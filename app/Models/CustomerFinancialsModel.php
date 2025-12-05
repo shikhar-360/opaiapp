@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class CustomerFinancialsModel extends Model
+{
+    protected $table = 'customer_financials';
+
+    protected $fillable = [
+        'app_id',
+        'customer_id',
+        'total_deposit',
+        'total_roi',
+        'total_withdraws',
+        'capping_limit'
+    ];
+}
