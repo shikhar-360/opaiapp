@@ -11,25 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('customer_financials', function (Blueprint $table) {
-            $table->id();
-
+        Schema::create('ninepay_transactions', function (Blueprint $table) {
+            $table->id(); 
             $table->unsignedBigInteger('app_id');
             $table->unsignedBigInteger('customer_id');
 
-            $table->decimal('total_deposit', 16, 6)->default(0);
-            $table->decimal('total_roi', 16, 6)->default(0);
-            $table->decimal('total_withdraws', 16, 6)->default(0);
+            $table->decimal('amount', 16, 6)->default(0);
+            $table->decimal('fees_amount', 16, 6)->default(0);
+            $table->decimal('received_amount', 16, 6)->default(0);
 
-            $table->decimal('capping_limit', 16, 6)->default(0);
+            // Amounts are stored as VARCHAR(255) as per your SQL
+            $table->string('chain', 255);
+            $table->string('currency', 225);
 
-            $table->decimal('total_topup', 16, 6)->default(0);
-
-            $table->timestamps();
+            // status is an INT NOT NULL
+            $table->enum('payment_status', ['pending', 'success', 'failed'])->default('pending');
+            $table->timestamps(); 
 
             $table->foreign('app_id')->references('id')->on('apps')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-
             $table->unique(['app_id', 'customer_id']);
         });
     }
@@ -39,6 +39,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('customer_financials');
+        Schema::dropIfExists('ninepay_transactions');
     }
 };

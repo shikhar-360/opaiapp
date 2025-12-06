@@ -14,10 +14,17 @@ use App\Http\Controllers\customer\CustomerController;
 use App\Http\Controllers\customer\DepositController;
 use App\Http\Controllers\customer\WithdrawController;
 use App\Http\Controllers\customer\P2PTransferController;
+use App\Http\Controllers\Customer\Topup9PayController;
+
+use App\Http\Controllers\TestController;
+
+
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/test-qr', [TestController::class, 'show'])->name('testqr');
 
 // Route::middleware(['auth:superadmin', 'auth.superadmin'])->prefix('superadmin')->name('superadmin.')->group(function () {
 Route::prefix('superadmin')->name('superadmin.')->group(function () {
@@ -82,5 +89,8 @@ Route::prefix('customer')->name('customer.')->group(function () {
 
         Route::get('/wallet/nonce', [CustomerAuthController::class, 'generateNonce'])->name('wallet.nonce');
         Route::post('/wallet/verify-ownership', [CustomerAuthController::class, 'verifyWalletOwnership'])->name('wallet.verify');
+
+        Route::get('/topup', [Topup9PayController::class, 'showForm'])->name('topup.form');
+        Route::post('/topup', [Topup9PayController::class, 'topup'])->name('topup.topup');
     });
 });
