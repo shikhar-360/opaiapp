@@ -18,6 +18,7 @@ After migrations, populate the database with initial data using the following se
 4. Install Required Modules for web3 connection
 
 composer require kornrunner/keccak
+
 composer require simplito/elliptic-php
 
 Install them via Composer:
