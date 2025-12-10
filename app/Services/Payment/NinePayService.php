@@ -23,11 +23,11 @@ class NinePayService
         // $this->apiKey  = config('services.9pay.api_key');
     }
 
-    public function initiateTransaction($customer, $package, $amount)
-    {
-        $transactionString = Str::random(12);
-        return "RAND-".$transactionString;
-    }
+    // public function initiateTransaction($customer, $package, $amount)
+    // {
+    //     $transactionString = Str::random(12);
+    //     return "RAND-".$transactionString;
+    // }
 
     public function validateTransaction($txnId)
     {
@@ -53,7 +53,7 @@ class NinePayService
 
     public function getEthWallet($customer)
     {
-        $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-" . $customer->id . "-" . $customer->referral_code . "/eth";
+        $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-INV0123456789-" . $customer->id . "-" . $customer->referral_code . "/eth";
         // $eth_json = file_get_contents($eth);
         // return $eth_json;
         try 
@@ -104,21 +104,26 @@ class NinePayService
         }
     }
 
-    public function topupReceived($request, $customerId, $amountReceived, $txn, $transactionHash)
+    public function topupReceived($customerId, $amountReceived, $transactionId, $transactionHash)
     {
         $appid = 0;
-
-        DB::transaction(function () use ($customerId, $amountReceived, $txn, $transactionHash) {
+        
+        // dd($customerId, $amountReceived, $transactionId, $transactionHash);
+        $refreshedFinance = array();
+        DB::transaction(function () use ($customerId, $amountReceived, $transactionId, $transactionHash) {
 
             $customer = CustomersModel::where('id',$customerId)->first();
 
             $appid = $customer->app_id;
 
             $pendingPayment = NinepayTransactionsModel::where('customer_id', $customerId)
-                                                ->where('payment_status', NinepayTransactionsModel::STATUS_PENDING)
-                                                ->where('txn', $txn)
-                                                ->where('app_id', $customer->app_id)
-                                                ->first();
+                                                        ->where('payment_status', NinepayTransactionsModel::STATUS_PENDING)
+                                                        ->where('transaction_id', $transactionId)
+                                                        // ->whereNull('transaction_hash')
+                                                        ->where('app_id', $customer->app_id)
+                                                        ->first();
+
+            // dd($pendingPayment);
 
             if ($pendingPayment) {
                 
@@ -129,31 +134,44 @@ class NinePayService
                 $pendingPayment->received_amount = $newTotalAmountReceived;
                 $pendingPayment->transaction_hash = $transactionHash;
                 
-                if ((abs($expectedAmount - $newTotalAmountReceived) < 0.0001))
+                // dd(abs($expectedAmount),abs($newTotalAmountReceived));
+                // dd(abs($expectedAmount), abs($newTotalAmountReceived));
+                // if ((abs($expectedAmount - $newTotalAmountReceived) < 0.0001))
+                if (abs($expectedAmount) <= abs($newTotalAmountReceived))
                 {
+                    // dd("1", $pendingPayment);
                     $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_SUCCESS; 
                     $pendingPayment->save(); 
 
-                    $customer->eth_9pay_json = null;
-                    $customer->tron_9pay_json = null;
-                    $customer->save();
+                    $criteria = [
+                        'customer_id'    => $customerId,
+                        'transaction_id' => $transactionId,
+                        'app_id'         => $customer->app_id, 
+                        'payment_status' => NinepayTransactionsModel::STATUS_UNDERPAID
+                    ];
+
+                    // Define the data you want to update in those records
+                    $updateData = [
+                        'payment_status'   => NinepayTransactionsModel::STATUS_SUCCESS
+                    ];
+
+                    // Perform the mass update
+                    NinepayTransactionsModel::where($criteria)->update($updateData);
                 } 
                 else 
                 {
+                    $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_UNDERPAID; 
+                    // dd("2", $pendingPayment);
                     $pendingPayment->save(); 
                 }
+
+                // dd("3", $pendingPayment);
+
+                $finance = $this->getCustomerFinance($customerId, $customer->app_id);
+                $finance->increment('total_topup', $amountReceived);
+                $finance->save();
             }
-
-            $finance = $this->getCustomerFinance($customerId, $customer->app_id);
-            $finance->increment('total_topup', $amountReceived);
-            $finance->save();
-
         });
 
-        $pendingPayment = NinepayTransactionsModel::where('customer_id', $customerId)
-                                                ->where('txn', $txn)
-                                                ->where('app_id', $appid)
-                                                ->first();
-        return $request->json($pendingPayment);
     }
 }

@@ -28,4 +28,19 @@ class FreeDepositPackagesModel extends Model
     protected $casts = [
         'status' => 'boolean',
     ];
+
+    public function app()
+    {
+        return $this->belongsTo(AppsModel::class, 'app_id');
+    }
+
+    public function package()
+    {
+        return $this->belongsTo(PackagesModel::class, 'package_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(CustomersModel::class, 'customer_id');
+    }
 }

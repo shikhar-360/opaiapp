@@ -30,6 +30,9 @@
 
     <button type="submit">Submit Deposit</button>
 </form>
+@php
+if(isset($QRs)):
+@endphp
 <h2>Scan QR Code to Top Up</h2>
 
 <p><strong>ETH Address:</strong> {{ $QRs['ethAddress'] }}</p>
@@ -39,3 +42,7 @@
 <img src="{{$QRs['ethQrCode']}}" alt="TRON QR Code" class="qr-code">
 
 <button>Cancel</button>
+@php
+endif;
+@endphp
+

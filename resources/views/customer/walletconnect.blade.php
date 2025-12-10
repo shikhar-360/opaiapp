@@ -4,7 +4,7 @@ Connecting your wallet
 <h1>Hello, {{ $customer->name }}!</h1>
 <p>Your email is: {{ $customer->email }}</p>
 <p>Your App ID is: {{ $customer->app_id }}</p>
-<p>Your App ID is: {{ $customer->wallet_address }}</p>
+<p>Your Wallet Address is: {{ $customer->wallet_address }}</p>
 
 
 <div><center><button id="connectWalletBtn" data-required-address="{{ $customer->wallet_address ?? '' }}">Connect Wallet</button></center></div>

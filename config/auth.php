@@ -48,6 +48,10 @@ return [
             'driver' => 'session',
             'provider' => 'customers', // <-- Link to the customer provider
         ],
+        'admin' => [ // <-- Define the superadmin guard
+            'driver' => 'session',
+            'provider' => 'users', // <-- Link to the superadmin provider
+        ],
     ],
 
     /*

@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('ninepay_transactions', function (Blueprint $table) {
             $table->id(); 
+            $table->string('transaction_id', 255)->nullable();	
+            $table->text('eth_9pay_json');
+            $table->text('tron_9pay_json');
+            $table->string('payment_address'); 
+            
             $table->unsignedBigInteger('app_id');
             $table->unsignedBigInteger('customer_id');
 
@@ -24,13 +29,17 @@ return new class extends Migration
             $table->string('chain', 255);
             $table->string('currency', 225);
 
+            $table->string('transaction_hash', 255)->nullable(); 
             // status is an INT NOT NULL
-            $table->enum('payment_status', ['pending', 'success', 'failed'])->default('pending');
+            $table->enum('payment_status', ['pending', 'success', 'failed', 'underpaid'])->default('pending');
             $table->timestamps(); 
 
             $table->foreign('app_id')->references('id')->on('apps')->onDelete('cascade');
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->unique(['app_id', 'customer_id']);
+            $table->unique(
+                ['app_id', 'transaction_id', 'payment_address', 'customer_id', 'transaction_hash'], 
+                'unique_ninepay_payment'
+            );
         });
     }
 

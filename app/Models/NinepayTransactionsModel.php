@@ -12,6 +12,8 @@ class NinepayTransactionsModel extends Model
     public const STATUS_PENDING = 'pending';
     public const STATUS_SUCCESS = 'success';
     public const STATUS_FAILED = 'failed';
+    public const STATUS_UNDERPAID = 'underpaid';
+
     
     protected $fillable = [
         'app_id',
@@ -22,7 +24,10 @@ class NinepayTransactionsModel extends Model
         'chain',
         'currency',
         'payment_status',
-        'txn'
+        'transaction_id',
+	    'eth_9pay_json',
+	    'tron_9pay_json',
+	    'payment_address',
     ];
     
 

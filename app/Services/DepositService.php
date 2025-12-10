@@ -1,8 +1,12 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
+use App\Models\CustomersModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -12,8 +16,16 @@ class DepositService
 
     public function validateDepositRules($customer, $packageId, $amount)
     {
+
         $package = PackagesModel::find($packageId);
         
+        $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
+
+        if($finance->total_topup < $amount)
+        {
+            throw new \Exception("Insufficuent balance");
+        }
+
         if (!$package) {
             throw new \Exception("Invalid package ID");
         }
@@ -26,9 +38,9 @@ class DepositService
 
         // Rule 2 — incremental deposit rule
         $lastDeposit = CustomerDepositsModel::where('customer_id', $customer->id)
-            ->where('payment_status', 'SUCCESS')
-            ->orderBy('id', 'DESC')
-            ->first();
+                                                ->where('payment_status', 'SUCCESS')
+                                                ->orderBy('id', 'DESC')
+                                                ->first();
 
         if ($lastDeposit && $amount < $lastDeposit->amount) {
             throw new \Exception(
@@ -48,22 +60,68 @@ class DepositService
             'amount'        => $amount,
             'roi_percent'   => $package->roi_percent,
             'transaction_id'=> $txnId,
-            'payment_status'=> 'PENDING',
+            'payment_status'=> CustomerDepositsModel::STATUS_PENDING,
             'coin_price'    => 2
         ]);
     }
 
     public function markDepositSuccess($deposit)
     {
-        $deposit->update([
-            'payment_status' => 'SUCCESS'
-        ]);
+        DB::beginTransaction();
+        try 
+        {
+            $deposit->update([
+                'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
+            ]);
 
-        $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
-        $finance->increment('total_deposit', $deposit->amount);
-        // $finance->capping_limit = $finance->total_deposit * 3; // Need to work on capping limit logic
-        $finance->save();
+            $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
+            $finance->increment('total_deposit', $deposit->amount);
+            $finance->decrement('total_topup', $deposit->amount); 
+            $finance->save();
 
-        return $deposit;
+            $firstDeposit = CustomerDepositsModel::where('customer_id', $deposit->customer_id)
+                                                ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                ->where('id', '!=', $deposit->id)
+                                                ->doesntExist();
+            if ($firstDeposit) {
+                $this->updateSponsorActiveDirects($deposit->customer_id);
+            }
+
+            DB::commit();
+            return $deposit;
+        } 
+        catch (\Exception $e) 
+        {
+            DB::rollBack();
+            
+            throw $e;
+        }
+    }
+
+    protected function updateSponsorActiveDirects(int $newActiveDirectId)
+    {
+        $customer = CustomersModel::find($newActiveDirectId);
+        
+        if (!$customer || !$customer->sponsor_id) {
+            return;
+        }
+
+        $sponsor = CustomersModel::find($customer->sponsor_id);
+
+        if ($sponsor) 
+        {
+            // Decode the existing active directs list, initialize if null
+            $activeIds = explode("/",$sponsor->active_direct_ids) ?? [];
+            
+            // Ensure the ID isn't already in the list (safety check for idempotency)
+            if (!in_array($newActiveDirectId, $activeIds)) {
+                $activeIds[] = $newActiveDirectId;
+                
+                // Re-encode and save back to the sponsor's record
+                // $sponsor->active_direct_ids = implode("/",$activeIds);
+                $sponsor->active_direct_ids = trim(($sponsor->active_direct_ids ?? '') . '/' . $newActiveDirectId, '/');
+                $sponsor->save();
+            }
+        }
     }
 }

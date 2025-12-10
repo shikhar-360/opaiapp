@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\CustomersModel;
 
@@ -82,7 +83,7 @@ class CustomerAuthController extends Controller
         // ]);
         // If 'password_check_result' is false, then the passwords do not match.
         // -----------------
-
+        
         if (!$customer || !Hash::check($validated['password'], $customer->password)) {
             return back()->withErrors(['email' => 'Invalid credentials']);
         }
@@ -91,13 +92,31 @@ class CustomerAuthController extends Controller
 
         $request->session()->regenerate();
 
-        // return redirect()->route('customer.dashboard');
+        return redirect()->route('customer.dashboard');
 
-        return redirect()->route('customer.web3login');
+        // return redirect()->route('customer.web3login');
     }
 
     public function logout(Request $request)
     {
+        if (Session::has('original_admin_id')) {
+            // --- Switch back to Admin account ---
+
+            $adminId = Session::pull('original_admin_id'); // Get the ID and clear the session key
+
+            // Log out the current customer guard
+            Auth::guard('customer')->logout();
+
+            // Log the original admin back in using the 'admin' guard
+            Auth::guard('admin')->loginUsingId($adminId);
+
+            // Regenerate session ID for security
+            $request->session()->regenerate();
+
+            // Redirect back to the admin dashboard
+            return redirect()->route('admin.dashboard')->with('status', 'Returned to admin session.');
+        }
+
         Auth::guard('customer')->logout(); 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
@@ -108,6 +127,12 @@ class CustomerAuthController extends Controller
     public function web3Login(Request $request)
     {
         $customer = Auth::guard('customer')->user();
+
+        // if (!Auth::guard('customer')->check() || Auth::guard('customer')->user()->role !== 'customer') {
+        //     // If the check fails, redirect them (which shouldn't happen right after login)
+        //     return redirect()->route('customer.login'); 
+        // }
+        
         return view('customer.walletconnect', [
             'customer' => $customer
         ]);
