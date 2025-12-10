@@ -25,13 +25,12 @@ return new class extends Migration
             $table->string('referral_code')->nullable()->unique()->index(); // Example: CUSTX82KF
             $table->unsignedBigInteger('sponsor_id')->nullable()->index(); // customer_id of sponsor
             $table->longText('direct_ids')->nullable(); // “3/7/9/...”
+            $table->longText('active_direct_ids')->nullable(); // “3/7/...”
             $table->boolean('status')->default(true);
             $table->string('remember_token')->nullable();
             $table->string('role')->default('customer');
             $table->unsignedBigInteger('level_id')->nullable()->index();
             $table->string('nonce')->nullable();
-            $table->longText('eth_9pay_json')->nullable();
-            $table->longText('tron_9pay_json')->nullable();
             $table->foreign('level_id')->references('id')->on('app_level_packages')->onDelete('cascade');
             $table->timestamps();
 
