@@ -124,6 +124,8 @@
                       </option> --}}
                       <option class="text-black" id="usdtToken" value="USDT">USDT</option>
                     </select>
+                    <input type="text" id="network_type" name="network_type" value="evm">
+                    <input type="text" id="network_name" name="network_name" value="polygon">
                   </div>
                 </div>
 
@@ -288,7 +290,7 @@
                 <h3 class="text-sm font-medium leading-none text-slate-900">Amount :</h3>
                 <div class="bg-white px-3 py-2 rounded-lg flex items-center justify-between gap-2 border border-slate-200">
                   <span id="copyAmount" class="text-xs font-mono text-slate-800 truncate">
-                    <span id="coin-amount-text"></span><span id="coin-amount-text-trc">{{ $hasQR ? $customer->QRs['qrAmount']:'' }}</span>
+                    <span id="coin-amount-text"></span><span id="coin-amount-text-trc">{{ $hasQR ? $customer->QRs['qrAmount'] :'' }}</span>
                   </span>
                   <button type="button"
                     onclick="copyAmount(); showToast && showToast('success', 'Copied to clipboard!')"
@@ -390,12 +392,18 @@
 
   // STEP 1: choose network -> show coinChoose
   function chooseCoin(type, network) {
+    alert(type+" "+network)
     selectedNetworkType = type;
     selectedNetwork = network;
+
+    document.getElementById('network_type').value = type;
+    document.getElementById('network_name').value = network;
 
     document.getElementById('networkChoose').style.display = 'none';
     document.getElementById('coinChoose').style.display = 'block';
     document.getElementById('paymentChoose').style.display = 'none';
+    
+    
   }
 
   // Back from coinChoose to networkChoose

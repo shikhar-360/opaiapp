@@ -10,6 +10,7 @@ use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerEarningDetailsModel;
+use App\Models\CustomerWithdrawsModel;
 
 use App\Traits\ManagesCustomerHierarchy;
 
@@ -97,6 +98,11 @@ class DashboardMatriceService
         $level          =   $this->getLevel($customer);
 
         $referralLevel  =   $this->getLevel($sponsordata);
+        
+        $myTotalWithdraws = CustomerWithdrawsModel::where('customer_id', $customer->id)
+                                                        ->where('app_id', $customer->app_id)
+                                                        ->where('transaction_type', 'WITHDRAW')
+                                                        ->sum('amount');
 
         $volumes = [
             'directIds' => $directIds,
@@ -119,6 +125,7 @@ class DashboardMatriceService
             'myLevelEarning'          => $myLevelEarning,
             'myTotalEarning'          => $myTotalEarning,
             'myReferralLevel'         => $referralLevel,
+            'myTotalWithdraws'        => $myTotalWithdraws,
         ];
 
         return $volumes;

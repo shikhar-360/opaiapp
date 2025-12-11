@@ -174,4 +174,41 @@ class NinePayService
         });
 
     }
+
+    public function ninePayFee($chain, $amount)
+    {
+        $feeAmount = 5;
+        
+        if ($chain == 'polygon') {
+            if ($amount >= 100) {
+                $feeAmount = $amount * 0.5 / 100;
+            } else {
+                $feeAmount = 0.5;
+            }
+        }
+        else if ($chain == 'tron') {
+            if ($amount >= 100) {
+                $feeAmount = $amount * 3 / 100;
+            } else {
+                $feeAmount = 3;
+            }
+        }
+        else if ($chain == 'bsc') {
+            if ($amount >= 100) {
+                $feeAmount = $amount * 1 / 100;
+            } else {
+                $feeAmount = 1;
+            }
+        }
+        else if ($chain == 'eth') {
+            if ($amount >= 100) {
+                $feeAmount = $amount * 5 / 100;
+            } else {
+                $feeAmount = 5;
+            }
+        }
+        
+        return $feeAmount;
+        
+    }
 }

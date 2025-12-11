@@ -46,7 +46,7 @@
       </div>
       <div>
         <p class="text-sm text-slate-500">Level Income</p>
-        <p class="text-xl font-bold text-fuchsia-600">$0.000</p>
+        <p class="text-xl font-bold text-fuchsia-600">{{ $customer->myLevelEarning }}</p>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
       </div>
       <div>
         <p class="text-sm text-slate-500">Total Income</p>
-        <p class="text-xl font-bold text-amber-600">$0.000</p>
+        <p class="text-xl font-bold text-amber-600">{{ $customer->myTotalEarning }}</p>
       </div>
     </div>
 
@@ -70,7 +70,7 @@
       </div>
       <div>
         <p class="text-sm text-slate-500">Total Withdraw</p>
-        <p class="text-xl font-bold text-emerald-600">$0</p>
+        <p class="text-xl font-bold text-emerald-600">{{ $customer->myTotalWithdraws }}</p>
       </div>
     </div>
 

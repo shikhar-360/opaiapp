@@ -46,6 +46,7 @@ class CustomerController extends Controller
         $customer->myPackages               =   $dashboard_matrics['myPackages'];
         $customer->myPackageDetails         =   $dashboard_matrics['myPackageDetails'];
         $customer->myReferralLevel          =   $dashboard_matrics['myReferralLevel'];
+        $customer->myTotalWithdraws         =   $dashboard_matrics['myTotalWithdraws'];
         
         return view('customer.dashboard', compact('customer'));
     }

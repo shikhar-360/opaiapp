@@ -33,7 +33,9 @@ Route::middleware(['customer'])->group(function () {
 
     Route::get('/pay-topup', [DepositController::class, 'showForm'])->name('pay.topup');
     Route::post('/pay-topup', [DepositController::class, 'deposit'])->name('pay.topup.save');
-    // Route::get('/pay-qr', [Topup9PayController::class, 'showQRForm'])->name('pay.qr');
+   
+    Route::get('/withdraw', [WithdrawController::class, 'showForm'])->name('withdraw');
+    Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');
 
     // Route::get('/bond', fn () => view('bond'))->name('bond');
     // Route::get('/swap', fn () => view('swap'))->name('swap');
@@ -53,9 +55,9 @@ Route::middleware(['customer'])->group(function () {
 // Route::get('/dashboard', fn () => view('customer.dashboard'))->name('dashboard');
 // Route::get('/profile', fn () => view('customer.profile'))->name('profile');
 Route::get('/staking', fn () => view('customer.staking'))->name('staking');
-Route::get('/login', fn () =>  view('customer.login'))->name('login');
-Route::get('/register', fn () =>  view('customer.register'))->name('register');
-Route::get('/withdraw', fn () => view('customer.withdraw'))->name('withdraw');
+// Route::get('/login', fn () =>  view('customer.login'))->name('login');
+// Route::get('/register', fn () =>  view('customer.register'))->name('register');
+// Route::get('/withdraw', fn () => view('customer.withdraw'))->name('withdraw');
 
 
 
