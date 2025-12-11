@@ -10,86 +10,75 @@ use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\CustomerEarningDetailsModel;
 
+use App\Traits\ManagesCustomerHierarchy;
+
 class LevelIncomeService
 {
+
+    use ManagesCustomerHierarchy;
+
     /**
      * Calculate and record the ROI on ROI for elligible customers.
      */
-    public function releaseLevelIncome(CustomersModel $sponsor, CustomerDepositsModel $deposit)
+    public function releaseLevelIncome(CustomerDepositsModel $deposit)
     {       
-        $activedirects = explode("/",$sponsor->active_direct_ids);
-        $activeDirectsCount = count($activedirects);
-        if (empty($activeDirectsCount)) {
-            return response()->json([
-                        'sponsor_id' => $sponsor->id,
-                        'message' => "No active directs"
-            ]);
+
+        $customer = CustomersModel::with('referrals')->find($deposit->customer_id);
+
+        if (!$customer) {
+            return ['error' => 'Customer not found'];
         }
 
-        $levelPackages = AppLevelPackagesModel::where('app_id', $sponsor->app_id)
-                                                ->orderBy('directs', 'DESC')
-                                                ->get(); 
-        if (!$levelPackages) {
-            return response()->json([
-                        'sponsor_id' => $sponsor->id,
-                        'message' => "No level package"
-            ]);
-        }
-        
-        $qualifiedLevelId = null;
-        $qualifiedLevelReward = 0;
-        foreach ($levelPackages as $levelPackage) {
-            // Check if the user's actual count meets or exceeds the requirement for this level
-            if ($activeDirectsCount >= (int)$levelPackage->directs) {
-                // This is the highest level they qualify for
-                $qualifiedLevelId = $levelPackage->id;
-                $qualifiedLevelReward = $levelPackage->reward;
-                // If this level is higher than their current one, update them
-                // if ($qualifiedLevelId > $customer->level_id) {
-                // }
-                break; 
+        // Get all uplines
+        $customerUplines = $this->getUplines($customer);
+
+        // Get all level packages for the app
+        $levelPackages = AppLevelPackagesModel::where('app_id', $deposit->app_id)
+                                                ->orderBy('level', 'ASC')
+                                                ->get()
+                                                ->keyBy('level');   // Faster lookup
+
+        $incomeDetails = [];
+
+        foreach ($customerUplines as $upline) {
+
+            $level = $upline['level'];
+
+            // Skip if package for this level does not exist
+            if (!isset($levelPackages[$level])) {
+                continue;
+            }
+
+            $pkg = $levelPackages[$level];
+
+            // Check if upline qualifies (directs >= required)
+            if ($upline['directs'] >= $pkg->directs) {
+
+                $rewardAmount = $deposit->amount * ($pkg->reward / 100);
+
+                $incomeDetails[] = [
+                    'app_id'           => $deposit->app_id,
+                    'customer_id'      => $upline['id'],  // upline user
+                    'reference_id'     => $customer->id,
+                    'reference_amount' => $deposit->amount,
+                    'amount_earned'    => $rewardAmount,
+                    'earning_type'     => 'LEVEL-REWARD',
+                ];
             }
         }
-        $rewardAmount = 0;
-        if($qualifiedLevelReward > 0)
-        {
-            $rewardAmount = $deposit->amount * ($qualifiedLevelReward / 100 );
-        }
 
-        
-        DB::transaction(function () use ($deposit, $sponsor, $qualifiedLevelId, $rewardAmount) {
-            
-            CustomerEarningDetailsModel::create([
-                'app_id'             => $sponsor->app_id,
-                'customer_id'        => $sponsor->id, 
-                'reference_id'       => $qualifiedLevelId,
-                'reference_amount'   => $deposit->amount,
-                'amount_earned'      => $rewardAmount,
-                'earning_type'       => 'LEVEL-REWARD', 
-            ]);
-
-            $sponsor->level_id = $qualifiedLevelId;
-            $sponsor->save();
-            
+        // Save income to DB
+        DB::transaction(function () use ($incomeDetails) {
+            foreach ($incomeDetails as $record) {
+                CustomerEarningDetailsModel::create($record);
+            }
         });
+
+        return [
+            'status'        => 'success',
+            'income_count'  => count($incomeDetails),
+            'records'       => $incomeDetails
+        ];
         
-    }
-
-    private function getRecursiveTeamIds(int $customerId): array
-    {
-        $teamIds = [];
-        $directReferrals = CustomersModel::where('sponsor_id', $customerId)->pluck('id');
-
-        if ($directReferrals->isEmpty()) {
-            return [];
-        }
-
-        foreach ($directReferrals as $referralId) {
-            $teamIds[] = $referralId;
-            // Merge the IDs from the next level down recursively
-            $teamIds = array_merge($teamIds, $this->getRecursiveTeamIds($referralId));
-        }
-
-        return array_unique($teamIds);
     }
 }

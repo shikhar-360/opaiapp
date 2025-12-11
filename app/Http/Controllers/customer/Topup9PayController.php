@@ -13,97 +13,62 @@ use App\Models\NinepayTransactionsModel;
 
 use App\Services\Payment\NinePayService;
 use App\Services\QRCodeService;
+use App\Services\DashboardMatriceService;
 
 class Topup9PayController extends Controller
 {
     protected $qrcodes;
     protected $ninepays;
+    protected $dashbaord_matrice_services;
 
-    public function __construct(NinePayService $ninepay, QRCodeService $qrcode)
+    public function __construct(NinePayService $ninepay, QRCodeService $qrcode, DashboardMatriceService $dashbaord_matrice_service)
     {
         $this->ninepays = $ninepay;
         $this->qrcodes = $qrcode;
+        $this->dashbaord_matrice_services = $dashbaord_matrice_service;
     }
 
     public function showForm()
     {
-        return view('customer.topup.form');
+
+        $customer = Auth::guard('customer')->user();
+        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+        $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
+        $customer->myPackages               =   $dashboard_matrics['myPackages'];
+        $customer->myFinance                =   $dashboard_matrics['myFinance'];
+        $customer['QRs'] = array();
+
+        $pendingTxn = NinepayTransactionsModel::where("customer_id", $customer->id)
+                                                ->where("app_id", $customer->app_id)
+                                                ->whereIn("payment_status", ['pending', 'underpaid'])
+                                                ->latest()
+                                                ->first();
+
+        if ($pendingTxn) 
+        {
+            $eth_array = json_decode($pendingTxn->eth_9pay_json, true);
+            $tron_array = json_decode($pendingTxn->tron_9pay_json, true);
+
+            $ethQrCode = $this->qrcodes->generate($eth_array['address']);
+            $tronQrCode = $this->qrcodes->generate($tron_array['address']);
+
+            $customer['QRs'] = [
+                'ethQrCode'         => $ethQrCode,
+                'tronQrCode'        => $tronQrCode,
+                'ethAddress'        => $eth_array['address'],
+                'tronAddress'       => $tron_array['address'],
+                'qrAmount'          => $pendingTxn->amount,
+                'qrPendingAmount'   => 0,
+            ];
+        }
+        // dd($customer);
+        return view('customer.pay_qr', compact('customer'));
     }
-
-    /*public function topup(Request $request)
-    {
-        $customer = Auth::guard('customer')->user();      
-
-        if (!$customer) {
-            abort(403, 'Customer not authenticated.');
-        }
-
-        $validated = $request->validate([
-            'amount'            => 'required|numeric|min:5|max:50',
-            // 'fees_amount'       => 'required|numeric',
-            // 'received_amount'   => 'required|numeric',
-            // 'chain'             => 'required|string',
-            // 'currency'          => 'required|string'
-        ]);    
-
-        // --- ETH Wallet Logic ---
-        if (empty($customer->eth_9pay_json)) 
-        {
-            $ninepay_eth = $this->ninepays->getEthWallet($customer);
-            $customer->eth_9pay_json = $ninepay_eth;
-            $customer->save();
-        }
-
-        // --- TRON Wallet Logic ---
-        if (empty($customer->tron_9pay_json)) 
-        {
-            $ninepay_tron = $this->ninepays->getTronWallet($customer);
-            $customer->tron_9pay_json = $ninepay_tron;
-            $customer->save();
-        }
-
-        // --- Process Wallets & Generate QR Codes ---
-        // Decode the JSON strings into PHP arrays
-        $eth_array = json_decode($customer->eth_9pay_json, true);
-        $tron_array = json_decode($customer->tron_9pay_json, true);
-
-        // Basic check to ensure decoding worked and 'address' key exists
-        if (!isset($eth_array['address']) || !isset($tron_array['address'])) {
-            return response()->json(['error' => 'Could not retrieve valid wallet addresses.'], 500);
-        }
-
-        // Generate QR codes using your service (make sure generate returns the Base64 URI if used in a view)
-        $ethQrCode = $this->qrcodes->generate($eth_array['address']);
-        $tronQrCode = $this->qrcodes->generate($tron_array['address']);
-
-        $invoice_number = "INV".$customer->id."".Str::random(4);
-        $txn =  NinepayTransactionsModel::create([
-                    'app_id'            =>  $customer->app_id,
-                    'txn'               =>  $eth_array['id'],
-                    'customer_id'	    =>  $customer->id,
-                    'amount'	        =>  $validated['amount'],
-                    'payment_status'	=>  "PENDING"
-                ]);
-
-        $invoice_number = "INV" . $txn->id . $customer->id . Str::random(4);
-
-        $txn->update(['invoice_number' => $invoice_number]);
-
-        // Return the data as a JSON response
-        $QRs = [
-            'ethQrCode' => $ethQrCode,
-            'tronQrCode' => $tronQrCode,
-            'ethAddress' => $eth_array['address'],
-            'tronAddress' => $tron_array['address'],
-        ];
-
-        return view('customer.topup.form', compact('QRs'));
-    }*/
 
     public function topup(Request $request)
     {
         $customer = Auth::guard('customer')->user();
-
+        $customer['QRs'] = array();
         if (!$customer) {
             abort(403, 'Customer not authenticated.');
         }
@@ -119,6 +84,8 @@ class Topup9PayController extends Controller
         $tron_array = array();
         $ethQrCode = '';
         $tronQrCode = '';
+        $qrAmount = 0;
+        $qrPendingAmount = 0;
 
         // dd($pendingTxn);
 
@@ -126,14 +93,7 @@ class Topup9PayController extends Controller
         if ($pendingTxn) 
         {
             $remaining = $pendingTxn->amount - $pendingTxn->received_amount;
-            // dd($pendingTxn->received_amount, $remaining);
-            // Safety check
-            // if ($remaining <= 0) 
-            // {
-            //     $pendingTxn->status = NinepayTransactionsModel::STATUS_SUCCESS;
-            // }
-            // else
-
+            
             if($pendingTxn->received_amount <= 0)
             {
                 // Do not create NEW top-up transaction
@@ -142,6 +102,8 @@ class Topup9PayController extends Controller
 
                 $ethQrCode = $this->qrcodes->generate($eth_array['address']);
                 $tronQrCode = $this->qrcodes->generate($tron_array['address']);
+
+                $qrAmount = $remaining;
             }
             else if($remaining > 0)
             {
@@ -168,6 +130,8 @@ class Topup9PayController extends Controller
 
                 $ethQrCode = $this->qrcodes->generate($eth_array['address']);
                 $tronQrCode = $this->qrcodes->generate($tron_array['address']);
+
+                $qrAmount = $remaining;
             }
             else
             {
@@ -178,11 +142,7 @@ class Topup9PayController extends Controller
         {
             NEWTOPUPREQUEST:
             $validated = $request->validate([
-                'amount'            => 'required|numeric|min:5|max:50',
-                // 'fees_amount'       => 'required|numeric',
-                // 'received_amount'   => 'required|numeric',
-                // 'chain'             => 'required|string',
-                // 'currency'          => 'required|string'
+                'amount'            => 'required|numeric|min:5',//|max:50
             ]);    
         
             // --- ETH Wallet Logic ---
@@ -215,6 +175,9 @@ class Topup9PayController extends Controller
                         'eth_9pay_json'   => $ninepay_eth,
                         'tron_9pay_json'  => $ninepay_tron
                     ]);
+            
+            $qrAmount = $validated['amount'];
+
             $transaction_id = "TXN" . $newTxn->id . $customer->id . Str::random(4);
             $newTxn->update(['transaction_id' => $transaction_id]);
         
@@ -224,13 +187,15 @@ class Topup9PayController extends Controller
         {
             // Return the data as a JSON response
             $QRs = [
-                'ethQrCode' => $ethQrCode,
-                'tronQrCode' => $tronQrCode,
-                'ethAddress' => $eth_array['address'],
-                'tronAddress' => $tron_array['address'],
+                'ethQrCode'         => $ethQrCode,
+                'tronQrCode'        => $tronQrCode,
+                'ethAddress'        => $eth_array['address'],
+                'tronAddress'       => $tron_array['address'],
+                'qrAmount'          => $qrAmount,
+                'qrPendingAmount'   => $qrPendingAmount,
             ];
-
-            return view('customer.topup.form', compact('QRs'));
+            $customer['QRs'] = $QRs;
+            return view('customer.pay_qr', compact('customer'));
         }
         else{
             echo "Some issue occured";

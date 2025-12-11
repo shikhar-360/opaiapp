@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Services\DepositService;
 use App\Services\Payment\NinePayService;
 use App\Services\LevelIncomeService;
+use App\Services\DashboardMatriceService;
 
 use App\Models\FreeDepositPackagesModel;
 use App\Models\CustomersModel;
+use App\Models\PackagesModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -21,22 +23,27 @@ class DepositController extends Controller
     protected $depositService;
     protected $ninePay;
     protected $levelIncomeServices;
+    protected $dashbaord_matrice_services;
 
     use ManagesCustomerFinancials;
 
-    public function __construct(DepositService $depositService, NinePayService $ninePay, LevelIncomeService $levelIncomeService)
+    public function __construct(DepositService $depositService, NinePayService $ninePay, LevelIncomeService $levelIncomeService, DashboardMatriceService $dashbaord_matrice_service)
     {
         $this->depositService = $depositService;
         $this->ninePay = $ninePay;
         $this->levelIncomeServices = $levelIncomeService;
+        $this->dashbaord_matrice_services = $dashbaord_matrice_service;
     }
 
     public function showForm()
     {
         $customer = Auth::guard('customer')->user();
-        $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
-        $topup_amount = $finance->total_topup;
-        return view('customer.deposit.form', compact('topup_amount'));
+        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+      
+        $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
+        $customer->myFinance                =   $dashboard_matrics['myFinance'];
+        $customer->myPackages               =   $dashboard_matrics['myPackages'];
+        return view('customer.pay_topup', compact('customer'));
     }
 
     public function deposit(Request $request)
@@ -45,11 +52,22 @@ class DepositController extends Controller
         $customer = Auth::guard('customer')->user();
 
         $validated = $request->validate([
-            'package_id' => 'required|exists:app_packages,id',
+            // 'package_id' => 'required|exists:app_packages,id',
             'amount'     => 'required|numeric',
             // 'txn_id'     => 'required|string|unique:customer_deposits,transaction_id',
         ]);
 
+        $package = PackagesModel::where("app_id", $customer->app_id)
+                                    ->where("amount", $validated['amount'])
+                                    ->first();
+        
+        if (!$package) 
+        {
+            return back()->withErrors(['amount' => 'No package found for this amount']);
+        }
+
+        $validated['package_id'] = $package->id;
+        
         try 
         {
             
@@ -78,10 +96,10 @@ class DepositController extends Controller
             $deposit = $this->depositService->markDepositSuccess($deposit);
             
             $sponsor = CustomersModel::find($customer->sponsor_id);
-            $this->levelIncomeServices->releaseLevelIncome($sponsor, $deposit);
+            $level_data = $this->levelIncomeServices->releaseLevelIncome($deposit);
 
             return redirect()
-                    ->route('customer.deposit.form')
+                    ->route('pay.topup')
                     ->with('success', 'Deposit successfully!');
 
         } 

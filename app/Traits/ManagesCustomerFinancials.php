@@ -21,4 +21,6 @@ trait ManagesCustomerFinancials
             'app_id' => $appId
         ]);
     }
+
+    
 }

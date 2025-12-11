@@ -31,25 +31,35 @@ class CustomerAuthController extends Controller
 
     public function register(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
-            'name'          => 'required|string|max:255',
-            'email'         => 'required|email|unique:customers,email',
-            'password'      => 'required|string|min:3|max:20',
-            'sponsor_code' => 'required|string|exists:customers,referral_code',
+            'name'           => 'required|string|max:255',
+            'email'          => 'required|email|unique:customers,email',
+            'phone'          => 'required|numeric|unique:customers,phone',
+            'sponsor_code'   => 'required|string|exists:customers,referral_code',
+            'password'       => 'required|string|min:3|max:20|confirmed',
+            'wallet_address' => 'required|string|max:255',
         ]);
 
         // Get sponsor
         $sponsor = CustomersModel::where('referral_code', $validated['sponsor_code'])->firstOrFail();
-        
+        if(!$sponsor)
+        {
+            return back()->withErrors(['referral' => 'Invalid referral code']);
+        }
         // Auto find app ID from sponsor
         $appId = $sponsor->app_id;
+
+        $lastSixDigits = substr($validated['wallet_address'], -6);
 
         $newCustomer = CustomersModel::create([
                             'app_id'        => $appId,
                             'name'          => $validated['name'],
+                            'wallet_address'=> $validated['wallet_address'],
                             'email'         => $validated['email'],
+                            'phone'         => $validated['phone'],
                             'password'      => Hash::make($validated['password']),
-                            // 'referral_code' => strtoupper(Str::random(6)),
+                            'referral_code' => $lastSixDigits,
                             'sponsor_id'    => $sponsor->id,
                             'role'          => 'customer'
                         ]);
@@ -57,7 +67,8 @@ class CustomerAuthController extends Controller
         $sponsor->direct_ids = trim(($sponsor->direct_ids ?? '') . '/' . $newCustomer->id, '/');
         $sponsor->save();
 
-        $this->showLoginForm();
+        // $this->showLoginForm();
+        return redirect()->route('login')->with('success', 'Registration successful.');
     }
 
     public function showLoginForm()
@@ -92,7 +103,7 @@ class CustomerAuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('customer.dashboard');
+        return redirect()->route('dashboard');
 
         // return redirect()->route('customer.web3login');
     }
@@ -121,7 +132,7 @@ class CustomerAuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('customer.login');
+        return redirect()->route('login');
     }
 
     public function web3Login(Request $request)

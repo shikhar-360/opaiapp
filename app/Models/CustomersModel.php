@@ -44,7 +44,7 @@ class CustomersModel extends Authenticatable
     
     public function sponsor()
     {
-        return $this->belongsTo(CustomersModel::class, 'sponsor_id');
+        return $this->belongsTo(CustomersModel::class, 'sponsor_id', 'id');
     }
     
     public function referrals()
