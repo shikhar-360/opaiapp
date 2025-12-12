@@ -46,7 +46,7 @@
                     class="px-3 py-2 rounded-lg bg-white border border-slate-200 text-slate-800 font-mono text-[11px] md:text-xs tracking-tight whitespace-nowrap overflow-x-auto scrollbar-thin cursor-text"
                     onclick="selectReferralText()" title="Click to select">
                     <span id="referral-link" class="inline-block">
-                      https://OpAi.farm/register?sponser_code={{ $customer->referral_code }}
+                      https://OpAi.farm/register/{{ $customer->referral_code }}
                     </span>
                   </div>
                 </div>
