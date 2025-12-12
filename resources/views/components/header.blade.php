@@ -59,7 +59,7 @@
         </p>
 
         {{-- Dashboard --}}
-        <a href="{{ route('index') }}"
+        <a href="{{ route('dashboard') }}"
            class="{{ $baseItemClass }} {{ Route::is('index') ? $activeClass : $inactiveClass }}">
             <span class="inline-flex items-center justify-center {{ Route::is('index') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1.5 rounded-lg">
                 <img src="/assets/images/menu/dashboard.webp" width="64" height="48" alt="Logo"
