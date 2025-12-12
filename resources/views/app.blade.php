@@ -42,28 +42,14 @@
   @include('components.footer')
 
   @stack('scripts')
-@php
-    echo "HELLO";
-@endphp
-@if ($sessionData = Session::get('data'))
-    @if($sessionData['status_code'] == 1)
-    <script type="text/javascript">
-        showToast("success", "{{ $sessionData['message'] }}");
-    </script>
-    @else
-    <script type="text/javascript">
-        showToast("error", "{{ $sessionData['message'] }}");
-    </script>
-    @endif
-@endif
+
 </body>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
+
 <!-- Notyf JS -->
-<script src="{{asset('assets/js/flowbite.min.js')}}"></script>
-<script src="{{asset('assets/js/notyf.min.js')}}"></script>
-<script src="{{asset('assets/js/dialog.js')}}"></script>
-<script src="{{asset('assets/js/custom.js')}}?v={{time()}}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 <script>
 var notyf = new Notyf({
     duration: 3000, // Auto-close after 3s
@@ -93,26 +79,23 @@ var notyf = new Notyf({
 });
 var notyfNotifications = [];
 function showToast(type, message) {
-    let input = message || configuration;
-    let notification;
-    if (type === 'success') 
-    {
-        notification = notyf.success(input);
-    } 
-    else if (type === 'error') 
-    {
-        notification = notyf.error(input);
-    } 
-    else 
-    {
-        const opts = Object.assign({}, {
-            type
-        }, {
-            message: input
-        });
-        notification = notyf.open(opts);
+    let input = message || "";
+    if (type === 'success') {
+        notyf.success(input);
+    } else if (type === 'error') {
+        notyf.error(input);
+    } else {
+        notyf.open({ type, message: input });
     }
-    notyfNotifications.push(notification);
 }
 </script>
+@if ($errors->has('status_code') && $errors->first('status_code') == 'error')
+    <script>
+        showToast("error", {!! json_encode($errors->first('message')) !!});
+    </script>
+@elseif ($errors->has('status_code') && $errors->first('status_code') == 'success')
+    <script>
+    showToast("success", {!! json_encode($errors->first('message')) !!});
+    </script>    
+@endif
 </html>
