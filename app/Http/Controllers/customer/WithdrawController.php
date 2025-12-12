@@ -43,30 +43,38 @@ class WithdrawController extends Controller
         $customer->myPackageDetails         =   $dashboard_matrics['myPackageDetails'];
         $customer->myReferralLevel          =   $dashboard_matrics['myReferralLevel'];
         $customer->myTotalWithdraws         =   $dashboard_matrics['myTotalWithdraws'];
-        
+        $customer->myAvailableBalance       =   $dashboard_matrics['myTotalEarning'] - $dashboard_matrics['myTotalWithdraws'];
         return view('customer.withdraw', compact('customer'));
     }
 
     public function withdraw(Request $request)
     {
-        $request->validate([
-            'amount' => 'required|numeric|min:0.0000001',
-        ]);
-
+        $validated = $request->validate([
+            'amount' => 'required|numeric|min:10',
+            'admin_charge' => 'required|numeric|min:0.0000001',
+            'net_amount' => 'required|numeric|min:9',
+        ]);  
+        
         $customer = Auth::guard('customer')->user();
 
         try {
-            $withdraw = $this->withdrawServices->processWithdrawal($customer, $request->amount);
-
+            $withdraw = $this->withdrawServices->processWithdrawal($customer, $validated);
             return redirect()
-                    ->route('customer.withdraw.form')
+                    ->route('withdraw')
                     ->with('success', $withdraw);
+            return redirect()
+                    ->route('pay.qr')
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Withdraw successfully.'
+                    ]);
 
         } catch (\Exception $e) {
-            return response()->json([
-                'status'  => false,
-                'message' => $e->getMessage(),
-            ], 400);
+            // return response()->json([
+            //     'status'  => false,
+            //     'message' => $e->getMessage(),
+            // ], 400);
+            return back()->withErrors(['status_code'=>'error', 'message' => $e->getMessage()]);
         }
     }
 }

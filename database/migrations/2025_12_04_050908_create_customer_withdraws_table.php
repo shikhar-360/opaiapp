@@ -18,13 +18,8 @@ return new class extends Migration
 
             // Payer (Sender)
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            
             $table->decimal('admin_charge', 10, 4); // Use appropriate precision/scale
-            $table->decimal('fees', 10, 4); // Use appropriate precision/scale
-            $table->decimal('coin_price', 10, 4); // Use appropriate precision/scale
             $table->decimal('amount', 10, 4); // Use appropriate precision/scale
-            $table->decimal('admin_charge_amount', 10, 4); // Use appropriate precision/scale
-            $table->decimal('fees_amount', 10, 4); // Use appropriate precision/scale
             $table->decimal('net_amount', 10, 4); // Use appropriate precision/scale
 
             $table->string('transaction_id'); 

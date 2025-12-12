@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
 
             $table->decimal('total_deposit', 16, 6)->default(0);
-            $table->decimal('total_roi', 16, 6)->default(0);
+            $table->decimal('total_income', 16, 6)->default(0);
             $table->decimal('total_withdraws', 16, 6)->default(0);
 
             $table->decimal('capping_limit', 16, 6)->default(0);

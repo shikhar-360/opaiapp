@@ -63,7 +63,9 @@ class DepositController extends Controller
         
         if (!$package) 
         {
-            return back()->withErrors(['amount' => 'No package found for this amount']);
+            // return back()->withErrors(['amount' => 'No package found for this amount']);
+            return back()->withErrors(['status_code'=>'error', 'message' => 'No package found for this amoun']);
+            // return redirect()->back()->with(['status'=>'success', 'Referral code verified successfully!']);
         }
 
         $validated['package_id'] = $package->id;
@@ -98,17 +100,24 @@ class DepositController extends Controller
             $sponsor = CustomersModel::find($customer->sponsor_id);
             $level_data = $this->levelIncomeServices->releaseLevelIncome($deposit);
 
+            // return redirect()
+            //         ->route('pay.topup')
+            //         ->with('success', 'Deposit successfully!');
             return redirect()
                     ->route('pay.topup')
-                    ->with('success', 'Deposit successfully!');
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Deposit successfully!'
+                    ]);
 
         } 
         catch (\Exception $e) 
         {
-            return response()->json([
-                'status'  => false,
-                'message' => $e->getMessage()
-            ], 422);
+            return back()->withErrors(['status_code'=>'error', 'message' => $e->getMessage()]);
+            // return response()->json([
+            //     'status'  => false,
+            //     'message' => $e->getMessage()
+            // ], 422);
         }
     }
 

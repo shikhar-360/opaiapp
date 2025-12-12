@@ -11,11 +11,13 @@ use App\Models\CustomersModel;
 use App\Models\CustomerEarningDetailsModel;
 
 use App\Traits\ManagesCustomerHierarchy;
+use App\Traits\ManagesCustomerFinancials;
 
 class LevelIncomeService
 {
 
     use ManagesCustomerHierarchy;
+    use ManagesCustomerFinancials;
 
     /**
      * Calculate and record the ROI on ROI for elligible customers.
@@ -39,7 +41,7 @@ class LevelIncomeService
                                                 ->keyBy('level');   // Faster lookup
 
         $incomeDetails = [];
-
+        
         foreach ($customerUplines as $upline) {
 
             $level = $upline['level'];
@@ -64,6 +66,11 @@ class LevelIncomeService
                     'amount_earned'    => $rewardAmount,
                     'earning_type'     => 'LEVEL-REWARD',
                 ];
+
+                $finance = $this->getCustomerFinance($upline['id'], $deposit->app_id);
+                $finance->increment('total_income', $rewardAmount);
+                // $finance->decrement('total_topup', $deposit->amount); 
+                $finance->save();
             }
         }
 

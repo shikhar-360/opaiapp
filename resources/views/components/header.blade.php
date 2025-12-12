@@ -79,14 +79,14 @@
         </a>
 
         {{-- Pay By Dapp --}}
-        <!-- <a href="{{ route('pay.dapp') }}"
+        {{-- <a href="{{ route('pay.dapp') }}"
            class="{{ $baseItemClass }} {{ Route::is('pay.dapp') ? $activeClass : $inactiveClass }}">
             <span class="inline-flex items-center justify-center {{ Route::is('pay.dapp') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/pay-by-dapp.webp" width="64" height="48" alt="Logo"
                      class="w-7 h-7 object-contain">
             </span>
             <span>Pay By Dapp</span>
-        </a> -->
+        </a> --}}
 
         {{-- Pay By QR --}}
         <a href="{{ route('pay.qr') }}"

@@ -43,7 +43,61 @@
 
   @stack('scripts')
 
+
+
 </body>
 
-
+<!-- Notyf JS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+<script>
+var notyf = new Notyf({
+    duration: 3000, // Auto-close after 3s
+    dismissible: true,
+    position: {
+        x: 'right',
+        y: 'top'
+    },
+    ripple: false, // Prevent overlapping animations
+    types: [{
+            type: 'success',
+            background: 'green',
+        },
+        {
+            type: 'error',
+            background: 'red',
+        },
+        {
+            type: 'warning',
+            background: 'orange',
+        },
+        {
+            type: 'info',
+            background: 'blue',
+        }
+    ]
+});
+var notyfNotifications = [];
+function showToast(type, message) {
+    let input = message || "";
+    if (type === 'success') {
+        notyf.success(input);
+    } else if (type === 'error') {
+        notyf.error(input);
+    } else {
+        notyf.open({ type, message: input });
+    }
+}
+</script>
+@if ($errors->has('status_code') && $errors->first('status_code') == 'error')
+    <script>
+        showToast("error", {!! json_encode($errors->first('message')) !!});
+    </script>
+@elseif ($errors->has('status_code') && $errors->first('status_code') == 'success')
+    <script>
+    showToast("success", {!! json_encode($errors->first('message')) !!});
+    </script>    
+@endif
 </html>

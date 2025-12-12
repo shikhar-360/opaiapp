@@ -24,8 +24,17 @@ class CustomerAuthController extends Controller
         $this->walletServices = $walletService;
     }
 
-    public function showRegisterForm($sponsorcode)
+    public function showRegisterForm($sponsorcode = null)
     {
+        if(empty($sponsorcode))
+        {
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+        }
+        // else{
+        //  return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+        //     return redirect()->back()->with(['status'=>'success', 'Referral code verified successfully!']);
+        // }
+
         return view('customer.register', compact('sponsorcode'));
     }
 
@@ -45,8 +54,9 @@ class CustomerAuthController extends Controller
         $sponsor = CustomersModel::where('referral_code', $validated['sponsor_code'])->firstOrFail();
         if(!$sponsor)
         {
-            return back()->withErrors(['referral' => 'Invalid referral code']);
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
         }
+        
         // Auto find app ID from sponsor
         $appId = $sponsor->app_id;
 
@@ -96,7 +106,7 @@ class CustomerAuthController extends Controller
         // -----------------
         
         if (!$customer || !Hash::check($validated['password'], $customer->password)) {
-            return back()->withErrors(['email' => 'Invalid credentials']);
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials']);
         }
 
         Auth::guard('customer')->login($customer); 

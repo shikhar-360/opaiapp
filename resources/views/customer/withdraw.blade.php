@@ -266,7 +266,7 @@
                     Available Balance
                   </h3>
                   <p class="text-sm">
-                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">{{ $customer->myAvailableBalance }}</span>
                   </p>
                 </div>
               </div>
@@ -309,7 +309,8 @@
           </div>
 
           {{-- FORM (STATIC / NO ACTION) --}}
-          <form class="relative" id="withdraw-process-form">
+          <form class="relative" id="withdraw-process-form" action="{{ route('withdraw.save') }}" method="POST">
+            @csrf
             {{-- Amount --}}
             <div class="relative">
               <label for="amount" class="block text-xs text-slate-300 font-medium mb-2">
@@ -348,7 +349,7 @@
                   <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor"
                         stroke-width="1.5" />
                 </svg>
-                <input type="text" name="admin_charge" readonly id="adminFees" placeholder="0" value="0"
+                <input type="text" name="admin_charge" readonly id="admin_charge" placeholder="0" value="0"
                        class="border-l pl-4 border-slate-700/70 outline-none shadow-none bg-transparent w-full block text-sm md:text-base text-slate-100">
               </div>
             </div>
@@ -369,14 +370,15 @@
                   <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor"
                         stroke-width="1.5" />
                 </svg>
-                <input type="text" readonly id="yourfinalamount" placeholder="Your final amount" value="0"
+                <input type="text" readonly id="net_amount" name="net_amount" placeholder="Your final amount" value="0"
                        class="border-l pl-4 border-slate-700/70 outline-none shadow-none bg-transparent w-full block text-sm md:text-base text-slate-100">
               </div>
             </div>
 
             {{-- button --}}
             <div class="flex items-center justify-center mt-0 relative group max-w-fit mx-auto">
-              <button type="button"
+              <button {{ $customer->myAvailableBalance < 10 ? '':'' }}
+                      type="submit"
                       class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-2 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-primary-text)] to-[var(--theme-primary-bg)] text-black font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
                 <span class="text-black">Withdraw</span>
                 <svg
@@ -397,3 +399,21 @@
 
 </section>
 @endsection
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {  
+  document.getElementById('amount').addEventListener('input', function () {
+      let amount = parseFloat(this.value) || 0;
+
+      // 5% admin charge
+      let adminCharge = amount * 0.05;
+
+      // final amount = amount - admin charge
+      let finalAmount = amount - adminCharge;
+
+      // Update fields
+      document.getElementById('admin_charge').value = adminCharge.toFixed(2);
+      document.getElementById('net_amount').value = finalAmount.toFixed(2);
+  });
+});
+</script>

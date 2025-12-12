@@ -64,15 +64,15 @@ class NinePayService
             }
             
             return json_encode([
-                'status' => false,
-                'data' => $response->status()
+                'status' => 'error',
+                'message' => $response->status()
             ]);
         } 
         catch (\Throwable $e) 
         {
             return json_encode([
-                'status' => false,
-                'data' => $e
+                'status' => 'error',
+                'message' => $e
             ]);
         }
 
@@ -91,15 +91,15 @@ class NinePayService
             }
             
             return json_encode([
-                'status' => false,
-                'data' => $response->status()
+                'status' => 'error',
+                'message' => $response->status()
             ]);
         } 
         catch (\Throwable $e) 
         {
             return json_encode([
-                'status' => false,
-                'data' => $e
+                'status' => 'error',
+                'message' => $e
             ]);
         }
     }

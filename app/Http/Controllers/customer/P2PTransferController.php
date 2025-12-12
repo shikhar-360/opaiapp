@@ -38,13 +38,22 @@ class P2PTransferController extends Controller
                                                                             $validated['wallet_address'],
                                                                             $validated['amount']
                                                                         );
+            // return redirect()
+            //         ->route('customer.transfer.form')
+            //         ->with('success', $p2ptransfer);
             return redirect()
                     ->route('customer.transfer.form')
-                    ->with('success', $p2ptransfer);
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Deposit successfully!'
+                    ]);
+
+            
         } 
         catch (Exception $e) {
             // If any validation fails (insufficient funds, not a downline member, etc.)
-            return response()->json(['error' => $e->getMessage()], 400);
+            // return response()->json(['error' => $e->getMessage()], 400);
+            return back()->withErrors(['status_code'=>'error', 'message' => $e->getMessage()]);
         }
     }
 }

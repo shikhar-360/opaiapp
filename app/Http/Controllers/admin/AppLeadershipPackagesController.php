@@ -3,29 +3,21 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\PackagesModel;
+use App\Models\AppLeadershipPackagesModel;
 
-use App\Traits\ManagesUserHierarchy;
-
-class AppPackagesController extends Controller
+class AppLeadershipPackagesController extends Controller
 {
-    use ManagesUserHierarchy;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $admin = Auth::guard('admin')->user();
-        $packages = PackagesModel::where('app_id', $admin->app_id)->get();
-
-        $downlineIds = $this->getRecursiveTeamIds(2); 
-        dd($downlineIds);
-
-        return view('admins.packages.index', compact('packages'));
+        $packages = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->get();
+        return view('admins.leadershippackages.index', compact('packages'));
     }
 
     /**
@@ -33,7 +25,7 @@ class AppPackagesController extends Controller
      */
     public function create()
     {
-        return view('admins.packages.create');
+        return view('admins.leadershippackages.create');
     }
 
     /**
@@ -42,18 +34,18 @@ class AppPackagesController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'plan_code'  => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'roi_percent' => 'required|numeric|min:0',
+            'rank'  => 'required|string|max:255',
+            'volume' => 'required|numeric|min:0',
+            'points' => 'required|numeric|min:0',
         ]);
 
         $admin = Auth::guard('admin')->user();
         
         $validated['app_id'] = $admin->app_id;
 
-        PackagesModel::create($validated);
+        AppLeadershipPackagesModel::create($validated);
 
-        return redirect()->route('admin.packages.index')
+        return redirect()->route('admin.leadershippackages.index')
                          ->with('success', 'Package created successfully.');
     }
 
@@ -63,8 +55,8 @@ class AppPackagesController extends Controller
     public function show($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = PackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
-        return view('admins.packages.show', compact('package'));
+        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        return view('admins.leadershippackages.show', compact('package'));
     }
 
     /**
@@ -73,8 +65,8 @@ class AppPackagesController extends Controller
     public function edit($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = PackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
-        return view('admins.packages.edit', compact('package'));
+        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        return view('admins.leadershippackages.edit', compact('package'));
     }
 
     /**
@@ -83,17 +75,17 @@ class AppPackagesController extends Controller
     public function update(Request $request, $id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = PackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
 
         $validated = $request->validate([
-            'plan_code'  => 'required|string|max:255',
-            'amount' => 'required|numeric|min:0',
-            'roi_percent' => 'required|numeric|min:0',
+            'rank'  => 'required|string|max:255',
+            'volume' => 'required|numeric|min:0',
+            'points' => 'required|numeric|min:0',
         ]);
 
         $package->update($validated);
 
-        return redirect()->route('admin.packages.index')
+        return redirect()->route('admin.leadershippackages.index')
                          ->with('success', 'Package updated successfully.');
     }
 
@@ -103,10 +95,10 @@ class AppPackagesController extends Controller
     public function destroy($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = PackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
         $package->delete();
 
-        return redirect()->route('admin.packages.index')
+        return redirect()->route('admin.leadershippackages.index')
                          ->with('success', 'Package deleted successfully.');
     }
 }

@@ -8,7 +8,11 @@
 
   <div class="w-full max-w-xl mx-auto">
     <div class="relative rounded-2xl">
-
+      @if ($errors->has('referral'))
+          <div class="text-red-500 text-sm mt-1">
+              {{ $errors->first('referral') }}
+          </div>
+      @endif
       <div
         class="relative p-6 md:p-8 rounded-2xl w-full mx-auto group overflow-hidden neo-card border !border-blue-300/60
                transition-all duration-300 

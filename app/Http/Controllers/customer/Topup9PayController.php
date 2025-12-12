@@ -71,7 +71,8 @@ class Topup9PayController extends Controller
         $customer = Auth::guard('customer')->user();
         $customer['QRs'] = array();
         if (!$customer) {
-            abort(403, 'Customer not authenticated.');
+            // abort(403, 'Customer not authenticated.');
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Customer not authenticated.']);
         }
 
         // Fetch last pending/underpaid transaction
@@ -160,11 +161,11 @@ class Topup9PayController extends Controller
             // Decode the JSON strings into PHP arrays
             $eth_array = json_decode($ninepay_eth, true);
             $tron_array = json_decode($ninepay_tron, true);
-            
 
             // Basic check to ensure decoding worked and 'address' key exists
             if (!isset($eth_array['address']) || !isset($tron_array['address'])) {
-                return response()->json(['error' => 'Could not retrieve valid wallet addresses.'], 500);
+                // return response()->json(['error' => 'Could not retrieve valid wallet addresses.'], 500);
+                return back()->withErrors(['status_code'=>'error', 'message' => 'Could not retrieve valid wallet addresses.']);
             }
 
             // Generate QR codes using your service (make sure generate returns the Base64 URI if used in a view)
@@ -204,10 +205,16 @@ class Topup9PayController extends Controller
                 'qrPendingAmount'   => $qrPendingAmount,
             ];
             $customer['QRs'] = $QRs;
-            return view('customer.pay_qr', compact('customer'));
+            // return view('customer.pay_qr', compact('customer'));
+            return redirect()
+                    ->route('pay.qr')
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Please pay using QR!'
+                    ]);
         }
         else{
-            echo "Some issue occured";
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Some issue occured.']);
         }
     }
 

@@ -44,6 +44,14 @@ return [
             'driver' => 'session',
             'provider' => 'customers', 
         ],
+        'superadmin' => [ // <-- Define the superadmin guard
+            'driver' => 'session',
+            'provider' => 'users', // <-- Link to the superadmin provider
+        ],
+        'admin' => [ // <-- Define the superadmin guard
+            'driver' => 'session',
+            'provider' => 'users', // <-- Link to the superadmin provider
+        ],
     ],
 
     /*
@@ -72,6 +80,7 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\CustomersModel::class, 
         ],
+        
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
