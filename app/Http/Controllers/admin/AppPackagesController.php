@@ -9,11 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\PackagesModel;
 
-use App\Traits\ManagesUserHierarchy;
-
 class AppPackagesController extends Controller
 {
-    use ManagesUserHierarchy;
     /**
      * Display a listing of the resource.
      */
@@ -21,10 +18,7 @@ class AppPackagesController extends Controller
     {
         $admin = Auth::guard('admin')->user();
         $packages = PackagesModel::where('app_id', $admin->app_id)->get();
-
-        $downlineIds = $this->getRecursiveTeamIds(2); 
-        dd($downlineIds);
-
+        
         return view('admins.packages.index', compact('packages'));
     }
 
