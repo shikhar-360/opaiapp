@@ -99,12 +99,3 @@ function showToast(type, message) {
     </script>    
 @endif
 </html>
-@if ($errors->has('status_code') && $errors->first('status_code') == 'error')
-    <script>
-        showToast("error", {!! json_encode($errors->first('message')) !!});
-    </script>
-@elseif ($errors->has('status_code') && $errors->first('status_code') == 'success')
-    <script>
-    showToast("success", {!! json_encode($errors->first('message')) !!});
-    </script>    
-@endif
