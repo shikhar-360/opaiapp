@@ -200,7 +200,7 @@
                 @php
                 $sr = 1;
                 @endphp
-                @foreach($customer->activeDirectsData as $ackey => $activeDirect)
+                @foreach($customer->allDirectsData as $ackey => $activeDirect)
                 <tr class="hover:bg-slate-200 transition">
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $sr++ }}</td>
                   <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $activeDirect->name }}</td>

@@ -159,10 +159,10 @@
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                 Net Amount
               </th>
-              <th
+              {{-- <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                 Status
-              </th>
+              </th> --}}
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                 Transaction ID
@@ -178,12 +178,26 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100">
-            <tr class="odd">
-              <td valign="top" colspan="7"
-                class="dataTables_empty px-4 sm:px-5 py-6 text-center text-slate-500">
-                No data available in table
+            @php
+            $sr = 1;
+            @endphp
+            @foreach($customer->myWithdraws as $wkey => $myW)
+            <tr class="hover:bg-slate-200 transition">
+              <td class="px-4 sm:px-5 py-3 text-black">{{  $sr++ }}</td>
+              <td class="px-4 sm:px-5 py-3">
+                <span
+                  class="inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 text-[11px] text-sky-700 border border-sky-200">
+                  {{ $myW->amount }}
+                </span>
               </td>
+              <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ $myW->net_amount }}</td>
+              {{-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myW->transaction_type }}</td> --}}
+              <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myW->transaction_id }}</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myW->transaction_type }}</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myW->created_at->format('d-m-Y') }}</td>
+              
             </tr>
+            @endforeach
           </tbody>
         </table>
 
@@ -266,7 +280,7 @@
                     Available Balance
                   </h3>
                   <p class="text-sm">
-                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">{{ $customer->myAvailableBalance }}</span>
+                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">{{ $customer->myAvailableBalance > 0 ? $customer->myAvailableBalance : 0 }}</span>
                   </p>
                 </div>
               </div>

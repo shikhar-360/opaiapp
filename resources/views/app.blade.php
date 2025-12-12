@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <title>OPAI – AI-Powered Digital Ecosystem for Smart Growth & Community Empowerment</title>
  <meta name="description" content="OPAI is an AI-powered digital ecosystem that empowers individuals with intelligent automation, smart tools, and a transparent, future-ready platform for growth.">
-
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
 
   <style> 
     :root {
@@ -44,8 +44,6 @@
   @stack('scripts')
 
 </body>
-
-<!-- Notyf JS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
@@ -89,6 +87,7 @@ function showToast(type, message) {
     }
 }
 </script>
+</html>
 @if ($errors->has('status_code') && $errors->first('status_code') == 'error')
     <script>
         showToast("error", {!! json_encode($errors->first('message')) !!});
@@ -98,4 +97,35 @@ function showToast(type, message) {
     showToast("success", {!! json_encode($errors->first('message')) !!});
     </script>    
 @endif
-</html>
+@if (session('status_code') === 'error')
+    <script>
+        showToast("error", {!! json_encode(session('message')) !!});
+    </script>
+@elseif (session('status_code') === 'success')
+    <script>
+        showToast("success", {!! json_encode(session('message')) !!});
+    </script>
+@endif
+<script>
+document.getElementById("depositForm").addEventListener("submit", function (e) {
+
+    const depositamount = document.getElementById("amount").value.trim();
+
+    // Define the list of allowed values
+    const allowedAmounts = [5, 10, 25, 50];
+
+    // Convert the input string into a number
+    const numericValue = parseFloat(depositamount);
+
+    // Check if the numeric value exists within the allowed amounts array
+    // The includes() method works well here as it checks for exact matches
+    
+    // FIX: Changed $isCorrect to standard JavaScript 'isCorrect'
+    const isCorrect = allowedAmounts.includes(numericValue); 
+    
+    if (!isCorrect) {
+        e.preventDefault(); // Stop the form from submitting
+        showToast("error", "Valid packages are 5, 10, 25 & 50");
+    }
+});
+</script>

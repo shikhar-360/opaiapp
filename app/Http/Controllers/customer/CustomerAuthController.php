@@ -30,6 +30,14 @@ class CustomerAuthController extends Controller
         {
             return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
         }
+
+        $sponsor = CustomersModel::where('referral_code', $sponsorcode)->first();
+        
+        if (!$sponsor) {
+            return redirect()->route('login')->with('status', 'Invalid referral code');
+        }
+
+
         // else{
         //  return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
         //     return redirect()->back()->with(['status'=>'success', 'Referral code verified successfully!']);
@@ -78,7 +86,8 @@ class CustomerAuthController extends Controller
         $sponsor->save();
 
         // $this->showLoginForm();
-        return redirect()->route('login')->with('success', 'Registration successful.');
+        return redirect()->route('login')->with(['status_code'=>'success', 'message' => 'Registration Successful.']);
+        
     }
 
     public function showLoginForm()
@@ -89,12 +98,12 @@ class CustomerAuthController extends Controller
     public function login(Request $request)
     {
         $validated = $request->validate([
-            'email'    => 'required|email',
+            'email'    => 'required',
             'password' => 'required'
         ]);
 
         $customer = CustomersModel::where('email', $validated['email'])->first();
-        
+        // dd($customer);
         // --- DEBUGGING --- 
         // dd([
         //     'input_email' => $validated['email'],
@@ -104,8 +113,12 @@ class CustomerAuthController extends Controller
         // ]);
         // If 'password_check_result' is false, then the passwords do not match.
         // -----------------
-        
-        if (!$customer || !Hash::check($validated['password'], $customer->password)) {
+        if (!$customer) 
+        {
+            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials']);
+        }
+        else if (!$customer || !Hash::check($validated['password'], $customer->password)) 
+        {
             return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials']);
         }
 

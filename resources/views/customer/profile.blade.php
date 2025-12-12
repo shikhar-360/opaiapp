@@ -70,7 +70,7 @@
                     <input type="text" id="wallet_address" name="wallet_address"
                       value="{{ $customer->wallet_address }}" placeholder="Enter Wallet Address"
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                      required aria-describedby="hs-validation-name-success-helper">
+                      required aria-describedby="hs-validation-name-success-helper" disabled>
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                       <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
@@ -95,7 +95,7 @@
                     <input type="email" id="email" name="email" value="{{ $customer->email }}"
                       placeholder="Enter Email"
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                      required aria-describedby="hs-validation-name-success-helper">
+                      required aria-describedby="hs-validation-name-success-helper" disabled >
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                       <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
@@ -226,7 +226,7 @@
         </script>
 
         {{-- Password form --}}
-        <form method="POST" action="https://OpAi.farm/password-update" class="space-y-4 relative z-10">
+        <form method="POST" action="{{ route('customer.profile.save') }}" class="space-y-4 relative z-10">
           @csrf
           <div class="relative space-y-5">
 

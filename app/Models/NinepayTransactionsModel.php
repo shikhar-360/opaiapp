@@ -13,7 +13,7 @@ class NinepayTransactionsModel extends Model
     public const STATUS_SUCCESS = 'success';
     public const STATUS_FAILED = 'failed';
     public const STATUS_UNDERPAID = 'underpaid';
-
+    public const STATUS_CANCEL = 'cancel';
     
     protected $fillable = [
         'app_id',

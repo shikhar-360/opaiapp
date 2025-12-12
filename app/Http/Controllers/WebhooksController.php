@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\NinepayTransactionsModel;
+
 use App\Services\Payment\NinePayService;
 
 class WebhooksController extends Controller
@@ -28,8 +30,8 @@ class WebhooksController extends Controller
         $explodeString = explode("+", $decodedString);
 
         $transaction_hash = trim($explodeString['0']); //0xd0bc39eba25c1be86fdf65a0d618d83880a49315fcadf6837c482495a263a366
-        $amount_nofee = trim($explodeString['1']); //100 (without fee or full amount)
-        $amount_afterfee = trim($explodeString['2']); //99 (after fee)
+        $amount_nofee = trim($explodeString['1']); //99.5 // Net amount
+        $amount_afterfee = trim($explodeString['2']); //100 (full amount)
         $invoice_id = trim($explodeString['3']); // INV43456789 
         $network_type = trim($explodeString['4']); //bsc-testnet
         $customer_id = 11; //testing
@@ -59,5 +61,25 @@ class WebhooksController extends Controller
         $topup_response = $this->ninepays->topupReceived($customer_id, $amount_received, $invoice_id, $transaction_hash);
 
         dd($topup_response);
+    }
+
+    public function topupCheckStatus($txnid)
+    {
+        $txn = NinepayTransactionsModel::where('transaction_id', $txnid)->first();
+
+        if (!$txn) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid request'
+            ], 404);
+        }
+
+        return response()->json([
+            'status'           => 'success',
+            'payment_status'   => $txn->payment_status,
+            'amount'           => $txn->amount+$txn->fees_amount,
+            'received_amount'  => $txn->received_amount,
+            'is_paid'          => ($txn->received_amount >= $txn->amount)
+        ]);
     }
 }

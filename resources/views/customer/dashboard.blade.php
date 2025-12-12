@@ -406,7 +406,7 @@
                     </span>
                   </td>
                   <td class="px-4 py-2">{{ $myPkgs->amount }}</td>
-                  <td class="px-4 py-2 text-right">{{ $myPkgs->created_at }}</td>
+                  <td class="px-4 py-2 text-right">{{ $myPkgs->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
               </tbody>

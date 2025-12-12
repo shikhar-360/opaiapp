@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\CustomerWithdrawsModel;
+
 use App\Services\WithdrawService;
 use App\Services\DashboardMatriceService;
 
@@ -44,28 +46,35 @@ class WithdrawController extends Controller
         $customer->myReferralLevel          =   $dashboard_matrics['myReferralLevel'];
         $customer->myTotalWithdraws         =   $dashboard_matrics['myTotalWithdraws'];
         $customer->myAvailableBalance       =   $dashboard_matrics['myTotalEarning'] - $dashboard_matrics['myTotalWithdraws'];
+        $customer->myWithdraws              =   $dashboard_matrics['myWithdraws'];
+        
+        // dd($customer->myWithdraws);
+        // $withdrawDetails = CustomerWithdrawsModel::where('customer_id', $customer->id)->where('app_id', $customer->app_id)->get();
+
+        // $customer->withdrawDetails          =   $withdrawDetails;      
+
         return view('customer.withdraw', compact('customer'));
     }
 
     public function withdraw(Request $request)
     {
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:10',
+            'amount' => 'required|numeric|min:0.0000001',
             'admin_charge' => 'required|numeric|min:0.0000001',
-            'net_amount' => 'required|numeric|min:9',
+            'net_amount' => 'required|numeric|min:0.0000001',
         ]);  
         
         $customer = Auth::guard('customer')->user();
 
         try {
             $withdraw = $this->withdrawServices->processWithdrawal($customer, $validated);
+            // return redirect()
+            //         ->route('withdraw')
+            //         ->with('success', $withdraw);
             return redirect()
                     ->route('withdraw')
-                    ->with('success', $withdraw);
-            return redirect()
-                    ->route('pay.qr')
                     ->with([
-                        'status'  => 'success',
+                        'status_code'  => 'success',
                         'message' => 'Withdraw successfully.'
                     ]);
 

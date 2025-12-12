@@ -4,7 +4,7 @@
 
 @section('content')
 <section
-  class="w-full py-10 md:py-12 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center bg-slate-50/50 relative overflow-hidden">
+  class="w-full py-10 md:py-12 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center  relative overflow-hidden">
 
   <div class="w-full max-w-xl mx-auto">
     <div class="relative rounded-2xl">

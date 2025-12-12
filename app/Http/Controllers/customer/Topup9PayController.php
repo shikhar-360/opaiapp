@@ -59,6 +59,7 @@ class Topup9PayController extends Controller
                 'qrAmount'          => $pendingTxn->amount + $pendingTxn->fees_amount,
                 'qrFeesAmount'      => $pendingTxn->fees_amount,
                 'qrPendingAmount'   => 0,
+                'transaction_id'    => $pendingTxn->transaction_id,
             ];
         }
         // dd($customer);
@@ -88,7 +89,7 @@ class Topup9PayController extends Controller
         $tronQrCode = '';
         $qrAmount = 0;
         $qrPendingAmount = 0;
-
+        $transaction_id = '';
         // dd($pendingTxn);
 
         // If previous transaction exists
@@ -106,6 +107,7 @@ class Topup9PayController extends Controller
                 $tronQrCode = $this->qrcodes->generate($tron_array['address']);
 
                 $qrAmount = $remaining;
+                $transaction_id = $pendingTxn->transaction_id;
             }
             else if($remaining > 0)
             {
@@ -134,6 +136,7 @@ class Topup9PayController extends Controller
                 $tronQrCode = $this->qrcodes->generate($tron_array['address']);
 
                 $qrAmount = $remaining;
+                $transaction_id = $pendingTxn->transaction_id;
             }
             else
             {
@@ -203,6 +206,7 @@ class Topup9PayController extends Controller
                 'tronAddress'       => $tron_array['address'],
                 'qrAmount'          => $qrAmount,
                 'qrPendingAmount'   => $qrPendingAmount,
+                'transaction_id'    => $transaction_id,
             ];
             $customer['QRs'] = $QRs;
             // return view('customer.pay_qr', compact('customer'));
@@ -216,6 +220,21 @@ class Topup9PayController extends Controller
         else{
             return back()->withErrors(['status_code'=>'error', 'message' => 'Some issue occured.']);
         }
+    }
+
+    public function topupCancel(Request $request)
+    {
+        $validated = $request->validate([
+            'transaction_id' => 'required|string|exists:ninepay_transactions,transaction_id',
+        ]);
+        NinepayTransactionsModel::where('transaction_id', $validated['transaction_id'])
+                                    ->update(['payment_status' => NinepayTransactionsModel::STATUS_CANCEL]);
+         return redirect()
+                    ->route('pay.qr')
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Transaction Canceled'
+                    ]);
     }
 
 }

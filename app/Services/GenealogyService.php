@@ -5,8 +5,12 @@ namespace App\Services;
 use App\Models\CustomersModel;
 use Illuminate\Support\Facades\DB;
 
+use App\Traits\ManagesCustomerHierarchy;
+
 class GenealogyService
 {
+
+    use ManagesCustomerHierarchy;
     /**
      * Build the nested genealogy tree starting from a given user ID.
      *
@@ -33,13 +37,15 @@ class GenealogyService
      */
     protected function formatCustomerNode(CustomersModel $customer): array
     {
+        $levelid = $this->getLevel($customer);
         // 1. Calculate metrics for this specific user efficiently
         $metrics = $this->calculateMetrics($customer->id);
 
         // 2. Build the base node structure (matches your desired output format)
         $node = [
-            "refferal_code"      => $customer->referral_code ?? 'N/A',
-            "level_id"               => $customer->level_id, // Placeholder: Add your rank logic here
+            "refferal_code"      => $customer->referral_code,
+            "wallet_address"     => $customer->wallet_address,
+            "level_id"           => $levelid, // Placeholder: Add your rank logic here
             "currentPackageDate" => $customer->created_at->format('Y-m-d'),
             "my_team"            => $metrics['total_team_count'],
             "my_direct"          => $metrics['total_direct_count'],

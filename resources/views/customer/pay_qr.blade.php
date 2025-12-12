@@ -124,8 +124,8 @@
                       </option> --}}
                       <option class="text-black" id="usdtToken" value="USDT">USDT</option>
                     </select>
-                    <input type="text" id="network_type" name="network_type" value="evm">
-                    <input type="text" id="network_name" name="network_name" value="polygon">
+                    <input type="hidden" id="network_type" name="network_type" value="evm">
+                    <input type="hidden" id="network_name" name="network_name" value="polygon">
                   </div>
                 </div>
 
@@ -231,7 +231,7 @@
             </div>
           </div>
 
-          <span
+          <span id="transaction_status"
             class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold tracking-wide
                    border border-amber-300 bg-amber-50 text-amber-700 uppercase absolute top-4 right-4">
             Pending
@@ -314,7 +314,7 @@
                 <h3 class="text-sm font-medium leading-none text-slate-900">Pending Amount :</h3>
                 <div class="bg-white px-3 py-2 rounded-lg flex items-center justify-between gap-2 border border-slate-200">
                   <span id="pendingAmount" class="text-xs font-mono text-slate-800 truncate">
-                    {{ $hasQR ? $customer->QRs['qrPendingAmount']:'' }}
+                    {{ $hasQR ? $customer->QRs['qrAmount']-$customer->QRs['qrPendingAmount']:'' }}
                   </span>
                   <button type="button"
                     onclick="navigator.clipboard.writeText(document.getElementById('pendingAmount').innerText.trim()).catch(()=>{}); showToast && showToast('success', 'Copied to clipboard!')"
@@ -334,7 +334,7 @@
               </div>
             </div>
 
-            <div class="flex justify-center pt-2">
+            {{-- <div class="flex justify-center pt-2">
               <button type="button" onclick="backScreen('coinChoose', 'paymentChoose')"
                 class="px-5 py-2.5 mx-auto sm:mx-0 flex items-center justify-center gap-2
                        text-sm md:text-base capitalize tracking-wide rounded-full
@@ -343,7 +343,32 @@
                        active:scale-95 transition-all duration-300 ease-out group">
                 Cancel
               </button>
-            </div>
+            </div> --}}
+
+            <form method="POST" action="{{ route('pay.qr.cancel') }}">
+                @csrf
+                <input type="hidden" name="transaction_id" value="{{ $customer->QRs['transaction_id']??'' }} ">
+
+                <button type="submit"
+                    class="px-5 py-2.5 mx-auto sm:mx-0 flex items-center justify-center gap-2
+                          text-sm md:text-base capitalize tracking-wide rounded-full
+                          border border-slate-300 bg-white text-slate-700
+                          font-semibold shadow-sm hover:border-sky-500 hover:bg-sky-50
+                          active:scale-95 transition-all duration-300 ease-out group">
+                    Cancel
+                </button>
+
+                {{-- <button type="button" onclick="backScreen('coinChoose', 'paymentChoose')"
+                  class="px-5 py-2.5 mx-auto sm:mx-0 flex items-center justify-center gap-2
+                        text-sm md:text-base capitalize tracking-wide rounded-full
+                        border border-slate-300 bg-white text-slate-700
+                        font-semibold shadow-sm hover:border-sky-500 hover:bg-sky-50
+                        active:scale-95 transition-all duration-300 ease-out group">
+                  Back
+                </button> --}}
+            </form>
+
+
           </div>
         </div>
       </div>
@@ -390,9 +415,11 @@
   let selectedNetwork = null;       // 'polygon' | 'bsc' | etc
   let selectedCoin = null;          // 'USDT' etc
 
+  
+
   // STEP 1: choose network -> show coinChoose
   function chooseCoin(type, network) {
-    alert(type+" "+network)
+    // alert(type+" "+network)
     selectedNetworkType = type;
     selectedNetwork = network;
 
@@ -482,5 +509,41 @@
     if (!el) return;
     navigator.clipboard.writeText(el.innerText.trim()).catch(() => { });
   }
+
+
+
 </script>
 @endsection
+<script>
+let txnId = "{{ $customer->QRs['transaction_id'] ?? '' }}"; // passed from controller
+
+function checkPaymentStatus() {
+  console.log(txnId);
+    if (txnId !== '') {
+        fetch(`/api/payment-status/${txnId}`)
+            .then(response => response.json())
+            .then(data => {
+
+                if (data.status === "success") {
+
+                    console.log("Payment Status:", data);
+
+                    document.getElementById("coin-amount-text-trc").textContent = data.amount;
+                    document.getElementById("pendingAmount").textContent = (data.amount - data.received_amount).toFixed(2);
+                    document.getElementById("transaction_status").textContent = data.payment_status.toUpperCase();
+
+                    // When payment is completed
+                    if (data.is_paid === true) {
+                        showToast("success", "Payment received!");
+                        clearInterval(checkInterval);
+                  
+                    }
+                }
+            })
+            .catch(err => console.error("Error:", err));
+    }
+}
+// Auto-run every 3 seconds
+let checkInterval = setInterval(checkPaymentStatus, 3000);
+// window.checkPaymentStatus = checkPaymentStatus;
+</script>

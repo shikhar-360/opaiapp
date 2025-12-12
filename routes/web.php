@@ -44,12 +44,14 @@ Route::middleware(['customer'])->group(function () {
 
     Route::get('/pay-qr', [Topup9PayController::class, 'showForm'])->name('pay.qr');
     Route::post('/pay-qr', [Topup9PayController::class, 'topup'])->name('pay.qr.save');
+    Route::post('/pay-qr/transaction', [Topup9PayController::class, 'topupCancel'])->name('pay.qr.cancel');
 
     Route::get('/pay-topup', [DepositController::class, 'showForm'])->name('pay.topup');
     Route::post('/pay-topup', [DepositController::class, 'deposit'])->name('pay.topup.save');
    
     Route::get('/withdraw', [WithdrawController::class, 'showForm'])->name('withdraw');
-    Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');
+    Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');   
+
 
     // Route::get('/bond', fn () => view('bond'))->name('bond');
     // Route::get('/swap', fn () => view('swap'))->name('swap');

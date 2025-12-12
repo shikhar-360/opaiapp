@@ -103,7 +103,12 @@ class DashboardMatriceService
                                                         ->where('app_id', $customer->app_id)
                                                         ->where('transaction_type', 'WITHDRAW')
                                                         ->sum('amount');
-
+        
+        $myWithdraws    =   CustomerWithdrawsModel::where('customer_id', $customer->id)
+                                                        ->where('app_id', $customer->app_id)
+                                                        ->where('transaction_type', 'WITHDRAW')
+                                                        ->get();
+                                                        
         $volumes = [
             'directIds' => $directIds,
             'activeDirectIds' => $activeDirectIds,
@@ -126,6 +131,7 @@ class DashboardMatriceService
             'myTotalEarning'          => $myTotalEarning,
             'myReferralLevel'         => $referralLevel,
             'myTotalWithdraws'        => $myTotalWithdraws,
+            'myWithdraws'             => $myWithdraws
         ];
 
         return $volumes;
@@ -149,7 +155,8 @@ class DashboardMatriceService
                                                 'customer_deposits.app_id',
                                                 'customer_deposits.package_id',
                                                 DB::raw('SUM(customer_deposits.amount) AS totaldeposit'),
-                                                DB::raw('MIN(customer_deposits.created_at) AS activation_date')
+                                                DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
+                                                'customers.referral_code'
                                             ])
                                             ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
                                             
@@ -165,12 +172,15 @@ class DashboardMatriceService
                                                 'customers.level_id',
                                                 'customers.created_at',
                                                 'customer_deposits.app_id',
-                                                'customer_deposits.package_id'
+                                                'customer_deposits.package_id',
+                                                'customers.referral_code'
                                             ])
                                             ->get();
 
         foreach($customerData as $ckey => $customerd)
         {
+            $customerData[$ckey]['level_id'] = $this->getLevel($customerd);
+
             $customerdd = CustomersModel::find($customerd['id'], ['id', 'direct_ids', 'active_direct_ids']);
         
             if (!$customerdd) { return ['error' => 'Customer not found']; }
@@ -216,7 +226,7 @@ class DashboardMatriceService
         return $customerData;
     }
     
-    public function getMyTeamData($customerId)
+    public function getMyTeamDataGrouped($customerId)
     {
         $customer = Auth::guard('customer')->user();
         $allTeamIds = $this->getRecursiveTeamIds($customerId);
@@ -235,7 +245,7 @@ class DashboardMatriceService
                                                 'customer_deposits.app_id',
                                                 'customer_deposits.package_id',
                                                 DB::raw('SUM(customer_deposits.amount) AS totaldeposit'),
-                                                DB::raw('MIN(customer_deposits.created_at) AS activation_date')
+                                                DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
                                             ])
                                             ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
                                             
@@ -267,6 +277,128 @@ class DashboardMatriceService
             $record->sponsor_code = $sponsors->get($sponsorId, 'N/A');
             return $record;
         });
+        return $customerData;
+    }
+
+    public function getMyTeamData($customerId)
+    {
+        $customer = Auth::guard('customer')->user();
+        $allTeamIds = $this->getRecursiveTeamIds($customerId);
+        
+        // dd($allTeamIds);
+
+        $customerData = CustomersModel::select([
+                                                'customers.id',
+                                                'customer_deposits.customer_id',
+                                                'customers.name',
+                                                'customers.wallet_address',
+                                                'customers.level_id',
+                                                'customers.referral_code',
+                                                'customers.sponsor_id',
+                                                'customers.created_at AS registration_date',
+                                                'customer_deposits.app_id',
+                                                'customer_deposits.package_id',
+                                                'customer_deposits.amount AS totaldeposit',
+                                                'customer_deposits.created_at AS activation_date'
+                                            ])
+                                            ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
+                                            ->whereIn('customers.id', $allTeamIds)
+                                            ->where('customer_deposits.payment_status', 'success') 
+                                            ->get();
+        $sponsorIds = $customerData->pluck('sponsor_id')->unique()->filter()->toArray();
+        $sponsors = CustomersModel::whereIn('id', $sponsorIds)->pluck('referral_code', 'id');
+
+
+        $customerData = $customerData->map(function ($record) use ($sponsors) {
+            // Look up the referral code using the sponsor_id we already fetched
+            $sponsorId = $record->sponsor_id;
+            // Add a new dynamic attribute 'sponsor_referral_code' to the result object
+            $record->sponsor_code = $sponsors->get($sponsorId, 'N/A');
+            return $record;
+        });
+
+        foreach($customerData as $customerd) 
+        {
+            $customerd->level_id = $this->getLevel($customerd); 
+        }
+
+        return $customerData;
+    }
+
+    public function getAllDirectsData(array $allDirectIds)
+    {
+        $customer = Auth::guard('customer')->user();
+        // Ensure we have IDs to query, otherwise return an empty collection
+        if (empty($allDirectIds)) {
+            return collect();
+        }
+
+        $customerData = CustomersModel::select([
+                                                    'customers.id',
+                                                    'customer_deposits.customer_id',
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.created_at AS registration_date',
+                                                    'customer_deposits.app_id',
+                                                    'customer_deposits.package_id',
+                                                    'customer_deposits.amount AS totaldeposit',
+                                                    'customer_deposits.created_at AS activation_date',
+                                                    'customers.referral_code'
+                                                ])
+                                                ->leftJoin('customer_deposits', function ($join) {
+                                                    $join->on('customers.id', '=', 'customer_deposits.customer_id')
+                                                        ->where('customer_deposits.payment_status', '=', 'success');
+                                                })
+                                                ->whereIn('customers.id', $allDirectIds)
+                                                ->get();
+
+        foreach($customerData as $ckey => $customerd)
+        {
+            $customerData[$ckey]['level_id'] = $this->getLevel($customerd);
+
+            $customerdd = CustomersModel::find($customerd['id'], ['id', 'direct_ids', 'active_direct_ids']);
+        
+            if (!$customerdd) { return ['error' => 'Customer not found']; }
+
+            // --- Prepare the ID Arrays ---
+            // Convert strings to arrays, filtering out potential empty entries
+            $directIds = array_filter(explode('/', $customerdd->direct_ids ?? ''));
+            $activeDirectIds = array_filter(explode('/', $customerdd->active_direct_ids ?? ''));
+            
+            // Use the trait function for all recursive team IDs
+            $allTeamIds = $this->getRecursiveTeamIds($customerdd->id);
+            
+            // --- Perform Calculations ---
+            // Function to safely sum deposits for a given set of IDs
+            $sumDeposits = function ($ids) {
+                if (empty($ids)) { return 0; }
+                return DB::table('customer_deposits')
+                    ->whereIn('customer_id', $ids)
+                    ->where('payment_status', 'success') 
+                    ->sum('amount');
+            };
+
+            $sumWithdraws = function ($ids) {
+                if (empty($ids)) { return 0; }
+                return DB::table('customer_withdraws')
+                    ->whereIn('customer_id', $ids)
+                    ->where('transaction_type', 'WITHDRAW') 
+                    ->sum('amount');
+            };
+
+            // ------ find the sponsor ---
+            $sponsordata = CustomersModel::with('sponsor')->find($customerdd->id);
+            $sponsor = 'N/A';
+            if ($sponsordata && $sponsordata->sponsor) {
+                $sponsor = $sponsordata->sponsor->referral_code;
+            }
+            
+            $customerData[$ckey]['totalDirectsCount']       = count($directIds);
+            $customerData[$ckey]['totalActiveDirectsCount'] = count($activeDirectIds);
+            $customerData[$ckey]['totalTeamCount']          = count($allTeamIds);
+        }
+
         return $customerData;
     }
 }

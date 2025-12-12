@@ -63,14 +63,13 @@ class CustomerController extends Controller
 
         $validated = $request->validate([
             'name'  => 'required|string|max:255',
-            'email' => 'required|string|max:255',
-            'phone' => 'required|numeric|min:10',
+            // 'phone' => 'required|numeric|min:10',
         ]);
 
-        $walletRules['wallet_address'] = [
+        $walletRules['phone'] = [
             'required',
-            'string',
-            'max:255',
+            'numeric',
+            'min:10',
             Rule::unique('customers')->ignore($customer->id), 
         ];
         
@@ -85,11 +84,11 @@ class CustomerController extends Controller
         // }
         // $validated['password'] = Hash::make($validated['password']);
 
-        if (empty($customer->referral_code) && !empty($validated['wallet_address'])) 
-        {
-            $lastSixDigits = substr($validated['wallet_address'], -6);
-            $validated['referral_code'] = $lastSixDigits;
-        }
+        // if (empty($customer->referral_code) && !empty($validated['wallet_address'])) 
+        // {
+        //     $lastSixDigits = substr($validated['wallet_address'], -6);
+        //     $validated['referral_code'] = $lastSixDigits;
+        // }
         
         $test = $customer->update($validated);
         
@@ -115,7 +114,11 @@ class CustomerController extends Controller
         $activeDirectIds                    =   array_filter(explode('/', $customer->active_direct_ids ?? ''));
         $customer->activeDirectsData        =   $this->dashbaord_matrice_services->getActiveDirectsData($activeDirectIds);
 
-        // dd($this->dashbaord_matrice_services->getMyTeamData(3));
+        $allDirectIds                       =   array_filter(explode('/', $customer->direct_ids ?? ''));
+        
+        $customer->allDirectsData           =   $this->dashbaord_matrice_services->getAllDirectsData($allDirectIds);
+
+        // dd("All",$customer->allDirectsData);
         // foreach($customer->activeDirectsData as $keys => $activeDirect)
         // {
         //     echo "<pre>"; print_r($activeDirect); echo "</pre>";
@@ -127,8 +130,8 @@ class CustomerController extends Controller
     public function showMyTeam()
     {
         $customer = Auth::guard('customer')->user();
-        $customer->myTeamData = $this->dashbaord_matrice_services->getMyTeamData(3);
-        // dd($customer);
+        $customer->myTeamData = $this->dashbaord_matrice_services->getMyTeamData($customer->id);
+        // dd($customer->myTeamData);
         // foreach($customer->activeDirectsData as $keys => $activeDirect)
         // {
         //     echo "<pre>"; print_r($activeDirect); echo "</pre>";
@@ -140,7 +143,7 @@ class CustomerController extends Controller
     public function showGenealogy()
     {
         $customer = Auth::guard('customer')->user();
-        $genealogyData = $this->genealogy_services->buildGenealogyTree(3);
+        $genealogyData = $this->genealogy_services->buildGenealogyTree($customer->id);
         // dd($genealogyData);
         // foreach($customer->activeDirectsData as $keys => $activeDirect)
         // {

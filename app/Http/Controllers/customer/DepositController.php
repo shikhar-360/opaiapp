@@ -43,6 +43,9 @@ class DepositController extends Controller
         $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
         $customer->myFinance                =   $dashboard_matrics['myFinance'];
         $customer->myPackages               =   $dashboard_matrics['myPackages'];
+        $customer->myPackageDetails         =   $dashboard_matrics['myPackageDetails'];
+
+        // dd($customer->myPackageDetails);
         return view('customer.pay_topup', compact('customer'));
     }
 
@@ -103,12 +106,15 @@ class DepositController extends Controller
             // return redirect()
             //         ->route('pay.topup')
             //         ->with('success', 'Deposit successfully!');
-            return redirect()
-                    ->route('pay.topup')
-                    ->with([
-                        'status'  => 'success',
-                        'message' => 'Deposit successfully!'
-                    ]);
+
+            // return redirect()
+            //         ->route('pay.topup')
+            //         ->with([
+            //             'status'  => 'success',
+            //             'message' => 'Deposit successfully!'
+            //         ]);
+
+            return redirect()->route('pay.topup')->with(['status_code'=>'success', 'message' => 'Deposit successfully.']);
 
         } 
         catch (\Exception $e) 

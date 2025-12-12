@@ -22,7 +22,6 @@ class AdminController extends Controller
 
     public function login(Request $request)
     {
-        
         $request->validate([
             'email' => 'required|email', // Added email validation rule
             'password' => 'required',
@@ -34,10 +33,11 @@ class AdminController extends Controller
             'password' => $request->password,
             'role' => 'admin'
         ])) { // , $request->boolean('remember') Add optional 'remember me' support
-
+            dd('Invalid credentials.');
             return back()->with('error', 'Invalid credentials.');
+            // return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials.']);
         }
-
+ 
         // Session regeneration for security after a fresh login via attempt
         $request->session()->regenerate();
 

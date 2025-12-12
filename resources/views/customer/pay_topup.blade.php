@@ -2,7 +2,9 @@
 
 @section('title', 'DApp Header (HTML)')
 
-
+@php
+  // var_dump($customer->myPackages);
+@endphp
 
 @section('content')
 <section class="min-h-screen w-full py-10 md:py-12 mx-auto max-w-[1400px] bg-slate-50/50">
@@ -100,7 +102,7 @@
 
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-3">
             {{-- Example single package (yahan loop laga sakte ho) --}}
-            @foreach($customer->myPackages as $pkg)
+            @foreach($customer->myPackageDetails as $pkg)
             <div
               class="flex items-center w-full gap-2.5 rounded-full h-full
                      border border-slate-200 bg-white px-0 pr-4
@@ -115,7 +117,7 @@
               </div>
               <div class="flex flex-col items-start">
                 <h3 class="text-sm lg:text-base font-semibold tracking-wide text-slate-900 tabular-nums">
-                  {{ $pkg->total_amount }}
+                  {{ $pkg->amount }}
                 </h3>
                 <span class="text-[10px] text-slate-500 uppercase tracking-[0.18em]">
                   Package
@@ -142,16 +144,8 @@
           <p class="text-sm text-slate-700">Topup Balance</p>
           <span class="text-sm font-semibold text-sky-700">{{ $customer->myFinance['total_topup'] }}</span>
         </div>
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
-        <form class="relative mt-2 space-y-4" method="post" action="{{ route('pay.topup.save') }}">
+        
+        <form id="depositForm" class="relative mt-2 space-y-4" method="post" action="{{ route('pay.topup.save') }}">
           @csrf
           <div class="space-y-1.5 relative z-10">
             <label for="amount"

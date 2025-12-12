@@ -110,10 +110,12 @@ class AppCustomersController extends Controller
         if ($request->filled('password')) {
             $rules['password'] = 'string|min:6';
         }
-        
+
         $validated = $request->validate($rules);
 
-        $validated['password'] = Hash::make($validated['password']);
+        if ($request->filled('password')) {
+            $validated['password'] = Hash::make($validated['password']);
+        }
 
         if (empty($validated['referral_code']) && !empty($validated['wallet_address'])) 
         {
@@ -124,7 +126,7 @@ class AppCustomersController extends Controller
         $customer->update($validated);
 
         return redirect()->route('admin.appcustomers.index')
-                         ->with('success', 'Package updated successfully.');
+                         ->with('success', 'Customer updated successfully.');
     }
 
     /**

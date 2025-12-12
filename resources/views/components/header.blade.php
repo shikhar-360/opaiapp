@@ -17,7 +17,17 @@
 
         {{-- RIGHT SIDE ACTIONS --}}
         <div class="flex items-center gap-2 md:gap-4">
-
+            @php
+                $truncated_wa = '';
+                $fullAddress = $customer->wallet_address??$genealogyData[0]['wallet_address']??''; // Define a local variable for clarity
+                if (strlen($fullAddress) > 10) {
+                    $start = substr($fullAddress, 0, 4);
+                    $end = substr($fullAddress, -6); // Fix: use $fullAddress here
+                    $truncated_wa = $start . '...' . $end;
+                } else {
+                    $truncated_wa = $fullAddress; // Use the full address if short
+                }
+            @endphp
             {{-- Connect Wallet --}}
             <button id="connectBtn"
                 class="px-3 sm:px-5 py-2 flex items-center justify-center gap-2 text-base capitalize tracking-wide rounded-lg
@@ -25,7 +35,7 @@
                        text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)]
                        hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
                        transition-all duration-300 ease-out group">
-                <span>Connect Wallet</span>
+                <span>{{ $truncated_wa }}</span>
             </button>
 
             {{-- Mobile Menu Toggle --}}

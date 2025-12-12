@@ -11,6 +11,7 @@ use App\Models\PackagesModel;
 
 class AppPackagesController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
@@ -18,7 +19,7 @@ class AppPackagesController extends Controller
     {
         $admin = Auth::guard('admin')->user();
         $packages = PackagesModel::where('app_id', $admin->app_id)->get();
-        
+
         return view('admins.packages.index', compact('packages'));
     }
 

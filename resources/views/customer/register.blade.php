@@ -43,7 +43,7 @@
               Create your account to access your dashboard, earnings and staking panel.
             </p>
 
-            <form method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data" class="w-full relative z-10">
+            <form id="registerForm" method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data" class="w-full relative z-10">
               @csrf
               <div class="mx-auto w-full space-y-2">
 
@@ -68,46 +68,9 @@
                             stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <input type="text" id="name" name="name" value="OpAi" placeholder="Enter Name"
+                    <input type="text" id="name" name="name" value="" placeholder="Enter Name"
                           class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                           required aria-describedby="hs-validation-name-success-helper">
-                    
-                    {{-- right tick --}}
-                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-                          viewBox="0 0 24 24">
-                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
-                                  stroke-linecap="round" stroke-linejoin="round"></polyline>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {{-- Telegram username --}}
-                <div class="text-left">
-                  <label for="walletaddress"
-                        class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
-                    Wallet Address
-                  </label>
-                  <div
-                    class="relative flex items-center p-3 rounded-lg gap-3 
-                           border border-slate-200 bg-white 
-                           focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-                           focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-
-                    {{-- left icon (telegram paper plane) --}}
-                    <svg class="w-5 h-5 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                      <path d="M20.5 4.5 4.8 10.3c-.7.26-.69 1.23.02 1.47L9 13.5l1.8 4.3c.3.7 1.28.68 1.53-.03L20.5 4.5Z"
-                            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
-                      <path d="m9 13.5 3-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
-                    </svg>
-
-                    <input type="text" id="walletaddress" name="wallet_address"
-                           value="OPAI" placeholder="Enter Telegram Username"
-                           class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                           required aria-describedby="hs-validation-name-success-helper">
-                    <input type="hidden" name="sponsor_code" value="{{ $sponsorcode }}">
                     
                     {{-- right tick --}}
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
@@ -141,7 +104,7 @@
                             stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <input type="email" id="email" name="email" value="uukyr@ghutyr.iy"
+                    <input type="email" id="email" name="email" value=""
                            placeholder="Enter Email"
                            class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                            required aria-describedby="hs-validation-name-success-helper">
@@ -176,10 +139,83 @@
                             stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
 
-                    <input type="text" id="mobile_number" name="phone" value="0000000000"
+                    <input type="text" id="mobile_number" name="phone" value=""
                            placeholder="Enter Mobile Number"
                            class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                            required aria-describedby="hs-validation-name-success-helper">
+                    
+                    {{-- right tick --}}
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                          viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {{-- Telegram username --}}
+                <div class="text-left">
+                  <label for="walletaddress"
+                        class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                        Telegram Username
+                  </label>
+                  <div
+                    class="relative flex items-center p-3 rounded-lg gap-3 
+                           border border-slate-200 bg-white 
+                           focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                           focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+
+                    {{-- left icon (telegram paper plane) --}}
+                    <svg class="w-5 h-5 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.5 4.5 4.8 10.3c-.7.26-.69 1.23.02 1.47L9 13.5l1.8 4.3c.3.7 1.28.68 1.53-.03L20.5 4.5Z"
+                            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="m9 13.5 3-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                    </svg>
+
+                    <input type="text" id="telegram_username" name="telegram_username"
+                           value="" placeholder="Enter Telegram Username"
+                           class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                           required aria-describedby="hs-validation-name-success-helper">
+                    
+                    {{-- right tick --}}
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                          viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                {{-- Wallet Address --}}
+                <div class="text-left">
+                  <label for="walletaddress"
+                        class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                    Wallet Address
+                  </label>
+                  <div
+                    class="relative flex items-center p-3 rounded-lg gap-3 
+                           border border-slate-200 bg-white 
+                           focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                           focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+
+                    {{-- left icon (telegram paper plane) --}}
+                    <svg class="w-5 h-5 text-slate-500 shrink-0" viewBox="0 0 24 24" fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                      <path d="M20.5 4.5 4.8 10.3c-.7.26-.69 1.23.02 1.47L9 13.5l1.8 4.3c.3.7 1.28.68 1.53-.03L20.5 4.5Z"
+                            stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="m9 13.5 3-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" />
+                    </svg>
+
+                    <input type="text" id="walletaddress" name="wallet_address"
+                           value="" placeholder="Enter Wallet Address"
+                           class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                           required aria-describedby="hs-validation-name-success-helper">
+                    <input type="hidden" name="sponsor_code" value="{{ $sponsorcode }}">
                     
                     {{-- right tick --}}
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
@@ -322,7 +358,7 @@
                 {{-- Login link --}}
                 <div class="text-sm font-medium text-slate-600 mt-3 text-center">
                   Already have an account?
-                  <a href="https://dapp.OpAi.farm"
+                  <a href="{{ route('login') }}"
                     class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
                     Login
                   </a>

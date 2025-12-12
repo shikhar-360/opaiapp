@@ -22,3 +22,4 @@ use App\Http\Controllers\WebhooksController;
 
 
 Route::POST('ninepay-gateway-listener', [WebhooksController::class, 'topupWebhook']);
+Route::get('/payment-status/{transaction_id}', [WebhooksController::class, 'topupCheckStatus']);

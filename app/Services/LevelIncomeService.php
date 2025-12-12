@@ -57,7 +57,7 @@ class LevelIncomeService
             if ($upline['directs'] >= $pkg->directs) {
 
                 $rewardAmount = $deposit->amount * ($pkg->reward / 100);
-
+                DB::statement('SET FOREIGN_KEY_CHECKS=0;');
                 $incomeDetails[] = [
                     'app_id'           => $deposit->app_id,
                     'customer_id'      => $upline['id'],  // upline user
