@@ -8,7 +8,7 @@ use App\Http\Controllers\customer\DepositController;
 use App\Http\Controllers\customer\WithdrawController;
 use App\Http\Controllers\customer\P2PTransferController;
 use App\Http\Controllers\customer\Topup9PayController;
-
+use App\Http\Controllers\customer\OverviewController;
 
 use App\Http\Controllers\superadmin\SuperAdminAuthController;
 use App\Http\Controllers\superadmin\SuperAdminController;
@@ -52,6 +52,8 @@ Route::middleware(['customer'])->group(function () {
     Route::get('/withdraw', [WithdrawController::class, 'showForm'])->name('withdraw');
     Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');   
 
+    Route::get('/overview', [OverviewController::class, 'incomeOverview'])->name('overview');
+    Route::post('/overview', [OverviewController::class, 'incomeOverview'])->name('overview.filter');
 
     // Route::get('/bond', fn () => view('bond'))->name('bond');
     // Route::get('/swap', fn () => view('swap'))->name('swap');
@@ -70,7 +72,7 @@ Route::middleware(['customer'])->group(function () {
 Route::get('/staking', fn () => view('customer.staking'))->name('staking');
 Route::view('/index', 'index')->name('index');
 Route::get('/pay-dapp', fn () => view('pay_dapp'))->name('pay.dapp');
-Route::get('/overview', fn () => view('overview'))->name('overview');
+// Route::get('/overview', fn () => view('overview'))->name('overview');
 Route::get('/tickets', fn () => view('tickets'))->name('tickets');
 
 
