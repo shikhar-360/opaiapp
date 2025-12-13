@@ -119,6 +119,7 @@ class CustomerController extends Controller
 
         $activeDirectIds                    =   array_filter(explode('/', $customer->active_direct_ids ?? ''));
         $customer->activeDirectsData        =   $this->dashbaord_matrice_services->getActiveDirectsData($activeDirectIds);
+        // dd("Active",$customer->activeDirectsData);
 
         $allDirectIds                       =   array_filter(explode('/', $customer->direct_ids ?? ''));
         
