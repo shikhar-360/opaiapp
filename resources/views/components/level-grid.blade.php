@@ -1,9 +1,10 @@
 @props([
-  'currentLevel' => 4,
+  'currentLevel' => 0,
   'totalLevels' => 5
 ])
 
 @php
+
   $cl = max(0, min($currentLevel, $totalLevels));
   $pad = str_pad($cl, 2, '0', STR_PAD_LEFT);
 

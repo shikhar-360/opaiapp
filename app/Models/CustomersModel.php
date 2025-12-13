@@ -26,6 +26,9 @@ class CustomersModel extends Authenticatable
         'team_ids',
         'level_id',
         'role',
+        'leadership_rank',
+        'leadership_points',
+        'leadership_champions_rank',
     ];
 
     protected $hidden = [

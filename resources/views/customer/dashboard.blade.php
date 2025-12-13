@@ -9,7 +9,7 @@
   </style>
 @endpush
 @php
-  // echo "<pre>"; print_r($customer);
+  // echo "<pre>"; echo $customer->leadership_champions_rank; //print_r($customer);
 @endphp
 @section('content')
   <section class="min-h-screen py-8 bg-slate-50/50 px-4">
@@ -144,11 +144,9 @@
           </div>
         </div>
       </div>
-   <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
-   
-   <x-level-grid :currentLevel="2" />
-        </div>
-
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
+       <x-level-grid :currentLevel="$customer->leadership_champions_rank" :totalLevels="5" />
+      </div>
     </div>
     </div>
    </div>
@@ -509,7 +507,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-500">Total Withdraw</p>
-            <p class="text-xl font-bold text-sky-600">{{ $customer->myWithdraws }}</p>
+            <p class="text-xl font-bold text-sky-600">{{ $customer->myTotalWithdraws }}</p>
           </div>
         </div>
       </div>

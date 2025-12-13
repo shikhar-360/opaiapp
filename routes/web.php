@@ -55,17 +55,6 @@ Route::middleware(['customer'])->group(function () {
     Route::get('/overview', [OverviewController::class, 'incomeOverview'])->name('overview');
     Route::post('/overview', [OverviewController::class, 'incomeOverview'])->name('overview.filter');
 
-    // Route::get('/bond', fn () => view('bond'))->name('bond');
-    // Route::get('/swap', fn () => view('swap'))->name('swap');
-    // Route::get('/public-alliance', fn () => view('public_alliance'))->name('public-alliance');
-    // Route::get('/pool-reward', fn () => view('pool_reward'))->name('pool-reward');
-    // Route::get('/account', fn () => view('account'))->name('account');
-    // Route::get('/turbine-list', fn () => view('turbine_list'))->name('turbine-list');
-    // Route::get('/pay-dapp', fn () => view('pay_dapp'))->name('pay.dapp');
-    // Route::get('/pay-qr', fn () => view('pay_qr'))->name('pay.qr');
-    // Route::get('/pay-topup', fn () => view('pay_topup'))->name('pay.topup');
-    // Route::get('/directs', fn () => view('directs'))->name('directs');
-    // Route::get('/team', fn () => view('team'))->name('team');
 });
 
 

@@ -10,19 +10,25 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Services\DashboardMatriceService;
 use App\Services\GenealogyService;
+use App\Services\LeadershipIncomeService;
+use App\Services\LeadershipChampionsIncomeService;
 
 class CustomerController extends Controller
 {
     protected $dashbaord_matrice_services;
     protected $genealogy_services;
-
-    public function __construct(DashboardMatriceService $dashbaord_matrice_service, GenealogyService $genealogy_service)
+    protected $leadership_income_services;
+    protected $leadership_chamions_income_services;
+    public function __construct(DashboardMatriceService $dashbaord_matrice_service, GenealogyService $genealogy_service, LeadershipIncomeService $leadership_income_service, LeadershipChampionsIncomeService $leadership_chamions_income_service)
     {
         $this->dashbaord_matrice_services = $dashbaord_matrice_service;
         $this->genealogy_services = $genealogy_service;
+
+        $this->leadership_income_services = $leadership_income_service;
+        $this->leadership_chamions_income_services = $leadership_chamions_income_service;
     }
 
-    public function dashboard()
+    public function dashboard(Request $request)
     {
         $customer = Auth::guard('customer')->user();
         
@@ -153,8 +159,19 @@ class CustomerController extends Controller
         return view('customer.genealogy', compact('genealogyData'));
     }
 
-    public function showDepositForm()
+    // For Testing
+    public function leadershipIncomeService(Request $request)
     {
-        return view('customer.deposit');
+        $customer = Auth::guard('customer')->user();
+        $resp = $this->leadership_income_services->assignLeadership();
+        dd($resp);
     }
+
+    public function leadershipChamionService(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+        $resp = $this->leadership_chamions_income_services->assignLeadershipchampions();
+        dd($resp);
+    }
+
 }
