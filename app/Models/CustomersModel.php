@@ -15,6 +15,7 @@ class CustomersModel extends Authenticatable
 
     protected $fillable = [
         'name',
+        'profile_image',
         'email',
         'phone',
         'password',
