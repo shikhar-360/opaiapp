@@ -113,11 +113,12 @@
                        w-9 h-9 sm:w-10 sm:h-10 min-w-9 min-h-9
                        rounded-full border border-slate-200
                        bg-slate-50 text-sky-700 shadow-inner">
-                {{ $pkg->package_id }}
+                <!-- {{ $pkg->package_id }} -->
+                {{ $loop->iteration }}
               </div>
               <div class="flex flex-col items-start">
                 <h3 class="text-sm lg:text-base font-semibold tracking-wide text-slate-900 tabular-nums">
-                  {{ $pkg->amount }}
+                  {{ number_format($pkg->amount, 2, '.', '') }}
                 </h3>
                 <span class="text-[10px] text-slate-500 uppercase tracking-[0.18em]">
                   Package
@@ -142,7 +143,7 @@
           class="bg-sky-50 border border-slate-200
                  rounded-xl px-4 py-3 mb-4 flex items-center justify-between relative z-10">
           <p class="text-sm text-slate-700">Topup Balance</p>
-          <span class="text-sm font-semibold text-sky-700">{{ $customer->myFinance['total_topup'] }}</span>
+          <span class="text-sm font-semibold text-sky-700">{{ number_format($customer->myFinance['total_topup'], 2, '.', '') }}</span>
         </div>
         
         <form id="depositForm" class="relative mt-2 space-y-4" method="post" action="{{ route('pay.topup.save') }}">

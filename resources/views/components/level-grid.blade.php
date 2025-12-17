@@ -18,18 +18,33 @@
 
 <div class="w-full p-px overflow-hidden">
   <div
-    class="relative grid grid-cols-1 lg:grid-cols-3 gap-5 w-full rounded-2xl 
+    class="relative grid grid-cols-1  gap-2 w-full rounded-2xl 
            border border-blue-300/60 bg-white backdrop-blur-2xl 
-           shadow-[0_15px_40px_rgba(15,23,42,.08)] xl:px-8 py-5 items-center overflow-hidden">
+           shadow-[0_15px_40px_rgba(15,23,42,.08)] px-4 xl:px-8 py-5 items-center overflow-hidden">
 
     {{-- soft glow background --}}
     <!-- <div class="pointer-events-none absolute inset-0 opacity-70">
-      <div class="absolute -top-24 -left-24 w-56 h-56 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -left-24 w-56 h-56 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div> -->
+      <div class="mb-3 flex items-center justify-between gap-2">
+        <div>
+          <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--theme-high-text)]">
+            VIP Rank Overview
+          </p>
+          <p class="text-sm text-slate-500">
+            You’re on VIP <span class="font-semibold text-slate-800">{{ $pad }}</span>
+            of {{ str_pad($totalLevels, 2, '0', STR_PAD_LEFT) }}
+          </p>
+        </div>
+        <div class="hidden sm:flex items-center gap-1 text-[11px] text-slate-500">
+          <span class="inline-flex h-2 w-2 rounded-full bg-[var(--theme-skky-400)]"></span>
+          <span>Active VIP Rank</span>
+        </div>
+      </div>
 
     {{-- Circular Gradient Progress --}}
-    <div class="sm:col-span-1 mx-auto grid place-items-center relative z-10">
+    <div class=" mx-auto grid place-items-center relative z-10">
       <div class="relative aspect-square w-56 sm:w-64 ">
         <svg class="absolute inset-0 h-full w-full" viewBox="0 0 220 220" fill="none">
           <defs>
@@ -59,7 +74,7 @@
         </svg>
 
         {{-- inner subtle glow --}}
-        <div class="absolute inset-6 rounded-full bg-gradient-to-b from-white/70 via-white/40 to-sky-50/30"></div>
+        <div class="absolute inset-6 rounded-full bg-gradient-to-b from-white/70 via-white/40 to-[var(--theme-skkky-50)]/30"></div>
 
         {{-- center text --}}
         <div class="absolute inset-0 grid place-items-center">
@@ -79,24 +94,10 @@
     </div>
 
     {{-- Levels grid --}}
-    <div class="sm:col-span-2 relative z-10">
-      <div class="mb-3 flex items-center justify-between gap-2">
-        <div>
-          <p class="text-xs font-semibold tracking-[0.2em] uppercase text-sky-600">
-            Rank Overview
-          </p>
-          <p class="text-sm text-slate-500">
-            You’re on Rank <span class="font-semibold text-slate-800">{{ $pad }}</span>
-            of {{ str_pad($totalLevels, 2, '0', STR_PAD_LEFT) }}
-          </p>
-        </div>
-        <div class="hidden sm:flex items-center gap-1 text-[11px] text-slate-500">
-          <span class="inline-flex h-2 w-2 rounded-full bg-sky-400"></span>
-          <span>Active level</span>
-        </div>
-      </div>
+    <div class=" relative z-10">
+    
 
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl bg-slate-50/70">
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 p-2 sm:p-3 rounded-2xl bg-[var(--theme-[var(--theme-skky-100)])]/70">
         @foreach ($levels as $n)
           @php
             $isActive = $n <= $cl;
@@ -104,8 +105,8 @@
           <div
             class="rounded-lg text-center py-2 sm:py-3 text-xs sm:text-[13px] transition 
                    {{ $isActive 
-                      ? 'bg-gradient-to-r from-sky-500 to-cyan-400 text-white font-semibold shadow-[0_10px_25px_rgba(56,189,248,.35)] border border-sky-400/80' 
-                      : 'bg-white text-slate-600 border border-slate-200 hover:border-sky-300 hover:bg-sky-50/60' }}">
+                      ? 'bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold shadow-[0_10px_25px_rgba(56,189,248,.35)] border border-[var(--theme-skky-400)]/80' 
+                      : 'bg-white text-slate-600 border border-slate-200 hover:border-[var(--theme-skky-300)] hover:bg-[var(--theme-skkky-50)]/60' }}">
             VIP {{ str_pad($n, 2, '0', STR_PAD_LEFT) }}
           </div>
         @endforeach

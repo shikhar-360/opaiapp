@@ -30,7 +30,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Direct Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->totalDirectInvestment }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }}</p>
     </div>
   </div>
 
@@ -41,7 +41,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Total Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->totalTeamInvestment }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }}</p>
     </div>
   </div>
 
@@ -111,7 +111,7 @@
 
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
-              <div class="dataTables_length" id="tabledata1_length">
+              {{-- <div class="dataTables_length" id="tabledata1_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata1_length" aria-controls="tabledata1"
@@ -123,14 +123,14 @@
                   </select>
                   <span>entries</span>
                 </label>
-              </div>
+              </div> --}}
 
-              <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
+              {{-- <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
                     <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                      {{-- Search icon --}}
+                      
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
                         fill="currentColor">
                         <path fill-rule="evenodd"
@@ -145,7 +145,7 @@
                       placeholder="Search user / wallet / rank" aria-controls="tabledata1">
                   </div>
                 </label>
-              </div>
+              </div> --}}
             </div>
 
             <table id="tabledata1"
@@ -177,10 +177,10 @@
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Package
                   </th>
-                  <th
+                  <!-- <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Registration Date
-                  </th>
+                  </th> -->
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Activation Date
@@ -207,9 +207,9 @@
                   <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalDirectsCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamCount }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ $activeDirect->totaldeposit }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->registration_date }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->activation_date }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($activeDirect->totaldeposit, 2, '.', '') }}</td>
+                  <!-- <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->registration_date }}</td> -->
+                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->activation_date ? \Carbon\Carbon::parse($activeDirect->activation_date)->format('d-m-Y'): '-' }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">
                     <span
                       class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 border border-slate-300 ">
@@ -222,7 +222,7 @@
               </tbody>
             </table>
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+            {{-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
               <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata1_info" role="status"
                 aria-live="polite">
                 Showing 1 to 5 of 5 entries
@@ -237,7 +237,7 @@
                   aria-controls="tabledata1" aria-role="link" data-dt-idx="next" tabindex="0"
                   id="tabledata1_next">Next</a>
               </div>
-            </div>
+            </div> --}}
 
           </div>
         </div>
@@ -250,7 +250,7 @@
 
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-              <div class="dataTables_length" id="tabledata2_length">
+              {{-- <div class="dataTables_length" id="tabledata2_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata2_length" aria-controls="tabledata2"
@@ -262,9 +262,9 @@
                   </select>
                   <span>entries</span>
                 </label>
-              </div>
+              </div> --}}
 
-              <div id="tabledata2_filter" class="dataTables_filter w-full sm:w-auto">
+              <!-- <div id="tabledata2_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
@@ -284,7 +284,7 @@
                       placeholder="Search active directs" aria-controls="tabledata2">
                   </div>
                 </label>
-              </div>
+              </div> -->
             </div>
 
             <table id="tabledata2"
@@ -361,7 +361,7 @@
               </tbody>
             </table>
 
-             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+             {{-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
               <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata1_info" role="status"
                 aria-live="polite">
                 Showing 1 to 5 of 5 entries
@@ -376,7 +376,7 @@
                   aria-controls="tabledata1" aria-role="link" data-dt-idx="next" tabindex="0"
                   id="tabledata1_next">Next</a>
               </div>
-            </div>
+            </div> --}}
           </div>
         </div>
       </div>
@@ -384,7 +384,27 @@
   </div>
 </section>
 
-
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function () {
+  $('#tabledata1').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#tabledata2').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+});
+</script>
 @push('scripts')
 <script>
   document.addEventListener('DOMContentLoaded', () => {

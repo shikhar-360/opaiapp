@@ -8,7 +8,7 @@
 {{-- TOP INCOME CARDS --}}
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 mb-8">
 
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
       <img src="/assets/images/icons/roi-income.webp" class="w-9" alt="Direct Team Investment">
     </div>
@@ -16,7 +16,7 @@
       <p class="text-sm text-slate-500">ROI Income</p>
       <p class="text-xl font-bold text-sky-600">$0</p>
     </div>
-  </div>
+  </div> -->
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
@@ -357,19 +357,19 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       <div
         class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
         <ul class="flex gap-2" data-tabs-toggle="#default-tab-content" role="tablist">
-          <li role="presentation">
+          <li class="hidden" role="presentation">
             <button id="table-income_all" data-tabs-target="#income_all" type="button" role="tab"
-              aria-controls="income_all" aria-selected="true"
+              aria-controls="income_all" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
               <span class="relative z-[1]">All Income</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">
-                8
+                {{ $customer->levelIncomeCount }}
               </span>
             </button>
           </li>
-          <li role="presentation">
+          <li class="hidden" role="presentation">
             <button id="table-income_roi" data-tabs-target="#income_roi" type="button" role="tab"
               aria-controls="income_roi" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
@@ -417,13 +417,13 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
     <div id="default-tab-content" class="relative">
       {{-- TAB: ALL INCOME --}}
-      <div id="income_all" role="tabpanel" aria-labelledby="table-income_all">
+      <div class="hidden" id="income_all" role="tabpanel" aria-labelledby="table-income_all">
         <div class="overflow-x-auto">
           <div id="tabledata_all_wrapper" class="dataTables_wrapper no-footer">
             
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-              <div class="dataTables_length" id="tabledata_all_length">
+              {{-- <div class="dataTables_length" id="tabledata_all_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata_all_length" aria-controls="tabledata_all"
@@ -435,14 +435,13 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   </select>
                   <span>entries</span>
                 </label>
-              </div>
+              </div> --}}
 
-              <div id="tabledata_all_filter" class="dataTables_filter w-full sm:w-auto">
+              {{-- <div id="tabledata_all_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
                     <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                      {{-- Search icon --}}
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                           d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
@@ -456,7 +455,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                       placeholder="Search amount / tag / date" aria-controls="tabledata_all">
                   </div>
                 </label>
-              </div>
+              </div> --}}
             </div>
 
             <table id="tabledata_all"
@@ -482,58 +481,18 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               </thead>
               <tbody class="divide-y divide-slate-100">
                 {{-- DUMMY DATA: ALL INCOME --}}
+                @foreach($customer->levelIncomeDetails as $ovkey => $incomes)
                 <tr class="hover:bg-slate-100 transition">
                   <td class="px-4 sm:px-5 py-3 text-slate-900">1</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$120.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI Income</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-01 10:12:35</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
                 </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">2</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$25.50</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI on ROI</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-02 14:03:11</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">3</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$80.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Income</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-03 09:45:27</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">4</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$40.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">Royalty Bonus</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-04 18:21:50</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">5</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$15.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">Star Bonus</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-05 12:10:09</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">6</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$30.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">Quick Start</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-06 16:44:33</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">7</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$10.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI Income</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-07 08:02:19</td>
-                </tr>
-                <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">8</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$60.00</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Income</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-08 19:31:02</td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+            {{-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
               <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_all_info" role="status"
                 aria-live="polite">
                 Showing 1 to 8 of 8 entries
@@ -548,7 +507,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   aria-controls="tabledata_all" aria-role="link" data-dt-idx="next" tabindex="0"
                   id="tabledata_all_next">Next</a>
               </div>
-            </div>
+            </div> --}}
 
           </div>
         </div>
@@ -661,13 +620,13 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       </div>
 
       {{-- TAB: DIRECT INCOME --}}
-      <div class="hidden" id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
+      <div id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
         <div class="overflow-x-auto">
           <div id="tabledata_direct_wrapper" class="dataTables_wrapper no-footer">
 
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-              <div class="dataTables_length" id="tabledata_direct_length">
+              {{-- <div class="dataTables_length" id="tabledata_direct_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata_direct_length" aria-controls="tabledata_direct"
@@ -679,14 +638,13 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   </select>
                   <span>entries</span>
                 </label>
-              </div>
+              </div> --}}
 
-              <div id="tabledata_direct_filter" class="dataTables_filter w-full sm:w-auto">
+              {{-- <div id="tabledata_direct_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
                     <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                      {{-- Search icon --}}
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                           d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
@@ -700,9 +658,9 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                       placeholder="Search direct income" aria-controls="tabledata_direct">
                   </div>
                 </label>
-              </div>
+              </div> --}}
             </div>
-
+            {{-- levelIncomeDetails --}}
             <table id="tabledata_direct"
               class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
               style="padding-top: 15px;" aria-describedby="tabledata_direct_info">
@@ -738,7 +696,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               </tbody>
             </table>
 
-            <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_direct_info" role="status"
+            {{-- <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_direct_info" role="status"
               aria-live="polite">
               Showing 1 to 2 of 2 entries
             </div>
@@ -751,7 +709,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
                 aria-controls="tabledata_direct" aria-role="link" data-dt-idx="next" tabindex="0"
                 id="tabledata_direct_next">Next</a>
-            </div>
+            </div> --}}
 
           </div>
         </div>
@@ -867,6 +825,27 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
   </div>
 </section>
 @endsection
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function () {
+  $('#tabledata_all').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#tabledata_direct').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+});
+</script>
 
 @push('scripts')
 <script>

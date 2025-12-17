@@ -29,15 +29,16 @@
                      class="w-7 h-7 rounded-full bg-slate-100 p-0.5 object-contain border border-slate-200">
                 <span class="font-medium text-slate-900 whitespace-nowrap">{{ $userNode['refferal_code'] }}</span>
             </div>
+
             
             {{-- Map your data fields to the correct divs --}}
             <div class="flex-1 text-center text-slate-700 shrink-0 whitespace-nowrap">{{ $userNode['level_id'] }}</div>
             <div class="flex-1 text-center text-slate-600 shrink-0 whitespace-nowrap">{{ $userNode['currentPackageDate'] }}</div>
             <div class="flex-1 text-center text-slate-700 shrink-0 whitespace-nowrap">{{ $userNode['my_team'] }}</div>
             <div class="flex-1 text-center text-slate-700 shrink-0 whitespace-nowrap">{{ $userNode['my_direct'] }}</div>
-            <div class="flex-1 text-center text-emerald-600 shrink-0 whitespace-nowrap">${{ number_format($userNode['totalInvestment'], 2) }}</div>
-            <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap">${{ number_format($userNode['team_investment'], 2) }}</div>
+            <div class="flex-1 text-center text-emerald-600 shrink-0 whitespace-nowrap">${{ number_format($userNode['team_investment'], 2) }}</div>
             <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap">${{ number_format($userNode['direct_investment'], 2) }}</div>
+            <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap">${{ number_format($userNode['totalInvestment'], 2) }}</div>
         </div>
 
         {{-- Children Container: Only rendered if children exist --}}

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\CustomersModel;
 
@@ -15,17 +16,31 @@ use App\Models\CustomersModel;
 // use kornrunner\Keccak;
 use App\Services\WalletService;
 
+use App\Traits\ManagesCustomerFinancials;
+
 class CustomerAuthController extends Controller
 {
     protected $walletServices;
+
+    use ManagesCustomerFinancials;
 
     public function __construct(WalletService $walletService)
     {
         $this->walletServices = $walletService;
     }
 
-    public function showRegisterForm($sponsorcode = null)
+    // public function showRegisterForm($sponsorcode = null)
+    // {
+    public function showRegisterForm(Request $request)
     {
+
+        $customer = Auth::guard('customer')->user();
+        if($customer){
+            return redirect()->route('dashboard');
+        }
+        
+        $sponsorcode = $request->query('sponsorcode');
+
         if(empty($sponsorcode))
         {
             return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
@@ -33,9 +48,11 @@ class CustomerAuthController extends Controller
 
         $sponsor = CustomersModel::where('referral_code', $sponsorcode)->first();
         
+        
         if (!$sponsor) {
             return redirect()->route('login')->with('status', 'Invalid referral code');
         }
+
 
 
         // else{
@@ -49,41 +66,78 @@ class CustomerAuthController extends Controller
     public function register(Request $request)
     {
         // dd($request->all());
-        $validated = $request->validate([
-            'name'           => 'required|string|max:255',
-            'email'          => 'required|email|unique:customers,email',
-            'phone'          => 'required|numeric|unique:customers,phone',
-            'sponsor_code'   => 'required|string|exists:customers,referral_code',
-            'password'       => 'required|string|min:3|max:20|confirmed',
-            'wallet_address' => 'required|string|max:255',
+
+        $validator = Validator::make($request->all(), [
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:customers,email',
+            'phone'    => 'nullable|string|min:10|max:20|unique:customers,phone',
+            'sponsor_code' => 'required|string|exists:customers,referral_code',
+            'password' => 'required|string|min:3|max:20|confirmed',
+            'telegram_username' => 'nullable|string|max:255|unique:customers,telegram_username',
         ]);
 
+        if ($validator->fails()) 
+        {
+            if($validator->errors()->get('sponsor_code'))
+            {
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('sponsor_code')]); 
+            }
+            else if($validator->errors()->get('name'))
+            {
+                return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('name')]);
+            }
+            else if($validator->errors()->get('email'))
+            {
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('email')]); 
+            }
+            else if($validator->errors()->get('phone'))
+            {
+                return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('phone')]);
+            }
+            else if($validator->errors()->get('password'))
+            {
+                return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('password')]);
+            }
+            else if($validator->errors()->get('telegram_username'))
+            {
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('telegram_username')]); 
+            }
+        }
+
+        $validated = $validator->validated();
+
         // Get sponsor
-        $sponsor = CustomersModel::where('referral_code', $validated['sponsor_code'])->firstOrFail();
+        $sponsor = CustomersModel::where('referral_code', $validated['sponsor_code'])->first();
         if(!$sponsor)
         {
-            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
         }
-        
+
         // Auto find app ID from sponsor
         $appId = $sponsor->app_id;
 
-        $lastSixDigits = substr($validated['wallet_address'], -6);
+        // $lastSixDigits = substr($validated['wallet_address'], -6);
 
         $newCustomer = CustomersModel::create([
                             'app_id'        => $appId,
                             'name'          => $validated['name'],
-                            'wallet_address'=> $validated['wallet_address'],
                             'email'         => $validated['email'],
-                            'phone'         => $validated['phone'],
+                            'phone'         => $validated['phone'] ?? null,
                             'password'      => Hash::make($validated['password']),
-                            'referral_code' => $lastSixDigits,
                             'sponsor_id'    => $sponsor->id,
-                            'role'          => 'customer'
+                            'role'          => 'customer',
+                            'telegram_username' => $validated['telegram_username'] ?? null,
                         ]);
         
         $sponsor->direct_ids = trim(($sponsor->direct_ids ?? '') . '/' . $newCustomer->id, '/');
         $sponsor->save();
+
+        //Temporary for testing purpose
+        $finance = $this->getCustomerFinance($newCustomer->id, $appId);
+        $finance->total_topup += 500;
+        $finance->capping_limit += (500 * 5);
+        $finance->save();
+        //Temporary for testing purpose
 
         // $this->showLoginForm();
         return redirect()->route('login')->with(['status_code'=>'success', 'message' => 'Registration Successful.']);
@@ -92,6 +146,11 @@ class CustomerAuthController extends Controller
 
     public function showLoginForm()
     {
+        $customer = Auth::guard('customer')->user();
+        if($customer){
+            return redirect()->route('dashboard');
+        }
+
         return view('customer.login');
     }
 

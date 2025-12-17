@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\WebhooksController;
+use App\Http\Controllers\TestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,3 +24,5 @@ use App\Http\Controllers\WebhooksController;
 
 Route::POST('ninepay-gateway-listener', [WebhooksController::class, 'topupWebhook']);
 Route::get('/payment-status/{transaction_id}', [WebhooksController::class, 'topupCheckStatus']);
+
+Route::POST('/test/promotion1000', [TestController::class, 'testPromotionThounsand']);

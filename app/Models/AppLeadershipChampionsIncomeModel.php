@@ -9,7 +9,7 @@ class AppLeadershipChampionsIncomeModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'leadership_champions_income';
+    protected $table = 'app_champions_income_plan';
 
     protected $fillable = [
         'app_id',	

@@ -63,14 +63,22 @@ class WithdrawController extends Controller
             'admin_charge' => 'required|numeric|min:0.0000001',
             'net_amount' => 'required|numeric|min:0.0000001',
         ]);  
-        
+        // dd($validated);
         $customer = Auth::guard('customer')->user();
 
         try {
             $withdraw = $this->withdrawServices->processWithdrawal($customer, $validated);
-            // return redirect()
-            //         ->route('withdraw')
-            //         ->with('success', $withdraw);
+
+            if (isset($withdraw->original) && !$withdraw->original['status']) {
+                // Both $withdraw and $withdraw->original exist, AND the status is false
+                return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message'      => $withdraw->original['message']
+                    ]);
+            }
+            
             return redirect()
                     ->route('withdraw')
                     ->with([

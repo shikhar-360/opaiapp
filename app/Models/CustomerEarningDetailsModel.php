@@ -15,6 +15,7 @@ class CustomerEarningDetailsModel extends Model
 	    'reference_amount',
 	    'amount_earned',
 	    'earning_type',
-	    'status'
+	    'status',
+	    'reference_level'
     ];
 }

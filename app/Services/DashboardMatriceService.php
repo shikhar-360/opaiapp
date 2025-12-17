@@ -11,6 +11,7 @@ use App\Models\CustomersModel;
 use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerEarningDetailsModel;
 use App\Models\CustomerWithdrawsModel;
+use App\Models\VotesModel;
 
 use App\Traits\ManagesCustomerHierarchy;
 
@@ -108,7 +109,20 @@ class DashboardMatriceService
                                                         ->where('app_id', $customer->app_id)
                                                         ->where('transaction_type', 'WITHDRAW')
                                                         ->get();
-                                                        
+
+        $voteTypes      = ['HONEST', 'ACTIVE', 'HELPFULL'];
+        $myVoteSummary  = VotesModel::where('sponsor_id', 1)
+                                            ->where('app_id', 1)
+                                            ->select('voted_for', \DB::raw('COUNT(*) as total_votes'))
+                                            ->groupBy('voted_for')
+                                            ->pluck('total_votes', 'voted_for'); 
+
+        $voteResult = collect($voteTypes)->mapWithKeys(function ($type) use ($myVoteSummary) {
+            return [$type => $myVoteSummary[$type] ?? 0];
+        });
+        
+        $myVoteSummary  =   ['HONEST'=>$voteResult['HONEST'], 'ACTIVE'=>$voteResult['ACTIVE'], 'HELPFULL'=>$voteResult['HELPFULL']];
+
         $volumes = [
             'directIds' => $directIds,
             'activeDirectIds' => $activeDirectIds,
@@ -131,7 +145,8 @@ class DashboardMatriceService
             'myTotalEarning'          => $myTotalEarning,
             'myReferralLevel'         => $referralLevel,
             'myTotalWithdraws'        => $myTotalWithdraws,
-            'myWithdraws'             => $myWithdraws
+            'myWithdraws'             => $myWithdraws,
+            'myVoteSummary'           => $voteResult,
         ];
 
         return $volumes;
@@ -233,39 +248,62 @@ class DashboardMatriceService
         
         // dd($allTeamIds);
 
-        $customerData = CustomersModel::select([
-                                                'customers.id',
-                                                'customer_deposits.customer_id',
-                                                'customers.name',
-                                                'customers.wallet_address',
-                                                'customers.level_id',
-                                                'customers.referral_code',
-                                                'customers.sponsor_id',
-                                                'customers.created_at AS registration_date',
-                                                'customer_deposits.app_id',
-                                                'customer_deposits.package_id',
-                                                DB::raw('SUM(customer_deposits.amount) AS totaldeposit'),
-                                                DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
-                                            ])
-                                            ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
+        // $customerData = CustomersModel::select([
+        //                                         'customers.id',
+        //                                         'customer_deposits.customer_id',
+        //                                         'customers.name',
+        //                                         'customers.wallet_address',
+        //                                         'customers.level_id',
+        //                                         'customers.referral_code',
+        //                                         'customers.sponsor_id',
+        //                                         'customers.created_at AS registration_date',
+        //                                         'customer_deposits.app_id',
+        //                                         'customer_deposits.package_id',
+        //                                         'customers.leadership_rank',
+        //                                         'customers.leadership_points',
+        //                                         'customers.leadership_champions_rank',
+        //                                         DB::raw('SUM(customer_deposits.amount) AS totaldeposit'),
+        //                                         DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
+        //                                     ])
+        //                                     ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
                                             
-                                            // --- This is the critical filter for Active Directs ---
-                                            ->whereIn('customers.id', $allTeamIds)
-                                            // ----------------------------------------------------
-                                            ->where('customer_deposits.payment_status', 'success') 
-                                            ->groupBy([
-                                                'customers.id',
-                                                'customer_deposits.customer_id', // Group by FK as well
-                                                'customers.name',
-                                                'customers.wallet_address',
-                                                'customers.level_id',
-                                                'customers.sponsor_id',
-                                                'customers.referral_code',
-                                                'customers.created_at',
-                                                'customer_deposits.app_id',
-                                                'customer_deposits.package_id'
+        //                                     // --- This is the critical filter for Active Directs ---
+        //                                     ->whereIn('customers.id', $allTeamIds)
+        //                                     // ----------------------------------------------------
+        //                                     ->where('customer_deposits.payment_status', 'success') 
+        //                                     ->groupBy([
+        //                                         'customers.id',
+        //                                         'customer_deposits.customer_id', // Group by FK as well
+        //                                         'customers.name',
+        //                                         'customers.wallet_address',
+        //                                         'customers.level_id',
+        //                                         'customers.sponsor_id',
+        //                                         'customers.referral_code',
+        //                                         'customers.created_at',
+        //                                         'customers.leadership_rank',
+        //                                         'customers.leadership_points',
+        //                                         'customers.leadership_champions_rank',
+        //                                         'customer_deposits.app_id',
+        //                                         'customer_deposits.package_id'
+        //                                     ])
+        //                                     ->get();
+
+        $customerData = CustomersModel::with([
+                                                'leadershipIncome',
+                                                'leadershipChampionsIncome',
+                                                'customerDeposits' => function($query) {
+                                                    $query->where('payment_status', 'success');
+                                                }
                                             ])
+                                            ->withSum(['customerDeposits as totaldeposit' => function($query) {
+                                                $query->where('payment_status', 'success');
+                                            }], 'amount')
+                                            ->withMin(['customerDeposits as activation_date' => function($query) {
+                                                $query->where('payment_status', 'success');
+                                            }], 'created_at')
+                                            ->whereIn('customers.id', $allTeamIds)
                                             ->get();
+                                        
         $sponsorIds = $customerData->pluck('sponsor_id')->unique()->filter()->toArray();
         $sponsors = CustomersModel::whereIn('id', $sponsorIds)->pluck('referral_code', 'id');
 
@@ -333,7 +371,7 @@ class DashboardMatriceService
             return collect();
         }
 
-        $customerData = CustomersModel::select([
+        /*$customerData = CustomersModel::select([
                                                     'customers.id',
                                                     'customer_deposits.customer_id',
                                                     'customers.name',
@@ -342,15 +380,54 @@ class DashboardMatriceService
                                                     'customers.created_at AS registration_date',
                                                     'customer_deposits.app_id',
                                                     'customer_deposits.package_id',
-                                                    'customer_deposits.amount AS totaldeposit',
-                                                    'customer_deposits.created_at AS activation_date',
-                                                    'customers.referral_code'
+                                                    'customers.referral_code',
+                                                    DB::raw('SUM(customer_deposits.amount) AS totaldeposit'),
+                                                    DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
+                                                ])
+                                                // ->leftJoin('customer_deposits', function ($join) {
+                                                //     $join->on('customers.id', '=', 'customer_deposits.customer_id')
+                                                //         ->where('customer_deposits.payment_status', '=', 'success');
+                                                // })
+                                                ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
+                                                ->whereIn('customers.id', $allDirectIds)
+                                                ->where('customer_deposits.payment_status', 'success') 
+                                                ->groupBy([
+                                                    'customers.id',
+                                                    'customer_deposits.customer_id', // Group by FK as well
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.sponsor_id',
+                                                    'customers.referral_code',
+                                                    'customers.created_at',
+                                                    'customer_deposits.app_id',
+                                                    'customer_deposits.package_id'
+                                                ])
+                                                ->get();*/
+
+        $customerData = CustomersModel::select([
+                                                    'customers.id',
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.created_at AS registration_date',
+                                                    'customers.referral_code',
+                                                    DB::raw('COALESCE(SUM(customer_deposits.amount), 0) AS totaldeposit'),
+                                                    DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
                                                 ])
                                                 ->leftJoin('customer_deposits', function ($join) {
                                                     $join->on('customers.id', '=', 'customer_deposits.customer_id')
-                                                        ->where('customer_deposits.payment_status', '=', 'success');
+                                                         ->where('customer_deposits.payment_status', 'success');
                                                 })
                                                 ->whereIn('customers.id', $allDirectIds)
+                                                ->groupBy([
+                                                    'customers.id',
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.referral_code',
+                                                    'customers.created_at',
+                                                ])
                                                 ->get();
 
         foreach($customerData as $ckey => $customerd)

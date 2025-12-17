@@ -12,7 +12,7 @@ class CustomerFinancialsModel extends Model
         'app_id',
         'customer_id',
         'total_deposit',
-        'total_roi',
+        'total_income',
         'total_withdraws',
         'capping_limit'
     ];

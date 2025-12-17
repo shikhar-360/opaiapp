@@ -51,9 +51,9 @@ class NinePayService
     }
 
 
-    public function getEthWallet($customer)
+    public function getEthWallet($customer, $transaction_id)
     {
-        $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-INV0123456789-" . $customer->id . "-" . $customer->referral_code . "/eth";
+        $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-".$transaction_id."-" . $customer->id . "/eth"; // . "-" . $customer->referral_code . "/eth";
         // $eth_json = file_get_contents($eth);
         // return $eth_json;
         try 
@@ -78,9 +78,9 @@ class NinePayService
 
     }
 
-    public function getTronWallet($customer)
+    public function getTronWallet($customer, $transaction_id)
     {
-        $tronURL = "https://api.9pay.co/get-tron-wallet/ninepaytest-" . $customer->id . "-" . $customer->referral_code;
+        $tronURL = "https://api.9pay.co/get-tron-wallet/ninepaytest-".$transaction_id."-". $customer->id; // . "-" . $customer->referral_code;
         // $getTron = file_get_contents($tron);
         // return $getTron;
         try 
@@ -117,7 +117,7 @@ class NinePayService
             $appid = $customer->app_id;
 
             $pendingPayment = NinepayTransactionsModel::where('customer_id', $customerId)
-                                                        ->where('payment_status', NinepayTransactionsModel::STATUS_PENDING)
+                                                        ->whereIn('payment_status', [NinepayTransactionsModel::STATUS_PENDING,NinepayTransactionsModel::STATUS_UNDERPAID])
                                                         ->where('transaction_id', $transactionId)
                                                         // ->whereNull('transaction_hash')
                                                         ->where('app_id', $customer->app_id)

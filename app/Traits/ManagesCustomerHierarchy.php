@@ -4,6 +4,7 @@
 namespace App\Traits;
 
 use App\Models\CustomersModel;
+
 use Illuminate\Support\Collection;
 
 trait ManagesCustomerHierarchy
@@ -54,6 +55,7 @@ trait ManagesCustomerHierarchy
                 "level"          => $depth,                    // depth from user
                 "directs"        => count($directs),
                 "active_directs" => count($activeDirects),
+                "level_id"       => $sponsor->level_id,
             ];
 
             $current = $sponsor;
