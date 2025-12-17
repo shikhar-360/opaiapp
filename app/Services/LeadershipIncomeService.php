@@ -42,11 +42,11 @@ class LeadershipIncomeService
                 $customer->leadership_rank = $leadershipRank->id; 
                 $customer->leadership_points = $leadershipRank->points; 
                 $customer->save();
-                $leadership[] = ["id"=>$customer->id, "rank"=>$leadershipRank->rank, "rank_id"=>$leadershipRank->id, "rank_points"=>$leadershipRank->points ];
+                //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipRank->rank, "rank_id"=>$leadershipRank->id, "rank_points"=>$leadershipRank->points ];
             }
         }
 
-        return $leadership;
+        //return $leadership;
         
     }
 }

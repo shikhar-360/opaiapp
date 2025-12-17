@@ -34,8 +34,10 @@ class WebhooksController extends Controller
         $amount_afterfee = trim($explodeString['2']); //100 (full amount)
         $invoice_id = trim($explodeString['3']); // INV43456789 
         $network_type = trim($explodeString['4']); //bsc-testnet
-        $customer_id = 11; //testing
+        $customer_id = 1; //testing
         $amount_received = $amount_nofee; // or  amount_afterfee
+
+        // dd($transaction_hash, $amount_nofee, $amount_afterfee, $invoice_id, $network_type, $customer_id, $amount_received );
 
         if (!is_numeric($amount_nofee) || $amount_nofee <= 0) {
             return response()->json(['error' => 'Invalid amount_withoutfee'], 400);
@@ -57,10 +59,11 @@ class WebhooksController extends Controller
 
         // dd($transaction_hash, $amount_nofee, $amount_afterfee, $invoice_id, $network_type, $customer_id, $amount_received);
 
+        $txn = NinepayTransactionsModel::where('transaction_id', $invoice_id)->first();
 
-        $topup_response = $this->ninepays->topupReceived($customer_id, $amount_received, $invoice_id, $transaction_hash);
+        $this->ninepays->topupReceived($txn->customer_id, $amount_received, $invoice_id, $transaction_hash);
 
-        dd($topup_response);
+        // dd($topup_response);
     }
 
     public function topupCheckStatus($txnid)

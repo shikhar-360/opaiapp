@@ -9,6 +9,7 @@ use App\Models\AppLevelPackagesModel;
 use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\CustomerEarningDetailsModel;
+use App\Models\CustomerFlushDetailsModel;
 
 use App\Traits\ManagesCustomerHierarchy;
 use App\Traits\ManagesCustomerFinancials;
@@ -25,6 +26,8 @@ class LevelIncomeService
     public function releaseLevelIncome(CustomerDepositsModel $deposit)
     {       
 
+
+
         $customer = CustomersModel::with('referrals')->find($deposit->customer_id);
 
         if (!$customer) {
@@ -33,15 +36,19 @@ class LevelIncomeService
 
         // Get all uplines
         $customerUplines = $this->getUplines($customer);
-
+        // dd($customerUplines);
         // Get all level packages for the app
         $levelPackages = AppLevelPackagesModel::where('app_id', $deposit->app_id)
                                                 ->orderBy('level', 'ASC')
                                                 ->get()
                                                 ->keyBy('level');   // Faster lookup
-
+        // dd($customerUplines, $levelPackages);
         $incomeDetails = [];
         
+        $totalFlushAmount = 0;
+        $totalEarnedAmount = 0;
+        $flushDetails = [];
+
         foreach ($customerUplines as $upline) {
 
             $level = $upline['level'];
@@ -53,10 +60,12 @@ class LevelIncomeService
 
             $pkg = $levelPackages[$level];
 
-            // Check if upline qualifies (directs >= required)
+            $rewardAmount = $deposit->amount * ($pkg->reward / 100);
+
             if ($upline['directs'] >= $pkg->directs) {
 
-                $rewardAmount = $deposit->amount * ($pkg->reward / 100);
+                $totalEarnedAmount += $rewardAmount;
+                
                 DB::statement('SET FOREIGN_KEY_CHECKS=0;');
                 $incomeDetails[] = [
                     'app_id'           => $deposit->app_id,
@@ -65,19 +74,46 @@ class LevelIncomeService
                     'reference_amount' => $deposit->amount,
                     'amount_earned'    => $rewardAmount,
                     'earning_type'     => 'LEVEL-REWARD',
+                    'reference_level'  => $level
                 ];
+
+                // Update level
+                $uplineCustomer = CustomersModel::find($upline['id']);
+                if ($uplineCustomer && $uplineCustomer->level_id < $level) {
+                    $uplineCustomer->level_id = $level;
+                    $uplineCustomer->save();
+                }
+                
 
                 $finance = $this->getCustomerFinance($upline['id'], $deposit->app_id);
                 $finance->increment('total_income', $rewardAmount);
                 // $finance->decrement('total_topup', $deposit->amount); 
                 $finance->save();
             }
+            else
+            {
+                
+                $totalFlushAmount += $rewardAmount;
+                
+                $flushDetails[] = [
+                    'app_id'           => $deposit->app_id,
+                    'upline_id'        => $upline['id'],
+                    'reference_id'     => $customer->id,
+                    'reference_amount' => $deposit->amount,
+                    'flush_amount'     => $rewardAmount,
+                    'flush_level'      => $level,
+                    'reason'           => 'NOT-ELIGIBLE'
+                ];
+            }
         }
 
         // Save income to DB
-        DB::transaction(function () use ($incomeDetails) {
+        DB::transaction(function () use ($incomeDetails, $flushDetails) {
             foreach ($incomeDetails as $record) {
                 CustomerEarningDetailsModel::create($record);
+            }
+            foreach ($flushDetails as $flush) {
+                CustomerFlushDetailsModel::create($flush);
             }
         });
 

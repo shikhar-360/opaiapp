@@ -43,6 +43,7 @@ class Topup9PayController extends Controller
                                                 ->whereIn("payment_status", ['pending', 'underpaid'])
                                                 ->latest()
                                                 ->first();
+        $remaining = 0;
         if ($pendingTxn) 
         {
             $eth_array = json_decode($pendingTxn->eth_9pay_json, true);
@@ -51,6 +52,8 @@ class Topup9PayController extends Controller
             $ethQrCode = $this->qrcodes->generate($eth_array['address']);
             $tronQrCode = $this->qrcodes->generate($tron_array['address']);
 
+            $remaining = ($pendingTxn->amount + $pendingTxn->fees_amount) - $pendingTxn->received_amount;
+
             $customer['QRs'] = [
                 'ethQrCode'         => $ethQrCode,
                 'tronQrCode'        => $tronQrCode,
@@ -58,7 +61,7 @@ class Topup9PayController extends Controller
                 'tronAddress'       => $tron_array['address'],
                 'qrAmount'          => $pendingTxn->amount + $pendingTxn->fees_amount,
                 'qrFeesAmount'      => $pendingTxn->fees_amount,
-                'qrPendingAmount'   => 0,
+                'qrPendingAmount'   => $remaining,
                 'transaction_id'    => $pendingTxn->transaction_id,
             ];
         }
@@ -152,12 +155,14 @@ class Topup9PayController extends Controller
                 "network_type"  => 'required|string|min:3',
                 "network_name"  => 'required|string|min:3',
             ]);    
-        
+            
+            $transaction_id = "TXN" . $customer->id . Str::random(4);
+
             // --- ETH Wallet Logic ---
-            $ninepay_eth = $this->ninepays->getEthWallet($customer);
+            $ninepay_eth = $this->ninepays->getEthWallet($customer, $transaction_id);
        
             // --- TRON Wallet Logic ---
-            $ninepay_tron = $this->ninepays->getTronWallet($customer);
+            $ninepay_tron = $this->ninepays->getTronWallet($customer, $transaction_id);
             
             $ninepay_fee = $this->ninepays->ninePayFee($validated['network_type'], $validated['amount']);
 
@@ -186,13 +191,14 @@ class Topup9PayController extends Controller
                         'tron_9pay_json'  => $ninepay_tron,
                         'chain'           => $validated['network_type'],
                         'currency'        => $validated['coinSelect'],
-                        'fees_amount'     => $ninepay_fee
+                        'fees_amount'     => $ninepay_fee,
+                        'transaction_id'  => $transaction_id
                     ]);
             
             $qrAmount = $validated['amount'];
 
-            $transaction_id = "TXN" . $newTxn->id . $customer->id . Str::random(4);
-            $newTxn->update(['transaction_id' => $transaction_id]);
+            // $transaction_id = "TXN" . $newTxn->id . $customer->id . Str::random(4);
+            // $newTxn->update(['transaction_id' => $transaction_id]);
         
         }
 

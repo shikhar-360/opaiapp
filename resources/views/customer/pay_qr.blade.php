@@ -90,7 +90,7 @@
 
         <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-sky-300/20 blur-3xl"></div>
 
-        <form class="relative mt-2 space-y-4" method="post" action="{{ route('pay.qr.save') }}">
+        <form id="qrpayForm" class="relative mt-2 space-y-4" method="post" action="{{ route('pay.qr.save') }}">
           @csrf
           <div class="w-full relative z-10">
             <h3 class="text-lg font-semibold mb-4 flex items-center gap-2 text-slate-900">
@@ -140,7 +140,7 @@
                           border border-slate-200 bg-white
                           focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100
                           focus-within:bg-sky-50/60 transition-colors">
-                    <input type="text" id="coin_amount" name="amount"
+                    <input type="text" id="amount" name="amount"
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                       placeholder="Enter your amount" required>
                   </div>
@@ -314,7 +314,7 @@
                 <h3 class="text-sm font-medium leading-none text-slate-900">Pending Amount :</h3>
                 <div class="bg-white px-3 py-2 rounded-lg flex items-center justify-between gap-2 border border-slate-200">
                   <span id="pendingAmount" class="text-xs font-mono text-slate-800 truncate">
-                    {{ $hasQR ? $customer->QRs['qrAmount']-$customer->QRs['qrPendingAmount']:'' }}
+                    {{ $hasQR ? $customer->QRs['qrPendingAmount']:'0' }}
                   </span>
                   <button type="button"
                     onclick="navigator.clipboard.writeText(document.getElementById('pendingAmount').innerText.trim()).catch(()=>{}); showToast && showToast('success', 'Copied to clipboard!')"
@@ -536,7 +536,7 @@ function checkPaymentStatus() {
                     if (data.is_paid === true) {
                         showToast("success", "Payment received!");
                         clearInterval(checkInterval);
-                  
+                        window.location.href = "/pay-topup";
                     }
                 }
             })

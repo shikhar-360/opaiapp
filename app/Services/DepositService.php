@@ -75,10 +75,14 @@ class DepositService
             ]);
 
             $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
-            $finance->increment('total_deposit', $deposit->amount);
-            $finance->decrement('total_topup', $deposit->amount); 
+            $depositAmount = $deposit->amount;
+            // Manual assignment ignores $fillable
+            $finance->total_deposit += $depositAmount;
+            $finance->capping_limit += ($depositAmount * 5);
+            $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
             $finance->save();
-
+            
+            
             $firstDeposit = CustomerDepositsModel::where('customer_id', $deposit->customer_id)
                                                 ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
                                                 ->where('id', '!=', $deposit->id)

@@ -6,21 +6,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
  <title>OPAI – AI-Powered Digital Ecosystem for Smart Growth & Community Empowerment</title>
  <meta name="description" content="OPAI is an AI-powered digital ecosystem that empowers individuals with intelligent automation, smart tools, and a transparent, future-ready platform for growth.">
-<link rel="icon" type="image/x-icon" href="/assets/images/favicon.ico">
+ <!-- in opaiapphtml/assets/images/favicon2.ico -->
+<link rel="icon" type="image/x-icon" href="/assets/images/favicon2.ico">
 
-  <style> 
-    :root {
-      --theme-bg: #F5F7FC;
-      --theme-primary-text:#7ed3ff;
-      --theme-high-text: #74d4ff;
-      --theme-primary-bg : #1da3d8;
-      --theme-primary-border : #314158;
-      --theme-secondary-border: #70c4ff80;
-      --theme-secondary-text: #778ecc;
-      /* --theme-primary-border: #ffffff; */
-      --theme-cardbg: #3a3a3d;
-      
-    }
+    <style> 
+:root {
+ 
+  --theme-bg: #f9fbff;
+  --theme-header-bg: #f1f6ff;
+  --theme-menu-bg: #eaf2ff;
+  --theme-primary-bg: #4a63d9;
+  --theme-primary-text: #2f3a8f;
+  --theme-high-text: #3b6fff;
+  --theme-cyyan-500: #6fa8ff;
+  --theme-cyyan-400: #8fc0ff;
+  --theme-cyyan-200: #d6e8ff;
+  --theme-skky-600: #3f5bd8;
+ --theme-skky-500: #5b78ff;
+  --theme-skky-400: #6fa8ff;
+  --theme-skky-300: #9ac5ff;
+  --theme-skky-200: #cfe2ff;
+  --theme-skky-100: #edf4ff;
+  --theme-skkky-50: #f7faff;
+  --theme-bllue-500: #2a3480;
+  --theme-bllue-400: #5f86ff;
+  --theme-primary-border: #c7d4ff;
+  --theme-secondary-border: #9bb7ff80;
+  --theme-secondary-text: #6a78b8;
+  --theme-cardbg: #ffffff;
+}
+
+
   </style>
 
   @vite(entrypoints: 'resources/css/app.css')

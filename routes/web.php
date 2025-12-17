@@ -9,6 +9,7 @@ use App\Http\Controllers\customer\WithdrawController;
 use App\Http\Controllers\customer\P2PTransferController;
 use App\Http\Controllers\customer\Topup9PayController;
 use App\Http\Controllers\customer\OverviewController;
+use App\Http\Controllers\customer\SupportTicketsController;
 
 use App\Http\Controllers\superadmin\SuperAdminAuthController;
 use App\Http\Controllers\superadmin\SuperAdminController;
@@ -22,9 +23,11 @@ use App\Http\Controllers\admin\AppCustomersController;
 use App\Http\Controllers\admin\AppFreeDepositPackagesController;
 use App\Http\Controllers\admin\AppLeadershipPackagesController;
 
+Route::get('/', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 
 // Registration
-Route::get('/register/{sponsorcode?}', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
+Route::get('/register', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
+// Route::get('/register/{sponsorcode?}', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [CustomerAuthController::class, 'register'])->name('register.submit');
 
 // Login
@@ -55,14 +58,15 @@ Route::middleware(['customer'])->group(function () {
     Route::get('/overview', [OverviewController::class, 'incomeOverview'])->name('overview');
     Route::post('/overview', [OverviewController::class, 'incomeOverview'])->name('overview.filter');
 
+    Route::get('/tickets', [SupportTicketsController::class, 'showForm'])->name('tickets');
+    Route::post('/tickets', [SupportTicketsController::class, 'saveTickets'])->name('tickets.save');
+
+    Route::post('/vote', [CustomerController::class, 'saveVote'])->name('customer.vote.save');
+
+    Route::get('/promotion', [CustomerController::class, 'showPromotion'])->name('promotion');
 });
 
 
-Route::get('/staking', fn () => view('customer.staking'))->name('staking');
-Route::view('/index', 'index')->name('index');
-Route::get('/pay-dapp', fn () => view('pay_dapp'))->name('pay.dapp');
-// Route::get('/overview', fn () => view('overview'))->name('overview');
-Route::get('/tickets', fn () => view('tickets'))->name('tickets');
 
 
 Route::prefix('superadmin')->name('superadmin.')->group(function () {

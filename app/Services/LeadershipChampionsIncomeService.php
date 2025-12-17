@@ -54,12 +54,13 @@ class LeadershipChampionsIncomeService
                                                                             ->first();
             if ($leadershipChampionsRank) {
                 $customer->leadership_champions_rank = $leadershipChampionsRank->id; //rank;
+                $customer->champions_point           = $leadershipChampionsRank->point;
                 $customer->save();
-                $leadership[] = ["id"=>$customer->id, "rank"=>$leadershipChampionsRank->rank, "rank_id"=>$leadershipChampionsRank->id ];
+                //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipChampionsRank->rank, "rank_id"=>$leadershipChampionsRank->id ];
             }
         }
 
-        return $leadership;
+        //return $leadership;
         
     }
 }

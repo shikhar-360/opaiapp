@@ -26,6 +26,10 @@ class CustomerDepositsModel extends Model
         'coin_price',
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime',
+    ];
+
     public function package() {
         return $this->belongsTo(PackagesModel::class, 'package_id');
     }

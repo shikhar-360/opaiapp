@@ -4,7 +4,7 @@
 
 @section('content')
 <section
-  class="w-full py-10 md:py-12 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center  relative overflow-hidden">
+  class="w-full py-10 md:py-12 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center bg-slate-50/50 relative overflow-hidden">
 
   <div class="w-full max-w-xl mx-auto">
     <div class="relative rounded-2xl">
@@ -28,14 +28,14 @@
         <div class="pb-4 text-center relative z-10">
           <div
             class="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.10)] px-4 py-3">
-            <img src="/assets/images/opai.webp" width="64" height="48" alt="Logo"
+            <img src="/assets/images/opai_7202.webp" width="64" height="48" alt="Logo"
                  class="w-full max-w-20 mx-auto">
           </div>
         </div>
 
         <div class="mt-4 flex flex-col items-center relative z-10">
           <h1 class="text-2xl xl:text-3xl font-semibold text-slate-900 text-center tracking-tight">
-            Welcome to HERE
+            Welcome to
             <span class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
               OpAi
             </span>
@@ -117,7 +117,7 @@
               {{-- Sign up link --}}
               <div class="text-sm font-medium text-slate-600 mt-2 text-center">
                 New here?
-                <a href="/register"
+                <a href="{{ route('register') }}"
                    class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
                   Sign Up
                 </a>

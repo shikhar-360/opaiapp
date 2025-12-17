@@ -7,7 +7,7 @@
 
         {{-- LOGO + BRAND --}}
         <div class="flex items-center gap-2.5">
-            <a href="{{ route('index') }}" class="flex items-center gap-2">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                 <img src="{{ asset('assets/images/opai.webp') }}" alt="OpAI Logo" class="w-12 md:w-12 h-auto">
                 <span class="hidden sm:inline font-semibold text-sm md:text-2xl tracking-wide text-slate-900">
                     OpAi
@@ -17,8 +17,8 @@
 
         {{-- RIGHT SIDE ACTIONS --}}
         <div class="flex items-center gap-2 md:gap-4">
-            @php
-                $truncated_wa = '';
+            <!-- @php
+               $truncated_wa = '';
                 $fullAddress = $customer->wallet_address??$genealogyData[0]['wallet_address']??''; // Define a local variable for clarity
                 if (strlen($fullAddress) > 10) {
                     $start = substr($fullAddress, 0, 4);
@@ -26,8 +26,8 @@
                     $truncated_wa = $start . '...' . $end;
                 } else {
                     $truncated_wa = $fullAddress; // Use the full address if short
-                }
-            @endphp
+                } 
+            @endphp -->
             {{-- Connect Wallet --}}
             <button id="connectBtn"
                 class="px-3 sm:px-5 py-2 flex items-center justify-center gap-2 text-base capitalize tracking-wide rounded-lg
@@ -35,7 +35,7 @@
                        text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)]
                        hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
                        transition-all duration-300 ease-out group">
-                <span>{{ $truncated_wa }}</span>
+                <span>#{{ $customer->referral_code }}</span>
             </button>
 
             {{-- Mobile Menu Toggle --}}
@@ -178,8 +178,18 @@
             <span>Tickets</span>
         </a>
 
+        {{-- Promotion --}}
+        <a href="{{ route('promotion') }}"
+           class="{{ $baseItemClass }} {{ Route::is('promotion') ? $activeClass : $inactiveClass }}">
+            <span class="inline-flex items-center justify-center {{ Route::is('promotion') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+                <img src="/assets/images/menu/promotion.webp" width="64" height="48" alt="Logo"
+                     class="w-8 h-8 object-contain">
+            </span>
+            <span>Promotion</span>
+        </a>
+        
         {{-- Logout --}}
-        <a href="{{ route('login') }}"
+        <a href="{{ route('logout') }}"
            class="{{ $baseItemClass }} text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent">
             <span class="inline-flex items-center justify-center bg-[#bfe7ff] p-1 rounded-lg">
                 <img src="/assets/images/menu/logout.webp" width="64" height="48" alt="Logo"

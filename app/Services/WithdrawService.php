@@ -35,7 +35,7 @@ class WithdrawService
             }
 
             // 3. Check capping limit
-            $remainingCap = $finance->capping_limit - $finance->total_withdraws;
+            $remainingCap = $finance->capping_limit-2500; // - $finance->total_withdraws;
             if ($remainingCap < $validatedData['amount']) {
                 return response()->json([
                     'status'  => false,
@@ -43,7 +43,9 @@ class WithdrawService
                     'finance' => $finance
                 ], 401);
             }
-            // dd($remainingCap);
+
+            if($remainingCap)
+            // dd($remainingCap,$validatedData);
             // 4. Calculate fees
             $adminFee = 0;
             if ($validatedData['amount'] < 100) {
@@ -66,11 +68,20 @@ class WithdrawService
             ]);
             
             // 6. Update finance summary
-            $finance->decrement('total_income', $netAmount);
-            $finance->increment('total_withdraws', $netAmount);
+            // $finance->decrement('total_income', $validatedData['amount']);
+            // $finance->increment('total_withdraws', $validatedData['amount']);
+            // $finance->decrement('capping_limit', $validatedData['amount']);
+            // $finance->save();
+
+            $withdrawAmount = $validatedData['amount'];
+
+            // Manual assignment ignores $fillable
+            $finance->total_income = max(0, $finance->total_income - $withdrawAmount);
+            $finance->capping_limit = max(0, $finance->capping_limit - $withdrawAmount);
+            $finance->total_withdraws += $withdrawAmount;
             $finance->save();
 
-            return $withdraw;
+            return ['status'  => true, 'message' => 'Withdraw success.', 'withdraw' => $withdraw];
         });
     }
 }
