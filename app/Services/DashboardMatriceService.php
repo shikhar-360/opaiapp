@@ -13,6 +13,7 @@ use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerEarningDetailsModel;
 use App\Models\CustomerWithdrawsModel;
 use App\Models\VotesModel;
+use App\Models\AppsModel;
 
 use App\Traits\ManagesCustomerHierarchy;
 
@@ -112,8 +113,8 @@ class DashboardMatriceService
                                                         ->get();
 
         $voteTypes      = ['HONEST', 'ACTIVE', 'HELPFULL'];
-        $myVoteSummary  = VotesModel::where('sponsor_id', 1)
-                                            ->where('app_id', 1)
+        $myVoteSummary  = VotesModel::where('sponsor_id', $customer->id)
+                                            ->where('app_id', $customer->app_id)
                                             ->select('voted_for', \DB::raw('COUNT(*) as total_votes'))
                                             ->groupBy('voted_for')
                                             ->pluck('total_votes', 'voted_for'); 
@@ -124,10 +125,13 @@ class DashboardMatriceService
         
         $myVoteSummary  =   ['HONEST'=>$voteResult['HONEST'], 'ACTIVE'=>$voteResult['ACTIVE'], 'HELPFULL'=>$voteResult['HELPFULL']];
 
+
+        $appData       =   AppsModel::where('id',$customer->app_id)->first();
+
         $volumes = [
-            'directIds' => $directIds,
-            'activeDirectIds' => $activeDirectIds,
-            'allTeamIds' => $allTeamIds,
+            'directIds'               => $directIds,
+            'activeDirectIds'         => $activeDirectIds,
+            'allTeamIds'              => $allTeamIds,
             'totalDirectInvestment'   => $sumDeposits($directIds),
             'totalActiveDirectVolume' => $sumDeposits($activeDirectIds),
             'totalTeamInvestment'     => $sumDeposits($allTeamIds),
@@ -148,6 +152,7 @@ class DashboardMatriceService
             'myTotalWithdraws'        => $myTotalWithdraws,
             'myWithdraws'             => $myWithdraws,
             'myVoteSummary'           => $voteResult,
+            'appData'                 => $appData,
         ];
 
         return $volumes;
