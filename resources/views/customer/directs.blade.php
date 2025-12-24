@@ -30,7 +30,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Direct Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -41,7 +41,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Total Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 

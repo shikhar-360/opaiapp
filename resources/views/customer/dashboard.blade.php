@@ -505,7 +505,7 @@
                 Earned
               </p>
               <p class="text-lg sm:text-2xl font-semibold text-slate-900 leading-none">
-                {{ number_format($customer->myLevelEarning, 2, '.', '') }}
+                {{ number_format($customer->myLevelEarning, 2, '.', '') }} {{ $customer->appData->currency }}
               </p>
             </div>
           </div>
@@ -568,7 +568,7 @@
                     Package
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm">
-                    Amount
+                    Amount ({{ $customer->appData->currency }})
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm text-right">
@@ -589,7 +589,7 @@
                       {{ $myPkgs->package_id }}
                     </span>
                   </td>
-                  <td class="px-4 py-2">{{ number_format($myPkgs->amount, 2, '.', '') }}</td>
+                  <td class="px-4 py-2">{{ number_format($myPkgs->amount, 2, '.', '') }} </td>
                   <td class="px-4 py-2 text-right">{{ $myPkgs->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
@@ -647,8 +647,6 @@
             <p class="text-sm text-slate-500">Date of Activation</p>
             <p class="text-xl font-bold text-[var(--theme-high-text)]">
               {{ optional($customer->myFirstDepositAt)->format('d-m-Y') ?? '-' }}
-            
-            
             </p>
           </div>
         </div>
@@ -661,7 +659,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-500">Self Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myInvestment, 2, '.', '') }}</p>
+            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myInvestment, 2, '.', '') }} {{ $customer->appData->currency }} </p>
           </div>
         </div>
 
@@ -673,7 +671,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-500">Direct Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }}</p>
+            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
@@ -685,7 +683,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-500">Total Team Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} </p>
+            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
@@ -697,7 +695,7 @@
           </div>
           <div>
             <p class="text-sm text-slate-500">Total Withdraw</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myTotalWithdraws, 2, '.', '') }}</p>
+            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myTotalWithdraws, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
       </div>

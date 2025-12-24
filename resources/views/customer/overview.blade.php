@@ -24,7 +24,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Level Income</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
     </div>
     <div>
       <p class="text-sm text-slate-500">Total Income</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }}</p>
+      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -468,7 +468,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                     Sr.
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
-                    Amount
+                    Amount 
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Tag
@@ -671,7 +671,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                     Sr.
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
-                    Amount
+                    Amount ({{ $customer->appData->currency }})
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
                     Tag

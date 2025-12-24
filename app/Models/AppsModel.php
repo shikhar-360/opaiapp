@@ -13,7 +13,9 @@ class AppsModel extends Model
         'primary_color',
         'accent_color',
         'logo_path',
-        'settings' 
+        'settings',
+        'currency',
+        'coin_price', 
     ];
 
     protected $casts = [

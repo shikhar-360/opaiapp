@@ -27,8 +27,8 @@
                         <div class="flex-1 text-center text-sky-700 font-semibold tracking-wide">Date of Activation</div>
                         <div class="flex-1 text-center shrink-0 whitespace-nowrap text-sky-700 font-semibold tracking-wide">Total Team</div>
                         <div class="flex-1 text-center shrink-0 whitespace-nowrap text-sky-700 font-semibold tracking-wide">Total Directs</div>
-                        <div class="flex-1 text-center text-sky-700 font-semibold tracking-wide">Total Team Investment</div>
-                        <div class="flex-1 text-center text-sky-700 font-semibold tracking-wide">Direct Team Investment</div>
+                        <div class="flex-1 text-center text-sky-700 font-semibold tracking-wide">Total Team Investment ({{ $customer->appData->currency }})</div>
+                        <div class="flex-1 text-center text-sky-700 font-semibold tracking-wide">Direct Team Investment ({{ $customer->appData->currency }})</div>
                         <div class="flex-1 text-center shrink-0 whitespace-nowrap text-sky-700 font-semibold tracking-wide">Self Investment</div>
                     </div>
                 </div>

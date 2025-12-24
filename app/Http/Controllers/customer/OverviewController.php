@@ -40,6 +40,7 @@ class OverviewController extends Controller
         $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
         $customer->myLevel                  =   $dashboard_matrics['myLevel'];
         $customer->myLevelEarning           =   $dashboard_matrics['myLevelEarning'];
+        $customer->appData                  =  $dashboard_matrics['appData'];
         
         $levelIncomeDetails = CustomerEarningDetailsModel::where('customer_id', $customer->id)
                                                             ->where('app_id', $customer->app_id)
@@ -52,6 +53,7 @@ class OverviewController extends Controller
         $customer->levelIncomeCount     = $levelIncomeDetails->count();
         $customer->levelIncomeDatefrom  = $dateFrom->format('Y-m-d');
         $customer->levelIncomeDateto    = $dateTo->format('Y-m-d');
+
 
         // dd($customer);
         

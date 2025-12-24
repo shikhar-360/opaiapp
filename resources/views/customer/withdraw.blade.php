@@ -34,7 +34,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">ROI Income</h3>
-        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">$0</p>
+        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0</p>
       </div>
     </div>
 
@@ -46,7 +46,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">Level Income</h3>
-        <p class="text-xl font-bold text-fuchsia-600 mt-1">{{ $customer->myLevelEarning }}</p>
+        <p class="text-xl font-bold text-fuchsia-600 mt-1">{{ $customer->appData->currency }} {{ $customer->myLevelEarning }}</p>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">Total Income</h3>
-        <p class="text-xl font-bold text-amber-600 mt-1">{{ $customer->myTotalEarning }}</p>
+        <p class="text-xl font-bold text-amber-600 mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
       </div>
     </div>
 
@@ -70,7 +70,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">Total Withdraw</h3>
-        <p class="text-xl font-bold text-emerald-600 mt-1">{{ $customer->myTotalWithdraws }}</p>
+        <p class="text-xl font-bold text-emerald-600 mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalWithdraws }}</p>
       </div>
     </div>
 
@@ -153,11 +153,11 @@
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                Amount
+                Amount ({{ $customer->appData->currency }})
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                Net Amount
+                Net Amount ({{ $customer->appData->currency }})
               </th>
               {{-- <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">

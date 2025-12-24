@@ -83,6 +83,10 @@ class CustomerController extends Controller
 
         $customer->myVoteSumamry            =   $dashboard_matrics['myVoteSummary'];
 
+        $customer->myVoteSumamry            =   $dashboard_matrics['myVoteSummary'];
+
+        $customer->appData                 =   $dashboard_matrics['appData'];
+
         // dd($customer);
                 
         return view('customer.dashboard', compact('customer'));
@@ -219,6 +223,9 @@ class CustomerController extends Controller
 
         $allDirectIds                       =   array_filter(explode('/', $customer->direct_ids ?? ''));
         $customer->allDirectsData           =   $this->dashbaord_matrice_services->getAllDirectsData($allDirectIds);
+
+        $customer->appData                 =   $dashboard_matrics['appData'];
+
         // dd("All",$customer->allDirectsData);
         
         // foreach($customer->activeDirectsData as $keys => $activeDirect)
@@ -246,13 +253,18 @@ class CustomerController extends Controller
     {
         $customer = Auth::guard('customer')->user();
         $genealogyData = $this->genealogy_services->buildGenealogyTree($customer->id);
+
+        $dashboard_matrics  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+
+        $customer->appData  =  $dashboard_matrics['appData'];
+
         // dd($genealogyData);
         // foreach($customer->activeDirectsData as $keys => $activeDirect)
         // {
         //     echo "<pre>"; print_r($activeDirect); echo "</pre>";
         // }
         // dd($customer->activeDirectsData);
-        return view('customer.genealogy', compact('genealogyData'));
+        return view('customer.genealogy', compact('genealogyData', 'customer'));
     }
 
     // For Testing
