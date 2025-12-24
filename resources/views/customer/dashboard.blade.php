@@ -864,11 +864,12 @@
                   <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th> -->
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th> -->
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -876,12 +877,13 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_rank'] }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td> -->
                   </tr>
                   @endforeach
                   <!-- <tr class="hover:bg-slate-200 transition">
@@ -1015,11 +1017,12 @@
                 <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th> -->
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th> -->
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -1027,12 +1030,13 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyDirects['referral_code'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $weeklyDirects['active_direct_count'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['level_id'] }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['level_id'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_rank'] }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_champions_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_champions_rank'] }}</td> -->
                   </tr>
                   @endforeach
                   <!-- <tr class="hover:bg-slate-200 transition">
@@ -1129,11 +1133,12 @@
                 <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
@@ -1141,12 +1146,13 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyDirects['referral_code'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $monthlyDirects['active_direct_count'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['level_id'] }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['level_id'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_rank'] }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_champions_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_champions_rank'] }}</td> -->
                   </tr>
                   @endforeach
                   <!-- <tr class="hover:bg-slate-200 transition">
@@ -1242,11 +1248,12 @@
                 <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
                   </tr>
@@ -1256,7 +1263,8 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->referral_code }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->referral_code }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_1 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1267,8 +1275,8 @@
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_4 }}</span>
-                    </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyVolume->total }}</td>
+                    </td> -->
+                    <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $dailyVolume->total }}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -1284,11 +1292,12 @@
                 <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name/th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
                   </tr>
@@ -1298,7 +1307,8 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->referral_code }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->referral_code }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_1 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1309,8 +1319,8 @@
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_4 }}</span>
-                    </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyVolume->total }}</td>
+                    </td> -->
+                    <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $weeklyVolume->total }}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -1326,11 +1336,12 @@
                 <thead>
                   <tr class="bg-slate-100 text-slate-900">
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
                   </tr>
@@ -1340,7 +1351,8 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->referral_code }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->referral_code }}</td>
+                    <!-- <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_1 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1351,8 +1363,8 @@
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_4 }}</span>
-                    </td>
-                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyVolume->total }}</td>
+                    </td> -->
+                    <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $monthlyVolume->total }}</td>
                   </tr>
                   @endforeach
                 </tbody>
@@ -1460,7 +1472,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-left">Honest</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
                   </tr>
                 </thead>
@@ -1500,7 +1512,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-left">Honest</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
                   </tr>
                 </thead>
@@ -1539,7 +1551,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-left">Honest</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
                   </tr>
                 </thead>

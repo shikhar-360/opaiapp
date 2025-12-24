@@ -115,7 +115,7 @@
             $strongPct = $strongTarget > 0 ? min(100, ($strongDone / $strongTarget) * 100) : 0;
             $otherPct  = $otherTarget > 0 ? min(100, ($otherDone / $otherTarget) * 100) : 0; 
           @endphp
-
+          
           <div class="rank-panel {{ $loop->first ? '' : 'hidden' }}" id="{{ $panelId }}">
 
             {{-- top row --}}
@@ -129,57 +129,21 @@
                   </span>
 
                   <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">
-                    Half: <span class="ml-1 font-semibold text-slate-900">{{ $half }}</span>
-                  </span>
-
-                  <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">
                     Directs: <span class="ml-1 font-semibold text-slate-900">{{ $directs }}</span>
                   </span>
 
-                  <span class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
-                    Active: <span class="ml-1 font-semibold">{{ optional($pkg->created_at)->format('d-m-Y') ?? now()->format('d-m-Y') }}</span>
-                  </span>
                 </div>
 
                 {{-- Targets chips --}}
                 <div class="flex flex-wrap gap-2 mt-3">
-                  @if (!empty($targets))
-                    @foreach ($targets as $t)
-                      <span class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">
-                        Target: <span class="ml-1 font-semibold text-slate-900">{{ $t }}</span>
-                      </span>
-                    @endforeach
-                  @else
-                    <span class="inline-flex items-center rounded-full bg-slate-50 px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-500 border border-slate-200">
-                      No targets configured
-                    </span>
-                  @endif
+                  <span class="inline-flex items-center bg-slate-10 px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-500 ">
+                      Get qualified for all levels and get a bonus package of OP-{{ implode('/', $targets); }} by having {{ $directs }} directs of OP-{{ implode('/', $targets); }}
+                  </span>
                 </div>
               </div>
+              
 
-              {{-- timer --}}
-              <div class="timer flex items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50/70 backdrop-blur-md px-3 py-2 shadow-sm"
-                   data-countdown="{{ $expiresIso }}">
-                <div class="tbox text-center min-w-[54px]">
-                  <div class="days text-base sm:text-lg font-extrabold text-[var(--theme-skky-600)] leading-none">--</div>
-                  <small class="block text-[10px] sm:text-[11px] text-slate-500 mt-1">Days</small>
-                </div>
-                <span class="colon font-extrabold text-slate-400">:</span>
-                <div class="tbox text-center min-w-[54px]">
-                  <div class="hours text-base sm:text-lg font-extrabold text-[var(--theme-skky-600)] leading-none">--</div>
-                  <small class="block text-[10px] sm:text-[11px] text-slate-500 mt-1">Hours</small>
-                </div>
-                <span class="colon font-extrabold text-slate-400">:</span>
-                <div class="tbox text-center min-w-[54px]">
-                  <div class="minutes text-base sm:text-lg font-extrabold text-[var(--theme-skky-600)] leading-none">--</div>
-                  <small class="block text-[10px] sm:text-[11px] text-slate-500 mt-1">Minutes</small>
-                </div>
-                <span class="colon font-extrabold text-slate-400">:</span>
-                <div class="tbox text-center min-w-[54px]">
-                  <div class="seconds text-base sm:text-lg font-extrabold text-[var(--theme-skky-600)] leading-none">--</div>
-                  <small class="block text-[10px] sm:text-[11px] text-slate-500 mt-1">Seconds</small>
-                </div>
-              </div>
+              
             </div>
 
             {{-- cards grid --}}
@@ -198,103 +162,31 @@
                     
                     $strongTargetDone   = $customer->p1_status[$t] ?? 0;
 
-                    $strongTargetPct = $strongTargetSet > 0 ? min(100, ($strongTargetDone / $strongTargetSet) * 100) : 0;
+
+                    $total = collect($customer->p1_status)->sum();
+
+                    $strongTargetPct = min(100, ($total / $directs) * 100);
 
                   @endphp
+                  @endforeach
                   <div class="mb-4">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
-                      <span>Strong Target</span>
-                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $strongTargetDone }} / {{ $strongTargetSet }}</span>
+                      <span>Directs</span>
+                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $total }} / {{ $directs }}</span>
                     </div>
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
                       <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $strongTargetPct }}%"></div>
                     </div>
                   </div>
 
-                  @endforeach
-
-                  <!-- <div class="mb-4">
-                    <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
-                      <span>Strong Target</span>
-                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $strongDone }} / {{ $strongTarget }}</span>
-                    </div>
-                    <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
-                      <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $strongPct }}%"></div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
-                      <span>Other Target</span>
-                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $otherDone }} / {{ $otherTarget }}</span>
-                    </div>
-                    <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
-                      <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $otherPct }}%"></div>
-                    </div>
-                  </div> -->
-
-                  <!-- <p class="text-[11px] text-slate-500 mt-3">
-                    Note: Progress values are 0 right now (demo). If you have user progress, replace <b>$strongDone</b>/<b>$otherDone</b> with real values.
-                  </p> -->
+                  
                 </div>
               </div>
 
-              {{-- Benefits --}}
-              <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl">
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/10 via-transparent to-[var(--theme-skky-400)]/15 opacity-70 blur-xl"></div>
-                <div class="relative">
-                  <h4 class="text-sm font-semibold text-slate-900 mb-4">Benefits</h4>
+              
 
-                  <div class="space-y-3">
-                    <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
-                      <span class="text-xs sm:text-sm text-slate-600">Package</span>
-                      <b class="font-mono text-sm text-slate-900">
-                        {{ !empty($targets) ? implode(' , ', $targets) : '-' }}
-                      </b>
-                    </div>
-
-                    <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
-                      <span class="text-xs sm:text-sm text-slate-600">Package Benefits</span>
-                      <b class="font-mono text-sm text-slate-900">
-                        {{ !empty($benefits) ? implode(' , ', $benefits) : '-' }}
-                      </b>
-                    </div>
-
-                    <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
-                      <span class="text-xs sm:text-sm text-slate-600">Benefit Levels</span>
-                      <b class="font-mono text-sm text-slate-900">
-                        {{ is_array($levels) ? count($levels) : 0 }}
-                      </b>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {{-- Notes --}}
-              <div class="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl">
-                <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-400/10 via-transparent to-fuchsia-400/10 opacity-70 blur-xl"></div>
-                <div class="relative">
-                  <h4 class="text-sm font-semibold text-slate-900 mb-3">Notes</h4>
-
-                  @if (!empty($levels))
-                    <p class="text-xs sm:text-sm text-slate-500 mb-3">Benefit will be distributed on these levels:</p>
-                    <div class="flex flex-wrap gap-2 mb-4 max-h-[108px] overflow-auto pr-1">
-                      @foreach ($levels as $lv)
-                        <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">L{{ $lv }}</span>
-                      @endforeach
-                    </div>
-                  @else
-                    <p class="text-xs sm:text-sm text-slate-500 mb-4">No benefit levels configured for this package.</p>
-                  @endif
-
-                  <button class="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full
-                                 bg-[var(--theme-skky-600)] text-white text-xs sm:text-sm font-semibold
-                                 hover:bg-[var(--theme-skky-500)] active:scale-95 transition-all border border-[var(--theme-skky-500)] shadow-md cursor-pointer"
-                          type="button">
-                    Claim (Demo)
-                  </button>
-                </div>
-              </div>
+              
+              
 
             </div>
           </div>

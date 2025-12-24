@@ -92,7 +92,7 @@ class CustomerController extends Controller
 
         $customer->leaderBoard             =   $dashboard_matrics['leaderBoard'];
         
-        // dd($customer->leaderBoard['directs']);
+        // dd($customer);
                 
         return view('customer.dashboard', compact('customer'));
     }
