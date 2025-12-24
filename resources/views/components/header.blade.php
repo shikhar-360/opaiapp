@@ -64,19 +64,48 @@
     @endphp
 
     <nav class="flex flex-col gap-0.5 w-full px-2.5 pt-6 text-sm md:text-[15px]">
+
+        <div class="flex flex-col items-center text-center gap-2 mb-2">
+            <div class="flex  items-center gap-2 ">
+                <div class="relative">
+                    <div
+                    class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md
+                            ring-1 ring-[var(--theme-skky-400)]/20">
+                        <img id="profilePreview"
+                            src="{{ asset('storage/' . $customer->profile_image) }}"
+                            alt="Profile"
+                            class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <!-- Name -->
+                <h3 class="text-base sm:text-lg font-semibold text-slate-900 leading-tight">
+                    <span id="profileNameText">OpAi</span>
+                </h3>
+            </div>
+
+            <!-- Rank -->
+            <span
+                class="inline-flex items-center gap-2 rounded-full bg-[var(--theme-skkky-50)]
+                    border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs
+                    font-medium text-[var(--theme-primary-text)]">
+                
+                <img src="/assets/images/rank/emerald-rank.webp"
+                    alt="Rank"
+                    class="w-6 h-6 object-contain">
+                Rank: <span class="font-semibold">{{ $customer->leadership_rank??'-' }}</span>
+            </span>
+
+            <!-- VIP -->
+            <span
+            class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1
+                   text-[11px] sm:text-xs font-medium text-emerald-700 border border-emerald-300">
+                VIP Level: <span class="font-semibold text-slate-900">{{ $customer->champions_rank??'-' }}</span>
+            </span>
+        </div>
+
         <p class="px-3 pb-1 text-[11px] uppercase tracking-[0.18em] text-slate-400">
             Menu
         </p>
-
-        {{-- Dashboard --}}
-        <a href="{{ route('dashboard') }}"
-           class="{{ $baseItemClass }} {{ Route::is('index') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('index') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1.5 rounded-lg">
-                <img src="/assets/images/menu/dashboard.webp" width="64" height="48" alt="Logo"
-                     class="w-6 h-6 object-contain">
-            </span>
-            <span>Dashboard</span>
-        </a>
 
         {{-- Profile --}}
         <a href="{{ route('profile') }}"
@@ -86,6 +115,16 @@
                      class="w-7 h-7 object-contain">
             </span>
             <span>Profile</span>
+        </a>
+
+        {{-- Dashboard --}}
+        <a href="{{ route('dashboard') }}"
+           class="{{ $baseItemClass }} {{ Route::is('index') ? $activeClass : $inactiveClass }}">
+            <span class="inline-flex items-center justify-center {{ Route::is('index') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1.5 rounded-lg">
+                <img src="/assets/images/menu/dashboard.webp" width="64" height="48" alt="Logo"
+                     class="w-6 h-6 object-contain">
+            </span>
+            <span>Dashboard</span>
         </a>
 
         {{-- Pay By Dapp --}}

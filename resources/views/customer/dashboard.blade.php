@@ -647,6 +647,8 @@
             <p class="text-sm text-slate-500">Date of Activation</p>
             <p class="text-xl font-bold text-[var(--theme-high-text)]">
               {{ optional($customer->myFirstDepositAt)->format('d-m-Y') ?? '-' }}
+            
+            
             </p>
           </div>
         </div>

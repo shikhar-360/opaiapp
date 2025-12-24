@@ -17,4 +17,9 @@ class AppPromotionPackagesModel extends Model
         'benefit_levels'
     ];
 
+    protected $casts = [
+        'package' => 'array',
+        'package_benefits' => 'array',
+        'benefit_levels' => 'array',
+    ];
 }

@@ -15,7 +15,6 @@ class CustomersModel extends Authenticatable
 
     protected $fillable = [
         'name',
-        'profile_image',
         'email',
         'phone',
         'password',
@@ -34,6 +33,8 @@ class CustomersModel extends Authenticatable
         'iswallet_editable',
         'isphone_editable',
         'champions_point',
+        'profile_image',
+        'promotion_status',
     ];
 
     protected $hidden = [
@@ -45,6 +46,7 @@ class CustomersModel extends Authenticatable
         'email_verified_at' => 'datetime',
         'status' => 'boolean',
         'created_at' => 'datetime',
+        'promotion_status' => 'array',
     ];
 
     public function app()

@@ -185,7 +185,8 @@ class CustomerAuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->route('dashboard');
+        // return redirect()->route('dashboard');
+        return redirect()->route('profile');
 
         // return redirect()->route('customer.web3login');
     }

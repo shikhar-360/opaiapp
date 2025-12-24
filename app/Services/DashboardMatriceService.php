@@ -4,6 +4,7 @@ namespace App\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
@@ -136,7 +137,7 @@ class DashboardMatriceService
             'myInvestment'            => $sumDeposits([$customer->id]),
             'myWithdraws'             => $sumWithdraws([$customer->id]),
             'mySponsor'               => $sponsor,
-            'myFirstDepositAt'        => $veryFirstDeposit->created_at ?? 'NA',
+            'myFirstDepositAt'        => $veryFirstDeposit ? Carbon::parse($veryFirstDeposit->created_at) : null, //$veryFirstDeposit->created_at ?? 'NA',
             'myPackages'              => $myPackages ?? [],
             'myPackageDetails'        => $myPackageDeatils ?? [],
             'myFinance'               => $myFinance,
