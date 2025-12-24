@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 use App\Services\DashboardMatriceService;
 use App\Services\GenealogyService;
 use App\Services\LeadershipIncomeService;
 use App\Services\LeadershipChampionsIncomeService;
-// use App\Services\PromotionThounsandService;
+use App\Services\PromotionThounsandService;
 
 // use App\Traits\ManagesCustomerHierarchy;
 use App\Models\AppLeadershipChampionsIncomeModel;
@@ -31,16 +32,18 @@ class CustomerController extends Controller
     protected $genealogy_services;
     protected $leadership_income_services;
     protected $leadership_chamions_income_services;
+    
+    protected $pk;
 
-
-    public function __construct(DashboardMatriceService $dashbaord_matrice_service, GenealogyService $genealogy_service, LeadershipIncomeService $leadership_income_service, LeadershipChampionsIncomeService $leadership_chamions_income_service)
+    public function __construct(DashboardMatriceService $dashbaord_matrice_service, GenealogyService $genealogy_service, LeadershipIncomeService $leadership_income_service, LeadershipChampionsIncomeService $leadership_chamions_income_service, PromotionThounsandService $p1000)
     {
         $this->dashbaord_matrice_services = $dashbaord_matrice_service;
         $this->genealogy_services = $genealogy_service;
 
         $this->leadership_income_services = $leadership_income_service;
         $this->leadership_chamions_income_services = $leadership_chamions_income_service;
-
+    
+        $this->pk = $p1000;
     }
 
     public function dashboard(Request $request)
@@ -87,7 +90,9 @@ class CustomerController extends Controller
 
         $customer->appData                 =   $dashboard_matrics['appData'];
 
-        // dd($customer);
+        $customer->leaderBoard             =   $dashboard_matrics['leaderBoard'];
+        
+        // dd($customer->leaderBoard['directs']);
                 
         return view('customer.dashboard', compact('customer'));
     }
@@ -331,10 +336,16 @@ class CustomerController extends Controller
 
         $customer->promotionPackage         =   AppPromotionPackagesModel::where('app_id', $customer->app_id)->get();
         
-        // $p1_status = $this->promotion_services->myPromotionStatus($customer, 1);
+        $p1_status = $this->pk->myPromotionStatus($customer, 1);
 
-        // dd($p1_status);
+        $p2_status = $this->pk->myPromotionStatus($customer, 2);
+
+        // dd($p1_status, $p2_status);
+
+        $customer->p1_status                =   $p1_status;
+        $customer->p2_status                =   $p2_status;
 
         return view('customer.promotion', compact('customer'));
     }
+
 }

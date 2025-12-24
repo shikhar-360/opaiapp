@@ -24,6 +24,7 @@
     };
 
     $firstPanelId = $packages->isNotEmpty() ? ('panel-' . $packages->first()->id) : null;
+
 @endphp
 
 <section class="min-h-screen py-8 bg-slate-50/50 px-4">
@@ -36,6 +37,7 @@
         <p class="text-xs sm:text-sm text-slate-500">Select a promotion package to see details.</p>
       </div>
     </div>
+
 
     {{-- TABS --}}
     <div class="relative mb-5">
@@ -92,12 +94,26 @@
             $expiresIso = $expiresAt ? $expiresAt->format('Y-m-d\TH:i:s') : now()->addDays(30)->format('Y-m-d\TH:i:s');
 
             // Progress (if you later have real progress, just replace these)
+            
             $strongTarget = (float) ($targets[0] ?? 0);
             $otherTarget  = (float) ($targets[1] ?? 0);
+
             $strongDone   = 0;
             $otherDone    = 0;
+            
+            if($targets[0] === 5)
+            {
+              $strongDone   = $customer->p1_status[$targets[0]] ?? 0;
+              $otherDone    = $customer->p1_status[$targets[1]] ?? 0;  
+            }
+            else if($targets[0] === 25)
+            {
+              $strongDone   = $customer->p2_status[$targets[0]] ?? 0;
+              $otherDone    = $customer->p2_status[$targets[1]] ?? 0;
+            }
+
             $strongPct = $strongTarget > 0 ? min(100, ($strongDone / $strongTarget) * 100) : 0;
-            $otherPct  = $otherTarget > 0 ? min(100, ($otherDone / $otherTarget) * 100) : 0;
+            $otherPct  = $otherTarget > 0 ? min(100, ($otherDone / $otherTarget) * 100) : 0; 
           @endphp
 
           <div class="rank-panel {{ $loop->first ? '' : 'hidden' }}" id="{{ $panelId }}">
@@ -175,7 +191,29 @@
                 <div class="relative">
                   <h4 class="text-sm font-semibold text-slate-900 mb-4">Progress</h4>
 
+                  @foreach ($targets as $t)
+                  @php
+                    
+                    $strongTargetSet = (float) ($t ?? 0);
+                    
+                    $strongTargetDone   = $customer->p1_status[$t] ?? 0;
+
+                    $strongTargetPct = $strongTargetSet > 0 ? min(100, ($strongTargetDone / $strongTargetSet) * 100) : 0;
+
+                  @endphp
                   <div class="mb-4">
+                    <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
+                      <span>Strong Target</span>
+                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $strongTargetDone }} / {{ $strongTargetSet }}</span>
+                    </div>
+                    <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
+                      <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $strongTargetPct }}%"></div>
+                    </div>
+                  </div>
+
+                  @endforeach
+
+                  <!-- <div class="mb-4">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <span>Strong Target</span>
                       <span class="text-[var(--theme-skky-700)] font-semibold">{{ $strongDone }} / {{ $strongTarget }}</span>
@@ -193,7 +231,7 @@
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
                       <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $otherPct }}%"></div>
                     </div>
-                  </div>
+                  </div> -->
 
                   <!-- <p class="text-[11px] text-slate-500 mt-3">
                     Note: Progress values are 0 right now (demo). If you have user progress, replace <b>$strongDone</b>/<b>$otherDone</b> with real values.

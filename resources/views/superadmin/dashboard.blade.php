@@ -21,26 +21,26 @@
     <div class="row">
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm p-4 text-center">
-                <h5>Total Apps</h5>
-                <h2>{{ $apps ?? 0 }}</h2>
+                <h5>Apps</h5>
+                <h2></h2>
                 <a href="{{ route('superadmin.apps.index') }}">APPS</a>
             </div>
         </div>
 
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm p-4 text-center">
-                <h5>Total Admins</h5>
-                <h2>{{ $admins ?? 0 }}</h2>
+                <h5>Admins</h5>
+                <h2></h2>
                 <a href="{{ route('superadmin.admins.index') }}">ADMINS</a>
             </div>
         </div>
 
-        <div class="col-md-4 mb-3">
+        <!-- <div class="col-md-4 mb-3">
             <div class="card shadow-sm p-4 text-center">
                 <h5>Total Customers</h5>
                 <h2>{{ $customers ?? 0 }}</h2>
             </div>
-        </div>
+        </div> -->
     </div>
 
 </div>

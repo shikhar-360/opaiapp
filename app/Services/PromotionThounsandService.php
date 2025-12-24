@@ -59,7 +59,7 @@ class PromotionThounsandService
                                                                             ->where('app_id', $customer->app_id)
                                                                             ->where('id', 1)
                                                                             ->first();
-            $leadershipChampionsRankArray = json_decode($leadershipChampionsRank['package'], true);
+            $leadershipChampionsRankArray = $leadershipChampionsRank['package']; //json_decode($leadershipChampionsRank['package'], true);
 
             
 
@@ -100,13 +100,13 @@ class PromotionThounsandService
                 // Assign promotion only if not already present
                 if (!in_array($promotion_pkg, $promotion_status_array, true)) 
                 {
-                    // dd($promotion_pkg);
+                    // / dd($promotion_pkg);
                     array_push($promotion_status_array, $promotion_pkg);
 
-                    // dd($promotion_status_array);
+                    dd($promotion_status_array);
 
-                    $customer->promotion_status = $promotion_status_array;
-                    $customer->save();
+                    // $customer->promotion_status = $promotion_status_array;
+                    // $customer->save();
                 }
 
             }
@@ -228,57 +228,69 @@ class PromotionThounsandService
     public function myPromotionStatus($customer, $promotionId)
     {
 
-        $customer = CustomersModel::where("customer_id", $customer->id)->where("app_id", $customer->app->id)->get();
+        $customer = CustomersModel::where("id", $customer->id)->where("app_id", $customer->app->id)->first();
     
         $packageCounts = [];
         $activeDirectIds = [];
         $leadershipChampionsRank = [];
 
+        // dd($customer);
+        
         if(!$customer->active_direct_ids)
         {
-            continue;
+            return ["status_code"=>"error", message=>"No active directs"];
         }
             
         $activeDirectIds    =   array_filter(explode('/', $customer->active_direct_ids ?? ''));
             
         if (empty($activeDirectIds)) {
-            continue;
+            return ["status_code"=>"error", message=>"No active directs"];
         }
 
         $leadershipChampionsRank = AppPromotionPackagesModel::where('app_id', $customer->app_id)
                                                                 ->where('id', $promotionId)
                                                                 ->first();
 
-        $leadershipChampionsRankArray = json_decode($leadershipChampionsRank['package'], true);
+        $leadershipChampionsRankArray = $leadershipChampionsRank['package']; //json_decode($leadershipChampionsRank['package'], true);
 
         $allDirects = CustomerDepositsModel::select('*')
-                                                    ->selectRaw('MIN(created_at) OVER (PARTITION BY customer_id, amount) as earliest_deposit_date')
-                                                    ->whereIn('customer_id', $activeDirectIds)
-                                                    ->where('payment_status', 'success')
-                                                    ->where('is_free_deposit', 0)
-                                                    ->whereIn('amount', $leadershipChampionsRankArray)
-                                                    ->get();
-            
-            //Cast the amount to integer
-            $allDirects = $allDirects->map(function ($row) {
-                                            $row->amount = (int) $row->amount;
-                                            return $row;
-                                        });
+                                                ->selectRaw('MIN(created_at) OVER (PARTITION BY customer_id, amount) as earliest_deposit_date')
+                                                ->whereIn('customer_id', $activeDirectIds)
+                                                ->where('payment_status', 'success')
+                                                ->where('is_free_deposit', 0)
+                                                ->whereIn('amount', $leadershipChampionsRankArray)
+                                                ->get();
+        
 
-            // count the pkg deposited 
-            $packageCounts = $allDirects->groupBy('amount')
-                                                ->map(fn ($rows) => $rows->groupBy('customer_id')->count());
 
-            //calculate total and add 0 for the missing packages                                                
-            $totalPkgCounts = 0;                                                
-            foreach($leadershipChampionsRankArray as $pkg)
+        //Cast the amount to integer
+        $allDirects = $allDirects->map(function ($row) {
+                                        $row->amount = (int) $row->amount;
+                                        return $row;
+                                    });
+        
+
+        // dd($allDirects);  
+
+        // count the pkg deposited 
+        $packageCounts = $allDirects->groupBy('amount')
+                                            ->map(fn ($rows) => $rows->groupBy('customer_id')->count());
+
+        // dd($packageCounts);
+
+        //calculate total and add 0 for the missing packages                                                
+        $totalPkgCounts = 0;                                                
+        foreach($leadershipChampionsRankArray as $pkg)
+        {
+            if (!$packageCounts->has($pkg)) 
             {
-                if (!$packageCounts->has($pkg)) 
-                {
-                    $packageCounts[$pkg] = 0;
-                }
+                $packageCounts[$pkg] = 0;
             }
+        }
 
-            return $packageCounts;
+        // dd($packageCounts);
+
+        return $packageCounts;
     }
 }
+

@@ -703,6 +703,8 @@
       {{-- Leaderboard --}}
   <h2 class="text-lg font-semibold mb-3 text-slate-900 mt-10">Leaderboard</h2>
 
+{{-- ===================== DIRECT / VOLUME + SUB TABS (BLADE) ===================== --}}
+
 <div
   class="p-4 md:p-6 text-slate-900 rounded-2xl w-full mx-auto border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.10)] relative overflow-hidden text-left">
 
@@ -713,472 +715,858 @@
   </div>
 
   <div class="relative mb-6">
-    {{-- TABS --}}
+    {{-- ================= MAIN TABS (Directs / Volumes / Votes) ================= --}}
     <div
-      class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
-      <ul class="flex gap-2" data-tabs-toggle="#default-tab-content" role="tablist">
-        {{-- DAILY TAB --}}
+      class="flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
+      <ul class="flex gap-2" data-main-tabs role="tablist">
+
+        {{-- DIRECTS MAIN TAB --}}
         <li role="presentation">
-          <button id="tab-daily" data-tabs-target="#panel-daily" type="button" role="tab"
-            aria-controls="panel-daily" aria-selected="true"
-            class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
-                   transition flex items-center gap-2">
-            <span class="relative z-[1]">Daily</span>
-            <span
-              class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
-              5
-            </span>
+          <button type="button" role="tab"
+            data-main-target="#direct-content"
+            aria-selected="true"
+            class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+            <span class="relative z-[1]">Directs</span>
           </button>
         </li>
 
-        {{-- WEEKLY TAB --}}
+        {{-- VOLUMES MAIN TAB --}}
         <li role="presentation">
-          <button id="tab-weekly" data-tabs-target="#panel-weekly" type="button" role="tab"
-            aria-controls="panel-weekly" aria-selected="false"
-            class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
-                   transition flex items-center gap-2">
-            <span class="relative z-[1]">Weekly</span>
-            <span
-              class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">
-              3
-            </span>
+          <button type="button" role="tab"
+            data-main-target="#volume-content"
+            aria-selected="false"
+            class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+            <span class="relative z-[1]">Volumes</span>
           </button>
         </li>
 
-        {{-- MONTHLY TAB --}}
+        {{-- VOTES MAIN TAB --}}
         <li role="presentation">
-          <button id="tab-monthly" data-tabs-target="#panel-monthly" type="button" role="tab"
-            aria-controls="panel-monthly" aria-selected="false"
-            class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
-                   transition flex items-center gap-2">
-            <span class="relative z-[1]">Monthly</span>
-            <span
-              class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
-              3
-            </span>
+          <button type="button" role="tab"
+            data-main-target="#votes-content"
+            aria-selected="false"
+            class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+            <span class="relative z-[1]">Votes</span>
           </button>
         </li>
+
       </ul>
 
-      {{-- Small hint text --}}
       <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
         <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-        <span>Click tabs to switch between Daily / Weekly / Monthly</span>
+        <span>Directs / Volumes / Votes </span>
       </div>
     </div>
   </div>
 
-  <div id="default-tab-content" class="relative">
-    {{-- ================= DAILY (TABLE 1) ================= --}}
-    <div id="panel-daily" role="tabpanel" aria-labelledby="tab-daily">
-      <div class="overflow-x-auto">
-        <div id="tabledata1_wrapper" class="dataTables_wrapper no-footer">
+  {{-- ================= MAIN PANELS WRAPPER ================= --}}
+  <div class="relative">
 
-          {{-- TOP BAR: SHOW + SEARCH --}}
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
-            <div class="dataTables_length" id="tabledata1_length">
-              <label class="text-xs text-slate-600 flex items-center gap-2">
-                <span>Show</span>
-                <select name="tabledata1_length" aria-controls="tabledata1"
-                  class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80">
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                </select>
-                <span>entries</span>
-              </label>
-            </div>
+    {{-- ===================================================================== --}}
+    {{-- ============================ DIRECT PANEL ============================ --}}
+    {{-- ===================================================================== --}}
+    <div id="direct-content" data-main-panel class="relative">
 
-            <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
-              <label class="text-xs text-slate-600 w-full">
-                <span class="sr-only">Search</span>
-                <div class="relative">
-                  <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                    {{-- Search icon --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
-                        clip-rule="evenodd" />
-                      <path
-                        d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
-                    </svg>
-                  </span>
-                  <input type="search"
-                    class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80"
-                    placeholder="Search user / wallet / rank" aria-controls="tabledata1">
+      {{-- SUB TABS (Direct) --}}
+      <div
+        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner mb-4">
+        <ul class="flex gap-2" data-tabs-toggle="#direct-tab-content" role="tablist">
+
+          <li role="presentation">
+            <button id="direct-tab-daily" data-tabs-target="#direct-panel-daily" type="button" role="tab"
+              aria-controls="direct-panel-daily" aria-selected="true"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Daily</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
+                {{ $customer->leaderBoard["directs"]["daily"]->count() }}
+              </span>
+            </button>
+          </li>
+
+          <li role="presentation">
+            <button id="direct-tab-weekly" data-tabs-target="#direct-panel-weekly" type="button" role="tab"
+              aria-controls="direct-panel-weekly" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Weekly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">
+                {{ $customer->leaderBoard["directs"]["weekly"]->count() }}
+              </span>
+            </button>
+          </li>
+
+          <li role="presentation">
+            <button id="direct-tab-monthly" data-tabs-target="#direct-panel-monthly" type="button" role="tab"
+              aria-controls="direct-panel-monthly" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Monthly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["directs"]["monthly"]->count() }}
+              </span>
+            </button>
+          </li>
+
+        </ul>
+      </div>
+
+      {{-- DIRECT SUB PANELS --}}
+      <div id="direct-tab-content" class="relative">
+
+        {{-- ================= DIRECT DAILY (TABLE 1) ================= --}}
+        <div id="direct-panel-daily" role="tabpanel" aria-labelledby="direct-tab-daily">
+          <div class="overflow-x-auto">
+            <div id="tabledata1_wrapper" class="dataTables_wrapper no-footer">
+
+              {{-- TOP BAR: SHOW + SEARCH --}}
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
+                <div class="dataTables_length" id="tabledata1_length">
+                  <label class="text-xs text-slate-600 flex items-center gap-2">
+                    <span>Show</span>
+                    <select name="tabledata1_length" aria-controls="tabledata1"
+                      class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <span>entries</span>
+                  </label>
                 </div>
-              </label>
+
+                <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
+                  <label class="text-xs text-slate-600 w-full">
+                    <span class="sr-only">Search</span>
+                    <div class="relative">
+                      <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
+                            clip-rule="evenodd" />
+                          <path
+                            d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
+                        </svg>
+                      </span>
+                      <input type="search"
+                        class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80"
+                        placeholder="Search user / wallet / rank" aria-controls="tabledata1">
+                    </div>
+                  </label>
+                </div>
+              </div> -->
+
+              <table id="tabledata1"
+                class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
+                style="padding-top: 15px;" aria-describedby="tabledata1_info">
+                <thead>
+                  <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["directs"]["daily"] as $dailyDirects)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td>
+                  </tr>
+                  @endforeach
+                  <!-- <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">1</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1001</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span
+                        class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">
+                        DIAMOND
+                      </span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">2</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1002</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span
+                        class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">
+                        EMERALD
+                      </span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">3</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1003</td>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span
+                        class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
+                        GOLD
+                      </span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">4</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1004</td>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span
+                        class="inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[11px] text-rose-700 border border-rose-300">
+                        RUBY
+                      </span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">5</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1005</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span
+                        class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">
+                        SAPPHIRE
+                      </span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">3</td>
+                  </tr> -->
+                </tbody>
+              </table>
+
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+                <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata1_info" role="status"
+                  aria-live="polite">
+                  Showing 1 to 5 of 5 entries
+                </div>
+                <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2"
+                  id="tabledata1_paginate">
+                  <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata1" aria-role="link" data-dt-idx="previous" tabindex="0"
+                    id="tabledata1_previous">Previous</a>
+                  <span class="text-xs text-slate-700">1</span>
+                  <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata1" aria-role="link" data-dt-idx="next" tabindex="0"
+                    id="tabledata1_next">Next</a>
+                </div>
+              </div> -->
+
             </div>
           </div>
-
-          <table id="tabledata1"
-            class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
-            style="padding-top: 15px;" aria-describedby="tabledata1_info">
-            <thead>
-              <tr class="bg-slate-100 text-slate-900">
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Sr.
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  User Id
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Rank
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px] !text-right">
-                 VIP Level
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              {{-- DUMMY DATA: DAILY --}}
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">1</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1001</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  {{-- DIAMOND --}}
-                  <span
-                    class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">
-                    DIAMOND
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">2</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1002</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  {{-- EMERALD --}}
-                  <span
-                    class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">
-                    EMERALD
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">3</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1003</td>
-                <td class="px-4 sm:px-5 py-3">
-                  {{-- GOLD --}}
-                  <span
-                    class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
-                    GOLD
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">4</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1004</td>
-                <td class="px-4 sm:px-5 py-3">
-                  {{-- RUBY --}}
-                  <span
-                    class="inline-flex items-center rounded-full bg-rose-50 px-2 py-0.5 text-[11px] text-rose-700 border border-rose-300">
-                    RUBY
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">5</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1005</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  {{-- SAPPHIRE --}}
-                  <span
-                    class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">
-                    SAPPHIRE
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">3</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
-            <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata1_info" role="status"
-              aria-live="polite">
-              Showing 1 to 5 of 5 entries
-            </div>
-            <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2"
-              id="tabledata1_paginate">
-              <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata1" aria-role="link" data-dt-idx="previous" tabindex="0"
-                id="tabledata1_previous">Previous</a>
-              <span class="text-xs text-slate-700">1</span>
-              <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata1" aria-role="link" data-dt-idx="next" tabindex="0"
-                id="tabledata1_next">Next</a>
-            </div>
-          </div>
-
         </div>
+
+        {{-- ================= DIRECT WEEKLY (TABLE 2) ================= --}}
+        <div class="hidden" id="direct-panel-weekly" role="tabpanel" aria-labelledby="direct-tab-weekly">
+          <div class="overflow-x-auto">
+            <div id="tabledata2_wrapper" class="dataTables_wrapper no-footer">
+
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                <div class="dataTables_length" id="tabledata2_length">
+                  <label class="text-xs text-slate-600 flex items-center gap-2">
+                    <span>Show</span>
+                    <select name="tabledata2_length" aria-controls="tabledata2"
+                      class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-emerald-400/80 focus:border-emerald-400/80">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <span>entries</span>
+                  </label>
+                </div>
+
+                <div id="tabledata2_filter" class="dataTables_filter w-full sm:w-auto">
+                  <label class="text-xs text-slate-600 w-full">
+                    <span class="sr-only">Search</span>
+                    <div class="relative">
+                      <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
+                            clip-rule="evenodd" />
+                          <path
+                            d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
+                        </svg>
+                      </span>
+                      <input type="search"
+                        class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-400/80 focus:border-emerald-400/80"
+                        placeholder="Search weekly directs" aria-controls="tabledata2">
+                    </div>
+                  </label>
+                </div>
+              </div> -->
+
+              <table id="tabledata2"
+                class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
+                style="padding-top: 15px;" aria-describedby="tabledata2_info">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["directs"]["weekly"] as $weeklyDirects)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $weeklyDirects['active_direct_count'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['level_id'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_champions_rank'] }}</td>
+                  </tr>
+                  @endforeach
+                  <!-- <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">1</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1001</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">EMERALD</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">1</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">2</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1003</td>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">GOLD</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">3</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1005</td>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">DIAMOND</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">3</td>
+                  </tr> -->
+                </tbody>
+              </table>
+
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+                <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata2_info" role="status" aria-live="polite">
+                  Showing 1 to 3 of 3 entries
+                </div>
+                <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2" id="tabledata2_paginate">
+                  <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata2" aria-role="link" data-dt-idx="previous" tabindex="0" id="tabledata2_previous">Previous</a>
+                  <span class="text-xs text-slate-700">1</span>
+                  <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata2" aria-role="link" data-dt-idx="next" tabindex="0" id="tabledata2_next">Next</a>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+
+        {{-- ================= DIRECT MONTHLY (TABLE 3) ================= --}}
+        <div class="hidden" id="direct-panel-monthly" role="tabpanel" aria-labelledby="direct-tab-monthly">
+          <div class="overflow-x-auto">
+            <div id="tabledata3_wrapper" class="dataTables_wrapper no-footer">
+
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                <div class="dataTables_length" id="tabledata3_length">
+                  <label class="text-xs text-slate-600 flex items-center gap-2">
+                    <span>Show</span>
+                    <select name="tabledata3_length" aria-controls="tabledata3"
+                      class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-fuchsia-400/80 focus:border-fuchsia-400/80">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <span>entries</span>
+                  </label>
+                </div>
+
+                <div id="tabledata3_filter" class="dataTables_filter w-full sm:w-auto">
+                  <label class="text-xs text-slate-600 w-full">
+                    <span class="sr-only">Search</span>
+                    <div class="relative">
+                      <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
+                            clip-rule="evenodd" />
+                          <path
+                            d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
+                        </svg>
+                      </span>
+                      <input type="search"
+                        class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-fuchsia-400/80 focus:border-fuchsia-400/80"
+                        placeholder="Search monthly directs" aria-controls="tabledata3">
+                    </div>
+                  </label>
+                </div>
+              </div> -->
+
+              <table id="tabledata3"
+                class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
+                style="padding-top: 15px;" aria-describedby="tabledata3_info">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["directs"]["monthly"] as $monthlyDirects)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $monthlyDirects['active_direct_count'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['level_id'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_rank'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_champions_rank'] }}</td>
+                  </tr>
+                  @endforeach
+                  <!-- <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">2</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER2002</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">DIAMOND</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">5</td>
+                  </tr>
+
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">3</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER2003</td>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">SAPPHIRE</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
+                  </tr> -->
+                </tbody>
+              </table>
+
+              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+                <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata3_info" role="status" aria-live="polite">
+                  Showing 1 to 3 of 3 entries
+                </div>
+                <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2" id="tabledata3_paginate">
+                  <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata3" aria-role="link" data-dt-idx="previous" tabindex="0" id="tabledata3_previous">Previous</a>
+                  <span class="text-xs text-slate-700">1</span>
+                  <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
+                    aria-controls="tabledata3" aria-role="link" data-dt-idx="next" tabindex="0" id="tabledata3_next">Next</a>
+                </div>
+              </div> -->
+
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    {{-- ================= WEEKLY (TABLE 2) ================= --}}
-    <div class="hidden" id="panel-weekly" role="tabpanel" aria-labelledby="tab-weekly">
-      <div class="overflow-x-auto">
-        <div id="tabledata2_wrapper" class="dataTables_wrapper no-footer">
+    {{-- ===================================================================== --}}
+    {{-- ============================ VOLUME PANEL ============================ --}}
+    {{-- ===================================================================== --}}
+    <div id="volume-content" data-main-panel class="hidden relative">
 
-          {{-- TOP BAR: SHOW + SEARCH --}}
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-            <div class="dataTables_length" id="tabledata2_length">
-              <label class="text-xs text-slate-600 flex items-center gap-2">
-                <span>Show</span>
-                <select name="tabledata2_length" aria-controls="tabledata2"
-                  class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-emerald-400/80 focus:border-emerald-400/80">
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                </select>
-                <span>entries</span>
-              </label>
-            </div>
+      {{-- SUB TABS (Volume) --}}
+      <div
+        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner mb-4">
+        <ul class="flex gap-2" data-tabs-toggle="#volume-tab-content" role="tablist">
+          <li role="presentation">
+            <button data-tabs-target="#volume-panel-daily" type="button" role="tab" aria-selected="true"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Daily</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["volume"]["daily"]->count() }}
+              </span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button data-tabs-target="#volume-panel-weekly" type="button" role="tab" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Weekly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["volume"]["weekly"]->count() }}
+              </span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button data-tabs-target="#volume-panel-monthly" type="button" role="tab" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Monthly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["volume"]["monthly"]->count() }}
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
 
-            <div id="tabledata2_filter" class="dataTables_filter w-full sm:w-auto">
-              <label class="text-xs text-slate-600 w-full">
-                <span class="sr-only">Search</span>
-                <div class="relative">
-                  <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                    {{-- Search icon --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
-                        clip-rule="evenodd" />
-                      <path
-                        d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
-                    </svg>
-                  </span>
-                  <input type="search"
-                    class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-emerald-400/80 focus:border-emerald-400/80"
-                    placeholder="Search weekly directs" aria-controls="tabledata2">
-                </div>
-              </label>
-            </div>
-          </div>
+      {{-- VOLUME SUB PANELS --}}
+      <div id="volume-tab-content">
 
-          <table id="tabledata2"
-            class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
-            style="padding-top: 15px;" aria-describedby="tabledata2_info">
-            <thead>
-              <tr class="bg-slate-100 text-slate-900">
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Sr.
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  User Id
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Rank
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px] !text-right">
-                  VIP Level
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              {{-- DUMMY DATA: WEEKLY --}}
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">1</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1001</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  <span
-                    class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">
-                    EMERALD
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right">1</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">2</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1003</td>
-                <td class="px-4 sm:px-5 py-3">
-                  <span
-                    class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
-                    GOLD
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">3</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER1005</td>
-                <td class="px-4 sm:px-5 py-3">
-                  <span
-                    class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">
-                    DIAMOND
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">3</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
-            <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata2_info" role="status"
-              aria-live="polite">
-              Showing 1 to 3 of 3 entries
-            </div>
-            <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2"
-              id="tabledata2_paginate">
-              <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata2" aria-role="link" data-dt-idx="previous" tabindex="0"
-                id="tabledata2_previous">Previous</a>
-              <span class="text-xs text-slate-700">1</span>
-              <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata2" aria-role="link" data-dt-idx="next" tabindex="0"
-                id="tabledata2_next">Next</a>
+        <div id="volume-panel-daily" role="tabpanel">
+          @php($dummy = true)
+          <div class="overflow-x-auto">
+            <div id="vol_tabledata1_wrapper" class="dataTables_wrapper no-footer">
+              <table id="vol_tabledata1" class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm" style="padding-top:15px;">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["volume"]["daily"] as $dlm => $dailyVolume)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->referral_code }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_1 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_2 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_3 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_4 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyVolume->total }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
             </div>
           </div>
-
         </div>
+
+        <div id="volume-panel-weekly" class="hidden" role="tabpanel">
+          <div class="overflow-x-auto">
+            <div id="vol_tabledata2_wrapper" class="dataTables_wrapper no-footer">
+              <table id="vol_tabledata2" class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm" style="padding-top:15px;">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["volume"]["weekly"] as $wlm => $weeklyVolume)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->referral_code }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_1 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_2 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_3 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_4 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyVolume->total }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div id="volume-panel-monthly" class="hidden" role="tabpanel">
+          <div class="overflow-x-auto">
+            <div id="vol_tabledata3_wrapper" class="dataTables_wrapper no-footer">
+              <table id="vol_tabledata3" class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm" style="padding-top:15px;">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
+                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["volume"]["monthly"] as $vlm => $monthlyVolume)
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->referral_code }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_1 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_2 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_3 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_4 }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyVolume->total }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    {{-- ================= MONTHLY (TABLE 3) ================= --}}
-    <div class="hidden" id="panel-monthly" role="tabpanel" aria-labelledby="tab-monthly">
-      <div class="overflow-x-auto">
-        <div id="tabledata3_wrapper" class="dataTables_wrapper no-footer">
+    {{-- ===================================================================== --}}
+    {{-- ============================= VOTES PANEL ============================ --}}
+    {{-- ===================================================================== --}}
+    <div id="votes-content" data-main-panel class="hidden relative">
 
-          {{-- TOP BAR: SHOW + SEARCH --}}
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-            <div class="dataTables_length" id="tabledata3_length">
-              <label class="text-xs text-slate-600 flex items-center gap-2">
-                <span>Show</span>
-                <select name="tabledata3_length" aria-controls="tabledata3"
-                  class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-fuchsia-400/80 focus:border-fuchsia-400/80">
-                  <option value="5">5</option>
-                  <option value="10">10</option>
-                  <option value="25">25</option>
-                  <option value="50">50</option>
-                </select>
-                <span>entries</span>
-              </label>
-            </div>
+      {{-- SUB TABS (Votes) --}}
+      <div
+        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner mb-4">
+        <ul class="flex gap-2" data-tabs-toggle="#votes-tab-content" role="tablist">
+          <li role="presentation">
+            <button data-tabs-target="#votes-panel-daily" type="button" role="tab" aria-selected="true"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Daily</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["votes"]["daily"]->count() }}
+              </span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button data-tabs-target="#votes-panel-weekly" type="button" role="tab" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Weekly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["votes"]["weekly"]->count() }}
+              </span>
+            </button>
+          </li>
+          <li role="presentation">
+            <button data-tabs-target="#votes-panel-monthly" type="button" role="tab" aria-selected="false"
+              class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
+              <span class="relative z-[1]">Monthly</span>
+              <span
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-fuchsia-700 border border-fuchsia-200">
+                {{ $customer->leaderBoard["votes"]["monthly"]->count() }}
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
 
-            <div id="tabledata3_filter" class="dataTables_filter w-full sm:w-auto">
-              <label class="text-xs text-slate-600 w-full">
-                <span class="sr-only">Search</span>
-                <div class="relative">
-                  <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                    {{-- Search icon --}}
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
-                      fill="currentColor">
-                      <path fill-rule="evenodd"
-                        d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
-                        clip-rule="evenodd" />
-                      <path
-                        d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
-                    </svg>
-                  </span>
-                  <input type="search"
-                    class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-fuchsia-400/80 focus:border-fuchsia-400/80"
-                    placeholder="Search monthly directs" aria-controls="tabledata3">
+      {{-- VOTES SUB PANELS --}}
+      <div id="votes-tab-content">
+
+        {{-- Votes Daily --}}
+        <div id="votes-panel-daily" role="tabpanel">
+          <div class="overflow-x-auto">
+            <div id="votes_tabledata1_wrapper" class="dataTables_wrapper no-footer">
+
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
+                <div class="dataTables_length" id="votes_tabledata1_length">
+                  <label class="text-xs text-slate-600 flex items-center gap-2">
+                    <span>Show</span>
+                    <select name="votes_tabledata1_length" aria-controls="votes_tabledata1"
+                      class="bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80">
+                      <option value="5">5</option>
+                      <option value="10">10</option>
+                      <option value="25">25</option>
+                      <option value="50">50</option>
+                    </select>
+                    <span>entries</span>
+                  </label>
                 </div>
-              </label>
+
+                <div id="votes_tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
+                  <label class="text-xs text-slate-600 w-full">
+                    <span class="sr-only">Search</span>
+                    <div class="relative">
+                      <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
+                          fill="currentColor">
+                          <path fill-rule="evenodd"
+                            d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
+                            clip-rule="evenodd" />
+                          <path
+                            d="M12.743 11.243a.75.75 0 011.06 0l2.97 2.97a.75.75 0 11-1.06 1.06l-2.97-2.97a.75.75 0 010-1.06z" />
+                        </svg>
+                      </span>
+                      <input type="search"
+                        class="block w-full bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-1 focus:ring-[var(--theme-skky-400)]/80 focus:border-[var(--theme-skky-400)]/80"
+                        placeholder="Search votes daily" aria-controls="votes_tabledata1">
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <table id="votes_tabledata1"
+                class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
+                style="padding-top: 15px;">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["votes"]["daily"] as $vm => $dailyvote)
+                  
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyvote['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyvote['active'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyvote['helpfull'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyvote['honest'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyvote['total_votes'] }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+
             </div>
           </div>
-
-          <table id="tabledata3"
-            class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
-            style="padding-top: 15px;" aria-describedby="tabledata3_info">
-            <thead>
-              <tr class="bg-slate-100 text-slate-900">
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Sr.
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  User Id
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px]">
-                  Rank
-                </th>
-                <th
-                  class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-xs sm:text-[13px] !text-right">
-                 VIP Level
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              {{-- DUMMY DATA: MONTHLY --}}
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">1</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER2001</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  <span
-                    class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
-                    GOLD
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">4</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">2</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER2002</td>
-                <td class="px-4 sm:px-5 py-3 text-black">
-                  <span
-                    class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-300)]">
-                    DIAMOND
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">5</td>
-              </tr>
-
-              <tr class="hover:bg-slate-200 transition">
-                <td class="px-4 sm:px-5 py-3 text-black">3</td>
-                <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">USER2003</td>
-                <td class="px-4 sm:px-5 py-3">
-                  <span
-                    class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">
-                    SAPPHIRE
-                  </span>
-                </td>
-                <td class="px-4 sm:px-5 py-3 text-right text-black">2</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
-            <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata3_info" role="status"
-              aria-live="polite">
-              Showing 1 to 3 of 3 entries
-            </div>
-            <div class="dataTables_paginate paging_simple_numbers mt-2 flex items-center gap-2"
-              id="tabledata3_paginate">
-              <a class="paginate_button previous px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata3" aria-role="link" data-dt-idx="previous" tabindex="0"
-                id="tabledata3_previous">Previous</a>
-              <span class="text-xs text-slate-700">1</span>
-              <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
-                aria-controls="tabledata3" aria-role="link" data-dt-idx="next" tabindex="0"
-                id="tabledata3_next">Next</a>
-            </div>
-          </div>
-
         </div>
+
+        {{-- Votes Weekly --}}
+        <div id="votes-panel-weekly" class="hidden" role="tabpanel">
+          <div class="overflow-x-auto">
+            <div id="votes_tabledata2_wrapper" class="dataTables_wrapper no-footer">
+              <table id="votes_tabledata2" class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm" style="padding-top:15px;">
+               <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["votes"]["weekly"] as $vm => $weeklyvote)
+                  
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyvote['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyvote['active'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyvote['helpfull'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyvote['honest'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyvote['total_votes'] }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {{-- Votes Monthly --}}
+        <div id="votes-panel-monthly" class="hidden" role="tabpanel">
+          <div class="overflow-x-auto">
+            <div id="votes_tabledata3_wrapper" class="dataTables_wrapper no-footer">
+              <table id="votes_tabledata3" class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm" style="padding-top:15px;">
+                <thead>
+                  <tr class="bg-slate-100 text-slate-900">
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">User Id</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Active</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Helpfull</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Honest</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Total</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  @foreach($customer->leaderBoard["votes"]["monthly"] as $vm => $monthlyvote)
+                  
+                  <tr class="hover:bg-slate-200 transition">
+                    <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyvote['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyvote['active'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyvote['helpfull'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-black">
+                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyvote['honest'] }}</span>
+                    </td>
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyvote['total_votes'] }}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1238,8 +1626,9 @@
     }
 
     // RANKING SLIDER INIT
-    document.addEventListener('DOMContentLoaded', function() {
-      const ACTIVE = [
+   document.addEventListener('DOMContentLoaded', function() {
+
+  const ACTIVE = [
     'bg-gradient-to-b',
     'from-[var(--theme-skky-500)]',
     'to-[var(--theme-bllue-200)]'
@@ -1290,13 +1679,61 @@
 
 });
   </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const tabList = document.querySelector('[data-tabs-toggle="#default-tab-content"]');
-    if (!tabList) return;
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
+  // ===== MAIN TABS (Directs / Volumes / Votes) =====
+  const mainBtns = document.querySelectorAll('[data-main-tabs] .main-tab');
+  const mainPanels = document.querySelectorAll('[data-main-panel]');
+
+  const mainActive = [
+    'bg-gradient-to-r', 'from-[var(--theme-skky-500)]', 'to-[var(--theme-skky-600)]',
+    'text-white',
+    'shadow-[0_10px_25px_rgba(59,130,246,.35)]',
+    'border', 'border-[var(--theme-skky-500)]'
+  ];
+
+  const mainInactive = [
+    'text-slate-600', 'hover:text-slate-900',
+    'border', 'border-slate-200',
+    'bg-white', 'hover:bg-slate-200'
+  ];
+
+  function setMainActive(btn) {
+    const target = btn.getAttribute('data-main-target');
+    const panel = document.querySelector(target);
+    if (!panel) return;
+
+    // hide all
+    mainPanels.forEach(p => p.classList.add('hidden'));
+    // show target
+    panel.classList.remove('hidden');
+
+    // button state
+    mainBtns.forEach(b => {
+      const isActive = b === btn;
+      b.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      b.classList.remove(...mainActive, ...mainInactive);
+      b.classList.add(
+        'group','relative','px-4','py-1.5','rounded-full',
+        'text-xs','sm:text-sm','font-semibold','transition',
+        'flex','items-center','gap-2'
+      );
+      b.classList.add(...(isActive ? mainActive : mainInactive));
+    });
+  }
+
+  // init main
+  const initiallyMain = [...mainBtns].find(b => b.getAttribute('aria-selected') === 'true') || mainBtns[0];
+  if (initiallyMain) setMainActive(initiallyMain);
+
+  mainBtns.forEach(btn => btn.addEventListener('click', () => setMainActive(btn)));
+
+  // ===== SUB TABS (Daily/Weekly/Monthly) =====
+  document.querySelectorAll('[data-tabs-toggle]').forEach(tabList => {
+    const contentSelector = tabList.getAttribute('data-tabs-toggle');
     const tabButtons = tabList.querySelectorAll('[role="tab"]');
-    const tabPanels = document.querySelectorAll('#default-tab-content [role="tabpanel"]');
+    const tabPanels = document.querySelectorAll(`${contentSelector} [role="tabpanel"]`);
 
     const activeClasses = [
       'bg-gradient-to-r', 'from-[var(--theme-skky-500)]', 'to-[var(--theme-skky-600)]',
@@ -1316,43 +1753,29 @@
       const targetPanel = document.querySelector(targetSelector);
       if (!targetPanel) return;
 
-      // Hide all panels
       tabPanels.forEach(panel => panel.classList.add('hidden'));
-      // Show selected
       targetPanel.classList.remove('hidden');
 
-      // Update tab button states
       tabButtons.forEach(b => {
         const isActive = b === btn;
         b.setAttribute('aria-selected', isActive ? 'true' : 'false');
-
         b.classList.remove(...activeClasses, ...inactiveClasses);
-
         b.classList.add(
-          'group', 'relative', 'px-4', 'py-1.5',
-          'rounded-full', 'text-xs', 'sm:text-sm',
-          'font-semibold', 'transition', 'flex', 'items-center', 'gap-2'
+          'group','relative','px-4','py-1.5',
+          'rounded-full','text-xs','sm:text-sm',
+          'font-semibold','transition','flex','items-center','gap-2'
         );
-
-        if (isActive) {
-          b.classList.add(...activeClasses);
-        } else {
-          b.classList.add(...inactiveClasses);
-        }
+        b.classList.add(...(isActive ? activeClasses : inactiveClasses));
       });
     }
 
-    // initial
-    tabButtons.forEach((btn) => {
-      if (btn.getAttribute('aria-selected') === 'true') {
-        setActiveTab(btn);
-      }
-    });
+    // init sub-tabs
+    const firstActive = [...tabButtons].find(b => b.getAttribute('aria-selected') === 'true') || tabButtons[0];
+    if (firstActive) setActiveTab(firstActive);
 
-    // click
-    tabButtons.forEach((btn) => {
-      btn.addEventListener('click', () => setActiveTab(btn));
-    });
+    tabButtons.forEach(btn => btn.addEventListener('click', () => setActiveTab(btn)));
   });
+
+});
 </script>
 @endpush

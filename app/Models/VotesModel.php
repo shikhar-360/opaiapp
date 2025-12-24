@@ -14,5 +14,8 @@ class VotesModel extends Model
         'voted_for',
     ];
 
-    
+    public function sponsor()
+    {
+        return $this->belongsTo(CustomersModel::class, 'sponsor_id');
+    }
 }
