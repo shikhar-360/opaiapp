@@ -38,6 +38,28 @@
     </div>
   </div>
 
+
+  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+      <img src="/assets/images/rank/emerald-rank.webp" class="w-9" alt="Rank Points">
+    </div>
+    <div>
+      <p class="text-sm text-slate-500">Rank Points</p>
+      <p class="text-xl font-bold text-sky-600">{{ $customer->leadership_points??'-' }} </p>
+    </div>
+  </div>
+
+
+  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+      <img src="/assets/images/icons/capping.webp" class="w-9" alt="Level Points">
+    </div>
+    <div>
+      <p class="text-sm text-slate-500">Level Points</p>
+      <p class="text-xl font-bold text-sky-600">{{ $customer->champions_point??'-' }} </p>
+    </div>
+  </div>
+
 </div>
 
 
@@ -362,7 +384,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               aria-controls="income_all" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
-              <span class="relative z-[1]">All Income</span>
+              <span class="relative z-[1]">Level Points</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">
                 {{ $customer->levelIncomeCount }}
@@ -374,10 +396,10 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               aria-controls="income_roi" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
-              <span class="relative z-[1]">ROI Income</span>
+              <span class="relative z-[1]">Rank Points</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">
-                3
+                {{ $customer->levelIncomeCount }}
               </span>
             </button>
           </li>
@@ -408,10 +430,10 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         </ul>
 
         {{-- Hint text --}}
-        <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
+        <!-- <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
           <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
           <span>Click tabs to switch income type</span>
-        </div>
+        </div> -->
       </div>
     </div>
 

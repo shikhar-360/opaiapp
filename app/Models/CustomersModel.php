@@ -35,6 +35,8 @@ class CustomersModel extends Authenticatable
         'champions_point',
         'profile_image',
         'promotion_status',
+        'direct_ids',
+        'active_direct_ids',
     ];
 
     protected $hidden = [

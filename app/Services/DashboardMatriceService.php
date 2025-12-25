@@ -15,6 +15,7 @@ use App\Models\CustomerWithdrawsModel;
 use App\Models\VotesModel;
 use App\Models\AppsModel;
 
+
 use App\Traits\ManagesCustomerHierarchy;
 
 class DashboardMatriceService
@@ -128,6 +129,29 @@ class DashboardMatriceService
 
         $appData       =   AppsModel::where('id',$customer->app_id)->first();
 
+        // Votes Today
+        $dailyVote          =   $this->votesSummaryByRange(Carbon::today());
+        // Votes In Last 7 Days
+        $weeklyVote         =   $this->votesSummaryByRange(Carbon::now()->subDays(7));
+        // Votes In Last 30 Days
+        $monthlyVote        =   $this->votesSummaryByRange(Carbon::now()->subDays(30));
+
+
+        // Volume Today
+        $dailyVolume          =   $this->volumeSummaryByRange(Carbon::today());
+        // volume In Last 7 Days
+        $weeklyVolume         =   $this->volumeSummaryByRange(Carbon::now()->subDays(7));
+        // Volume In Last 30 Days
+        $monthlyVolume        =   $this->volumeSummaryByRange(Carbon::now()->subDays(30));
+
+
+        // Directs Today
+        $dailyDirects         =   $this->directsByRange(Carbon::today());
+        // volume In Last 7 Days
+        $weeklyDirects        =   $this->directsByRange(Carbon::now()->subDays(7));
+        // Volume In Last 30 Days
+        $monthlyDirects       =   $this->directsByRange(Carbon::now()->subDays(30));
+
         $volumes = [
             'directIds'               => $directIds,
             'activeDirectIds'         => $activeDirectIds,
@@ -153,6 +177,11 @@ class DashboardMatriceService
             'myWithdraws'             => $myWithdraws,
             'myVoteSummary'           => $voteResult,
             'appData'                 => $appData,
+            'leaderBoard'             => array(
+                                                "votes" => array("daily"=>$dailyVote,"weekly"=>$weeklyVote,"monthly"=>$monthlyVote),
+                                                "volume" => array("daily"=>$dailyVolume,"weekly"=>$weeklyVolume,"monthly"=>$monthlyVolume),
+                                                "directs" => array("daily"=>$dailyDirects,"weekly"=>$weeklyDirects,"monthly"=>$monthlyDirects),
+                                            ),
         ];
 
         return $volumes;
@@ -483,5 +512,146 @@ class DashboardMatriceService
         }
 
         return $customerData;
+    }
+
+    function votesSummaryByRange($fromDate)
+    {
+        $customer = Auth::guard('customer')->user();
+        // return VotesModel::with('sponsor:id,referral_code')
+        //     ->select(
+        //         'sponsor_id',
+        //         DB::raw("SUM(CASE WHEN voted_for = 'ACTIVE' THEN 1 ELSE 0 END) AS active"),
+        //         DB::raw("SUM(CASE WHEN voted_for = 'HELPFULL' THEN 1 ELSE 0 END) AS helpfull"),
+        //         DB::raw("SUM(CASE WHEN voted_for = 'HONEST' THEN 1 ELSE 0 END) AS honest"),
+        //         DB::raw("COUNT(*) AS total_votes")
+        //     )
+        //     ->where('created_at', '>=', $fromDate)
+        //     ->where('app_id', $customer->app_id)
+        //     ->groupBy('sponsor_id')
+        //     ->get()
+        //     ->map(function ($row) {
+        //         $row->referral_code = $row->sponsor->referral_code ?? null;
+        //         unset($row->sponsor);
+        //         return $row;
+        //     });
+
+        return VotesModel::with('sponsor:id,referral_code')
+                            ->select(
+                                'sponsor_id',
+                                DB::raw("SUM(CASE WHEN voted_for = 'ACTIVE' THEN 1 ELSE 0 END) AS active"),
+                                DB::raw("SUM(CASE WHEN voted_for = 'HELPFULL' THEN 1 ELSE 0 END) AS helpfull"),
+                                DB::raw("SUM(CASE WHEN voted_for = 'HONEST' THEN 1 ELSE 0 END) AS honest"),
+                                DB::raw("COUNT(*) AS total_votes")
+                            )
+                            ->where('created_at', '>=', $fromDate)
+                            ->where('app_id', $customer->app_id)
+                            ->groupBy('sponsor_id')
+                            ->orderByDesc('total_votes')   // 👈 DESCENDING ORDER
+                            ->get()
+                            ->map(function ($row) {
+                                $row->referral_code = $row->sponsor->referral_code ?? null;
+                                unset($row->sponsor);
+                                return $row;
+                            });
+    }
+
+    function volumeSummaryByRange($fromDate)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        $packageIds = PackagesModel::where('app_id', $customer->app_id)
+                                            ->pluck('id')
+                                            ->toArray();
+        
+        $selects = [
+                        'customers.referral_code',
+                        'customer_deposits.customer_id',
+                    ];
+
+        foreach ($packageIds as $pid) {
+            $selects[] = DB::raw(
+                "SUM(CASE WHEN package_id = {$pid} THEN amount ELSE 0 END) AS package_{$pid}"
+            );
+        }
+
+        // total volume
+        $selects[] = DB::raw("SUM(amount) AS total");
+
+        // $volumeSummary = CustomerDepositsModel::join(
+        //                                                 'customers',
+        //                                                 'customers.id',
+        //                                                 '=',
+        //                                                 'customer_deposits.customer_id'
+        //                                             )
+        //                                             ->select($selects)
+        //                                             ->where('customer_deposits.payment_status', 'success')
+        //                                             ->where('customer_deposits.created_at', '>=', $fromDate)
+        //                                             ->where('customer_deposits.app_id', $customer->app_id)
+        //                                             ->groupBy(
+        //                                                 'customer_deposits.customer_id',
+        //                                                 'customers.referral_code'
+        //                                             )
+        //                                             ->orderBy('customer_deposits.customer_id')
+        //                                             ->orderByRaw('SUM(customer_deposits.amount) DESC')
+        //                                             ->get();
+
+
+        $baseQuery = CustomerDepositsModel::join(
+                        'customers',
+                        'customers.id',
+                        '=',
+                        'customer_deposits.customer_id'
+                    )
+                    ->select($selects) // includes SUM(amount) AS total
+                    ->where('customer_deposits.payment_status', 'success')
+                    ->where('customer_deposits.created_at', '>=', $fromDate)
+                    ->where('customer_deposits.app_id', $customer->app_id)
+                    ->groupBy(
+                        'customer_deposits.customer_id',
+                        'customers.referral_code'
+                    );
+
+        $volumeSummary = DB::query()
+                            ->fromSub($baseQuery, 'volume_summary')
+                            ->orderByDesc('total')
+                            ->get();
+
+        return $volumeSummary;
+    }
+
+
+    function directsByRange($fromDate)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        /*
+        $activeDirectCounts = CustomersModel::select(
+            'id',
+            'referral_code',
+            'active_direct_ids',
+            DB::raw("
+                LENGTH(active_direct_ids) 
+                - LENGTH(REPLACE(active_direct_ids, '/', '')) 
+                + 1 AS active_direct_count
+            ")
+        )
+        ->whereNotNull('active_direct_ids')
+        ->where('active_direct_ids', '!=', '')
+        ->get();
+        */
+
+        $customers = CustomersModel::whereNotNull('active_direct_ids')->where('app_id',$customer->app_id)->get();
+
+        return $customers->map(function ($row) {
+                                                $row->active_direct_count = count(
+                                                    array_filter(explode('/', $row->active_direct_ids))
+                                                );
+                                                return $row;
+                                            })->sortByDesc('active_direct_count');
+        
+        
+        
+
+        
     }
 }
