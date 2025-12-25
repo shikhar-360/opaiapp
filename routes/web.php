@@ -30,6 +30,9 @@ Route::get('/register', [CustomerAuthController::class, 'showRegisterForm'])->na
 // Route::get('/register/{sponsorcode?}', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [CustomerAuthController::class, 'register'])->name('register.submit');
 
+Route::get('/forgot', [CustomerAuthController::class, 'showForgotPassword'])->name('forgot');
+Route::post('/forgot', [CustomerAuthController::class, 'forgot'])->name('forgot.submit');
+
 // Login
 Route::get('/login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [CustomerAuthController::class, 'login'])->name('login.submit');

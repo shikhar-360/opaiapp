@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\CustomersModel;
+use App\Models\forgotPasswordRequestsModel;
+
+use Illuminate\Support\Facades\Mail;
 
 // use Elliptic\EC; 
 // use kornrunner\Keccak;
@@ -61,6 +64,77 @@ class CustomerAuthController extends Controller
         // }
 
         return view('customer.register', compact('sponsorcode'));
+    }
+    public function showForgotPassword(Request $request)
+    {
+
+        return view('customer.forgot');
+    }
+
+    public function forgot(Request $request){
+       
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required|email|exists:customers,email',
+        ]);
+        
+        if ($validator->fails()) {
+            if($validator->errors()->get('email')){
+                 dd($validator->errors());
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('email')]); 
+            }
+        }
+        $validated = $validator->validated();
+
+        $user = CustomersModel::where('email', $validated['email'])->first();
+        if(!$user)
+        {
+            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'User not found']);
+        }
+        do {
+            $code = $this->randomString(6);
+            $exists = forgotPasswordRequestsModel::where('code', $code)->exists();
+        } while ($exists);
+
+        try {
+            $mailData = array('username' => "darshana", 'portal' => 'TradeAI', 'refferal_code' => "123456", 'emailMessage' =>"dshfuisdhfui", 'email' => "darshana@360core.inc"); 
+
+            $to_name = "darshana";
+            $to_email = "darshana@360core.inc";
+
+            $sentEmail = Mail::send('emails.forgot_otp', $mailData, function ($message) use ($to_name, $to_email) {
+                $message->to($to_email, $to_name)
+                    ->subject('Welcome to Trade AI')
+                    ->from('info@cp.vitnixx.net', 'Trade AI');
+            });
+
+            if ($sentEmail === 0) { // Check if email was sent successfully
+                throw new \Exception('Email sending failed.');
+            }
+        } catch (\Exception $error) {
+            dd($error);
+        }
+
+        forgotPasswordRequestsModel::where('user_id', $user['id'])->delete();
+
+
+        forgotPasswordRequestsModel::create([
+            'user_id' => $user->id,
+            'code'    => $code,
+            'created_at' => now(),
+           
+        ]);
+        return back()->withInput()->withErrors(['status_code'=>'success', 'message' => 'Your forgot password request send successfully, please check you mail']);
+     }
+    function randomString($length = 6) {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
     }
 
     public function register(Request $request)

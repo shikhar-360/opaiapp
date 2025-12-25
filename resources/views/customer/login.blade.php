@@ -123,6 +123,14 @@
                 </a>
               </div>
 
+              {{-- Forgot Link --}}
+              <div class="text-sm font-medium text-slate-600 mt-2 text-center">
+                <a href="{{ route('forgot') }}"
+                   class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
+                  Forgot Password ? 
+                </a>
+              </div>
+
               {{-- Divider --}}
               <div class="flex items-center gap-3 my-5">
                 <span class="h-px flex-1 bg-slate-500"></span>
