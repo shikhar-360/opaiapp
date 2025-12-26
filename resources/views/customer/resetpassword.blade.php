@@ -35,55 +35,14 @@
 
         <div class="mt-4 flex flex-col items-center relative z-10">
           <h1 class="text-2xl xl:text-3xl font-semibold text-slate-900 text-center tracking-tight">
-            Welcome to
-            <span class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
-              OpAi
-            </span>
+            Reset Your Password
           </h1>
 
           <div class="w-full flex-1  text-center">
 
-            <p class="mb-4 leading-relaxed mx-auto max-w-sm text-slate-600 text-sm">
-              Login to access your dashboard.
-            </p>
-
-
-    <form method="POST" action="{{ route('login.submit') }}" class="space-y-4 relative z-10">
+    <form method="POST" action="{{ route('password.update') }}" class="space-y-4 relative z-10">
     @csrf
     <div class="relative space-y-5">
-
-        {{-- username  --}}
-        <div
-            class="relative flex items-center p-3 rounded-lg gap-3 
-            border border-slate-200 bg-white 
-            focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-            focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-            
-            <svg class="w-6 h-6 min-w-6 min-h-6 text-slate-500" fill="none" viewBox="0 0 24 24">
-                <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" stroke="#0f172a" stroke-width="1.5"/>
-                <path d="M3 22c0-4.4 4-8 9-8s9 3.6 9 8" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-
-            <input type="text" name="userid" id="userid" placeholder="Userid i.e. 1159A66F" required
-                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
-        </div>
-
-        {{-- email --}}
-        <div
-            class="relative flex items-center p-3 rounded-lg gap-3 
-            border border-slate-200 bg-white 
-            focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-            focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-            
-            <svg class="w-6 h-6 min-w-6 min-h-6 text-slate-500" fill="none" viewBox="0 0 24 24">
-                <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5z" stroke="#0f172a" stroke-width="1.5"/>
-                <path d="M3 22c0-4.4 4-8 9-8s9 3.6 9 8" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-
-            <input type="text" name="email" id="email" placeholder="Email i.e. van@example.com" required
-                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
-        </div>
-
         {{-- password --}}
         <div
             class="relative flex items-center p-3 rounded-lg gap-3 
@@ -101,6 +60,28 @@
                 class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
         </div>
 
+        {{-- confirm password --}}
+        <div
+            class="relative flex items-center p-3 rounded-lg gap-3 
+            border border-slate-200 bg-white 
+            focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+            focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+
+            <svg class="w-6 h-6 min-w-6 min-h-6 text-slate-500" fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="16" r="2" stroke="#0f172a" stroke-width="1.5"></circle>
+                <path d="M6 10V8c0-3.3 2.7-6 6-6s6 2.7 6 6v2" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M4 10h16v10H4z" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+
+            <input type="password" name="password_confirmation" id="password_confirmation" placeholder="Confirm password" required
+                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
+            
+            <input type="hidden" name="cid" id="cid" value={{ $customer_id }} required 
+                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
+            <input type="hidden" name="ccd" id="ccd" value={{ $code }} required 
+                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]">
+        </div>
+
     </div>
 
     {{-- button --}}
@@ -115,7 +96,7 @@
                        transition-all duration-300 ease-out group 
                        hover:-translate-y-0.5 
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-skky-400)] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100">
-            <span>Login</span>
+            <span>Proceed</span>
             <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" clip-rule="evenodd"
                     d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
@@ -132,18 +113,9 @@
 
               {{-- Sign up link --}}
               <div class="text-sm font-medium text-slate-600 mt-2 text-center">
-                New here?
-                <a href="{{ route('register') }}"
+                <a href="{{ route('login') }}"
                    class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
-                  Sign Up
-                </a>
-              </div>
-
-              {{-- Forget Password Link --}}
-              <div class="text-sm font-medium text-slate-600 mt-2 text-center">
-                <a href="{{ route('forgot') }}"
-                   class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
-                  Forgot Password ? 
+                  Login
                 </a>
               </div>
 

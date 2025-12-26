@@ -37,20 +37,20 @@
                 </div>
 
                 <div class="mt-4 flex flex-col items-center relative z-10">
-                    <h1 class="text-2xl xl:text-3xl font-semibold text-slate-900 text-center tracking-tight">
+                    {{-- <h1 class="text-2xl xl:text-3xl font-semibold text-slate-900 text-center tracking-tight">
                         Welcome to
                         <span
                             class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
                             OpAi
                         </span>
-                    </h1>
+                    </h1> --}}
 
                     <div class="w-full flex-1  text-center">
 
                        
                         
             <p class="mb-4 leading-relaxed mx-auto max-w-sm text-slate-600 text-sm">
-              Enter your registered email address and we’ll send you a link to reset your password and regain access to your dashboard, earnings, and staking panel.
+              Forget Password Request
             </p>
 
                         <form method="POST" action="{{ route('forgot.submit') }}" class="space-y-4 relative z-10">

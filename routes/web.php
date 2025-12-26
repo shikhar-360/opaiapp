@@ -30,13 +30,16 @@ Route::get('/register', [CustomerAuthController::class, 'showRegisterForm'])->na
 // Route::get('/register/{sponsorcode?}', [CustomerAuthController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [CustomerAuthController::class, 'register'])->name('register.submit');
 
-Route::get('/forgot', [CustomerAuthController::class, 'showForgotPassword'])->name('forgot');
-Route::post('/forgot', [CustomerAuthController::class, 'forgot'])->name('forgot.submit');
-
 // Login
 Route::get('/login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [CustomerAuthController::class, 'login'])->name('login.submit');
 Route::get('/logout', [CustomerAuthController::class, 'logout'])->name('logout');
+
+// Forget Password
+Route::get('/forgot', [CustomerAuthController::class, 'showForgotPassword'])->name('forgot');
+Route::post('/forgot', [CustomerAuthController::class, 'forgot'])->name('forgot.submit');
+Route::get('/reset-password', [CustomerAuthController::class, 'showResetPasswordForm'])->name('password.reset');
+Route::post('/reset-password', [CustomerAuthController::class, 'processResetPassword'])->name('password.update');
 
 Route::middleware(['customer'])->group(function () {
     Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard'); //fn () => view('index'))->name('index');
