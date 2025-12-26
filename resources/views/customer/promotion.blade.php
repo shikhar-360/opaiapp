@@ -89,31 +89,24 @@
             $benefits = $decode($pkg->package_benefits);
             $levels = $decode($pkg->benefit_levels);
 
-            // Timer: by default show expiry = created_at + 30 days
-            $expiresAt = optional($pkg->created_at)->copy()->addDays(30);
-            $expiresIso = $expiresAt ? $expiresAt->format('Y-m-d\TH:i:s') : now()->addDays(30)->format('Y-m-d\TH:i:s');
-
-            // Progress (if you later have real progress, just replace these)
-            
-            $strongTarget = (float) ($targets[0] ?? 0);
-            $otherTarget  = (float) ($targets[1] ?? 0);
-
-            $strongDone   = 0;
-            $otherDone    = 0;
-            
-            if($targets[0] === 5)
+            $directsCount = 0;
+            $beneficiaryCount = 0;
+            if($pkg->id == 1)
             {
-              $strongDone   = $customer->p1_status[$targets[0]] ?? 0;
-              $otherDone    = $customer->p1_status[$targets[1]] ?? 0;  
+              $directsCount = collect($customer->p1_status[0])->sum()??0;
+              $beneficiaryCount = $customer->p1_status[1]??0;
             }
-            else if($targets[0] === 25)
+            else if($pkg->id === 2)
             {
-              $strongDone   = $customer->p2_status[$targets[0]] ?? 0;
-              $otherDone    = $customer->p2_status[$targets[1]] ?? 0;
+              $directsCount = collect($customer->p2_status[0])->sum();
+              $beneficiaryCount = $customer->p2_status[1];
+            }
+            else if($pkg->id === 4)
+            {
+              $directsCount = collect($customer->p4_status[0])->sum();
+              $beneficiaryCount = $customer->p4_status[1];
             }
 
-            $strongPct = $strongTarget > 0 ? min(100, ($strongDone / $strongTarget) * 100) : 0;
-            $otherPct  = $otherTarget > 0 ? min(100, ($otherDone / $otherTarget) * 100) : 0; 
           @endphp
           
           <div class="rank-panel {{ $loop->first ? '' : 'hidden' }}" id="{{ $panelId }}">
@@ -125,7 +118,7 @@
 
                 <div class="flex flex-wrap gap-2 mt-2">
                   <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">
-                    Beneficiaries: <span class="ml-1 font-semibold text-slate-900">{{ $total }}</span>
+                    Beneficiaries: <span class="ml-1 font-semibold text-slate-900">{{ $beneficiaryCount }} / {{ $total }}</span>
                   </span>
 
                   <span class="inline-flex items-center rounded-full bg-white px-3 py-1 text-[11px] sm:text-xs font-medium text-slate-700 border border-slate-200">
@@ -154,25 +147,17 @@
                 <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--theme-skky-400)]/15 via-transparent to-fuchsia-400/15 opacity-70 blur-xl"></div>
                 <div class="relative">
                   <h4 class="text-sm font-semibold text-slate-900 mb-4">Progress</h4>
-
                   @foreach ($targets as $t)
                   @php
                     
-                    $strongTargetSet = (float) ($t ?? 0);
-                    
-                    $strongTargetDone   = $customer->p1_status[$t] ?? 0;
-
-
-                    $total = collect($customer->p1_status)->sum();
-
-                    $strongTargetPct = min(100, ($total / $directs) * 100);
+                    $strongTargetPct = min(100, ($directsCount / $directs) * 100);
 
                   @endphp
                   @endforeach
                   <div class="mb-4">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <span>Directs</span>
-                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $total }} / {{ $directs }}</span>
+                      <span class="text-[var(--theme-skky-700)] font-semibold">{{ $directsCount }} / {{ $directs }}</span>
                     </div>
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden border border-slate-200">
                       <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full" style="width:{{ $strongTargetPct }}%"></div>

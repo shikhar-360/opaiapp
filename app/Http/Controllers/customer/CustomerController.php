@@ -22,6 +22,7 @@ use App\Models\AppLeadershipIncomeModel;
 use App\Models\VotesModel;
 use App\Models\CustomersModel;
 use App\Models\AppPromotionPackagesModel;
+use App\Models\AppLevelPackagesModel;
 
 
 class CustomerController extends Controller
@@ -48,6 +49,7 @@ class CustomerController extends Controller
 
     public function dashboard(Request $request)
     {
+        // dd($request);
         $customer = Auth::guard('customer')->user();
         
         // dd($customer);
@@ -336,16 +338,39 @@ class CustomerController extends Controller
 
         $customer->promotionPackage         =   AppPromotionPackagesModel::where('app_id', $customer->app_id)->get();
         
+        // dd($customer->promotionPackage);
+
         $p1_status = $this->pk->myPromotionStatus($customer, 1);
 
         $p2_status = $this->pk->myPromotionStatus($customer, 2);
+
+        $p4_status = $this->pk->myPromotionStatus($customer, 4);
 
         // dd($p1_status, $p2_status);
 
         $customer->p1_status                =   $p1_status;
         $customer->p2_status                =   $p2_status;
+        $customer->p4_status                =   $p4_status;
+
+        // dd($customer->p1_status, $customer->p2_status, $customer->p4_status);
 
         return view('customer.promotion', compact('customer'));
+    }
+
+
+    public function showLevelCalculator(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        $appsLevelPackages = AppLevelPackagesModel::where('app_id',$customer->app_id)->get();
+
+        $customer->appsLevelPackages = $appsLevelPackages;
+
+        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+        
+        $customer->totalActiveDirectsCount  =   $dashboard_matrics['totalActiveDirectsCount'];
+
+        return view('customer.levelcalculator', compact('customer'));
     }
 
 }

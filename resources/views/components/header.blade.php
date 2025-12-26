@@ -2,7 +2,7 @@
 
     <div
         class="flex items-center justify-between px-4 md:px-8 py-4 sm:py-3 relative z-20
-               bg-[#d8ebff]
+               bg-[var(--theme-header-bg)]
                backdrop-blur-xl border-b border-slate-500 text-slate-900">
 
         {{-- LOGO + BRAND --}}
@@ -10,7 +10,7 @@
             <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
                 <img src="{{ asset('assets/images/opai.webp') }}" alt="OpAI Logo" class="w-12 md:w-12 h-auto">
                 <span class="hidden sm:inline font-semibold text-sm md:text-2xl tracking-wide text-slate-900">
-                    OpAi
+                                 <img src="{{ asset('assets/images/opai-text.webp') }}" alt="OpAI Logo" class="w-12 md:w-12 h-auto">
                 </span>
             </a>
         </div>
@@ -31,7 +31,7 @@
             {{-- Connect Wallet --}}
             <button id="connectBtn"
                 class="px-3 sm:px-5 py-2 flex items-center justify-center gap-2 text-base capitalize tracking-wide rounded-lg
-                       border border-sky-200 bg-gradient-to-r from-sky-500 to-cyan-400
+                       border border-[var(--theme-skky-200)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)]
                        text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)]
                        hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
                        transition-all duration-300 ease-out group">
@@ -40,7 +40,7 @@
 
             {{-- Mobile Menu Toggle --}}
             <button id="menuToggle"
-                class="md:hidden p-2 rounded-lg bg-[#bfe7ff] hover:bg-slate-200
+                class="md:hidden p-2 rounded-lg bg-[#bfdcff] hover:bg-slate-200
                        focus:outline-none focus:ring-2 focus:ring-slate-300 text-slate-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -52,24 +52,26 @@
 
     {{-- SIDEBAR (Desktop + Mobile) --}}
  <aside id="sidebar"
-    class="fixed top-[82px] md:top-[74px] left-0 bottom-0 w-60 md:w-64 aside-bg
-           bg-[#F5F7FC] z-20 backdrop-blur-2xl border-r border-slate-500 text-black
+    class="fixed top-[82px] md:top-[74px] left-0 bottom-0 w-60 md:w-64 aside-bg overflow-y-auto
+           bg-[var(--theme-bg)] z-20 backdrop-blur-2xl border-r border-slate-500 text-black
            transform -translate-x-full md:translate-x-0
            transition-transform duration-300 ease-out flex flex-col shadow-lg md:shadow-none">
 
     @php
-        $baseItemClass = 'flex items-center gap-2.5 px-3 py-2 rounded-xl transition';
-        $activeClass = 'bg-blue-50 text-sky-700 border border-blue-300 shadow-sm border-l-4 border-l-blue-500';
-        $inactiveClass = 'text-slate-700 border border-transparent hover:bg-slate-300 hover:text-sky-600 hover:border-blue-100';
+        $baseItemClass = 'flex items-center gap-2.5 px-2 py-1 rounded-xl transition';
+        $activeClass = 'bg-blue-50 text-[var(--theme-primary-text)] border border-blue-300 shadow-sm border-l-4 border-l-[var(--theme-bllue-500)]';
+        $inactiveClass = 'text-slate-700 border border-transparent hover:bg-slate-300 hover:text-[var(--theme-high-text)] hover:border-blue-100';
     @endphp
 
-    <nav class="flex flex-col gap-0.5 w-full px-2.5 pt-6 text-sm md:text-[15px]">
+    <nav class="flex flex-col gap-0.5 w-full px-2.5 pb-6 pt-6 text-sm md:text-[15px]">
 
-        <div class="flex flex-col items-center text-center gap-2 mb-2">
+
+<div class="flex flex-col items-start text-center gap-2 mb-2">
+
             <div class="flex  items-center gap-2 ">
                 <div class="relative">
                     <div
-                    class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md
+      class="w-10 h-10 sm:w-12 sm:h-12 rounded-lg overflow-hidden bg-white border border-slate-200 shadow-md
                             ring-1 ring-[var(--theme-skky-400)]/20">
                         <img id="profilePreview"
                             src="{{ asset('storage/' . $customer->profile_image) }}"
@@ -77,30 +79,39 @@
                             class="w-full h-full object-cover">
                     </div>
                 </div>
-                <!-- Name -->
-                <h3 class="text-base sm:text-lg font-semibold text-slate-900 leading-tight">
-                    <span id="profileNameText">OpAi</span>
-                </h3>
-            </div>
 
-            <!-- Rank -->
+                <!-- Name -->
+   <div>
+ <h3 class="text-base sm:text-xl font-semibold text-slate-900 leading-tight text-left">
+                    <span id="profileNameText">{{ $customer->name??'-' }}</span>
+                </h3>
+    <div class="flex items-center gap-2 justify-center mt-1">
             <span
-                class="inline-flex items-center gap-2 rounded-full bg-[var(--theme-skkky-50)]
-                    border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs
+    class="inline-flex items-center gap-2 rounded-xl bg-[var(--theme-skkky-50)]
+           border border-[var(--theme-skky-200)] px-1 py-1 text-[11px] sm:text-xs
                     font-medium text-[var(--theme-primary-text)]">
-                
                 <img src="/assets/images/rank/emerald-rank.webp"
                     alt="Rank"
                     class="w-6 h-6 object-contain">
-                Rank: <span class="font-semibold">{{ $customer->leadership_rank??'-' }}</span>
-            </span>
+       {{-- Rank: <span class="font-semibold">{{ $customer->leadership_rank??'-' }}</span>
+            </span> --}}
+  </span>
 
             <!-- VIP -->
             <span
-            class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1
+    class="inline-flex items-center gap-2 rounded-xl bg-emerald-50 px-3 py-1
                    text-[11px] sm:text-xs font-medium text-emerald-700 border border-emerald-300">
                 VIP Level: <span class="font-semibold text-slate-900">{{ $customer->champions_rank??'-' }}</span>
             </span>
+    </div>
+
+   </div>
+ 
+ </div>
+
+
+  <!-- Rank -->
+
         </div>
 
         <p class="px-3 pb-1 text-[11px] uppercase tracking-[0.18em] text-slate-400">
@@ -110,7 +121,7 @@
         {{-- Profile --}}
         <a href="{{ route('profile') }}"
            class="{{ $baseItemClass }} {{ Route::is('profile') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('profile') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('profile') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/profile.webp" width="64" height="48" alt="Logo"
                      class="w-7 h-7 object-contain">
             </span>
@@ -119,8 +130,8 @@
 
         {{-- Dashboard --}}
         <a href="{{ route('dashboard') }}"
-           class="{{ $baseItemClass }} {{ Route::is('index') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('index') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1.5 rounded-lg">
+           class="{{ $baseItemClass }} {{ Route::is('dashboard') ? $activeClass : $inactiveClass }}">
+            <span class="inline-flex items-center justify-center {{ Route::is('dashboard') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1.5 rounded-lg">
                 <img src="/assets/images/menu/dashboard.webp" width="64" height="48" alt="Logo"
                      class="w-6 h-6 object-contain">
             </span>
@@ -140,7 +151,7 @@
         {{-- Pay By QR --}}
         <a href="{{ route('pay.qr') }}"
            class="{{ $baseItemClass }} {{ Route::is('pay.qr') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('pay.qr') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1.5 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('pay.qr') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1.5 rounded-lg">
                 <img src="/assets/images/menu/pay-by-qr.webp" width="64" height="48" alt="Logo"
                      class="w-7 h-7 object-contain">
             </span>
@@ -150,7 +161,7 @@
         {{-- Pay By Topup --}}
         <a href="{{ route('pay.topup') }}"
            class="{{ $baseItemClass }} {{ Route::is('pay.topup') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('pay.topup') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('pay.topup') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/pay-by-topup.webp" width="64" height="48" alt="Logo"
                      class="w-7 h-7 object-contain">
             </span>
@@ -160,9 +171,9 @@
         {{-- Directs --}}
         <a href="{{ route('directs') }}"
            class="{{ $baseItemClass }} {{ Route::is('directs') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('directs') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('directs') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/directs.webp" width="64" height="48" alt="Logo"
-                     class="w-7 h-7 object-contain">
+                     class="w-6 h-6 object-contain">
             </span>
             <span>Directs</span>
         </a>
@@ -170,9 +181,9 @@
         {{-- Team --}}
         <a href="{{ route('team') }}"
            class="{{ $baseItemClass }} {{ Route::is('team') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('team') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('team') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/team.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Team</span>
         </a>
@@ -180,9 +191,9 @@
         {{-- Genealogy --}}
         <a href="{{ route('genealogy') }}"
            class="{{ $baseItemClass }} {{ Route::is('genealogy') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('genealogy') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('genealogy') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/genealogy.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Genealogy</span>
         </a>
@@ -190,9 +201,9 @@
         {{-- Overview --}}
         <a href="{{ route('overview') }}"
            class="{{ $baseItemClass }} {{ Route::is('overview') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('overview') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('overview') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/overview.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Overview</span>
         </a>
@@ -200,9 +211,9 @@
         {{-- Withdraw --}}
         <a href="{{ route('withdraw') }}"
            class="{{ $baseItemClass }} {{ Route::is('withdraw') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('withdraw') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('withdraw') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/withdraw.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Withdraw</span>
         </a>
@@ -210,32 +221,68 @@
         {{-- Tickets --}}
         <a href="{{ route('tickets') }}"
            class="{{ $baseItemClass }} {{ Route::is('tickets') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('tickets') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('tickets') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/tickets.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Tickets</span>
         </a>
-
         {{-- Promotion --}}
         <a href="{{ route('promotion') }}"
            class="{{ $baseItemClass }} {{ Route::is('promotion') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('promotion') ? 'bg-blue-100' : 'bg-[#bfe7ff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center {{ Route::is('promotion') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
                 <img src="/assets/images/menu/promotion.webp" width="64" height="48" alt="Logo"
-                     class="w-8 h-8 object-contain">
+                     class="w-7 h-7 object-contain">
             </span>
             <span>Promotion</span>
         </a>
         
-        {{-- Logout --}}
-        <a href="{{ route('logout') }}"
-           class="{{ $baseItemClass }} text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent">
-            <span class="inline-flex items-center justify-center bg-[#bfe7ff] p-1 rounded-lg">
-                <img src="/assets/images/menu/logout.webp" width="64" height="48" alt="Logo"
+         {{-- Level Calculator --}}
+        <a href="{{ route('levelcalculator') }}"
+           class="{{ $baseItemClass }} {{ Route::is('levelcalculator') ? $activeClass : $inactiveClass }}">
+            <span class="inline-flex items-center justify-center {{ Route::is('levelcalculator') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
+                <img src="/assets/images/menu/level-calculator.webp" width="64" height="48" alt="Logo"
                      class="w-7 h-7 object-contain">
             </span>
-            <span>Logout</span>
+            <span>Level Calculator</span>
         </a>
+        {{-- Logout --}}    
+        <!-- <a href="{{ route('logout') }}"
+           class="{{ $baseItemClass }} text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent">
+            <span class="inline-flex items-center justify-center bg-[#bfdcff] p-1 rounded-lg">
+                <img src="/assets/images/menu/logout.webp" width="64" height="48" alt="Logo"
+                     class="w-6 h-6 object-contain">
+            </span>
+            <span>Logout</span>
+        </a> -->
+    
+        @php
+            $stack = session('impersonation_stack', []);
+            $last  = end($stack);
+        @endphp
+
+        @if(Auth::guard('customer')->check() && $last && $last['guard'] === 'admin')
+            {{-- Customer → Admin --}}
+            <a href="{{ route('customer.logoutascustomer') }}"
+               class="{{ $baseItemClass }} text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent">
+                <span class="inline-flex items-center justify-center bg-[#bfdcff] p-1 rounded-lg">
+                    <img src="/assets/images/menu/logout.webp" width="64" height="48" alt="Logo"
+                         class="w-6 h-6 object-contain">
+                </span>
+                <span>Logout As Customer</span>
+            </a>
+        @else
+            {{-- Normal logout --}}
+            <a href="{{ route('logout') }}"
+               class="{{ $baseItemClass }} text-red-500 hover:bg-red-50 hover:text-red-600 border border-transparent">
+                <span class="inline-flex items-center justify-center bg-[#bfdcff] p-1 rounded-lg">
+                    <img src="/assets/images/menu/logout.webp" width="64" height="48" alt="Logo"
+                         class="w-6 h-6 object-contain">
+                </span>
+                <span>Logout</span>
+            </a>
+        @endif
+
     </nav>
 </aside>
 

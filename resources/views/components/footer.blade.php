@@ -1,4 +1,4 @@
-<footer class="text-black py-6 border-t border-slate-500 bg-[#F5F7FC] md:ml-64">
+<footer class="text-black py-6 border-t border-slate-500 bg-[var(--theme-bg)] md:ml-64">
   <div class=" mx-auto px-4">
     <div class="flex flex-col md:flex-row justify-between items-center text-center">
 
@@ -27,4 +27,3 @@
 
     </div>
   </div>
-</footer>

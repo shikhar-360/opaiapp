@@ -67,9 +67,14 @@ Route::middleware(['customer'])->group(function () {
     Route::post('/vote', [CustomerController::class, 'saveVote'])->name('customer.vote.save');
 
     Route::get('/promotion', [CustomerController::class, 'showPromotion'])->name('promotion');
+
+    Route::get('/levelcalculator', [CustomerController::class, 'showLevelCalculator'])->name('levelcalculator');
 });
 
 
+Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
+    Route::get('/logoutascustomer', [AdminController::class, 'returnToAdmin'])->name('logoutascustomer');
+});
 
 
 Route::prefix('superadmin')->name('superadmin.')->group(function () {
@@ -85,17 +90,25 @@ Route::prefix('superadmin')->name('superadmin.')->group(function () {
         // GET /superadmin/apps/{app}/edit
         // PUT /superadmin/apps/{app}
         // DELETE /superadmin/apps/{app}
-
+        
+        
         Route::resource('admins', SuperadminAsAdmin::class)->except(['show']);
         // GET	/superadmin/admins	
         // GET	/superadmin/admins/create
         // POST /superadmin/admins	
         // GET	/superadmin/admins/{admin}/edit
         // PUT/PATCH /superadmin/admins/{admin}
-
+        
         // Login-as Admin
-        Route::get('/admins/{admin}/login-as', [AdminController::class, 'loginAs'])->name('admins.loginAs');
+        // Route::get('/admins/{admin}/login-as', [SuperadminAsAdmin::class, 'loginAs'])->name('admins.loginAs');
     });
+
+    Route::get('/loginasadmin/{adminUser}', [SuperadminAsAdmin::class, 'loginAsAdmin'])
+                                                                ->middleware('auth:superadmin')
+                                                                ->name('admins.loginAs');
+
+    // Route::get('/logoutasadmin', [SuperadminAsAdmin::class, 'returnToSuperadmin'])->name('logoutasadmin');
+        
 });
 
 // Route::middleware(['auth:admin', 'auth.admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -116,7 +129,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
-
+        
         // Resourceful Routes for Management
         // Use standard Laravel resource controllers for managing items
         Route::resource('packages', AppPackagesController::class);
@@ -160,7 +173,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // DELETE /admin/leadershippackages/{app}
 
         // Specific Action: Login as Customer
-        Route::get('/login-as-customer/{customerId}', [AdminController::class, 'loginAsCustomer'])->name('login.as.customer');
+        Route::get('/loginascustomer/{customer}', [AdminController::class, 'loginAsCustomer'])->name('login.as.customer');
 
+        Route::get('/logoutasadmin', [SuperadminAsAdmin::class, 'returnToSuperadmin'])->name('logoutasadmin');
     });
+
+    // Route::get('/logoutascustomer', [AdminController::class, 'returnToAdmin'])->name('logoutascustomer');
+
 });

@@ -36,7 +36,6 @@
   --theme-cardbg: #ffffff;
 }
 
-
   </style>
 
   @vite(entrypoints: 'resources/css/app.css')

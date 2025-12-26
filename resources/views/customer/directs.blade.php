@@ -18,30 +18,28 @@
 
 
 @section('content')
-
-
 <section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-5">
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="/assets/images/icons/income.webp" class="w-9" alt="Direct Team Investment">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-sky-300 to-sky-500 border border-[var(--theme-skky-200)]">
+      <img src="/assets/images/icons/direct-team-investment.webp" class="w-9" alt="Direct Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Direct Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+      <h3 class=" text-base text-slate-600">Direct Team Investment</h3>
+      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
   {{-- Total Team Investment --}}
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="/assets/images/icons/total-team-investmnet.webp" class="w-9" alt="Total Team Investment">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
+      <img src="/assets/images/icons/total-team-investment.webp" class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Total Team Investment</p>
-      <p class="text-xl font-bold text-sky-600">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+      <h3 class="text-base text-slate-600">Total Team Investment</h3>
+      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -60,7 +58,7 @@
 
     <!-- soft glow background -->
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
@@ -76,7 +74,7 @@
                      transition flex items-center gap-2">
               <span class="relative z-[1]">Total Directs</span>
               <span
-                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]"> 
                 {{ $customer->totalDirectsCount }}
               </span>
             </button>
@@ -154,27 +152,27 @@
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Sr.
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     User Id
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Wallet Address
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Direct
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Team
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Package
                   </th>
                   <!-- <th
@@ -182,15 +180,15 @@
                     Registration Date
                   </th> -->
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Activation Date
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Rank
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
                     Level
                   </th>
                 </tr>
@@ -293,43 +291,43 @@
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Sr.
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     User Id
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Wallet Address
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Direct
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Team
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Package
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Registration Date
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Activation Date
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Rank
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
                     Level
                   </th>
                 </tr>
@@ -415,10 +413,10 @@ $(document).ready(function () {
     const tabPanels = document.querySelectorAll('#default-tab-content [role="tabpanel"]');
 
     const activeClasses = [
-      'bg-gradient-to-r', 'from-sky-500', 'to-sky-600',
+      'bg-gradient-to-r', 'from-[var(--theme-skky-500)]', 'to-[var(--theme-skky-600)]',
       'text-white',
       'shadow-[0_10px_25px_rgba(59,130,246,.35)]',
-      'border', 'border-sky-500'
+      'border', 'border-[var(--theme-skky-500)]'
     ];
 
     const inactiveClasses = [

@@ -53,7 +53,8 @@ class NinePayService
 
     public function getEthWallet($customer, $transaction_id)
     {
-        $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-".$transaction_id."-" . $customer->id . "/eth"; // . "-" . $customer->referral_code . "/eth";
+        // $ethURL = "https://api.9pay.co/get-eth-wallet/ninepaytest-".$transaction_id."-" . $customer->id . "/eth"; // . "-" . $customer->referral_code . "/eth";
+        $ethURL = "https://api.9pay.co/get-eth-wallet/opai-".$transaction_id."-".$customer->id."/eth";
         // $eth_json = file_get_contents($eth);
         // return $eth_json;
         try 
@@ -80,7 +81,8 @@ class NinePayService
 
     public function getTronWallet($customer, $transaction_id)
     {
-        $tronURL = "https://api.9pay.co/get-tron-wallet/ninepaytest-".$transaction_id."-". $customer->id; // . "-" . $customer->referral_code;
+        // $tronURL = "https://api.9pay.co/get-tron-wallet/ninepaytest-".$transaction_id."-". $customer->id; // . "-" . $customer->referral_code;
+        $tronURL = "https://api.9pay.co/get-tron-wallet/opai-".$transaction_id."-".$customer->id;
         // $getTron = file_get_contents($tron);
         // return $getTron;
         try 

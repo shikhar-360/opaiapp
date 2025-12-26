@@ -8,6 +8,8 @@ use App\Models\AppsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -105,7 +107,7 @@ class AdminController extends Controller
     }
 
     // Login As Admin
-    public function loginAs(UsersModel $admin)
+   /* public function loginAs(UsersModel $admin)
     {
         if ($admin->role !== 'admin') abort(404);
 
@@ -113,12 +115,44 @@ class AdminController extends Controller
 
         return redirect()->route('admin.dashboard')
                             ->with('success', 'Logged in as admin.');
+    }*/
+
+    public function loginAsAdmin(UsersModel $adminUser)
+    {
+        // dd($adminUser->id, $adminUser->role, $adminUser->getAttributes());
+
+        if ($adminUser->role !== 'admin') abort(404);
+
+        $current = Auth::guard('superadmin')->user(); // adjust if your superadmin guard name differs
+        if (!$current) abort(403);
+
+        // push current identity into stack
+
+        $stack = Session::get('impersonation_stack', []);
+        $last = end($stack);
+        if (!$last || $last['guard'] !== 'superadmin' || $last['id'] !== $current->id) {
+            $stack[] = ['guard' => 'superadmin', 'id' => $current->id];
+            session(['impersonation_stack' => $stack]);
+        }
+
+        // $last = end($stack);
+        // $stack[] = ['guard' => 'superadmin', 'id' => $current->id];
+        // Session::put('impersonation_stack', $stack);
+
+        // logout superadmin guard, login admin guard
+        Auth::guard('superadmin')->logout();
+        Auth::guard('admin')->login($adminUser);
+
+        request()->session()->regenerate();
+
+        return redirect()->route('admin.dashboard')->with('success', 'Logged in as admin.');
     }
 
     public function dashboard()
     {
         return view('admins.dashboard');
     }
+
 
     public function logout()
     {
@@ -133,4 +167,52 @@ class AdminController extends Controller
         // Redirect the user to the login page (or wherever you want them to go)
         return redirect('admin.login');
     }
+
+    public function returnToSuperadmin(Request $request)
+    {
+        $stack = session('impersonation_stack', []);
+
+        if (empty($stack)) {
+            return redirect()->route('admin.login')
+                ->withErrors(['error' => 'No impersonation session found.']);
+        }
+
+        // Must currently be admin
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login')
+                ->withErrors(['error' => 'You are not logged in as admin.']);
+        }
+
+        // Last stack entry MUST be superadmin
+        $prev = end($stack);
+        if (!$prev || $prev['guard'] !== 'superadmin') {
+            return redirect()->route('admin.dashboard')
+                ->withErrors(['error' => 'Return path to superadmin not found.']);
+        }
+
+        // 1) Logout admin HARD (clear guard session keys too)
+        Auth::guard('admin')->logout();
+        $request->session()->forget(Auth::guard('admin')->getName());         // login_admin_xxx
+        $request->session()->forget(Auth::guard('admin')->getRecallerName()); // remember_admin_xxx
+
+        // 2) Pop superadmin from stack
+        $superEntry = array_pop($stack);
+        session(['impersonation_stack' => $stack]);
+
+        // 3) Login superadmin back
+        $super = UsersModel::findOrFail($superEntry['id']);
+        Auth::guard('superadmin')->login($super);
+
+        // Force session to contain superadmin id (extra safety like returnToAdmin)
+        $request->session()->put(Auth::guard('superadmin')->getName(), $super->getAuthIdentifier());
+
+        // Clear intended redirect so it won't bounce weirdly
+        $request->session()->forget('url.intended');
+
+        // Rotate session id safely
+        $request->session()->migrate(true);
+
+        return redirect()->route('superadmin.dashboard')->with('success', 'Returned to superadmin.');
+    }
+
 }

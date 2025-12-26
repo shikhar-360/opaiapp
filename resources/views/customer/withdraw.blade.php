@@ -27,20 +27,20 @@
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-5 mb-8">
 
     {{-- ROI Income --}}
-    <div class="hidden neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
       <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
         <img src="/assets/images/icons/roi-income.webp" width="100" height="100" alt="ROI Income"
              class="w-9 h-9 object-contain">
       </div>
       <div>
         <h3 class="text-base text-slate-600">ROI Income</h3>
-        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0</p>
+        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">$0</p>
       </div>
-    </div>
+    </div> -->
 
     {{-- Level Income --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-fuchsia-50 border border-fuchsia-200">
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-fuchsia-300 to-fuchsia-500 border border-fuchsia-200">
         <img src="/assets/images/icons/capping.webp" width="100" height="100" alt="Level Income"
              class="w-9 h-9 object-contain">
       </div>
@@ -52,8 +52,8 @@
 
     {{-- Total Income --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-amber-50 border border-amber-200">
-        <img src="/assets/images/icons/total-withdraw.webp" width="100" height="100" alt="Total Income"
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-amber-200">
+        <img src="/assets/images/icons/total-income.webp" width="100" height="100" alt="Total Income"
              class="w-9 h-9 object-contain">
       </div>
       <div>
@@ -64,9 +64,9 @@
 
     {{-- Total Withdraw --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-emerald-50 border border-emerald-200">
-        <img src="/assets/images/icons/income.webp" width="100" height="100" alt="Total Withdraw"
-             class="w-9 h-9 object-contain">
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-emerald-200">
+        <img src="/assets/images/icons/withdraw.webp" width="100" height="100" alt="Total Withdraw"
+             class="w-9 h-9 object-contain invert">
       </div>
       <div>
         <h3 class="text-base text-slate-600">Total Withdraw</h3>
@@ -74,10 +74,48 @@
       </div>
     </div>
 
+
+    {{-- Wallet Balance --}}
+<div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-blue-200">
+    <img src="/assets/images/icons/wallet-balance.webp" width="100" height="100" alt="Wallet Balance"
+         class="w-9 h-9 object-contain">
+  </div>
+  <div>
+    <h3 class="text-base text-slate-600">Wallet Balance</h3>
+    <p class="text-xl font-bold text-blue-600 mt-1">$0.000</p>
+  </div>
+</div>
+
+{{-- Token Wallet --}}
+<div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-300 to-purple-500 border border-purple-200">
+    <img src="/assets/images/icons/token-wallet.webp" width="100" height="100" alt="Token Wallet"
+         class="w-9 h-9 object-contain">
+  </div>
+  <div>
+    <h3 class="text-base text-slate-600">Token Wallet</h3>
+    <p class="text-xl font-bold text-purple-600 mt-1">0 TOKEN</p>
+  </div>
+</div>
+
+{{-- Token Balance --}}
+<div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-blue-200">
+    <img src="/assets/images/icons/token-balance.webp" width="100" height="100" alt="Token Balance"
+         class="w-9 h-9 object-contain">
+  </div>
+  <div>
+    <h3 class="text-base text-slate-600">Token Balance</h3>
+    <p class="text-xl font-bold text-blue-600 mt-1">$0.000</p>
+  </div>
+</div>
+
+
   </div>
 
   {{-- WITHDRAW BUTTON --}}
-  <div class="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4 mb-8">
+  <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-lg mx-auto">
     <button data-dialog-target="dialog" type="submit"
       class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
       <span>Earning Withdraw</span>
@@ -88,6 +126,16 @@
         </path>
       </svg>
     </button>
+        <!-- <button data-dialog-target="withdraw-success" type="button"
+      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
+      <span>Withdraw Success</span>
+      <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+        aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
+        <path clip-rule="evenodd" fill-rule="evenodd"
+          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
+        </path>
+      </svg>
+    </button> -->
   </div>
 
   {{-- WITHDRAWALS TABLE CARD (SAME THEME AS DIRECTS TABLE) --}}
@@ -124,7 +172,7 @@
               <span class="sr-only">Search</span>
               <div class="relative">
                 <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-
+                  
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
                     fill="currentColor">
                     <path fill-rule="evenodd"
@@ -275,7 +323,7 @@
 
             <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
               <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
-                          bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+                          bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
                 <img src="/assets/images/icons/total-withdraw.webp" width="100" height="100" alt="Logo"
                   class="w-9 h-9 object-contain">
                 </div>
@@ -304,7 +352,7 @@
 
               <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
               <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
-                          bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+                          bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
                 <img src="/assets/images/icons/total-withdraw.webp" width="100" height="100" alt="Logo"
                   class="w-9 h-9 object-contain">
                 </div>
@@ -349,6 +397,7 @@
                        placeholder="Enter Amount (min withdraw 10)" required
                 class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none
                        text-sm md:text-base [caret-color:#60a5fa] border-l border-slate-200 pl-4">
+            </div>
             </div>
           
 
@@ -429,27 +478,161 @@
 
   </div>
       <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent opacity-100"></div>
-  
+    </div>
+  </div>
 </div>
+
+<!-- WITHDRAW SUCCESS POPUP -->
+<div data-dialog-backdrop="withdraw-success"
+  class="fixed inset-0 z-[999] grid place-items-center
+         bg-black/60 backdrop-blur-sm p-3
+         pointer-events-none opacity-0 transition-opacity duration-300">
+
+  <div data-dialog="withdraw-success" class="w-full max-w-md">
+    <div
+      class="relative p-5 md:p-6 rounded-2xl w-full mx-auto overflow-hidden
+             border border-slate-200 bg-white
+             shadow-[0_20px_50px_rgba(15,23,42,.20)]
+             backdrop-blur-2xl">
+
+      <!-- glow blobs -->
+      <div class="pointer-events-none absolute -top-16 -right-16 w-48 h-48 bg-[var(--theme-skky-300)]/25 rounded-full blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-16 -left-16 w-48 h-48 bg-indigo-400/20 rounded-full blur-3xl"></div>
+
+      <!-- close -->
+      <button data-dialog-close="withdraw-success"
+        class="h-9 w-9 flex items-center justify-center
+               rounded-lg border border-slate-200 bg-white absolute top-3 right-3
+               hover:bg-slate-100 transition"
+        type="button">
+        <svg class="w-5 h-5 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+
+      <!-- header -->
+      <div class="relative text-center">
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200
+                    flex items-center justify-center shadow-sm">
+          <svg class="w-7 h-7 text-emerald-600" viewBox="0 0 24 24" fill="none">
+            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <h2 class="mt-4 text-lg sm:text-xl font-semibold text-slate-900">
+          🎉 Congratulations!
+        </h2>
+
+        <p class="mt-1 text-sm text-slate-600">
+          You have successfully withdrawn.
+        </p>
+      </div>
+
+      <!-- amount card -->
+      <div class="relative mt-6">
+        <div
+          class="flex items-center justify-between gap-3 p-4 rounded-2xl
+                 border border-slate-200 bg-white
+                 shadow-[0_12px_32px_rgba(15,23,42,.10)]
+                 backdrop-blur-xl">
+
+          <div class="min-w-0">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+              Amount
+            </p>
+            <p class="text-xl sm:text-2xl font-extrabold text-slate-900 tabular-nums">
+              <span id="withdrawAmountText">{{ session('withdraw_amount') }}</span>
+            </p>
+          </div>
+
+          <span class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)]
+                       border border-[var(--theme-skky-200)]
+                       px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)]">
+            USDT
+          </span>
+        </div>
+      </div>
+
+      <!-- actions -->
+      <div class="mt-6 flex items-center justify-center gap-3">
+        <button data-dialog-close="withdraw-success" type="button"
+          class="px-4 py-2 rounded-lg border border-slate-200
+                 bg-white text-slate-700 text-sm font-semibold
+                 hover:bg-slate-100 transition">
+          Close
+        </button>
+
+        <button data-dialog-close="withdraw-success" type="button"
+          class="px-5 py-2 rounded-lg text-white font-semibold
+                 bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
+                 shadow-[0_10px_25px_rgba(56,189,248,.40)]
+                 hover:shadow-[0_16px_30px_rgba(56,189,248,.55)]
+                 active:scale-95 transition">
+          OK 🚀
+        </button>
+      </div>
+
+      <div class="absolute inset-x-3 bottom-0 h-px
+                  bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
+    </div>
+  </div>
+</div>
+
 
 
 </section>
 @endsection
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+@if (session('status_code') === 'success')
 <script>
-$(document).ready(function () {
-  $('#withdrawalsTable').DataTable({
-      pageLength: 5,
-      lengthMenu: [5, 10, 25, 50],
-      searching: true,
-      ordering: true,
-      responsive: true
-  });
+document.addEventListener('DOMContentLoaded', function () {
+  const backdrop = document.querySelector('[data-dialog-backdrop="withdraw-success"]');
+  if (backdrop) {
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      backdrop.classList.add('opacity-100');
+  }
 });
 </script>
+@endif
 <script>
+document.addEventListener('click', function (e) {
+    const closeBtn = e.target.closest('[data-dialog-close]');
+    if (!closeBtn) return;
+
+    const dialogName = closeBtn.getAttribute('data-dialog-close');
+
+    const backdrop = document.querySelector(
+        `[data-dialog-backdrop="${dialogName}"]`
+    );
+
+    if (backdrop) {
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        backdrop.classList.remove('opacity-100');
+    }
+});
+ /* function openRankPopup() {
+    const popup = document.querySelector('[data-dialog-backdrop="rank-dialog"]');
+    if (!popup) return;
+
+    popup.classList.remove('pointer-events-none', 'opacity-0');
+    popup.classList.add('opacity-100');
+  }
+
+  function closeRankPopup() {
+    const popup = document.querySelector('[data-dialog-backdrop="rank-dialog"]');
+    if (!popup) return;
+
+    popup.classList.add('pointer-events-none', 'opacity-0');
+    popup.classList.remove('opacity-100');
+  }*/
+
+
+  /*document.querySelectorAll('[data-dialog-close]').forEach(btn => {
+    btn.addEventListener('click', closeRankPopup);
+  });*/
+
 document.addEventListener("DOMContentLoaded", function () {  
   document.getElementById('amount').addEventListener('input', function () {
       let amount = parseFloat(this.value) || 0;
@@ -466,3 +649,4 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+

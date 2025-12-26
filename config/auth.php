@@ -74,7 +74,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\UsersModel::class,
         ],
         'customers' => [ // Add this new provider
             'driver' => 'eloquent',

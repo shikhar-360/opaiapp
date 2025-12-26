@@ -20,20 +20,42 @@
                hover:shadow-[0_18px_45px_rgba(59,130,246,0.25)]">
 
         {{-- soft glow blobs --}}
-        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-sky-300/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -bottom-14 -left-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
 
         {{-- Header --}}
-        <div class="flex items-center justify-between gap-2 mb-4 relative z-10">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 relative z-10">
           <h2 class="text-xl md:text-2xl font-semibold text-slate-900 tracking-tight">
             Packages History
           </h2>
+
+          {{-- ✅ Toggle: Free Package ON/OFF (Only added this; baki kuch change nahi) --}}
+          <div class="flex items-center gap-2 self-end sm:self-auto">
+            <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+              Free Package
+            </span>
+
+            <button type="button"
+              onclick="toggleFreePackage()"
+              class="relative inline-flex h-7 w-14 items-center rounded-full border border-slate-200 bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-300)]"
+              aria-label="Toggle Free Package">
+              <span id="freePkgTrack"
+                class="absolute inset-0 rounded-full transition-colors"></span>
+
+              <span id="freePkgDot"
+                class="inline-block h-6 w-6 transform rounded-full bg-white border border-slate-200 shadow transition-transform translate-x-1"></span>
+            </button>
+
+           <span id="freePkgStatus" class="text-[10px] sm:text-[11px] text-slate-500 min-w-[28px] text-right">
+  OFF
+</span>
+          </div>
         </div>
 
         {{-- Sponsor / Copy referral --}}
         <div class="mb-6 space-y-2 relative z-10">
           <div class="flex items-center justify-between gap-2">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-sky-700 font-medium">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
               My Sponsor
             </p>
             <span class="text-[11px] text-slate-500">Tap to copy</span>
@@ -42,14 +64,14 @@
           <div
             class="relative flex items-center p-3 rounded-lg gap-3
                    border border-slate-200 bg-white
-                   focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100
-                   focus-within:bg-sky-50/60
+                   focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])]
+                   focus-within:bg-[var(--theme-skkky-50)]/60
                    transition-colors">
             <div class="flex items-center gap-2 min-w-0">
               <div
                 class="flex items-center justify-center w-8 h-8 rounded-full
-                       bg-sky-50 border border-sky-200">
-                <svg class="w-4 h-4 text-sky-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+                       bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+                <svg class="w-4 h-4 text-[var(--theme-high-text)]" xmlns="http://www.w3.org/2000/svg" fill="none"
                   viewBox="0 0 24 24">
                   <path d="M5 20h14M5 4h14M8 4v16M16 4v16" stroke="currentColor" stroke-width="1.5"
                     stroke-linecap="round"></path>
@@ -65,7 +87,7 @@
               onclick="copyYourReferral(); typeof showToast==='function' && showToast('success', 'Copied to clipboard!')"
               class="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium cursor-pointer
                      border border-slate-200 text-slate-700
-                     hover:text-slate-900 hover:border-sky-500 hover:bg-sky-50
+                     hover:text-slate-900 hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)]
                      transition-colors">
               <svg class="w-4 h-4" viewBox="0 0 1024 1024">
                 <path fill="currentColor"
@@ -89,13 +111,50 @@
                 console.error("Failed to copy text!");
               });
             }
+
+            // ✅ Free Package Toggle (ON/OFF)
+            let isFreePackageOn = false;
+
+            function toggleFreePackage() {
+              isFreePackageOn = !isFreePackageOn;
+
+              const statusEl = document.getElementById('freePkgStatus');
+              const dotEl = document.getElementById('freePkgDot');
+              const trackEl = document.getElementById('freePkgTrack');
+
+              if (isFreePackageOn) {
+                statusEl.innerText = 'ON';
+                statusEl.classList.remove('text-slate-500');
+                statusEl.classList.add('text-[var(--theme-primary-text)]');
+
+                dotEl.classList.remove('translate-x-1');
+                dotEl.classList.add('translate-x-7');
+
+                trackEl.classList.add('bg-[var(--theme-skky-500)]');
+                trackEl.classList.remove('bg-transparent');
+
+                typeof showToast === 'function' && showToast('success', 'Free Package: ON');
+              } else {
+                statusEl.innerText = 'OFF';
+                statusEl.classList.add('text-slate-500');
+                statusEl.classList.remove('text-[var(--theme-primary-text)]');
+
+                dotEl.classList.remove('translate-x-7');
+                dotEl.classList.add('translate-x-1');
+
+                trackEl.classList.remove('bg-[var(--theme-skky-500)]');
+                trackEl.classList.add('bg-transparent');
+
+                typeof showToast === 'function' && showToast('info', 'Free Package: OFF');
+              }
+            }
           </script>
         </div>
 
         {{-- Active Packages --}}
         <div class="w-full flex-1 mb-6 text-slate-900 relative z-10">
           <div class="flex items-center justify-between mb-3">
-            <p class="text-[11px] uppercase tracking-[0.18em] text-sky-700 font-medium">
+            <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
               Active / Purchased Packages
             </p>
           </div>
@@ -106,18 +165,18 @@
             <div
               class="flex items-center w-full gap-2.5 rounded-full h-full
                      border border-slate-200 bg-white px-0 pr-4
-                     hover:border-sky-500/70 hover:bg-sky-50
-                     transition-colors">
+                     hover:border-[var(--theme-skky-500)]/70 hover:bg-[var(--theme-skkky-50)]
+                     transition-colors max-w-fit">
               <div
                 class="text-xs sm:text-sm font-semibold flex items-center justify-center
                        w-9 h-9 sm:w-10 sm:h-10 min-w-9 min-h-9
                        rounded-full border border-slate-200
-                       bg-slate-50 text-sky-700 shadow-inner">
+                       bg-slate-50 text-[var(--theme-primary-text)] shadow-inner">
                 <!-- {{ $pkg->package_id }} -->
                 {{ $loop->iteration }}
               </div>
               <div class="flex flex-col items-start">
-                <h3 class="text-sm lg:text-base font-semibold tracking-wide text-slate-900 tabular-nums">
+                <h3 class="text-xs font-semibold tracking-wide text-slate-900 tabular-nums">
                   {{ number_format($pkg->amount, 2, '.', '') }}
                 </h3>
                 <span class="text-[10px] text-slate-500 uppercase tracking-[0.18em]">
@@ -140,28 +199,28 @@
         </h2>
 
         <div
-          class="bg-sky-50 border border-slate-200
+          class="bg-[var(--theme-skkky-50)] border border-slate-200
                  rounded-xl px-4 py-3 mb-4 flex items-center justify-between relative z-10">
           <p class="text-sm text-slate-700">Topup Balance</p>
-          <span class="text-sm font-semibold text-sky-700">{{ number_format($customer->myFinance['total_topup'], 2, '.', '') }}</span>
+          <span class="text-sm font-semibold text-[var(--theme-primary-text)]">{{ number_format($customer->myFinance['total_topup'], 2, '.', '') }}</span>
         </div>
         
         <form id="depositForm" class="relative mt-2 space-y-4" method="post" action="{{ route('pay.topup.save') }}">
           @csrf
           <div class="space-y-1.5 relative z-10">
             <label for="amount"
-              class="block text-[11px] uppercase tracking-[0.18em] text-sky-700 font-medium">
+              class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
               Package Amount
             </label>
             <div
               class="relative flex items-center p-3 rounded-lg gap-3
                      border border-slate-200 bg-white
-                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100
-                     focus-within:bg-sky-50/60 transition-colors">
+                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])]
+                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
               <div
                 class="flex items-center justify-center w-9 h-9 rounded-full
-                       bg-sky-50 border border-sky-200">
-                <svg class="w-5 h-5 text-sky-700" viewBox="0 0 24 24" fill="none">
+                       bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+                <svg class="w-5 h-5 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
                   <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5"></ellipse>
                   <path d="M3 5V9C3 10.6569 7.02944 12 12 12C16.9706 12 21 10.6569 21 9V5"
                     stroke="currentColor" stroke-width="1.5"></path>
@@ -183,8 +242,8 @@
             <button
               class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-2 cursor-pointer 
                      text-sm md:text-base capitalize tracking-wide mt-4
-                     rounded-full border border-sky-500
-                     bg-gradient-to-r from-sky-500 to-sky-600
+                     rounded-lg border border-[var(--theme-skky-500)]
+                     bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
                      font-semibold
                      shadow-[0_8px_20px_rgba(56,189,248,.30)]
                      hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
@@ -202,7 +261,7 @@
         </form>
 
         <div
-          class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/70 to-transparent opacity-100">
+          class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent opacity-100">
         </div>
       </div>
     </div>
@@ -215,7 +274,7 @@
                relative overflow-hidden text-left
                shadow-[0_15px_40px_rgba(15,23,42,.08)] backdrop-blur-2xl">
 
-        <div class="pointer-events-none absolute -top-16 -left-10 w-40 h-40 rounded-full bg-sky-300/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -top-16 -left-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -bottom-16 -right-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
 
         <h3 class="text-lg md:text-xl font-semibold text-slate-900 mb-5 relative z-10">
@@ -224,7 +283,7 @@
 
         <div class="space-y-4 relative z-10">
           <div class="flex items-start gap-3">
-            <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400"></div>
+            <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)]"></div>
             <p class="text-sm leading-relaxed text-slate-600">
               <span class="text-slate-900 font-medium">Top-Up Wallet Usage:</span>
               Funds added via QR are credited to the Top-Up Wallet and can be used only for package
@@ -233,7 +292,7 @@
           </div>
 
           <div class="flex items-start gap-3">
-            <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400"></div>
+            <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)]"></div>
             <p class="text-sm leading-relaxed text-slate-600">
               <span class="text-slate-900 font-medium">Exclusive Use of Top-Up Balance:</span>
               The top-up balance is not applicable for any other purposes.

@@ -20,7 +20,7 @@
 
     {{-- soft glow background (same style as My Directs) --}}
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
@@ -72,7 +72,7 @@
           <thead>
             <tr class="bg-slate-100 text-slate-900">
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Sr.
               </th>
               <!-- <th
@@ -80,15 +80,15 @@
                 Package
               </th> -->
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 All Package
               </th>
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Member Code
               </th>
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Sponsor
               </th>
               <!-- <th
@@ -96,15 +96,15 @@
                 Registration Date
               </th> -->
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Activation Date
               </th>
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Rank
               </th>
               <th
-                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right">
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
                 Level
               </th>
             </tr>
@@ -119,8 +119,8 @@
               <td class="px-4 sm:px-5 py-3 text-black">{{  $sr++ }}</td>
               <!-- <td class="px-4 sm:px-5 py-3">
                 <span
-                  class="inline-flex items-center rounded-full bg-sky-50 px-2 py-0.5 text-[11px] text-sky-700 border border-sky-200">
-                   {{ $myTeam->id }}({{ $myTeam->package_id }})
+                  class="inline-flex items-center rounded-full bg-[var(--theme-skkky-50)] px-2 py-0.5 text-[11px] text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
+                  $100
                 </span>
               </td> -->
               <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($myTeam->totaldeposit, 2, '.', '') }}</td>

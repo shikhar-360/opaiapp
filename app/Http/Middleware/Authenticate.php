@@ -12,6 +12,32 @@ class Authenticate extends Middleware
      */
     protected function redirectTo(Request $request): ?string
     {
-        return $request->expectsJson() ? null : route('login');
+
+        if (!empty(session('impersonation_stack', []))) {
+            return null; // don't redirect to login while impersonating chain exists
+        }
+
+        if (! $request->expectsJson()) {
+            if ($request->is('superadmin/*')) return route('superadmin.login');
+            if ($request->is('admin/*')) return route('admin.login');
+            return redirect()->route('customer.login');
+        }
+
+        return null;
+        
+        /*if (! $request->expectsJson()) {
+
+            if ($request->is('superadmin/*')) {
+                return route('superadmin.login');
+            }
+
+            if ($request->is('admin/*')) {
+                return route('admin.login');
+            }
+
+            return route('login');
+
+        }*/
+        // return $request->expectsJson() ? null : route('login');
     }
 }

@@ -29,11 +29,12 @@
     </div> -->
       <div class="mb-3 flex items-center justify-between gap-2">
         <div>
-          <p class="text-xs font-semibold tracking-[0.2em] uppercase text-[var(--theme-high-text)]">
+          <h3
+          class="font-semibold text-lg md:text-xl text-[var(--theme-primary-text)] truncate">
             VIP Rank Overview
-          </p>
-          <p class="text-sm text-slate-500">
-            You’re on VIP <span class="font-semibold text-slate-800">{{ $pad }}</span>
+        </h3>
+          <p class="text-sm text-slate-500 mt-1">
+            You’re on VIP <span class="font-semibold text-slate-800 ">{{ $pad }}</span>
             of {{ str_pad($totalLevels, 2, '0', STR_PAD_LEFT) }}
           </p>
         </div>

@@ -17,9 +17,10 @@ class TestController extends Controller
 
     public function testPromotionThounsand(Request $request)
     {
-        $this->pk->assignPromotionThousand($promotion_pkg=1);
+        // $this->pk->assignPromotionThousand($promotion_pkg=1);
         // $this->pk->assignPromotionFiveHundred($promotion_pkg=2);
-
+        // $this->pk->assignPromotionTenX($promotion_pkg=3);
+        // $this->pk->assignPromotionFiveThousand($promotion_pkg=4);
     }
 
 }

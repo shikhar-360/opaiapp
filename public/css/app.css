@@ -1,0 +1,316 @@
+@import 'tailwindcss';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+
+:root {
+  --background: #F5F7FC;
+  --foreground: #000000;
+  min-height: 100vh;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Cobbler";
+  font-weight: 400;
+}
+
+* {
+  box-sizing: border-b border-gray-700ox;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+a {
+  font-family: "BankGothic";
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  line-height: 0.9 !important;
+}
+.textspan {
+  font-family: "BankGothic";
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+    background-color: #3A3933;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #3f3f3f;
+  border-radius: 20px;}
+@font-face {
+  font-family: "BankGothic";
+  src: url("../../public/fonts/BankGothicBold.eot");
+  src:
+    url("../../public/fonts/BankGothicBold.eot?#iefix") format("embedded-opentype"),
+    url("../../public//fonts/BankGothicBold.woff2") format("woff2"),
+    url("../../public/fonts/BankGothicBold.woff") format("woff"),
+    url("../../public/fonts/BankGothicBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Cobbler";
+  src: url("../../public/fonts/Cobbler-Regular.eot");
+  src:
+    url("../../public/fonts/Roboto.eot?#iefix") format("embedded-opentype"),
+    url("../../public/fonts/Roboto.woff2") format("woff2"),
+    url("../../public/fonts/Roboto.woff") format("woff"),
+    url("../../public/fonts/Roboto.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.container {
+  max-width: 1440px;
+}
+.loader {
+  display: grid;
+  grid-template-columns: repeat(3, 12px);
+  gap: 8px;
+}
+.l {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: white;
+  animation: pulse 1s ease-in-out infinite;
+}
+.l:nth-child(2) { animation-delay: .1s }
+.l:nth-child(3) { animation-delay: .2s }
+.l:nth-child(4) { animation-delay: .3s }
+.l:nth-child(5) { animation-delay: .4s }
+.l:nth-child(6) { animation-delay: .5s }
+.l:nth-child(7) { animation-delay: .6s }
+.l:nth-child(8) { animation-delay: .7s }
+.l:nth-child(9) { animation-delay: .8s }
+
+@keyframes pulse {
+  0%, 100% { opacity: .3; transform: scale(.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+.bg-theme {
+    background-color: var(--theme-bg);
+}
+.text-theme {
+    color: var(--theme-bg);
+}
+.border-theme {
+    border-color: var(--theme-bg);
+}
+
+.bg-primary {
+  background-color: #ccaa77;
+  color: #000000;
+   transition: background-color 0.25s ease;
+  
+}
+.bg-tittlecard{
+background-image: radial-gradient(62.12% 75.73% at 50% 111.19%, #0A0A0A 0%, #222224 59.04%, rgba(17, 17, 21, 0.59) 100%);
+
+}
+.bg-bordercard{
+  border-color: #ccaa774b;
+}
+.bg-primary:hover {
+  background-color: #d4af77; 
+}
+.text-primary {
+  color: #778ecc;
+}
+
+.main-bgimg{
+  
+}
+.bg-secondary {
+  background-color: #ffffff;
+}
+
+.text-secondary {
+  color: #ffffff;
+}
+
+.bg-card {
+  background-color: #171717;
+}
+
+.text-card {
+  color: #181b1f;
+}
+
+.bg-subtext {
+  background-color: #b0bfb0;
+}
+
+.text-subtext {
+  color: #b0bfb0;
+}
+
+.bg-popupbg {
+  background-color: #212122;
+}
+
+.text-popupbg {
+  color: #212122;
+}
+.text-active {
+  color: #32CD32;
+}
+
+:root {
+  --gold-1: #f8d36a;
+  --gold-2: #c49d2b;
+  --gold-3: #7f6520;
+  --dark-top: #2b2b2e;
+  --dark-bottom: #0f0f10;
+  --radius: 0.5rem; /* rounded-lg */
+}
+
+/* Reset & base button */
+button.gold-btn {
+  all: unset;
+  box-sizing: border-box;
+  cursor: pointer;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #f8f5e2;
+  padding: 8px 30px;
+  border-radius: var(--radius);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  /* gold gradient border */
+  border: 2px solid transparent;
+  background:
+    linear-gradient(145deg, var(--gold-1), var(--gold-2) 45%, var(--gold-3)) border-box,
+    linear-gradient(to bottom, var(--dark-top), var(--dark-bottom)) padding-box;
+
+  /* subtle shadows for depth */
+  box-shadow:
+    inset 0 1px 3px rgba(255, 255, 255, 0.05),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.6),
+    0 8px 18px rgba(0, 0, 0, 0.4);
+
+  transition: filter 0.25s ease, transform 0.2s ease;
+}
+
+.asidebg{
+
+}
+ .neo-card {
+      @apply relative rounded-2xl
+      border border-slate-300 bg-gradient-to-br from-slate-100/80 via-slate-200/40 to-[var(--theme-skky-300)]
+      backdrop-blur-xl p-4 sm:p-5 text-black shadow-[0_10px_30px_rgba(0,0,0,0.10)]
+      transition-all duration-300 ease-out hover:-translate-y-1 
+      hover:border-[var(--theme-skky-300)]  hover:shadow-[0_15px_45px_rgba(56,189,248,0.25)]; 
+    }
+
+.aside-bg::before {
+    content: "";
+   position: absolute;
+    inset: 0;
+     background-image: url('../../public/assets/images/aside4.jpg');
+     /* filter: hue-rotate(-40deg); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+     z-index: -10;
+     opacity: 0.5 ;
+   pointer-events: none;
+   filter: hue-rotate(25deg);
+ }
+
+/*! CSS for glimtree */
+.bstree,
+.bstree ul {
+  list-style: none;
+  position: relative; }
+
+.bstree-vline {
+  position: absolute;
+  border-left: 1px solid;
+  bottom: 0;
+  content: "";
+  display: block;
+  left: 8px;
+  top: 0;
+  width: 0;
+  height: calc(100% - 20px); }
+
+.bstree-data .bstree-vline {
+  height: calc(100% - 12px); }
+
+.bstree-children li::before {
+  position: absolute;
+  height: 0;
+  left: 8px;
+  width: 22px;
+  content: "";
+  display: block;
+  margin-top: 12px;
+  border-top: 1px solid; }
+
+.bstree-incomplete > .checkbox label {
+  text-decoration: underline; }
+
+.bstree-chevron {
+  cursor: pointer; }
+
+.bstree input[type=checkbox] {
+  margin-top: 0.3rem; }
+
+.custom-checkbox .custom-control-indicator {
+  margin-top: 2px; }
+
+.bstree-data .fa {
+  vertical-align: 0; }
+
+.bstree-data .bstree-inner-container {
+  margin-bottom: 6px; }
+
+
+
+.logingregbg {
+  position: relative;
+  background: rgba(0, 0, 0, 0.548);
+}
+
+.logingregbg::before {
+  content: "";
+  background-image: url("../../public/assets/images/gmni.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.25;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+/* soft diagonal sheen */

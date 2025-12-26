@@ -4,8 +4,6 @@
 
 @section('content')
 <section class="min-h-screen py-8 bg-slate-50/50">
-
-
   <div class="mx-auto max-w-[1400px] px-4">
 
 
@@ -35,6 +33,7 @@
               @csrf
               <div class="flex items-center gap-4 mb-4">
                 <div class="relative">
+     
                   <div
                     class="w-20 h-20 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md
                            ring-1 ring-[var(--theme-skky-400)]/20">
@@ -42,12 +41,13 @@
                         <img id="profilePreview" src="{{ asset('storage/' . $customer->profile_image) }}"
                             alt="Profile" class="w-full h-full object-cover">
                       @else
-                          <img id="profilePreview" src="assets/images/opai.webp" alt="Profile"
+                          <img id="profilePreview" src="/assets/images/user/default-avatar.webp" alt="Profile"
                               class="w-full h-full object-cover">
                       @endif
 
                       
                   </div>
+
                   {{-- Camera button --}}
                   <label for="profile_pic"
                     class="absolute -bottom-2 -right-2 w-9 h-9 rounded-full cursor-pointer
@@ -60,6 +60,7 @@
                             stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                   </label>
+
                   {{-- Hidden input --}}
                   <input id="profile_pic" name="profile_pic" type="file" accept="image/*" class="hidden">
                 </div>
@@ -565,6 +566,13 @@
     </div> 
 
   </div>
+
+
+
+
+
+
+
 </section>
 @endsection
 

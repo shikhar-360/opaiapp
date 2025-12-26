@@ -44,7 +44,7 @@
           <div class="w-full flex-1  text-center">
 
             <p class="mb-4 leading-relaxed mx-auto max-w-sm text-slate-600 text-sm">
-              Login to access your dashboard, earnings and staking panel.
+              Login to access your dashboard.
             </p>
 
 

@@ -19,7 +19,7 @@
                hover:shadow-[0_18px_45px_rgba(59,130,246,0.25)]">
 
         {{-- soft glow --}}
-        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-sky-300/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
         <div class="pointer-events-none absolute -bottom-14 -left-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
 
         <div class="w-full relative z-10">
@@ -32,7 +32,7 @@
             <div onclick="chooseCoin('evm', 'polygon')" class="text-center cursor-pointer">
               <div
                 class="p-4 rounded-xl border border-slate-200 bg-white
-                       hover:border-sky-500 hover:bg-sky-50 transition-colors">
+                       hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition-colors">
                 <img src="/assets/images/coin-icon/polygone.png" width="64" height="48" alt="polygon"
                   class="w-12 sm:w-14 h-auto mx-auto">
               </div>
@@ -56,24 +56,24 @@
         </h3>
         <div class="space-y-3 text-sm text-slate-600">
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Exact Payment Requirement : Send the exact amount displayed, including fees, to avoid extra charges or
               failed credit.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your
               package.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>
               Transaction Support : For any payment related assistance, contact
-              <a class="underline text-sky-600" href="mailto:support@9pay.co">support@9pay.co</a>
+              <a class="underline text-[var(--theme-high-text)]" href="mailto:support@9pay.co">support@9pay.co</a>
             </p>
           </div>
         </div>
@@ -88,7 +88,7 @@
                shadow-[0_15px_40px_rgba(15,23,42,.10)] backdrop-blur-2xl
                transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(59,130,246,0.25)]">
 
-        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-sky-300/20 blur-3xl"></div>
+        <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
 
         <form id="qrpayForm" class="relative mt-2 space-y-4" method="post" action="{{ route('pay.qr.save') }}">
           @csrf
@@ -109,14 +109,14 @@
                 {{-- Select --}}
                 <div class="text-left">
                   <label for="coinSelect"
-                    class="block text-[11px] uppercase tracking-wide text-sky-700 font-medium mb-2">
+                  class="block text-[11px] uppercase tracking-wide text-[var(--theme-primary-text)] font-medium mb-2">
                     Coin
                   </label>
                   <div
                     class="relative flex items-center p-3 rounded-lg gap-3
-                          border border-slate-200 bg-white
-                          focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100
-                          focus-within:bg-sky-50/60 transition-colors">
+                         border border-slate-200 bg-white
+                         focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])]
+                         focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
                     <select id="coinSelect" name="coinSelect" onchange="selectCoinChain('USDT');"
                       class="w-full bg-transparent text-slate-900 text-sm outline-none cursor-pointer">
                       {{-- <option value="" disabled selected class="bg-white text-slate-900">
@@ -132,14 +132,14 @@
                 {{-- Amount --}}
                 <div class="text-left">
                   <label for="coin_amount"
-                    class="block text-[11px] uppercase tracking-wide text-sky-700 font-medium mb-2">
+                  class="block text-[11px] uppercase tracking-wide text-[var(--theme-primary-text)] font-medium mb-2">
                     Amount
                   </label>
                   <div
                     class="relative flex items-center p-3 rounded-lg gap-3
-                          border border-slate-200 bg-white
-                          focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100
-                          focus-within:bg-sky-50/60 transition-colors">
+                         border border-slate-200 bg-white
+                         focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])]
+                         focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
                     <input type="text" id="amount" name="amount"
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                       placeholder="Enter your amount" required>
@@ -150,12 +150,12 @@
               <div class="flex items-center justify-center mt-6">
                 <button  type="submit"
                   class="px-5 py-2.5 cursor-pointer flex items-center justify-center gap-2
-                        text-sm md:text-base capitalize tracking-wide rounded-full
-                        border border-sky-500 bg-gradient-to-r from-sky-500 to-sky-600
-                        text-white font-semibold
-                        shadow-[0_8px_20px_rgba(56,189,248,.30)]
-                        hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
-                        active:scale-95 transition-all duration-300 ease-out group">
+                       text-sm md:text-base capitalize tracking-wide rounded-full
+                       border border-[var(--theme-skky-500)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
+                       text-white font-semibold
+                       shadow-[0_8px_20px_rgba(56,189,248,.30)]
+                       hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
+                       active:scale-95 transition-all duration-300 ease-out group">
                   <span>Continue</span>
                   <svg id="svg1-icon"
                     class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="currentColor"
@@ -181,24 +181,24 @@
         </h3>
         <div class="space-y-3 text-sm text-slate-600">
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Exact Payment Requirement : Send the exact amount displayed, including fees, to avoid extra charges or
               failed credit.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your
               package.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>
               Transaction Support : For any payment related assistance, contact
-              <a class="underline text-sky-600" href="mailto:support@9pay.co">support@9pay.co</a>
+              <a class="underline text-[var(--theme-high-text)]" href="mailto:support@9pay.co">support@9pay.co</a>
             </p>
           </div>
         </div>
@@ -225,7 +225,7 @@
             <div class="flex flex-col">
               <span class="text-xs uppercase tracking-[0.15em] text-slate-500">EVM Network</span>
               <h3 class="text-xl font-semibold text-slate-900 flex items-center gap-1">
-                <span class="uppercase text-sky-600" id="chainSelected"></span>
+                <span class="uppercase text-[var(--theme-high-text)]" id="chainSelected"></span>
                 <span class="text-slate-800">Chain</span>
               </h3>
             </div>
@@ -271,8 +271,8 @@
                 <button type="button"
                   onclick="copyOgEvmAddress(); showToast && showToast('success', 'Copied to clipboard!')"
                   class="ml-2 p-2 rounded-md border border-slate-200 text-slate-700
-                         hover:border-sky-500 hover:bg-sky-50 transition
-                         focus:outline-none focus:ring-2 focus:ring-sky-200">
+                         hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition
+                         focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-200)]">
                   <svg class="w-5 h-5" viewBox="0 0 1024 1024" aria-hidden="true">
                     <path fill="currentColor"
                       d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z">
@@ -295,8 +295,8 @@
                   <button type="button"
                     onclick="copyAmount(); showToast && showToast('success', 'Copied to clipboard!')"
                     class="ml-2 p-2 rounded-md border border-slate-200 text-slate-700
-                           hover:border-sky-500 hover:bg-sky-50 transition
-                           focus:outline-none focus:ring-2 focus:ring-sky-200">
+                           hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition
+                           focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-200)]">
                     <svg class="w-5 h-5" viewBox="0 0 1024 1024" aria-hidden="true">
                       <path fill="currentColor"
                         d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z">
@@ -319,8 +319,8 @@
                   <button type="button"
                     onclick="navigator.clipboard.writeText(document.getElementById('pendingAmount').innerText.trim()).catch(()=>{}); showToast && showToast('success', 'Copied to clipboard!')"
                     class="ml-2 p-2 rounded-md border border-slate-200 text-slate-700
-                           hover:border-sky-500 hover:bg-sky-50 transition
-                           focus:outline-none focus:ring-2 focus:ring-sky-200">
+                           hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition
+                           focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-200)]">
                     <svg class="w-5 h-5" viewBox="0 0 1024 1024" aria-hidden="true">
                       <path fill="currentColor"
                         d="M768 832a128 128 0 0 1-128 128H192A128 128 0 0 1 64 832V384a128 128 0 0 1 128-128v64a64 64 0 0 0-64 64v448a64 64 0 0 0 64 64h448a64 64 0 0 0 64-64h64z">
@@ -382,24 +382,24 @@
         </h3>
         <div class="space-y-3 text-sm text-slate-600">
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Exact Payment Requirement : Send the exact amount displayed, including fees, to avoid extra charges or
               failed credit.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your
               package.</p>
           </div>
           <div class="flex items-start gap-2">
-            <span class="mt-1 w-2 h-2 rounded-full bg-sky-400"></span>
+            <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
             <p>
               Transaction Support : For any payment related assistance, contact
-              <a class="underline text-sky-600" href="mailto:support@9pay.co">support@9pay.co</a>
+              <a class="underline text-[var(--theme-high-text)]" href="mailto:support@9pay.co">support@9pay.co</a>
             </p>
           </div>
         </div>

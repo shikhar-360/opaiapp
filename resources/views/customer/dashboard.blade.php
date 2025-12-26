@@ -149,6 +149,7 @@
           <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
         </div>
 
+
         {{-- Download PDF Card --}}
         <div
           class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg hover:shadow-2xl transition-shadow">
@@ -214,6 +215,7 @@
               <div class="absolute -top-24 -left-24 w-52 h-52 bg-[var(--theme-skky-400)]/15 rounded-full blur-3xl"></div>
               <div class="absolute -bottom-28 -right-24 w-60 h-60 bg-indigo-500/15 rounded-full blur-3xl"></div>
             </div>
+
             <div class="relative z-10 px-4 md:px-6 pt-5 pb-6 sm:pb-7">
               <div class="flex flex-col items-start justify-start  gap-2">
                 <h3
@@ -225,8 +227,11 @@
                   Current Rank: <span class="font-semibold">{{ $customer->leadership_rank ? 'Star '.$customer->leadership_rank : '-' }} </span>
                 </span>
               </div>
+
               <!-- stars row -->
               <div class="grid grid-cols-5 gap-0 w-full pt-4 sm:pt-5">
+
+
                 <!-- Star 5 (inactive) -->
                 @php
                     $diamond = $customer->leadership_rank == 5 ? '' : 'opacity-30';
@@ -247,9 +252,10 @@
                     alt="STAR">
                   <h3 class="text-xs sm:text-lg leading-none ">Diamond</h3>
                 </div>
+
                 <!-- Star 4 (inactive) -->
                 <div
-                  class="gridbox {{ $ruby }} grayscale pointer-events-none relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-slate-200 shadow-sm col-start-4 col-end-4"
+          class="gridbox {{ $ruby }} grayscale pointer-events-none relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-slate-200 shadow-sm col-start-4 col-end-4"
                   data-rank="STAR" style="height:calc(100% + 1px)">
                   <img src="/assets/images/rank/ruby-rank.webp" width="60" height="60"
                     class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-16 md:-translate-y-20 w-auto h-14 md:h-20 object-contain object-bottom p-1.5"
@@ -259,7 +265,7 @@
 
                 <!-- Star 3 (active) -->
                 <div
-                  class="gridbox {{ $emerald }} relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-emerald-300 shadow-md col-start-3 col-end-3"
+          class="gridbox {{ $emerald }} relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-emerald-300 shadow-md col-start-3 col-end-3"
                   data-rank="STAR" style="height:calc(100% + 1px)">
                   <img src="/assets/images/rank/emerald-rank.webp" width="60" height="60"
                     class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-16 md:-translate-y-20 w-auto h-14 md:h-20 object-contain object-bottom p-1.5"
@@ -269,7 +275,7 @@
 
                 <!-- Star 2 (active) -->
                 <div
-                  class="gridbox {{ $sapphire }} relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-emerald-200 shadow-md col-start-2 col-end-2"
+          class="gridbox {{ $sapphire }} relative bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-200)] text-slate-900 text-center py-3 px-1 border-t border-l border-emerald-200 shadow-md col-start-2 col-end-2"
                   data-rank="STAR" style="height:calc(100% + 1px)">
                   <img src="/assets/images/rank/sapphire-rank.webp" width="60" height="60"
                     class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-16 md:-translate-y-20 w-auto h-14 md:h-20 object-contain object-bottom p-1.5"
@@ -356,22 +362,38 @@
           class="swiper rankingsliderbox overflow-hidden rounded-2xl border border-slate-200 bg-white backdrop-blur-2xl px-3 py-4 shadow-sm">
           <div class="swiper-wrapper flex">
             @for ($i = 1; $i <= 20; $i++)
-              @php
-                $achieved_color = "text-slate-900";
-                /* if($i == $customer->myLevel)*/
-                if($i == $customer->level_id)
-                {
-                  $achieved_color = "text-white";
-                }
-              @endphp
               <div class="swiper-slide !w-[140px] sm:!w-[160px] md:!w-[200px]">
                 <div
-                  class=" level-card  p-4 rounded-xl mx-auto border border-blue-300/60 bg-gradient-to-t from-[var(--theme-skkky-50)] via-white to-[var(--theme-[var(--theme-skky-100)])] text-center text-slate-900 relative flex flex-col gap-1 items-center justify-center shadow-[0_10px_30px_rgba(59,130,246,.25)]">
+  class="level-card p-4 rounded-xl mx-auto border border-blue-300/60
+         bg-gradient-to-t from-[var(--theme-skkky-50)] via-white to-[var(--theme-[var(--theme-skky-100)])]
+         text-center text-slate-900 relative flex flex-col gap-1 items-center justify-center
+         ">
+
+  <!-- 🔒 Lock Icon -->
+  <div
+    class="absolute top-1 right-1 w-4 h-4 rounded-full flex items-center ">
+           
+           
+            @if($i > $customer->level_id)
+                <img
+                    src="{{ asset('assets/images/lock.webp') }}"
+                    alt="Locked"
+                    class="w-4 h-4 object-contain"
+                >
+            @endif
+     
+  </div>
+
                   <strong class="block uppercase text-[11px] tracking-[0.18em] text-slate-500">
                     Level
                   </strong>
+
                   <strong
-                    class="w-10 h-10 border border-[var(--theme-skky-300)]/80 bg-gradient-to-t from-[var(--theme-skky-500)] to-[var(--theme-skky-400)] rounded-full flex items-center justify-center {{$achieved_color}} font-bold text-sm shadow-[0_8px_22px_rgba(56,189,248,.7)]">
+    class="w-10 h-10 border border-[var(--theme-skky-300)]/80
+           bg-gradient-to-t from-[var(--theme-skky-500)] to-[var(--theme-skky-400)]
+           rounded-full flex items-center justify-center
+           text-slate-900 font-bold text-sm
+           ">
                     {{ $i }}
                   </strong>
                 </div>
@@ -382,26 +404,34 @@
       </div>
 
       {{-- METRIC CARDS ROW 1 --}}
-      <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
+            <div class="flex items-center justify-between mb-3 mt-8 ">
+          <h2 class="text-base sm:text-lg font-semibold text-slate-900">
+            Stats
+          </h2>
+          
+        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 sm:gap-5">
+        
+
 
         {{-- Referral level --}}
         <div
-          class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(59,130,246,0.25)]">
+          class="group relative overflow-hidden  rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(59,130,246,0.25)]">
           <div
             class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--theme-skky-400)]/15 via-transparent to-fuchsia-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
           </div>
 
-          <div class="relative flex items-center gap-3 sm:gap-4">
+          <div class="relative flex items-center gap-2 sm:gap-3">
             <div
-              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-slate-50 ring-1 ring-[var(--theme-skky-400)]/20 shadow-[0_0_25px_rgba(56,189,248,0.35)]">
+              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br from-blue-400 to-blue-600 ring-1 ring-[var(--theme-skky-400)]/20 ">
               <img src="/assets/images/icons/capping.webp" alt="Referral level"
                 class="h-7 w-7 sm:h-8 sm:w-8 object-contain">
             </div>
 
             <div class="flex-1 min-w-0">
-              <p class="text-sm sm:text-base font-medium text-sky-900 truncate">
+              <h3 class="text-sm sm:text-base font-medium text-sky-900 truncate">
                 Referral level
-              </p>
+              </h3>
             </div>
 
             <div class="text-right">
@@ -424,17 +454,17 @@
             class="pointer-events-none absolute inset-0 bg-gradient-to-br from-emerald-400/15 via-transparent to-[var(--theme-skky-400)]/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
           </div>
 
-          <div class="relative flex items-center gap-3 sm:gap-4">
+          <div class="relative flex items-center gap-2 sm:gap-3">
             <div
-              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-slate-50 ring-1 ring-emerald-400/20 shadow-[0_0_25px_rgba(16,185,129,0.35)]">
+              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-400 to-emerald-600 ring-1 ring-emerald-400/20 ">
               <img src="/assets/images/icons/team.webp" alt="Team"
                 class="h-7 w-7 sm:h-8 sm:w-8 object-contain">
             </div>
 
             <div class="flex-1 min-w-0">
-              <p class="text-sm sm:text-base font-medium text-emerald-900 truncate">
+              <h3 class="text-sm sm:text-base font-medium text-emerald-900 truncate">
                 Team
-              </p>
+                </h3>
             </div>
 
             <div class="text-right">
@@ -448,56 +478,99 @@
         </div>
 
         {{-- Capping --}}
+
         <div
           class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(245,158,11,0.25)]">
+
           <div
-            class="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-400/15 via-transparent to-[var(--theme-skky-400)]/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
+    class="pointer-events-none absolute inset-0 bg-gradient-to-br from-amber-400/15 via-transparent to-orange-500/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
           </div>
 
-          <div class="relative flex items-center gap-3 sm:gap-4">
+  <!-- Main Row -->
+  <div class="relative flex items-center gap-4">
+
+    <!-- Left : Icon + Title -->
+    <div class="flex items-center gap-3 min-w-[140px]">
             <div
-              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-slate-50 ring-1 ring-amber-400/20 shadow-[0_0_25px_rgba(245,158,11,0.35)]">
-              <img src="/assets/images/icons/daily-income.webp" alt="Capping"
+        class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 ring-1 ring-amber-400/20 ">
+        <img src="/assets/images/icons/capping.webp" alt="Capping"
                 class="h-7 w-7 sm:h-8 sm:w-8 object-contain">
             </div>
 
-            <div class="flex-1 min-w-0">
-              <p class="text-sm sm:text-base font-medium text-amber-900 truncate">
+      <div>
+        <h3 class="text-sm sm:text-base font-medium text-amber-900">
                 Capping
+        </h3>
+        <p class="text-[11px] text-slate-500">
+          Progress
               </p>
+      </div>
             </div>
 
-            <div class="text-right">
-              <p class="text-[11px] text-slate-500 mb-0.5">
-                Slots
-              </p>
-              <p class="text-lg sm:text-2xl font-semibold text-slate-900 leading-none">5X
-                <!-- {{ $customer->myFinance['capping_limit'] }} -->
-              </p>
+    <!-- Right : Progress -->
+
+    @php
+    $earned = (float) ($customer->myLevelEarning ?? 0);
+
+    $rawCapping = (float) ($customer->myFinance['capping_limit'] ?? 0);
+    $cappingLimit = max(0, $rawCapping - 2500); // never negative
+
+    if ($cappingLimit > 0) {
+        $percentUsed = ($earned / $cappingLimit) * 100;
+        $scaleOf10   = ($earned / $cappingLimit) * 10;
+    } else {
+        $percentUsed = 0;
+        $scaleOf10   = 0;
+    }
+
+    // Clamp values
+    $percentUsed = min(100, round($percentUsed, 2));
+    $scaleOf10   = min(10, round($scaleOf10, 2));
+    @endphp
+    <div class="flex-1">
+      <div class="flex justify-between mb-1">
+        <span class="text-xs font-medium text-slate-600">
+          {{ $scaleOf10 }} / 10
+        </span>
+        <span class="text-xs font-medium text-amber-700">
+          {{ $percentUsed }}%
+        </span>
+      </div>
+
+      <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden">
+        <div
+          class="bg-gradient-to-r from-amber-400 to-orange-500 h-2.5 rounded-full transition-all duration-500"
+          style="width: {{ $percentUsed }}%;">
+        </div>
             </div>
           </div>
 
-          <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400/100 to-transparent opacity-60"></div>
         </div>
+
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent opacity-60"></div>
+</div>
+
+
+
 
         {{-- Level Income --}}
         <div
-          class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(56,189,248,0.25)]">
+          class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-5 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(139,56,248,0.20)]">
           <div
-            class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--theme-skky-400)]/15 via-transparent to-purple-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
+            class="pointer-events-none absolute inset-0 bg-gradient-to-br from-purple-400/15 via-transparent to-purple-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
           </div>
 
-          <div class="relative flex items-center gap-3 sm:gap-4">
+          <div class="relative flex items-center gap-2 sm:gap-3">
             <div
-              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-slate-50 ring-1 ring-[var(--theme-skky-400)]/20 shadow-[0_0_25px_rgba(56,189,248,0.35)]">
+              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br from-purple-300 to-purple-500 ring-1 ring-[var(--theme-skky-400)]/20 ">
               <img src="/assets/images/icons/level-income.webp" alt="Level Income"
                 class="h-7 w-7 sm:h-8 sm:w-8 object-contain">
             </div>
 
             <div class="flex-1 min-w-0">
-              <p class="text-sm sm:text-base font-medium text-sky-900 truncate">
+              <h3 class="text-sm sm:text-base font-medium text-sky-900 truncate">
                 Level Income
-              </p>
+              </h3>
             </div>
 
             <div class="text-right">
@@ -510,7 +583,7 @@
             </div>
           </div>
 
-          <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/100 to-transparent opacity-60"></div>
+          <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-purple-400/100 to-transparent opacity-60"></div>
         </div>
 
         {{-- Total Income --}}
@@ -520,17 +593,17 @@
             class="pointer-events-none absolute inset-0 bg-gradient-to-br from-indigo-400/15 via-transparent to-[var(--theme-skky-400)]/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100">
           </div>
 
-          <div class="relative flex items-center gap-3 sm:gap-4">
+          <div class="relative flex items-center gap-2 sm:gap-3">
             <div
-              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-slate-50 ring-1 ring-slate-200 shadow-[0_0_18px_rgba(148,163,184,0.55)]">
-              <img src="/assets/images/icons/income.webp" alt="Total Income"
+              class="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400 to-sky-500 ring-1 ring-slate-200 ">
+              <img src="/assets/images/icons/total-income.webp" alt="Total Income"
                 class="h-7 w-7 sm:h-8 sm:w-8 object-contain">
             </div>
 
             <div class="flex-1 min-w-0">
-              <p class="text-sm sm:text-base font-semibold text-slate-900 truncate">
-                  Total Points
-              </p>
+              <h3 class="text-sm sm:text-base  text-fuchsia-900 truncate">
+                Total Points
+                </h3>
             </div>
 
             <div class="text-right">
@@ -546,6 +619,7 @@
 
           <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-slate-300 to-transparent"></div>
         </div>
+
       </div>
 
       {{-- MY PACKAGES TABLE --}}
@@ -561,17 +635,17 @@
             <table class="w-full text-left border-collapse pb-4 text-sm text-slate-900">
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
                     Sr No.
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
                     Package
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm">
-                    Amount ({{ $customer->appData->currency }})
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
+                    Amount
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-xs sm:text-sm text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px] text-right">
                     Date
                   </th>
                 </tr>
@@ -604,98 +678,96 @@
         {{-- Sponsor --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/sponsor.webp" class="w-9" alt="Sponsor">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-300 to-purple-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/mentor.webp" class="w-9" alt="Mentor">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Sponsor</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">#{{ $customer->mySponsor }}</p>
+            <h3 class="text-base text-slate-600">Mentor</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">#{{ $customer->mySponsor }}</p>
           </div>
         </div>
 
         {{-- Total Directs --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/total-directs.webp" class="w-9" alt="Total Directs">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/my-circle.webp" class="w-9" alt="My Circle">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Total Directs</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ $customer->totalDirectsCount }}</p>
+            <h3 class="text-base text-slate-600">My Circle</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">3</p>
           </div>
         </div>
 
         {{-- Total Active Direct --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/total-active-direct.webp" class="w-9" alt="Total Active Direct">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/my-circle-count.webp" class="w-9" alt="My Circle Count">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Total Active Direct</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ $customer->totalActiveDirectsCount }}</p>
+            <h3 class="text-base text-slate-600">My Circle Count</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">2</p>
           </div>
         </div>
 
         {{-- Date of Activation --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
             <img src="/assets/images/icons/date-of-activation.webp" class="w-9" alt="Date of Activation">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Date of Activation</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">
-              {{ optional($customer->myFirstDepositAt)->format('d-m-Y') ?? '-' }}
-            </p>
+            <h3 class="text-base text-slate-600">Date of Activation</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ optional($customer->myFirstDepositAt)->format('d-m-Y') ?? '-' }}</p>
           </div>
         </div>
 
         {{-- Self Investment --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/self-investment.webp" class="w-9" alt="Self Investment">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/self-investment.webp" class="w-9" alt="Personal Journey">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Self Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myInvestment, 2, '.', '') }} {{ $customer->appData->currency }} </p>
+            <h3 class="text-base text-slate-600">Personal Journey</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->myInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
         {{-- Direct Investment --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/direct-investment.webp" class="w-9" alt="Direct Investment">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-300 to-purple-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/my-circle-growth.webp" class="w-9" alt="My Circle Growth">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Direct Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+            <h3 class="text-base text-slate-600">My Circle Growth</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
         {{-- Total Team Investment --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/total-team-investmnet.webp" class="w-9" alt="Total Team Investment">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/icons/extended-growth.webp" class="w-6 invert" alt="Extended Growth">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Total Team Investment</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+            <h3 class="text-base text-slate-600">Extended Growth</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
         {{-- Total Withdraw --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div
-            class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
+            class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
             <img src="/assets/images/icons/total-withdraw.webp" class="w-9" alt="Total Withdraw">
           </div>
           <div>
-            <p class="text-sm text-slate-500">Total Withdraw</p>
-            <p class="text-xl font-bold text-[var(--theme-high-text)]">{{ number_format($customer->myTotalWithdraws, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+            <h3 class="text-base text-slate-600">Total Withdraw</h3>
+            <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->myTotalWithdraws, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
       </div>
@@ -820,7 +892,7 @@
             <div id="tabledata1_wrapper" class="dataTables_wrapper no-footer">
 
               {{-- TOP BAR: SHOW + SEARCH --}}
-              <!-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
                 <div class="dataTables_length" id="tabledata1_length">
                   <label class="text-xs text-slate-600 flex items-center gap-2">
                     <span>Show</span>
@@ -855,28 +927,40 @@
                     </div>
                   </label>
                 </div>
-              </div> -->
+              </div>
 
               <table id="tabledata1"
                 class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
                 style="padding-top: 15px;" aria-describedby="tabledata1_info">
-                <thead>
                   <thead>
                   <tr class="bg-slate-100 text-slate-900">
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
-                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th> -->
-                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th> -->
-                    <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
+                    <th
+                      class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                      Sr.
+                    </th>
+                    <th
+                      class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                      Name
+                    </th>
+                    <th
+                      class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                      Referral Code
+                    </th>
+                    <th
+                      class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                      Directs
+                    </th>
+                    {{-- <th
+                      class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
+                      VIP Level
+                    </th> --}}
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100">
                   @foreach($customer->leaderBoard["directs"]["daily"] as $dailyDirects)
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
-                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
+                    <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $customer->name }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
@@ -1252,7 +1336,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
@@ -1268,9 +1352,9 @@
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_1 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
-                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_2 }}</span>
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyVolume->package_2 }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_3 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1296,7 +1380,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
@@ -1312,9 +1396,9 @@
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_1 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
-                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_2 }}</span>
+                      <span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">{{ $weeklyVolume->package_2 }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_3 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1340,7 +1424,7 @@
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
-                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 3</th>
+                    <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 4</th> -->
                     <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Total</th>
                     <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">VIP Level</th> -->
@@ -1358,7 +1442,7 @@
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_2 }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_3 }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1482,10 +1566,10 @@
                   <tr class="hover:bg-slate-200 transition">
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyvote['referral_code'] }}</td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
-                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyvote['active'] }}</span>
+                    <td class="px-4 sm:px-5 py-3">
+                      <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyvote['active'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyvote['helpfull'] }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1523,9 +1607,9 @@
                     <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                     <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyvote['referral_code'] }}</td>
                     <td class="px-4 sm:px-5 py-3 text-black">
-                      <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyvote['active'] }}</span>
+                      <span class="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[11px] text-emerald-700 border border-emerald-300">{{ $weeklyvote['active'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyvote['helpfull'] }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1564,7 +1648,7 @@
                     <td class="px-4 sm:px-5 py-3 text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyvote['active'] }}</span>
                     </td>
-                    <td class="px-4 sm:px-5 py-3 text-black">
+                    <td class="px-4 sm:px-5 py-3 text-right text-black">
                       <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyvote['helpfull'] }}</span>
                     </td>
                     <td class="px-4 sm:px-5 py-3 text-black">
@@ -1584,6 +1668,7 @@
 
   </div>
 </div>
+
 
 
 
@@ -1642,8 +1727,8 @@
 
   const ACTIVE = [
     'bg-gradient-to-b',
-    'from-[var(--theme-skky-500)]',
-    'to-[var(--theme-bllue-200)]'
+    'from-[var(--theme-skky-300)]',
+    'to-[var(--theme-bllue-300)]'
   ];
 
   const INACTIVE = [
@@ -1790,4 +1875,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 </script>
+
 @endpush

@@ -61,7 +61,7 @@ class AdminController extends Controller
 
     // --- Specific Action: Login As Customer ---
 
-    public function loginAsCustomer(Request $request, $customerId)
+    /*public function loginAsCustomer(Request $request, $customerId)
     {
         // 1. Get the currently authenticated admin user object
         $admin = Auth::guard('admin')->user();
@@ -94,28 +94,94 @@ class AdminController extends Controller
 
         // 7. Redirect to the customer dashboard
         return redirect()->route('customer.dashboard');
+    }*/
+
+    public function loginAsCustomer(Request $request, $customerId)
+    {
+        $admin = Auth::guard('admin')->user();
+        if (!$admin) return back()->withErrors(['error' => 'You must be logged in as an admin.']);
+
+        $customer = CustomersModel::find($customerId);
+        if (!$customer) return back()->withErrors(['error' => 'Customer not found.']);
+        
+        // push current identity into stack
+        $stack = Session::get('impersonation_stack', []);
+        $last = end($stack);
+        if (!$last || $last['guard'] !== 'admin' || $last['id'] !== $admin->id) {
+            $stack[] = ['guard' => 'admin', 'id' => $admin->id];
+            session(['impersonation_stack' => $stack]);
+        }
+        
+        // $stack = Session::get('impersonation_stack', []);
+        // $stack[] = ['guard' => 'admin', 'id' => $admin->id];
+        // Session::put('impersonation_stack', $stack);
+
+        Auth::guard('admin')->logout();
+        Auth::guard('customer')->login($customer);
+
+        $request->session()->regenerate();
+
+        return redirect()->route('dashboard')->with('success', 'Logged in as customer.');
     }
 
     public function returnToAdmin(Request $request)
     {
-        // Check if we are currently "impersonating"
-        if (Session::has('original_admin_id')) {
-            $adminId = Session::pull('original_admin_id'); // Get the ID and remove it from session
-            
-            // Log out the current customer session
-            Auth::guard('customer')->logout();
-            
-            // Log the original admin back in using the admin guard
-            Auth::guard('admin')->loginUsingId($adminId);
-            
-            // Regenerate session ID
-            $request->session()->regenerate();
+        $stack = session('impersonation_stack', []);
+        // dd(config('auth.guards.admin'), config('auth.providers'));
+        // dd([
+        //   'admin_check' => Auth::guard('admin')->check(),
+        //   'admin_id' => Auth::guard('admin')->id(),
+        //   'customer_check' => Auth::guard('customer')->check(),
+        //   'stack' => session('impersonation_stack', []),
+        //   'admin_dashboard_url' => route('admin.dashboard'),
+        // ]);
 
-            // Redirect back to the admin dashboard
-            return redirect()->route('admin.dashboard');
+        // $stack = session('impersonation_stack', []);
+        if (empty($stack)) {
+            return redirect()->route('login')->withErrors(['error' => 'No impersonation session found.']);
         }
 
-        // If no original admin ID found, just go home
-        return redirect('/'); 
+        // must be customer now
+        if (!Auth::guard('customer')->check()) {
+            return redirect()->route('login')->withErrors(['error' => 'You are not logged in as customer.']);
+        }
+
+        $prev = end($stack);
+        if (!$prev || $prev['guard'] !== 'admin') {
+            return redirect()->route('customer.dashboard')->withErrors(['error' => 'Return path to admin not found.']);
+        }
+
+        // 1) logout customer HARD
+        Auth::guard('customer')->logout();
+        $request->session()->forget(Auth::guard('customer')->getName());          // login_customer_xxx
+        $request->session()->forget(Auth::guard('customer')->getRecallerName());  // remember_customer_xxx
+
+        // 2) pop admin from stack
+        $adminEntry = array_pop($stack);
+        session(['impersonation_stack' => $stack]);
+
+        // 3) login admin HARD
+        $admin = UsersModel::findOrFail($adminEntry['id']);
+
+        Auth::guard('admin')->login($admin);
+
+        // Force session to contain admin id
+        $request->session()->put(Auth::guard('admin')->getName(), $admin->getAuthIdentifier());
+
+        // clear intended
+        $request->session()->forget('url.intended');
+
+        // rotate session id
+        $request->session()->migrate(true);
+
+        // DEBUG (remove after)
+        // dd([
+        //   'admin_guard_key' => Auth::guard('admin')->getName(),
+        //   'admin_session_value' => session(Auth::guard('admin')->getName()),
+        //   'admin_check' => Auth::guard('admin')->check(),
+        //   'customer_check' => Auth::guard('customer')->check(),
+        // ]);
+
+        return redirect()->route('admin.dashboard')->with('success', 'Returned to admin.');
     }
 }

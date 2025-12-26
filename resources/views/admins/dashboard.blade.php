@@ -10,7 +10,33 @@
 <nav class="navbar navbar-dark bg-dark mb-4">
     <div class="container">
         <span class="navbar-brand">Admin Dashboard</span>
-        <a href="{{ route('admin.logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
+        <!-- <a href="{{ route('admin.logout') }}" class="btn btn-outline-light btn-sm">
+        Logouts
+        </a> -->
+
+        @php
+            $stack = session('impersonation_stack', []);
+            $last  = end($stack);
+        @endphp
+
+        @if(Auth::guard('customer')->check() && $last && $last['guard'] === 'admin')
+            {{-- Customer → Admin --}}
+            <a href="{{ route('customer.logoutascustomer') }}" class="btn btn-outline-light btn-sm">
+                Logout As Customer
+            </a>
+
+        @elseif(Auth::guard('admin')->check() && $last && $last['guard'] === 'superadmin')
+            {{-- Admin → Superadmin --}}
+            <a href="{{ route('admin.logoutasadmin') }}" class="btn btn-outline-light btn-sm">
+                Logout As Admin
+            </a>
+
+        @else
+            {{-- Normal logout --}}
+            <a href="{{ route('admin.logout') }}" class="btn btn-outline-light btn-sm">
+                Logout
+            </a>
+        @endif
     </div>
 </nav>
 

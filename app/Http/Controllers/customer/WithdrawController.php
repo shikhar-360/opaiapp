@@ -83,7 +83,8 @@ class WithdrawController extends Controller
                     ->route('withdraw')
                     ->with([
                         'status_code'  => 'success',
-                        'message' => 'Withdraw successfully.'
+                        'message' => 'Withdraw successfully.',
+                        'withdraw_amount'=>$validated['amount']
                     ]);
 
         } catch (\Exception $e) {

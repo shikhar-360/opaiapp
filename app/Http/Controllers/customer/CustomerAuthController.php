@@ -267,24 +267,7 @@ class CustomerAuthController extends Controller
 
     public function logout(Request $request)
     {
-        if (Session::has('original_admin_id')) {
-            // --- Switch back to Admin account ---
-
-            $adminId = Session::pull('original_admin_id'); // Get the ID and clear the session key
-
-            // Log out the current customer guard
-            Auth::guard('customer')->logout();
-
-            // Log the original admin back in using the 'admin' guard
-            Auth::guard('admin')->loginUsingId($adminId);
-
-            // Regenerate session ID for security
-            $request->session()->regenerate();
-
-            // Redirect back to the admin dashboard
-            return redirect()->route('admin.dashboard')->with('status', 'Returned to admin session.');
-        }
-
+        
         Auth::guard('customer')->logout(); 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

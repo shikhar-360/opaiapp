@@ -48,7 +48,7 @@ class CustomersModel extends Authenticatable
         'email_verified_at' => 'datetime',
         'status' => 'boolean',
         'created_at' => 'datetime',
-        'promotion_status' => 'array',
+        // 'promotion_status' => 'array',
     ];
 
     public function app()

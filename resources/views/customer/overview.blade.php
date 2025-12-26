@@ -19,22 +19,22 @@
   </div> -->
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-sky-300 to-sky-500 border border-[var(--theme-skky-200)]">
       <img src="/assets/images/icons/capping.webp" class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Level Income</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
+      <h3 class="text-base text-slate-600">Level Income</h3>
+      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
       <img src="/assets/images/icons/total-withdraw.webp" class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Total Income</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
+      <h3 class="text-base text-slate-600">Total Income</h3>
+      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -73,16 +73,16 @@
 shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-emerald-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)] opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]
       relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/roi-income.webp" class="w-10 h-10 object-contain">
       </div>
@@ -91,12 +91,12 @@ shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">ROI Income</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -106,16 +106,16 @@ shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-fuchsia-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-fuchsia-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-fuchsia-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/capping.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -123,7 +123,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Level Income</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0.000</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0.000</span>
       </p>
     </div>
   </div>
@@ -139,15 +139,15 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
     <div class="absolute -top-20 -left-20 w-52 h-52 bg-emerald-200/60 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-sky-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-[var(--theme-skky-400)] opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/direct-investment.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -155,7 +155,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Direct Income</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -179,7 +179,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-amber-400 to-fuchsia-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/royalty-income.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -187,7 +187,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Royalty Bonus</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -202,16 +202,16 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-emerald-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-emerald-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-emerald-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/star-bonus.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -219,12 +219,12 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Star Bonus</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -235,15 +235,15 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
     <div class="absolute -top-20 -left-20 w-52 h-52 bg-emerald-200/60 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-cyan-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-[var(--theme-cyyan-200)]/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-[var(--theme-cyyan-400)] opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/quick-start-bonus.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -251,7 +251,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Quick Start Bonus</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -266,16 +266,16 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-amber-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-amber-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-amber-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
         <img src="/assets/images/icons/total-withdraw.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
@@ -283,12 +283,12 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Total Income</h3>
       <p class="text-sm">
-        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0.000</span>
+        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0.000</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -297,7 +297,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     class="w-full mx-auto my-10 overflow-hidden rounded-2xl relative border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.08)]">
     {{-- soft glow background --}}
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
@@ -310,7 +310,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- Start date --}}
         <label class="relative group w-full">
           <div
-            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-sky-400/80 group-focus-within:ring-1 group-focus-within:ring-sky-400/60 transition">
+            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-[var(--theme-skky-400)]/80 group-focus-within:ring-1 group-focus-within:ring-[var(--theme-skky-400)]/60 transition">
             <span class="pl-3 pr-2 opacity-80 text-slate-400">
               <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -327,7 +327,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- TO badge --}}
         <div class="hidden md:flex items-center justify-center">
           <span
-            class="w-8 h-8 grid place-items-center rounded-full bg-white border border-slate-200 text-[11px] font-semibold tracking-widest text-sky-600">
+            class="w-8 h-8 grid place-items-center rounded-full bg-white border border-slate-200 text-[11px] font-semibold tracking-widest text-[var(--theme-high-text)]">
             TO
           </span>
         </div>
@@ -335,7 +335,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- End date --}}
         <label class="relative group w-full">
           <div
-            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-sky-400/80 group-focus-within:ring-1 group-focus-within:ring-sky-400/60 transition">
+            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-[var(--theme-skky-400)]/80 group-focus-within:ring-1 group-focus-within:ring-[var(--theme-skky-400)]/60 transition">
             <span class="pl-3 pr-2 opacity-80 text-slate-400">
               <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -370,7 +370,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     
     {{-- soft glow background --}}
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
@@ -379,14 +379,14 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       <div
         class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
         <ul class="flex gap-2" data-tabs-toggle="#default-tab-content" role="tablist">
-          <li class="hidden" role="presentation">
+          <li role="presentation">
             <button id="table-income_all" data-tabs-target="#income_all" type="button" role="tab"
-              aria-controls="income_all" aria-selected="false"
+              aria-controls="income_all" aria-selected="true"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
               <span class="relative z-[1]">Level Points</span>
               <span
-                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
                 {{ $customer->levelIncomeCount }}
               </span>
             </button>
@@ -430,16 +430,16 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         </ul>
 
         {{-- Hint text --}}
-        <!-- <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
+        <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
           <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
           <span>Click tabs to switch income type</span>
-        </div> -->
+        </div>
       </div>
     </div>
 
     <div id="default-tab-content" class="relative">
       {{-- TAB: ALL INCOME --}}
-      <div class="hidden" id="income_all" role="tabpanel" aria-labelledby="table-income_all">
+      <div id="income_all" role="tabpanel" aria-labelledby="table-income_all">
         <div class="overflow-x-auto">
           <div id="tabledata_all_wrapper" class="dataTables_wrapper no-footer">
             
@@ -486,17 +486,17 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Sr.
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Amount 
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Tag
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
                     Date
                   </th>
                 </tr>
@@ -642,7 +642,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       </div>
 
       {{-- TAB: DIRECT INCOME --}}
-      <div id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
+      <div class="hidden" id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
         <div class="overflow-x-auto">
           <div id="tabledata_direct_wrapper" class="dataTables_wrapper no-footer">
 
@@ -682,7 +682,8 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 </label>
               </div> --}}
             </div>
-            {{-- levelIncomeDetails --}}
+            </div>
+
             <table id="tabledata_direct"
               class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
               style="padding-top: 15px;" aria-describedby="tabledata_direct_info">
@@ -880,10 +881,10 @@ $(document).ready(function () {
 
     // Tailwind classes for active & inactive tabs (same as My Directs light theme)
     const activeClasses = [
-      'bg-gradient-to-r', 'from-sky-500', 'to-sky-600',
+      'bg-gradient-to-r', 'from-[var(--theme-skky-500)]', 'to-[var(--theme-skky-600)]',
       'text-white',
       'shadow-[0_10px_25px_rgba(59,130,246,.35)]',
-      'border', 'border-sky-500'
+      'border', 'border-[var(--theme-skky-500)]'
     ];
 
     const inactiveClasses = [

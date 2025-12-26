@@ -14,7 +14,7 @@
 
     {{-- soft glow background --}}
     <div class="pointer-events-none absolute inset-0 opacity-70">
-      <div class="absolute -top-24 -left-24 w-64 h-64 bg-sky-300/20 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -left-24 w-64 h-64 bg-[var(--theme-skky-300)]/20 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-200/40 rounded-full blur-3xl"></div>
     </div>
 
@@ -32,15 +32,15 @@
           {{-- Subject --}}
           <div class="text-left">
             <label for="subject"
-                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
               Subject
             </label>
             <div
               class="relative flex items-center p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
-                     focus-within:bg-sky-50/60 transition-colors">
-              <svg class="w-5 h-5 min-w-5 min-h-5 text-sky-400" viewBox="0 0 38 32"
+                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+              <svg class="w-5 h-5 min-w-5 min-h-5 text-[var(--theme-skky-400)]" viewBox="0 0 38 32"
                    xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <path fill="currentColor"
@@ -74,18 +74,18 @@
           {{-- File --}}
           <div class="text-left">
             <label for="file"
-                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
               Attachment (optional)
             </label>
 
             <div
               class="relative flex items-center p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
-                     focus-within:bg-sky-50/60 transition-colors">
+                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
 
               <svg xmlns="http://www.w3.org/2000/svg"
-                   class="w-6 h-6 min-w-6 min-h-6 text-sky-400/80"
+                   class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-skky-400)]/80"
                    fill="none" viewBox="0 0 24 24" stroke-width="1.7">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                       d="M12 16V4m0 0l4 4m-4-4L8 8" />
@@ -98,8 +98,8 @@
                 id="file"
                 class="block w-full text-sm text-slate-800
                        file:mr-4 file:rounded-md file:border-0
-                       file:bg-sky-500 file:text-white file:px-4 file:py-1 file:font-semibold cursor-pointer
-                       hover:file:bg-sky-600 transition-colors
+                       file:bg-[var(--theme-skky-500)] file:text-white file:px-4 file:py-1 file:font-semibold cursor-pointer
+                       hover:file:bg-[var(--theme-skky-600)] transition-colors
                        focus:outline-none">
             </div>
           </div>
@@ -107,14 +107,14 @@
           {{-- Message --}}
           <div class="text-left">
             <label for="message"
-                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
               Message
             </label>
             <div
               class="relative flex items-start p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
-                     focus-within:bg-sky-50/60 transition-colors">
+                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
               <textarea
                 rows="4"
                 name="message"
@@ -129,10 +129,10 @@
           {{-- Button --}}
           <div class="pt-2">
             <button type="submit"
-              class="px-5 py-2.5 mx-auto flex items-center justify-center gap-2 
+              class="px-5 py-2.5 mx-auto flex items-center justify-center  
                      text-sm sm:text-base tracking-wide mt-4 
-                     rounded-full border border-sky-500 
-                     bg-gradient-to-r from-sky-500 to-sky-600 
+                     rounded-lg border border-[var(--theme-skky-500)] 
+                     bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] 
                      text-white font-semibold 
                      shadow-[0_8px_20px_rgba(56,189,248,.35)] 
                      hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] 
@@ -162,7 +162,7 @@
 
     {{-- soft glow background --}}
     <div class="pointer-events-none absolute inset-0 opacity-70">
-      <div class="absolute -top-24 -right-24 w-64 h-64 bg-sky-200/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
@@ -214,7 +214,7 @@
           <thead>
           <tr class="bg-slate-100 text-slate-900">
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting sorting_asc"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting sorting_asc"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-sort="ascending" aria-label="Ticket Id.: activate to sort column descending">
               Open Date
@@ -226,37 +226,37 @@
               Ticket Id.
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Subject: activate to sort column ascending">
               Subject
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Message: activate to sort column ascending">
               Message
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Attachment: activate to sort column ascending">
               Attachment
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Status: activate to sort column ascending">
               Status
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Reply: activate to sort column ascending">
               Reply
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Date: activate to sort column ascending">
               Date
