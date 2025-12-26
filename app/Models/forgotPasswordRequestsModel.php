@@ -4,14 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class forgotPasswordRequestsModel extends Model
+class ForgotPasswordRequestsModel extends Model
 {
     protected $table = 'forgot_password_requests';
 
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'code',
-       
+        'expires_at',
     ];
     
+    protected $casts = [
+        'expires_at' => 'datetime',
+    ];
 }

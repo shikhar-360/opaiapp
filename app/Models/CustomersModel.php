@@ -68,15 +68,29 @@ class CustomersModel extends Authenticatable
 
     protected static function booted()
     {
-        static::creating(function ($customer) {
+        /*static::creating(function ($customer) {
             if (empty($customer->referral_code)) 
             {
                 $customer->referral_code = self::generateUniqueReferralCode($customer->app_id);
             }
+        });*/
+
+        static::created(function ($customer) {
+            // Only generate if not already set
+            if (empty($customer->referral_code)) {
+
+                $customer->referral_code = self::generateUniqueReferralCode(
+                    $customer->app_id,
+                    $customer->id   // ✅ ID is available here
+                );
+
+                // Prevent infinite loop
+                $customer->saveQuietly();
+            }
         });
     }
 
-    private static function generateUniqueReferralCode($appId)
+    private static function generateUniqueReferralCode($appId, int $id): string
     {
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
@@ -87,7 +101,7 @@ class CustomersModel extends Authenticatable
             }
         } while (self::where('referral_code', $code)->exists());
 
-        return $appId.$code;
+        return $appId.$id.$code;
     }
 
     public function leadershipIncome()

@@ -11,25 +11,26 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 use App\Models\CustomersModel;
-use App\Models\forgotPasswordRequestsModel;
-
-use Illuminate\Support\Facades\Mail;
+use App\Models\ForgotPasswordRequestsModel;
 
 // use Elliptic\EC; 
 // use kornrunner\Keccak;
 use App\Services\WalletService;
+use App\Services\Email\EmailService;
 
 use App\Traits\ManagesCustomerFinancials;
 
 class CustomerAuthController extends Controller
 {
     protected $walletServices;
+    protected $emailService;
 
     use ManagesCustomerFinancials;
 
-    public function __construct(WalletService $walletService)
+    public function __construct(WalletService $walletService, EmailService $emailService)
     {
         $this->walletServices = $walletService;
+        $this->emailService = $emailService;
     }
 
     // public function showRegisterForm($sponsorcode = null)
@@ -64,77 +65,6 @@ class CustomerAuthController extends Controller
         // }
 
         return view('customer.register', compact('sponsorcode'));
-    }
-    public function showForgotPassword(Request $request)
-    {
-
-        return view('customer.forgot');
-    }
-
-    public function forgot(Request $request){
-       
-        $validator = Validator::make($request->all(), [
-            'email'    => 'required|email|exists:customers,email',
-        ]);
-        
-        if ($validator->fails()) {
-            if($validator->errors()->get('email')){
-                 dd($validator->errors());
-               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('email')]); 
-            }
-        }
-        $validated = $validator->validated();
-
-        $user = CustomersModel::where('email', $validated['email'])->first();
-        if(!$user)
-        {
-            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'User not found']);
-        }
-        do {
-            $code = $this->randomString(6);
-            $exists = forgotPasswordRequestsModel::where('code', $code)->exists();
-        } while ($exists);
-
-        try {
-            $mailData = array('username' => "darshana", 'portal' => 'TradeAI', 'refferal_code' => "123456", 'emailMessage' =>"dshfuisdhfui", 'email' => "darshana@360core.inc"); 
-
-            $to_name = "darshana";
-            $to_email = "darshana@360core.inc";
-
-            $sentEmail = Mail::send('emails.forgot_otp', $mailData, function ($message) use ($to_name, $to_email) {
-                $message->to($to_email, $to_name)
-                    ->subject('Welcome to Trade AI')
-                    ->from('info@cp.vitnixx.net', 'Trade AI');
-            });
-
-            if ($sentEmail === 0) { // Check if email was sent successfully
-                throw new \Exception('Email sending failed.');
-            }
-        } catch (\Exception $error) {
-            dd($error);
-        }
-
-        forgotPasswordRequestsModel::where('user_id', $user['id'])->delete();
-
-
-        forgotPasswordRequestsModel::create([
-            'user_id' => $user->id,
-            'code'    => $code,
-            'created_at' => now(),
-           
-        ]);
-        return back()->withInput()->withErrors(['status_code'=>'success', 'message' => 'Your forgot password request send successfully, please check you mail']);
-     }
-    function randomString($length = 6) {
-        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-
-        for ($i = 0; $i < $length; $i++) {
-            $randomString .= $characters[random_int(0, $charactersLength - 1)];
-        }
-
-        return $randomString;
     }
 
     public function register(Request $request)
@@ -213,6 +143,8 @@ class CustomerAuthController extends Controller
         $finance->save();
         //Temporary for testing purpose
 
+        $this->emailService->sendRegistrationEmail($newCustomer);
+        
         // $this->showLoginForm();
         return redirect()->route('login')->with(['status_code'=>'success', 'message' => 'Registration Successful.']);
         
@@ -232,10 +164,11 @@ class CustomerAuthController extends Controller
     {
         $validated = $request->validate([
             'email'    => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'userid'   => 'required'
         ]);
 
-        $customer = CustomersModel::where('email', $validated['email'])->first();
+        $customer = CustomersModel::where('referral_code', $validated['userid'])->where('email', $validated['email'])->first();
         // dd($customer);
         // --- DEBUGGING --- 
         // dd([
@@ -321,6 +254,148 @@ class CustomerAuthController extends Controller
                 'error_details' => $e->getMessage() 
             ], 500);
         }
+    }
+
+    public function showForgotPassword(Request $request)
+    {
+        return view('customer.forgot');
+    }
+
+    public function forgot(Request $request)
+    {
+        $validated = $request->validate([
+            'email' => 'required|email|exists:customers,email',
+        ]);
+
+        $customer = CustomersModel::where('email', $validated['email'])->first();
+
+        // Generate unique reset code
+        do {
+            $code = strtoupper(Str::random(6));
+        } while (
+            ForgotPasswordRequestsModel::where('code', $code)->exists()
+        );
+
+        // Save reset request
+        ForgotPasswordRequestsModel::create([
+            'customer_id' => $customer->id,
+            'email'       => $customer->email,
+            'code'        => $code,
+            'expires_at'  => now()->addMinutes(15),
+        ]);
+
+        // Create reset URL
+        $resetUrl = url('/reset-password?code=' . $code);
+
+        // Send mail
+        $this->emailService->sendForgotPasswordEmail(
+            $customer->email,
+            $resetUrl
+        );
+
+        return back()->withInput()->withErrors(['status_code'=>'success', 'message' => 'Your forgot password request send successfully, please check you mail']);
+    }
+
+    function randomString($length = 6) 
+    {
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
+
+        return $randomString;
+    }
+
+    public function showResetPasswordForm(Request $request)
+    {
+        $code = $request->query('code');
+
+        if (!$code) {
+            // return view('customer.forgot');
+            return redirect()->route('forgot')->with(['status_code'=>'error', 'message' => 'Invalid request']);
+        }
+
+        $resetRequest = ForgotPasswordRequestsModel::where('code', $code)->first();
+
+        // Invalid or expired
+        if (
+            !$resetRequest ||
+            $resetRequest->expires_at->isPast()
+        ) {
+            // return view('customer.forgot')->withErrors([
+            //     'status_code' => 'error',
+            //     'message' => 'Password reset link is invalid or expired.'
+            // ]);
+
+            return redirect()->route('forgot')->with(['status_code'=>'error', 'message' => 'Password reset link is invalid or expired.']);
+        }
+
+        // Valid reset link
+        return view('customer.resetpassword', [
+            'code' => $code,
+            'customer_id' => $resetRequest->customer_id,
+        ]);
+
+        // return redirect()->route('password.reset')->with(['status_code'=>'error', 'message' => 'Password reset link is invalid or expired.']);
+    }
+
+    public function processResetPassword(Request $request)
+    {
+        // ✅ Validate input
+        $validator = Validator::make($request->all(), [
+            'cid'       => 'required|exists:customers,id',
+            'ccd'       => 'required|exists:forgot_password_requests,code',
+            'password'  => 'required|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) 
+        {
+            if($validator->errors()->get('cid'))
+            {
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('cid')]); 
+            }
+            else if($validator->errors()->get('ccd'))
+            {
+                return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('ccd')]);
+            }
+            else if($validator->errors()->get('password'))
+            {
+               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('password')]); 
+            }
+        }
+
+        $validated = $validator->validated();
+
+        // ✅ Fetch reset request
+        $resetRequest = ForgotPasswordRequestsModel::where('code', $validated['ccd'])
+                                                        ->where('customer_id', $validated['cid'])
+                                                        ->first();
+
+        // ❌ Invalid or expired
+        if (!$resetRequest || $resetRequest->expires_at->isPast()) {
+           return view('customer.forgot')->withErrors([
+                'status_code' => 'error',
+                'message' => 'Password reset link is invalid or expired.'
+            ]);
+        }
+
+        // ✅ Update password
+        CustomersModel::where('id', $validated['cid'])->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        // ✅ Invalidate reset request
+        $resetRequest->delete();
+
+        return redirect()
+            ->route('login')
+            ->with([
+                'status_code' => 'success',
+                'message' => 'Password reset successfully. Please login.'
+            ]);
     }
 
 }
