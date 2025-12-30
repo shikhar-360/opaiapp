@@ -58,12 +58,12 @@ h6 {
   border-radius: 20px;}
 @font-face {
   font-family: "BankGothic";
-  src: url("../../public/fonts/BankGothicBold.eot");
+  src: url("../../public/fonts/BankGothicBold2.eot");
   src:
-    url("../../public/fonts/BankGothicBold.eot?#iefix") format("embedded-opentype"),
-    url("../../public//fonts/BankGothicBold.woff2") format("woff2"),
-    url("../../public/fonts/BankGothicBold.woff") format("woff"),
-    url("../../public/fonts/BankGothicBold.ttf") format("truetype");
+    url("../../public/fonts/BankGothicBold2.eot?#iefix") format("embedded-opentype"),
+    url("../../public//fonts/BankGothicBold2.woff2") format("woff2"),
+    url("../../public/fonts/BankGothicBold2.woff") format("woff"),
+    url("../../public/fonts/BankGothicBold2.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;

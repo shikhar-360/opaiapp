@@ -42,14 +42,15 @@
   @vite(['resources/js/app.js'])
 </head>
 
-<body class="min-h-screen flex flex-col text-white !bg-[var(--theme-bg)]">
+<body class="min-h-screen flex flex-col text-white !bg-[var(--theme-bg)]  ">
 
   {{-- @include('components.header')  --}}
 
   <main class="flex-1 main-bgimg relative">
 
-    <img src="/assets/images/diag-ascii.png"  alt="bnrbg"
-             class="absolute top-0 left-0 w-full h-full object-cover -z-10 opacity-100">
+    <img src="/assets/images/white-grid.png"  alt="bnrbg"
+             class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">
+             
     @yield('content')
 
   </main>

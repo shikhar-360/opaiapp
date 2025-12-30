@@ -12,10 +12,10 @@ class CheckLevelService
     /**
      * Check & update user level based on directs
      */
-    public function checkCustomerLevel($app_id)
+    public function checkCustomerLevelAll($app_id)
     {
         // 1. Get all customers
-        $customers = CustomersModel::where('status', 1)->get(); 
+        $customers = CustomersModel::where('status', 1)->where('app_id', $app_id)->get(); 
         // change condition as per your requirement
 
         $results = [];
@@ -59,6 +59,39 @@ class CheckLevelService
         return [
             'status' => true,
             'message' => 'Levels updated for all active customers',
+            'data' => $results
+        ];
+    }
+
+    public function checkCustomerLevel($customer)
+    {
+        $directsCount = CustomersModel::join('customer_deposits', 'customer_deposits.customer_id', '=', 'customers.id')
+                                            ->where('customers.sponsor_id', $customer->id)
+                                            ->where('customer_deposits.payment_status', 'success')   // only successful deposits
+                                            ->distinct('customers.id')
+                                            ->count('customers.id');
+
+        $levelPackage = AppLevelPackagesModel::where('app_id', $customer->app_id)
+                                                        ->where('directs', '<=', $directsCount)
+                                                        ->orderBy('directs', 'DESC')
+                                                        ->first();
+        $results = [];
+        if ($levelPackage) 
+        {
+            // Update customer level
+            CustomersModel::where('id', $customer->id)->update([
+                                                            'level_id' => $levelPackage->id
+                                                        ]);
+            $results[] = [
+                'user_id' => $customer->id,
+                'directs' => $directsCount,
+                'assigned_level' => $levelPackage->id,
+            ];
+        }
+
+        return [
+            'status' => true,
+            'message' => 'Levels updated',
             'data' => $results
         ];
     }

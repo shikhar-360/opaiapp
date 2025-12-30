@@ -14,6 +14,7 @@ use App\Models\CustomerEarningDetailsModel;
 use App\Models\CustomerWithdrawsModel;
 use App\Models\VotesModel;
 use App\Models\AppsModel;
+use App\Models\FreeDepositPackagesModel;
 
 
 use App\Traits\ManagesCustomerHierarchy;
@@ -30,6 +31,10 @@ class DashboardMatriceService
         $customer = CustomersModel::find($customer->id, ['id', 'app_id', 'direct_ids', 'active_direct_ids']);
         
         if (!$customer) { return ['error' => 'Customer not found']; }
+
+        // $levelid = $this->getLevel($customer);
+        // $customer->level_id = $levelid;
+        // $customer->save();
 
         if ($customer->id != $customerId) {
             // If the IDs don't match, stop execution and show a 403 Forbidden error
@@ -52,7 +57,7 @@ class DashboardMatriceService
                 ->whereIn('customer_id', $ids)
                 ->where('payment_status', 'success') 
                 ->sum('amount');
-        };
+        }; 
 
         $sumWithdraws = function ($ids) {
             if (empty($ids)) { return 0; }
@@ -152,6 +157,12 @@ class DashboardMatriceService
         // Volume In Last 30 Days
         $monthlyDirects       =   $this->directsByRange(Carbon::now()->subDays(30));
 
+
+        $freepackages         =   FreeDepositPackagesModel::where('status',1)
+                                        ->where('app_id',$customer->app_id)
+                                        ->where('customer_id',$customer->id)
+                                        ->first();
+
         $volumes = [
             'directIds'               => $directIds,
             'activeDirectIds'         => $activeDirectIds,
@@ -182,6 +193,7 @@ class DashboardMatriceService
                                                 "volume" => array("daily"=>$dailyVolume,"weekly"=>$weeklyVolume,"monthly"=>$monthlyVolume),
                                                 "directs" => array("daily"=>$dailyDirects,"weekly"=>$weeklyDirects,"monthly"=>$monthlyDirects),
                                             ),
+            'myFreePackage'           => $freepackages,
         ];
 
         return $volumes;
@@ -229,11 +241,13 @@ class DashboardMatriceService
 
         foreach($customerData as $ckey => $customerd)
         {
-            $customerData[$ckey]['level_id'] = $this->getLevel($customerd);
+            // $customerData[$ckey]['level_id'] = $this->getLevel($customerd);
 
             $customerdd = CustomersModel::find($customerd['id'], ['id', 'direct_ids', 'active_direct_ids']);
-        
+            
             if (!$customerdd) { return ['error' => 'Customer not found']; }
+
+            $customerData[$ckey]['level_id'] = $customerdd->level_id;
 
             // --- Prepare the ID Arrays ---
             // Convert strings to arrays, filtering out potential empty entries
@@ -350,6 +364,58 @@ class DashboardMatriceService
             $record->sponsor_code = $sponsors->get($sponsorId, 'N/A');
             return $record;
         });
+
+
+        foreach($customerData as $ckey => $customerd)
+        {
+            // $customerData[$ckey]['level_id'] = $this->getLevel($customerd);
+
+            $customerdd = CustomersModel::find($customerd['id'], ['id', 'direct_ids', 'active_direct_ids']);
+            
+            if (!$customerdd) { return ['error' => 'Customer not found']; }
+
+            $customerData[$ckey]['level_id'] = $customerdd->level_id;
+
+            // --- Prepare the ID Arrays ---
+            // Convert strings to arrays, filtering out potential empty entries
+            $directIds = array_filter(explode('/', $customerdd->direct_ids ?? ''));
+            $activeDirectIds = array_filter(explode('/', $customerdd->active_direct_ids ?? ''));
+            
+            // Use the trait function for all recursive team IDs
+            $allTeamIds = $this->getRecursiveTeamIds($customerdd->id);
+            
+            // --- Perform Calculations ---
+            // Function to safely sum deposits for a given set of IDs
+            $sumDeposits = function ($ids) {
+                if (empty($ids)) { return 0; }
+                return DB::table('customer_deposits')
+                    ->whereIn('customer_id', $ids)
+                    ->where('payment_status', 'success') 
+                    ->sum('amount');
+            };
+
+            $sumWithdraws = function ($ids) {
+                if (empty($ids)) { return 0; }
+                return DB::table('customer_withdraws')
+                    ->whereIn('customer_id', $ids)
+                    ->where('transaction_type', 'WITHDRAW') 
+                    ->sum('amount');
+            };
+
+            // ------ find the sponsor ---
+            $sponsordata = CustomersModel::with('sponsor')->find($customerdd->id);
+            $sponsor = 'N/A';
+            if ($sponsordata && $sponsordata->sponsor) {
+                $sponsor = $sponsordata->sponsor->referral_code;
+            }
+            
+            $customerData[$ckey]['totalDirectsCount']       = count($directIds);
+            $customerData[$ckey]['totalActiveDirectsCount'] = count($activeDirectIds);
+            $customerData[$ckey]['totalTeamCount']          = count($allTeamIds);
+            $customerData[$ckey]['totalTeamInvestment']     = $sumDeposits($activeDirectIds);
+        }
+
+
         return $customerData;
     }
 
@@ -447,6 +513,7 @@ class DashboardMatriceService
                                                     'customers.level_id',
                                                     'customers.created_at AS registration_date',
                                                     'customers.referral_code',
+                                                    'customers.leadership_champions_rank',
                                                     DB::raw('COALESCE(SUM(customer_deposits.amount), 0) AS totaldeposit'),
                                                     DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
                                                 ])
@@ -462,6 +529,7 @@ class DashboardMatriceService
                                                     'customers.level_id',
                                                     'customers.referral_code',
                                                     'customers.created_at',
+                                                    'customers.leadership_champions_rank'
                                                 ])
                                                 ->get();
 
@@ -509,6 +577,7 @@ class DashboardMatriceService
             $customerData[$ckey]['totalDirectsCount']       = count($directIds);
             $customerData[$ckey]['totalActiveDirectsCount'] = count($activeDirectIds);
             $customerData[$ckey]['totalTeamCount']          = count($allTeamIds);
+            $customerData[$ckey]['totalTeamInvestment']     = $sumDeposits($activeDirectIds);
         }
 
         return $customerData;
@@ -535,7 +604,7 @@ class DashboardMatriceService
         //         return $row;
         //     });
 
-        return VotesModel::with('sponsor:id,referral_code')
+        return VotesModel::with('sponsor:id,referral_code,name')
                             ->select(
                                 'sponsor_id',
                                 DB::raw("SUM(CASE WHEN voted_for = 'ACTIVE' THEN 1 ELSE 0 END) AS active"),
@@ -550,6 +619,7 @@ class DashboardMatriceService
                             ->get()
                             ->map(function ($row) {
                                 $row->referral_code = $row->sponsor->referral_code ?? null;
+                                $row->name          = $row->sponsor->name ?? null;
                                 unset($row->sponsor);
                                 return $row;
                             });
@@ -564,6 +634,7 @@ class DashboardMatriceService
                                             ->toArray();
         
         $selects = [
+                        'customers.name',
                         'customers.referral_code',
                         'customer_deposits.customer_id',
                     ];
@@ -608,7 +679,8 @@ class DashboardMatriceService
                     ->where('customer_deposits.app_id', $customer->app_id)
                     ->groupBy(
                         'customer_deposits.customer_id',
-                        'customers.referral_code'
+                        'customers.referral_code',
+                        'customers.name'
                     );
 
         $volumeSummary = DB::query()

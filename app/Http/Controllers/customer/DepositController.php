@@ -15,6 +15,7 @@ use App\Services\DashboardMatriceService;
 use App\Models\FreeDepositPackagesModel;
 use App\Models\CustomersModel;
 use App\Models\PackagesModel;
+use App\Models\CustomerDepositsModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -45,6 +46,13 @@ class DepositController extends Controller
         $customer->myPackages               =   $dashboard_matrics['myPackages'];
         $customer->myPackageDetails         =   $dashboard_matrics['myPackageDetails'];
 
+        $customer->myFreePackage            =   $dashboard_matrics['myFreePackage'];
+
+        $customer->actualDepositCounts      =   CustomerDepositsModel::where('customer_id', $customer->id)
+                                                                        ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                                        ->where('is_free_deposit', 0)
+                                                                        ->count();
+                                                                        
         // dd($customer->myPackageDetails);
         return view('customer.pay_topup', compact('customer'));
     }
@@ -57,6 +65,7 @@ class DepositController extends Controller
         $validated = $request->validate([
             // 'package_id' => 'required|exists:app_packages,id',
             'amount'     => 'required|numeric',
+            'hdn_freepackage'     => 'required|numeric',
             // 'txn_id'     => 'required|string|unique:customer_deposits,transaction_id',
         ]);
 
@@ -80,29 +89,28 @@ class DepositController extends Controller
             $package = $this->depositService
                             ->validateDepositRules($customer, $validated['package_id'], $validated['amount']);
             
-            // 2️⃣ Initiate 9Pay transaction. Here init_ninepay = transaction id
             $freepackages = FreeDepositPackagesModel::where('status',1)
                                         ->where('app_id',$customer->app_id)
                                         ->where('customer_id',$customer->id)
-                                        ->where('package_id', $validated['package_id'])
+                                        // ->where('package_id', $validated['package_id'])
                                         ->first();
             // dd($freepackages);
             $deposit = '';
             $txnId = "DEPOSIT-".Str::random(8);
-            if($freepackages)
+            if($freepackages && $validated['hdn_freepackage'])
             {
-                $txnId = "DEPOSITFREEPACKAGE-".$freepackages->id; //DUMMY TXN ID
+                $txnId = "FREEPACKAGE-".$freepackages->id."-".Str::random(8); //DUMMY TXN ID
             }
 
             // 3️⃣ Create deposit
             $deposit = $this->depositService->createPendingDeposit($customer, $package, $validated['amount'], $txnId);
             
             // 4️⃣ Mark deposit successful
-            $deposit = $this->depositService->markDepositSuccess($deposit);
+            $deposit = $this->depositService->markDepositSuccess($deposit, $validated['hdn_freepackage']);
             
             $sponsor = CustomersModel::find($customer->sponsor_id);
             $level_data = $this->levelIncomeServices->releaseLevelIncome($deposit);
-
+            
             // return redirect()
             //         ->route('pay.topup')
             //         ->with('success', 'Deposit successfully!');

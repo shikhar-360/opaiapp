@@ -29,7 +29,7 @@
     {{-- ROI Income --}}
     <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
       <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]">
-        <img src="/assets/images/icons/roi-income.webp" width="100" height="100" alt="ROI Income"
+        <img src="{{ asset('assets/images/icons/roi-income.webp?v=1') }}"  width="100" height="100" alt="ROI Income"
              class="w-9 h-9 object-contain">
       </div>
       <div>
@@ -41,32 +41,32 @@
     {{-- Level Income --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
       <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-fuchsia-300 to-fuchsia-500 border border-fuchsia-200">
-        <img src="/assets/images/icons/capping.webp" width="100" height="100" alt="Level Income"
+        <img src="{{ asset('assets/images/icons/level-income.webp?v=1') }}"  width="100" height="100" alt="Circle Credits"
              class="w-9 h-9 object-contain">
       </div>
       <div>
-        <h3 class="text-base text-slate-600">Level Income</h3>
-        <p class="text-xl font-bold text-fuchsia-600 mt-1">{{ $customer->appData->currency }} {{ $customer->myLevelEarning }}</p>
+        <h3 class="text-base text-slate-600">Circle Credits</h3>
+        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myLevelEarning }}</p>
       </div>
     </div>
 
     {{-- Total Income --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-amber-200">
-        <img src="/assets/images/icons/total-income.webp" width="100" height="100" alt="Total Income"
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200">
+        <img src="{{ asset('assets/images/icons/total-income.webp?v=1') }}"  width="100" height="100" alt="Total Credits"
              class="w-9 h-9 object-contain">
       </div>
       <div>
-        <h3 class="text-base text-slate-600">Total Income</h3>
-        <p class="text-xl font-bold text-amber-600 mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
+        <h3 class="text-base text-slate-600">Total Credits</h3>
+        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
       </div>
     </div>
 
     {{-- Total Withdraw --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-emerald-200">
-        <img src="/assets/images/icons/withdraw.webp" width="100" height="100" alt="Total Withdraw"
-             class="w-9 h-9 object-contain invert">
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-emerald-200">
+        <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  width="100" height="100" alt="Total Withdraw"
+             class="w-9 h-9 object-contain">
       </div>
       <div>
         <h3 class="text-base text-slate-600">Total Withdraw</h3>
@@ -77,37 +77,37 @@
 
     {{-- Wallet Balance --}}
 <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-blue-200">
-    <img src="/assets/images/icons/wallet-balance.webp" width="100" height="100" alt="Wallet Balance"
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 border border-blue-200">
+    <img src="{{ asset('assets/images/icons/wallet-balance.webp?v=1') }}"  width="100" height="100" alt="Wallet Balance"
          class="w-9 h-9 object-contain">
   </div>
   <div>
     <h3 class="text-base text-slate-600">Wallet Balance</h3>
-    <p class="text-xl font-bold text-blue-600 mt-1">$0.000</p>
+    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
   </div>
 </div>
 
 {{-- Token Wallet --}}
 <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-300 to-purple-500 border border-purple-200">
-    <img src="/assets/images/icons/token-wallet.webp" width="100" height="100" alt="Token Wallet"
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-400 to-purple-700 border border-purple-200">
+    <img src="{{ asset('assets/images/icons/token-wallet.webp?v=1') }}"  width="100" height="100" alt="Perks Wallet"
          class="w-9 h-9 object-contain">
   </div>
   <div>
-    <h3 class="text-base text-slate-600">Token Wallet</h3>
-    <p class="text-xl font-bold text-purple-600 mt-1">0 TOKEN</p>
+    <h3 class="text-base text-slate-600">Perks Wallet</h3>
+    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">0 TOKEN</p>
   </div>
 </div>
 
 {{-- Token Balance --}}
 <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-300 to-blue-500 border border-blue-200">
-    <img src="/assets/images/icons/token-balance.webp" width="100" height="100" alt="Token Balance"
+  <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 border border-blue-200">
+    <img src="{{ asset('assets/images/icons/token-balance.webp?v=1') }}"  width="100" height="100" alt="Perks Balance"
          class="w-9 h-9 object-contain">
   </div>
   <div>
-    <h3 class="text-base text-slate-600">Token Balance</h3>
-    <p class="text-xl font-bold text-blue-600 mt-1">$0.000</p>
+    <h3 class="text-base text-slate-600">Perks Balance</h3>
+    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
   </div>
 </div>
 
@@ -117,7 +117,7 @@
   {{-- WITHDRAW BUTTON --}}
   <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-lg mx-auto">
     <button data-dialog-target="dialog" type="submit"
-      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
+      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
       <span>Earning Withdraw</span>
       <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
         aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
@@ -148,7 +148,7 @@
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative overflow-x-auto">
+    <div class="relative overflow-x-auto pb-1">
       <div id="withdrawalsTable_wrapper" class="dataTables_wrapper no-footer">
 
         {{-- TOP BAR: SHOW + SEARCH --}}
@@ -323,8 +323,8 @@
 
             <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
               <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
-                          bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
-                <img src="/assets/images/icons/total-withdraw.webp" width="100" height="100" alt="Logo"
+                          bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
+                <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  width="100" height="100" alt="Logo"
                   class="w-9 h-9 object-contain">
                 </div>
 
@@ -352,8 +352,8 @@
 
               <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
               <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
-                          bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
-                <img src="/assets/images/icons/total-withdraw.webp" width="100" height="100" alt="Logo"
+                          bg-gradient-to-br from-amber-400 to-amber-600 border border-[var(--theme-skky-200)]">
+                <img src="{{ asset('assets/images/icons/pending.webp?v=1') }}"  width="100" height="100" alt="Logo"
                   class="w-9 h-9 object-contain">
                 </div>
 

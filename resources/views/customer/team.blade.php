@@ -13,7 +13,7 @@
 @section('content')
 <section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
 
-  <h2 class="text-lg font-semibold mb-3 text-slate-900">My Team</h2>
+  <h2 class="text-lg font-semibold mb-3 text-slate-900">My Extended Circle</h2>
 
   <div
     class="p-4 md:p-6 text-slate-900 rounded-2xl w-full mx-auto border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.10)] relative overflow-hidden text-left">
@@ -24,7 +24,7 @@
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative overflow-x-auto">
+    <div class="relative overflow-x-auto pb-1">
       <div id="tabledata1_wrapper" class="dataTables_wrapper no-footer">
 
         {{-- TOP BAR: SHOW + SEARCH --}}
@@ -89,7 +89,7 @@
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                Sponsor
+                Mentor
               </th>
               <!-- <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
@@ -98,6 +98,10 @@
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                 Activation Date
+              </th>
+              <th
+                class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                Team Volume
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
@@ -125,15 +129,19 @@
               </td> -->
               <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($myTeam->totaldeposit, 2, '.', '') }}</td>
               <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myTeam->referral_code }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myTeam->sponsor_code }} ({{ $myTeam->sponsor_id }})</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myTeam->sponsor_code }}</td>
               <!-- <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->registration_date }}</td> -->
               <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->activation_date ? \Carbon\Carbon::parse($myTeam->activation_date)->format('d-m-Y'): '-' }}</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->totalTeamInvestment ?? 0 }}</td>
               <td class="px-4 sm:px-5 py-3">
+                @if($myTeam->leadership_rank > 0)
                 <span
                   class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
-                  {{ $customer->leadershipIncome?->rank ?? '-' }} 
-                   <!-- {{ $customer->leadershipChampionsIncome?->rank ?? '-' }} -->
+                  {{ $myTeam->leadership_rank }}
                 </span>
+                @else
+                -
+                @endif
               </td>
               <td class="px-4 sm:px-5 py-3 text-right text-slate-900">{{ $myTeam->level_id }}</td>
             </tr>

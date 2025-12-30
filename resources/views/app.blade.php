@@ -44,13 +44,13 @@
   @vite(['resources/js/app.js'])
 </head>
 
-<body class="min-h-screen flex flex-col text-white !bg-[var(--theme-bg)]  bg-[#bfe7ff]">
+<body class="min-h-screen flex flex-col text-white !bg-[var(--theme-bg)]  ">
 
   @include('components.header') 
 
   <main class="flex-1 pt-16 md:pt-[56px] md:ml-64 main-bgimg relative">
 
-    <img src="/assets/images/diag-ascii.png"  alt="bnrbg"
+    <img src="/assets/images/white-grid.png"  alt="bnrbg"
              class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">
     @yield('content')
 
@@ -60,6 +60,11 @@
 
   @stack('scripts')
 
+  @if($customer->isRankAssigned == 1)
+  <x-rank-success-modal :customer="$customer" />
+  @endif
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -185,4 +190,5 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
 });
+
 </script>

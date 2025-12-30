@@ -25,9 +25,11 @@ class NinepayTransactionsModel extends Model
         'currency',
         'payment_status',
         'transaction_id',
-	    'eth_9pay_json',
-	    'tron_9pay_json',
-	    'payment_address',
+        'eth_9pay_json',
+        'tron_9pay_json',
+        'payment_address',
+        'network_type',
+        'network_name'
     ];
     
 

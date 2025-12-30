@@ -19,6 +19,7 @@ use App\Services\WalletService;
 use App\Services\Email\EmailService;
 
 use App\Traits\ManagesCustomerFinancials;
+use App\Traits\ManagesCustomerHierarchy;
 
 class CustomerAuthController extends Controller
 {
@@ -26,6 +27,7 @@ class CustomerAuthController extends Controller
     protected $emailService;
 
     use ManagesCustomerFinancials;
+    use ManagesCustomerHierarchy;
 
     public function __construct(WalletService $walletService, EmailService $emailService)
     {
@@ -143,9 +145,21 @@ class CustomerAuthController extends Controller
         $finance->save();
         //Temporary for testing purpose
 
-        $this->emailService->sendRegistrationEmail($newCustomer);
+        // $this->emailService->sendRegistrationEmail($newCustomer);
         
         // $this->showLoginForm();
+
+        //upon registration update the levels of each upline can be done from checkLevelService only
+        /*$customerUplines = $this->getUplines($newCustomer);
+        foreach ($customerUplines as $upline) {
+            $uplineCustomer = CustomersModel::find($upline['id']);
+            if ($uplineCustomer) {
+                $levelid = $this->getLevel($uplineCustomer);
+                $uplineCustomer->level_id = $levelid;
+                $uplineCustomer->save();
+            }
+        }*/
+
         return redirect()->route('login')->with(['status_code'=>'success', 'message' => 'Registration Successful.']);
         
     }
@@ -165,27 +179,25 @@ class CustomerAuthController extends Controller
         $validated = $request->validate([
             'email'    => 'required',
             'password' => 'required',
-            'userid'   => 'required'
+            // 'userid'   => 'required'
         ]);
 
-        $customer = CustomersModel::where('referral_code', $validated['userid'])->where('email', $validated['email'])->first();
-        // dd($customer);
-        // --- DEBUGGING --- 
-        // dd([
-        //     'input_email' => $validated['email'],
-        //     'customer_found' => (bool)$customer,
-        //     'db_password_hash' => $customer ? $customer->password : 'N/A',
-        //     'password_check_result' => $customer ? Hash::check($validated['password'], $customer->password) : false,
-        // ]);
-        // If 'password_check_result' is false, then the passwords do not match.
-        // -----------------
-        if (!$customer) 
+        $customer = CustomersModel::where('email', $validated['email'])->first(); //where('referral_code', $validated['userid'])->
+        
+        /*if (!$customer) 
         {
             return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials']);
         }
         else if (!$customer || !Hash::check($validated['password'], $customer->password)) 
         {
             return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid credentials']);
+        }*/
+
+        if (!$customer || !Hash::check($validated['password'], $customer->password)) {
+            return back()->withErrors([
+                'status_code' => 'error',
+                'message' => 'Invalid credentials'
+            ])->withInput();
         }
 
         Auth::guard('customer')->login($customer); 
@@ -193,8 +205,8 @@ class CustomerAuthController extends Controller
         $request->session()->regenerate();
 
         return redirect()->route('dashboard');
-        // return redirect()->route('profile');
 
+        // return redirect()->route('profile');
         // return redirect()->route('customer.web3login');
     }
 

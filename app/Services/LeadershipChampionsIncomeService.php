@@ -52,11 +52,23 @@ class LeadershipChampionsIncomeService
                                                                             ->orderBy('team_volume', 'desc')
                                                                             ->orderBy('directs', 'desc')
                                                                             ->first();
+            // if ($leadershipChampionsRank) {
+            //     $customer->leadership_champions_rank = $leadershipChampionsRank->id; //rank;
+            //     $customer->champions_point           = $leadershipChampionsRank->point;
+            //     if($customer->leadership_champions_rank != $leadershipChampionsRank->id){
+            //         $customer->isRankAssigned            = 1; //Rank popup purposes
+            //     }
+            //     $customer->save();
+            //     //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipChampionsRank->rank, "rank_id"=>$leadershipChampionsRank->id ];
+            // }
+
             if ($leadershipChampionsRank) {
-                $customer->leadership_champions_rank = $leadershipChampionsRank->id; //rank;
-                $customer->champions_point           = $leadershipChampionsRank->point;
-                $customer->save();
-                //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipChampionsRank->rank, "rank_id"=>$leadershipChampionsRank->id ];
+                if($customer->leadership_champions_rank != $leadershipChampionsRank->id){
+                    $customer->leadership_champions_rank = $leadershipChampionsRank->id; //rank;
+                    $customer->champions_point           = ($customer->champions_point ?? 0) + ($leadershipChampionsRank->points ?? 0);
+                    $customer->isRankAssigned            = 1; //Rank popup purposes
+                    $customer->save();
+                }
             }
         }
 
