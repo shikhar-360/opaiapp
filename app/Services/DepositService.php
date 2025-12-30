@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
+use App\Models\FreeDepositPackagesModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -65,23 +66,42 @@ class DepositService
         ]);
     }
 
-    public function markDepositSuccess($deposit)
+    public function markDepositSuccess($deposit, $isfreePkg)
     {
+
         DB::beginTransaction();
         try 
         {
-            $deposit->update([
-                'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
-            ]);
+            $freepackages = FreeDepositPackagesModel::where('status',1)
+                                        ->where('app_id',$deposit->app_id)
+                                        ->where('customer_id',$deposit->customer_id)
+                                        // ->where('package_id', $validated['package_id'])
+                                        ->first();
+            if ($freepackages && $isfreePkg) {
 
-            $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
-            $depositAmount = $deposit->amount;
-            // Manual assignment ignores $fillable
-            $finance->total_deposit += $depositAmount;
-            $finance->capping_limit += ($depositAmount * 5);
-            $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
-            $finance->save();
+                // dd("IF", $deposit, $isfreePkg);
+
+                $deposit->update([
+                    'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
+                    'is_free_deposit'=> 1
+                ]);
+            }
+            else
+            {
+                // dd("ELSE", $deposit, $isfreePkg);
+
+                $deposit->update([
+                    'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
+                ]);
             
+                $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
+                $depositAmount = $deposit->amount;
+                // Manual assignment ignores $fillable
+                $finance->total_deposit += $depositAmount;
+                $finance->capping_limit += ($depositAmount * 5);
+                $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
+                $finance->save();
+            }
             
             $firstDeposit = CustomerDepositsModel::where('customer_id', $deposit->customer_id)
                                                 ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)

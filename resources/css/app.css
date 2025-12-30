@@ -20,7 +20,7 @@ body {
 }
 
 * {
-  box-sizing: border-b border-gray-700ox;
+  box-sizing: border-box;
 }
 
 h1,
@@ -43,27 +43,34 @@ h6 {
 .textspan {
   font-family: "BankGothic";
 }
+th{
+  font-family: "BankGothic";
+
+}
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-track {
-    background-color: #3A3933;
+    background-color: #d6e5f8;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background-color: #3f3f3f;
-  border-radius: 20px;}
+    background-color: #a1a4a5;
+  border-radius: 20px;
+}
+
+  
 @font-face {
   font-family: "BankGothic";
-  src: url("../../public/fonts/BankGothicBold.eot");
+  src: url("../../public/fonts/BankGothicBold2.eot");
   src:
-    url("../../public/fonts/BankGothicBold.eot?#iefix") format("embedded-opentype"),
-    url("../../public//fonts/BankGothicBold.woff2") format("woff2"),
-    url("../../public/fonts/BankGothicBold.woff") format("woff"),
-    url("../../public/fonts/BankGothicBold.ttf") format("truetype");
+    url("../../public/fonts/BankGothicBold2.eot?#iefix") format("embedded-opentype"),
+    url("../../public//fonts/BankGothicBold2.woff2") format("woff2"),
+    url("../../public/fonts/BankGothicBold2.woff") format("woff"),
+    url("../../public/fonts/BankGothicBold2.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
@@ -119,12 +126,13 @@ h6 {
     border-color: var(--theme-bg);
 }
 
-.bg-primary {
+/* .bg-primary {
   background-color: #ccaa77;
   color: #000000;
    transition: background-color 0.25s ease;
   
 }
+
 .bg-tittlecard{
 background-image: radial-gradient(62.12% 75.73% at 50% 111.19%, #0A0A0A 0%, #222224 59.04%, rgba(17, 17, 21, 0.59) 100%);
 
@@ -134,7 +142,7 @@ background-image: radial-gradient(62.12% 75.73% at 50% 111.19%, #0A0A0A 0%, #222
 }
 .bg-primary:hover {
   background-color: #d4af77; 
-}
+} */
 .text-primary {
   color: #778ecc;
 }
@@ -177,14 +185,14 @@ background-image: radial-gradient(62.12% 75.73% at 50% 111.19%, #0A0A0A 0%, #222
   color: #32CD32;
 }
 
-:root {
+/* :root {
   --gold-1: #f8d36a;
   --gold-2: #c49d2b;
   --gold-3: #7f6520;
   --dark-top: #2b2b2e;
   --dark-bottom: #0f0f10;
-  --radius: 0.5rem; /* rounded-lg */
-}
+  --radius: 0.5rem; 
+} */
 
 /* Reset & base button */
 button.gold-btn {
@@ -223,25 +231,26 @@ button.gold-btn {
 }
  .neo-card {
       @apply relative rounded-2xl
-      border border-slate-300 bg-gradient-to-br from-slate-100/80 via-slate-200/40 to-sky-300/40
+      border border-slate-300 bg-gradient-to-br from-slate-100/80 via-slate-200/40 to-[var(--theme-skky-200)]
       backdrop-blur-xl p-4 sm:p-5 text-black shadow-[0_10px_30px_rgba(0,0,0,0.10)]
       transition-all duration-300 ease-out hover:-translate-y-1 
-      hover:border-sky-300  hover:shadow-[0_15px_45px_rgba(56,189,248,0.25)];
+      hover:border-[var(--theme-skky-300)]  ; 
     }
 
-.aside-bg::before {
+/* .aside-bg::before {
     content: "";
    position: absolute;
     inset: 0;
      background-image: url('../../public/assets/images/aside4.jpg');
-     /* filter: hue-rotate(-40deg); */
+     filter: hue-rotate(-40deg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
      z-index: -10;
-     opacity: 0.5 ;
+     opacity: 0.4;
    pointer-events: none;
- }
+   filter: hue-rotate(25deg);
+ } */
 
 /*! CSS for glimtree */
 .bstree,

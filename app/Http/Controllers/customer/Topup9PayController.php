@@ -150,7 +150,7 @@ class Topup9PayController extends Controller
         {
             NEWTOPUPREQUEST:
             $validated = $request->validate([
-                'amount'        => 'required|numeric|min:5',
+                'coin_amount'   => 'required|numeric|min:5',
                 "coinSelect"    => 'required|string|min:3',
                 "network_type"  => 'required|string|min:3',
                 "network_name"  => 'required|string|min:3',
@@ -164,7 +164,7 @@ class Topup9PayController extends Controller
             // --- TRON Wallet Logic ---
             $ninepay_tron = $this->ninepays->getTronWallet($customer, $transaction_id);
             
-            $ninepay_fee = $this->ninepays->ninePayFee($validated['network_type'], $validated['amount']);
+            $ninepay_fee = $this->ninepays->ninePayFee($validated['network_type'], $validated['coin_amount']);
 
             // Decode the JSON strings into PHP arrays
             $eth_array = json_decode($ninepay_eth, true);
@@ -183,19 +183,21 @@ class Topup9PayController extends Controller
             $newTxn = NinepayTransactionsModel::create([
                         'customer_id'     => $customer->id,
                         'app_id'          => $customer->app_id,
-                        'amount'          => $validated['amount'],
+                        'amount'          => $validated['coin_amount'],
                         'received_amount' => 0,
                         'payment_status'  => NinepayTransactionsModel::STATUS_PENDING,
                         'payment_address' => $eth_array['address'],
                         'eth_9pay_json'   => $ninepay_eth,
                         'tron_9pay_json'  => $ninepay_tron,
                         'chain'           => $validated['network_type'],
+                        'network_type'    => $validated['network_type'],
+                        'network_name'    => $validated['network_name'],
                         'currency'        => $validated['coinSelect'],
                         'fees_amount'     => $ninepay_fee,
                         'transaction_id'  => $transaction_id
                     ]);
             
-            $qrAmount = $validated['amount'];
+            $qrAmount = $validated['coin_amount'];
 
             // $transaction_id = "TXN" . $newTxn->id . $customer->id . Str::random(4);
             // $newTxn->update(['transaction_id' => $transaction_id]);

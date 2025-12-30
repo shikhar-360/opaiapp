@@ -38,11 +38,17 @@ class LeadershipIncomeService
                                                             ->where('team_volume', '<=', $totalTeamInvestment)
                                                             ->orderBy('team_volume', 'desc')
                                                             ->first();
+            // if ($leadershipRank) {
+            //     $customer->leadership_rank = $leadershipRank->id; 
+            //     $customer->leadership_points = $leadershipRank->points; 
+            //     $customer->save();
+            //     //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipRank->rank, "rank_id"=>$leadershipRank->id, "rank_points"=>$leadershipRank->points ];
+            // }
+
             if ($leadershipRank) {
                 $customer->leadership_rank = $leadershipRank->id; 
-                $customer->leadership_points = $leadershipRank->points; 
+                $customer->leadership_points    = ($customer->leadership_points ?? 0) + ($leadershipRank->points ?? 0);
                 $customer->save();
-                //$leadership[] = ["id"=>$customer->id, "rank"=>$leadershipRank->rank, "rank_id"=>$leadershipRank->id, "rank_points"=>$leadershipRank->points ];
             }
         }
 

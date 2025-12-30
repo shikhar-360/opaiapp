@@ -4,7 +4,7 @@
 
 @section('content')
 <section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
-    <h2 class="text-lg font-semibold mb-4 text-slate-900 mt-1">Genealogy here</h2>
+    <h2 class="text-lg font-semibold mb-4 text-slate-900 mt-1">Genealogy</h2>
 
     <div
         class="relative p-4 md:p-6 rounded-2xl w-full mx-auto border border-slate-200 bg-white shadow-[0_15px_40px_rgba(15,23,42,.10)] backdrop-blur-2xl overflow-hidden text-left transition-all duration-300 hover:shadow-[0_18px_45px_rgba(15,23,42,0.15)]"
@@ -15,7 +15,7 @@
             <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
         </div>
 
-        <div class="relative overflow-x-auto">
+        <div class="relative overflow-x-auto pb-1">
             <div class="min-w-[900px]">
 
                 {{-- Header Row --}}
@@ -25,11 +25,11 @@
                         {{-- <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Rank </div> --}}
                         <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Level</div>
                         <div class="flex-1 text-center text-[var(--theme-primary-text)] font-semibold tracking-wide">Date of Activation</div>
-                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Total Team</div>
-                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Total Directs</div>
-                        <div class="flex-1 text-center text-[var(--theme-primary-text)] font-semibold tracking-wide">Total Team Investment ({{ $customer->appData->currency }})</div>
-                        <div class="flex-1 text-center text-[var(--theme-primary-text)] font-semibold tracking-wide">Direct Team Investment ({{ $customer->appData->currency }})</div>
-                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Self Investment</div>
+                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Extended Circle</div>
+                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Core Circle</div>
+                        <div class="flex-1 text-center text-[var(--theme-primary-text)] font-semibold tracking-wide">Total Team Volume</div>
+                        <div class="flex-1 text-center text-[var(--theme-primary-text)] font-semibold tracking-wide">Direct Team Volume</div>
+                        <div class="flex-1 text-center shrink-0 whitespace-nowrap text-[var(--theme-primary-text)] font-semibold tracking-wide">Self Volume</div>
                     </div>
                 </div>
 

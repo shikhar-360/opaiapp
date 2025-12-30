@@ -26,8 +26,6 @@ class LevelIncomeService
     public function releaseLevelIncome(CustomerDepositsModel $deposit)
     {       
 
-
-
         $customer = CustomersModel::with('referrals')->find($deposit->customer_id);
 
         if (!$customer) {
@@ -51,16 +49,29 @@ class LevelIncomeService
 
         foreach ($customerUplines as $upline) {
 
-            $level = $upline['level'];
+            $upline_level = $upline['level'];
+            $opened_level = $upline['level_id']; //from DB
 
+            $actualDepositCounts      =   CustomerDepositsModel::where('customer_id', $upline['id'])
+                                                                        ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                                        ->where('is_free_deposit', 0)
+                                                                        ->count();
             // Skip if package for this level does not exist
-            if (!isset($levelPackages[$level])) {
+            if (!isset($levelPackages[$upline_level])) {
                 continue;
             }
 
-            $pkg = $levelPackages[$level];
+            // If do not have actual deposit then level income from 1st 
+            $pkg = $levelPackages[1];
+            if($actualDepositCounts > 0)
+            {
+                $pkg = $levelPackages[$upline_level];
+            }
 
             $rewardAmount = $deposit->amount * ($pkg->reward / 100);
+
+            
+            // if (($upline_level <= $opened_level) && ($upline['directs'] >= $pkg->directs)) {
 
             if ($upline['directs'] >= $pkg->directs) {
 
@@ -74,15 +85,15 @@ class LevelIncomeService
                     'reference_amount' => $deposit->amount,
                     'amount_earned'    => $rewardAmount,
                     'earning_type'     => 'LEVEL-REWARD',
-                    'reference_level'  => $level
+                    'reference_level'  => $upline_level
                 ];
 
-                // Update level
-                $uplineCustomer = CustomersModel::find($upline['id']);
+                // Update level only on new user registration
+                /*$uplineCustomer = CustomersModel::find($upline['id']);
                 if ($uplineCustomer && $uplineCustomer->level_id < $level) {
                     $uplineCustomer->level_id = $level;
                     $uplineCustomer->save();
-                }
+                }*/
                 
 
                 $finance = $this->getCustomerFinance($upline['id'], $deposit->app_id);
@@ -101,10 +112,11 @@ class LevelIncomeService
                     'reference_id'     => $customer->id,
                     'reference_amount' => $deposit->amount,
                     'flush_amount'     => $rewardAmount,
-                    'flush_level'      => $level,
+                    'flush_level'      => $upline_level,
                     'reason'           => 'NOT-ELIGIBLE'
                 ];
             }
+
         }
 
         // Save income to DB

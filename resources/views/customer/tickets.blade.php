@@ -19,7 +19,7 @@
     </div>
 
     <div class="relative">
-      <h3 class="text-2xl font-semibold mb-4 text-slate-900 text-center">
+      <h3 class="text-xl font-semibold mb-4 text-slate-900 text-center">
         Create a Support Ticket
       </h3>
 
@@ -166,7 +166,7 @@
       <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative overflow-x-auto">
+    <div class="relative overflow-x-auto pb-1">
       <div id="withdrawalsTable_wrapper" class="dataTables_wrapper no-footer">
 
         {{-- TOP BAR: SHOW + SEARCH --}}

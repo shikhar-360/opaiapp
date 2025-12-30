@@ -9,8 +9,8 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 mb-8">
 
   <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="/assets/images/icons/roi-income.webp" class="w-9" alt="Direct Team Investment">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
+      <img src="{{ asset('assets/images/icons/roi-income.webp?v=1') }}"  class="w-9" alt="Direct Team Investment">
     </div>
     <div>
       <p class="text-sm text-slate-500">ROI Income</p>
@@ -20,20 +20,20 @@
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-sky-300 to-sky-500 border border-[var(--theme-skky-200)]">
-      <img src="/assets/images/icons/capping.webp" class="w-9" alt="Total Team Investment">
+      <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <h3 class="text-base text-slate-600">Level Income</h3>
+      <h3 class="text-base text-slate-600">Circle Credits</h3>
       <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-300 to-amber-500 border border-[var(--theme-skky-200)]">
-      <img src="/assets/images/icons/total-withdraw.webp" class="w-9" alt="Total Team Investment">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 border border-[var(--theme-skky-200)]">
+      <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <h3 class="text-base text-slate-600">Total Income</h3>
+      <h3 class="text-base text-slate-600">Total Credits</h3>
       <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
@@ -41,7 +41,7 @@
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="/assets/images/rank/emerald-rank.webp" class="w-9" alt="Rank Points">
+      <img src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}"  class="w-9" alt="Rank Points">
     </div>
     <div>
       <p class="text-sm text-slate-500">Rank Points</p>
@@ -52,7 +52,7 @@
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="/assets/images/icons/capping.webp" class="w-9" alt="Level Points">
+      <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Level Points">
     </div>
     <div>
       <p class="text-sm text-slate-500">Level Points</p>
@@ -84,7 +84,7 @@ shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]
       relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/roi-income.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/roi-income.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -116,7 +116,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/capping.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -148,7 +148,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/direct-investment.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/direct-investment.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -180,7 +180,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/royalty-income.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/royalty-income.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -212,7 +212,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/star-bonus.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/star-bonus.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -244,7 +244,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/quick-start-bonus.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/quick-start-bonus.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -276,7 +276,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       group-hover:opacity-70 transition-opacity"></div>
 
       <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="/assets/images/icons/total-withdraw.webp" class="w-10 h-10 object-contain">
+        <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  class="w-10 h-10 object-contain">
       </div>
     </div>
 
@@ -352,7 +352,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- CTA --}}
         <div class="md:pl-2">
           <button type="submit"
-            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-primary-text)] to-[var(--theme-primary-bg)] text-black font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
+            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-primary-text)] to-[var(--theme-primary-bg)] text-black font-semibold hover:-translate-y-1 transition-all duration-300 ease-out">
               <path
                 d="M15.8 15.8L21 21M18 10.5A7.5 7.5 0 1 1 3 10.5a7.5 7.5 0 0 1 15 0Z"
                 stroke="#020617" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -377,11 +377,11 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     <div class="relative mb-6">
       {{-- TABS --}}
       <div
-        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
+        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner overflow-x-auto">
         <ul class="flex gap-2" data-tabs-toggle="#default-tab-content" role="tablist">
-          <li role="presentation">
+          <li class="hidden" role="presentation">
             <button id="table-income_all" data-tabs-target="#income_all" type="button" role="tab"
-              aria-controls="income_all" aria-selected="true"
+              aria-controls="income_all" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
               <span class="relative z-[1]">Level Points</span>
@@ -405,7 +405,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
           </li>
           <li role="presentation">
             <button id="table-income_direct" data-tabs-target="#income_direct" type="button" role="tab"
-              aria-controls="income_direct" aria-selected="false"
+              aria-controls="income_direct" aria-selected="true"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
               <span class="relative z-[1]">Level Income</span>
@@ -439,7 +439,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
     <div id="default-tab-content" class="relative">
       {{-- TAB: ALL INCOME --}}
-      <div id="income_all" role="tabpanel" aria-labelledby="table-income_all">
+      <div class="hidden" id="income_all" role="tabpanel" aria-labelledby="table-income_all">
         <div class="overflow-x-auto">
           <div id="tabledata_all_wrapper" class="dataTables_wrapper no-footer">
             
@@ -464,6 +464,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   <span class="sr-only">Search</span>
                   <div class="relative">
                     <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                      {{-- Search icon --}}
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                           d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
@@ -507,7 +508,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 <tr class="hover:bg-slate-100 transition">
                   <td class="px-4 sm:px-5 py-3 text-slate-900">1</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}-{{ $incomes->reference_level }}</td>
                   <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
@@ -642,7 +643,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       </div>
 
       {{-- TAB: DIRECT INCOME --}}
-      <div class="hidden" id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
+      <div id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
         <div class="overflow-x-auto">
           <div id="tabledata_direct_wrapper" class="dataTables_wrapper no-footer">
 
@@ -709,9 +710,9 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 {{-- DUMMY DATA: DIRECT INCOME --}}
                 @foreach($customer->levelIncomeDetails as $ovkey => $incomes)
                 <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">1</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">{{ $loop->iteration }}</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}-{{ $incomes->reference_level }}</td>
                   <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
@@ -940,4 +941,5 @@ $(document).ready(function () {
     });
   });
 </script>
+
 @endpush

@@ -72,6 +72,15 @@ Route::middleware(['customer'])->group(function () {
     Route::get('/promotion', [CustomerController::class, 'showPromotion'])->name('promotion');
 
     Route::get('/levelcalculator', [CustomerController::class, 'showLevelCalculator'])->name('levelcalculator');
+    
+    Route::get('/educare', [CustomerController::class, 'showEducare'])->name('educare');
+    Route::get('/tools', [CustomerController::class, 'showTools'])->name('tools');
+
+    Route::post('/fetch-user-name', [CustomerController::class, 'fetchUserName'])->name('fetch.user.name');
+    Route::post('/stop-rankpopup', [CustomerController::class, 'stopRankPopup'])->name('stop.rankpopup');
+
+    Route::get('/stats', [CustomerController::class, 'showStats'])->name('stats');
+
 });
 
 
@@ -184,3 +193,4 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Route::get('/logoutascustomer', [AdminController::class, 'returnToAdmin'])->name('logoutascustomer');
 
 });
+

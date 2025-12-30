@@ -3,7 +3,7 @@
 @section('title', 'Profile')
 
 @section('content')
-<section class="min-h-screen py-8 bg-slate-50/50">
+<section class="min-h-screen pt-8 pb-16 lg:pb-8 bg-slate-50/50">
   <div class="mx-auto max-w-[1400px] px-4">
 
 
@@ -13,7 +13,7 @@
       <div class="space-y-5">
         <div class="grid grid-cols-1 h-full">
           <div class="col-span-1 grid grid-cols-1 h-full">
-          <h2 class="text-2xl font-semibold mb-4 text-slate-900 text-center">
+            <h2 class="text-xl font-semibold mb-2 text-slate-900 text-center">
             Profile
           </h2>
           
@@ -29,20 +29,20 @@
                   <div class="absolute -top-24 -left-24 w-64 h-64 bg-[var(--theme-skky-300)]/20 rounded-full blur-3xl"></div>
                 <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-blue-400/15 rounded-full blur-3xl"></div>
               </div>
-            <form method="POST" action="{{ route('customer.profile.save') }}" enctype="multipart/form-data" class="w-full relative z-10">
+            <form id="profileForm" method="POST" action="{{ route('customer.profile.save') }}" enctype="multipart/form-data" class="w-full relative z-10">
               @csrf
               <div class="flex items-center gap-4 mb-4">
                 <div class="relative">
      
                   <div
-                    class="w-20 h-20 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md
+        class="w-16 h-16   md:w-20 md:h-20 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-md
                            ring-1 ring-[var(--theme-skky-400)]/20">
                       @if ($customer->profile_image)
                         <img id="profilePreview" src="{{ asset('storage/' . $customer->profile_image) }}"
                             alt="Profile" class="w-full h-full object-cover">
                       @else
-                          <img id="profilePreview" src="/assets/images/user/default-avatar.webp" alt="Profile"
-                              class="w-full h-full object-cover">
+                        <img id="profilePreview" src="/assets/images/default-avatar.png" alt="Profile"
+                            class="w-full h-full object-cover">
                       @endif
 
                       
@@ -68,26 +68,47 @@
                 {{-- Name + Badge + Rank --}}
                 <div class="min-w-0">
                   <h3 class="text-base sm:text-lg font-semibold text-slate-900 leading-tight truncate">
-                    <span id="profileNameText">OpAi</span>
+                    <span id="profileNameText">{{ $customer->name }}</span>
                   </h3>
 
                   <div class="mt-2 flex flex-wrap items-center gap-2">
                     {{-- Badge --}}
                    <span
-                      class="inline-flex items-center gap-2 rounded-full bg-[var(--theme-skkky-50)]
-                             border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs
-                             font-medium text-[var(--theme-primary-text)]">
-                      <img src="/assets/images/rank/emerald-rank.webp"
+                      class="inline-flex items-center gap-1 rounded-lg bg-[var(--theme-skkky-50)]
+         border border-[var(--theme-skky-200)] p-1 text-[11px] sm:text-xs
+         font-medium text-[var(--theme-primary-text)]">
+                      <!-- <img src="/assets/images/rank/emerald-rank.webp"
                            alt="Rank"
-                           class="w-8 h-8 object-contain">
+                           class="w-8 h-8 object-contain"> -->
+                            @if($customer->leadership_rank == 1 || $customer->leadership_rank == 'gold')
+                                <img src="{{ asset('assets/images/rank/gold-rank.webp?v=1') }}"
+                                alt="Rank"
+                                class="w-6 h-6 object-contain">
+                            @elseif($customer->leadership_rank == 2 || $customer->leadership_rank == 'sapphire')
+                                <img src="{{ asset('assets/images/rank/sapphire-rank.webp?v=1') }}" 
+                                alt="Rank"
+                                class="w-6 h-6 object-contain">
+                            @elseif($customer->leadership_rank == 3 || $customer->leadership_rank == 'emerald')
+                                <img src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}" 
+                                alt="Rank"
+                                class="w-6 h-6 object-contain">
+                            @elseif($customer->leadership_rank == 4 || $customer->leadership_rank == 'ruby')
+                                <img src="{{ asset('assets/images/rank/ruby-rank.webp?v=1') }}" 
+                                alt="Rank"
+                                class="w-6 h-6 object-contain">
+                            @elseif($customer->leadership_rank == 5 || $customer->leadership_rank == 'diamond')
+                                <img src="{{ asset('assets/images/rank/diamond-rank.webp?v=1') }}" 
+                                alt="Rank"
+                                class="w-8 h-8 object-contain">
+                            @endif
                           
-                      Rank:  <span class="font-semibold">{{ $customer->leadership_rank??'-' }}</span>
+                      {{-- Rank:  <span class="font-semibold">{{ $customer->leadership_rank??'-' }}</span> --}}
                     </span>
 
 
                     {{-- Rank --}}
                     <span
-                      class="inline-flex gap-2 items-center rounded-full bg-emerald-50 px-2 py-2 text-[11px] text-emerald-700 border border-emerald-300">
+                      class="inline-flex gap-1 items-center rounded-full bg-emerald-50 px-2 py-1 text-[11px] text-emerald-700 border border-emerald-300 justify-center">
                       Vip Level: <span class="font-semibold text-slate-900">{{ $customer->champions_rank??'-' }}</span>
                     </span>
                   </div>
@@ -99,7 +120,7 @@
               </div>
             
               <div class="mx-auto w-full space-y-4">
-
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2"> 
                 {{-- Name --}}
                 <div class="text-left">
                   <label for="name"
@@ -123,45 +144,6 @@
                     </div>
                   </div>
                 </div>
-
-                {{-- Wallet Address --}}
-                @php
-                $wareadonly = '';
-                if(!$customer['iswallet_editable'])
-                {
-                  $wareadonly = 'readonly';
-                }
-                $phreadonly = '';
-                if(!$customer['isphone_editable'])
-                {
-                  $phreadonly = 'readonly';
-                }
-                @endphp
-                <div class="text-left">
-                  <label for="walletaddress"
-                           class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
-                    Wallet Address
-                  </label>
-                  <div
-                      class="relative flex items-center p-3 rounded-lg gap-3 
-                             border border-slate-200 bg-white 
-                             focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-                             focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-                    <input type="text" id="wallet_address" name="wallet_address"
-                      value="{{ $customer->wallet_address }}" placeholder="Enter Wallet Address"
-                      class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                             required aria-describedby="hs-validation-name-success-helper">
-                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24">
-                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
-                          stroke-linecap="round" stroke-linejoin="round"></polyline>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-
-                {{-- Email --}}
                 <div class="text-left">
                   <label for="email"
                            class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
@@ -185,6 +167,82 @@
                     </div>
                   </div>
                 </div>
+                </div>
+                {{-- Wallet Address --}}
+                @php
+                $wareadonly = '';
+                if(!$customer['iswallet_editable'])
+                {
+                  $wareadonly = 'readonly';
+                }
+                $phreadonly = '';
+                if(!$customer['isphone_editable'])
+                {
+                  $phreadonly = 'readonly';
+                }
+                @endphp
+                
+
+
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2"> 
+
+          {{-- Wallet Address --}}
+          <div class="text-left">
+                  <label for="walletaddress"
+                           class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                    Wallet Address
+                  </label>
+                  <div
+                      class="relative flex items-center p-3 rounded-lg gap-3 
+                             border border-slate-200 bg-white 
+                             focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                             focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+                    <input type="text" id="wallet_address" name="wallet_address"
+                      value="{{ $customer->wallet_address }}" placeholder="Enter Wallet Address"
+                      class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                             required aria-describedby="hs-validation-name-success-helper" {{ $wareadonly }}>
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
+                          stroke-linecap="round" stroke-linejoin="round"></polyline>
+                      </svg>
+                      </div>
+                    </div>
+                  </div>
+                
+                {{--Confirm Wallet Address --}}
+                <div class="text-left">
+                  <label for="confirm_walletaddress"
+                          class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                  Confirm Wallet Address
+                  </label>
+                  <div
+                    class="relative flex items-center p-3 rounded-lg gap-3 
+                            border border-slate-200 bg-white 
+                            focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
+                            focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+                    <input type="text" id="confirm_walletaddress" name="confirm_walletaddress"
+                             value="{{ $customer->wallet_address }}" placeholder="Confirm Wallet Address"
+                            class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                            required aria-describedby="hs-validation-name-success-helper" {{ $wareadonly }}>
+                    <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
+                      <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 24 24">
+                        <polyline points="20 6 9 17 4 12" stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+  </div>
+
+                 
+
+                {{-- Email --}}
+                
 
                 {{-- Mobile --}}
                 <div class="text-left">
@@ -200,7 +258,8 @@
                     <input type="text" id="phone" name="phone" value="{{ $customer->phone }}"
                       placeholder="Enter Mobile Number"
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                      required aria-describedby="hs-validation-name-success-helper" {{ $phreadonly }}>
+                      required 
+                      aria-describedby="hs-validation-name-success-helper" {{ $phreadonly }}>
                     <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                       <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24">
@@ -235,18 +294,28 @@
                     </div>
                   </div>
                 </div>
+                
+                {{-- Terms checkbox --}}
+                <div class="flex items-center justify-center gap-2 pt-2">
+                  <input id="termsCheck" type="checkbox"
+                        class=" w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-300" required>
+                  <label for="termsCheck" class="text-sm text-slate-700">
+                    I have read and agree to the the details.
+                
+                  </label>
+                </div>
 
                 {{-- Submit --}}
                 <div class="pt-2">
-                  <button type="submit"
+                  <button type="button" id="openPasswordModal"
                             class="px-5 py-2.5 mx-auto flex items-center justify-center  
-                           text-sm sm:text-base tracking-wide mt-4 
+                                   text-sm sm:text-base tracking-wide
                                    rounded-lg border border-[var(--theme-skky-500)] 
                                    bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] 
-                           text-white font-semibold 
-                           shadow-[0_8px_20px_rgba(56,189,248,.35)] 
-                           hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] 
-                           active:scale-95 transition-all duration-300 ease-out">
+                                   text-white font-semibold 
+                                   
+                                   hover:-translate-y-1 cursor-pointer 
+                                   active:scale-95 transition-all duration-300 ease-out">
                     <span>Update</span>
                     <svg id="svg1-icon"
                       class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
@@ -431,7 +500,7 @@
     {{-- ================= voting ================= --}}
     
       <div class="space-y-5 h-full max-h-[400px]">
-         <h2 class="text-2xl font-semibold mb-4 text-slate-900 text-center">
+         <h2 class="text-xl font-semibold mb-4 text-slate-900 text-center">
               Voting
             </h2>
         <div class="grid grid-cols-1 h-full">
@@ -459,18 +528,17 @@
                   <div class="text-left">
                     <label for="voting_user_id"
                            class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
-                      Sponsor Code
+                      User Id
                     </label>
-
                     <div
                       class="relative flex items-center p-3 rounded-lg gap-3 
                              border border-slate-200 bg-white 
                              focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
                              focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-                      <input type="text" id="voting_user_id" name="voting_user_id" value="{{ $customer->mySponsor }}"
+                      <input type="text" id="voting_user_id" name="voting_user_id" value=""
                              placeholder="Enter User Id"
                              class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
-                             required aria-describedby="hs-validation-name-success-helper">
+                             required aria-describedby="hs-validation-name-success-helper" autocomplete="off">
                       <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
                         <svg class="shrink-0 size-4 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none"
                              viewBox="0 0 24 24">
@@ -480,10 +548,13 @@
                       </div>
                     </div>
                   </div>
-
+                  <div class="text-left">
+                    <label class="block text-[11px] uppercase tracking-wide text-[var(--theme-primary-text)] font-medium mb-2">
+                      <p id="userNameResult" class="mt-1 text-sm text-slate-600 hidden"></p>
+                    </label>
+                  </div>
                
 
-                  {{-- LEADERSHIP CLUB --}}
                   {{-- LEADERSHIP CLUB --}}
                   <div class="text-left">
                     <label class="block text-[11px] uppercase tracking-wide text-[var(--theme-primary-text)] font-medium mb-2">
@@ -539,8 +610,7 @@
                                    rounded-lg border border-[var(--theme-skky-500)] 
                                    bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] 
                                    text-white font-semibold 
-                                   shadow-[0_8px_20px_rgba(56,189,248,.35)] 
-                                   hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] 
+                                   hover:-translate-y-1 cursor-pointer 
                                    active:scale-95 transition-all duration-300 ease-out">
                       <span>Vote</span>
                       <svg id="svg1-icon"
@@ -567,11 +637,60 @@
 
   </div>
 
+{{-- PASSWORD POPUP --}}
+<div id="passwordModal" class="hidden fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
 
+  <div class="relative min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-md rounded-2xl bg-white border border-slate-200 shadow-[0_20px_60px_rgba(15,23,42,.25)] overflow-hidden">
+      
+      <div class="p-4 border-b border-slate-200 flex items-center justify-between">
+        <h3 class="text-lg font-semibold text-slate-900">Confirm Password</h3>
+        <button type="button" id="closePasswordModal"
+                class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center">
+          <svg class="w-5 h-5 text-slate-700" viewBox="0 0 24 24" fill="none">
+            <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
 
+      <div class="p-4 space-y-3">
+        <p class="text-sm text-slate-600">
+          To update your profile information, please confirm your password below.
+        </p>
 
+        <div class="text-left">
+          <label for="confirm_update_password"
+                 class="block text-[11px] uppercase tracking-wide text-slate-700 font-medium mb-2">
+            Password
+          </label>
 
+          <div class="relative flex items-center p-3 rounded-lg gap-3 border border-slate-200 bg-white
+                      focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-skky-200)]
+                      transition-colors">
+            <input type="password" id="confirm_update_password" placeholder="Enter your password"
+                   class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]" required>
+          </div>
 
+          <p id="passwordError" class="hidden text-sm text-red-600 mt-2"></p>
+        </div>
+      </div>
+
+      <div class="p-4 border-t border-slate-200 flex items-center justify-end gap-2">
+        <button type="button" id="cancelPasswordModal"
+                class="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50">
+          Cancel
+        </button>
+
+        <button type="button" id="confirmPasswordAndSubmit"
+                class="px-4 py-2 rounded-lg bg-[var(--theme-skky-600)] text-white font-semibold hover:bg-sky-700 active:scale-95 transition">
+          Confirm & Update
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{{-- /PASSWORD POPUP --}}
 
 </section>
 @endsection
@@ -608,10 +727,123 @@ document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById("multiSelectBtn");
     const dd  = document.getElementById("multiSelectDropdown");
 
-    if (!btn.contains(e.target) && !dd.contains(e.target)) {
+    if (btn && dd && !btn.contains(e.target) && !dd.contains(e.target)) {
       dd.classList.add("hidden");
     }
   });
+
+  // ===== Password popup for Update button =====
+  const modal = document.getElementById('passwordModal');
+  const openBtn = document.getElementById('openPasswordModal');
+  const closeBtn = document.getElementById('closePasswordModal');
+  const cancelBtn = document.getElementById('cancelPasswordModal');
+  const confirmBtn = document.getElementById('confirmPasswordAndSubmit');
+  const passInput = document.getElementById('confirm_update_password');
+  const errorEl = document.getElementById('passwordError');
+  const form = document.getElementById('profileForm');
+  const termsBox  = document.getElementById('termsCheck');
+
+  function openModal() {
+
+    if (!termsBox.checked) {
+        showToast('error', 'Please accept the terms & conditions.');
+        termsBox.focus();
+        return;
+    }
+
+    modal.classList.remove('hidden');
+    errorEl.classList.add('hidden');
+    errorEl.innerText = '';
+    passInput.value = '';
+    setTimeout(() => passInput.focus(), 50);
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+  }
+
+  openBtn && openBtn.addEventListener('click', openModal);
+  closeBtn && closeBtn.addEventListener('click', closeModal);
+  cancelBtn && cancelBtn.addEventListener('click', closeModal);
+
+  // click outside content to close
+  modal && modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // ESC to close
+  document.addEventListener('keydown', (e) => {
+    if (modal && !modal.classList.contains('hidden') && e.key === 'Escape') closeModal();
+  });
+
+  // Confirm -> add hidden password field -> submit
+  confirmBtn && confirmBtn.addEventListener('click', () => {
+    const pwd = (passInput.value || '').trim();
+
+    if (!pwd) {
+      errorEl.innerText = "Password required.";
+      errorEl.classList.remove('hidden');
+      passInput.focus();
+      return;
+    }
+
+    let hidden = document.getElementById('update_password_hidden');
+    if (!hidden) {
+      hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = 'hdnpassword';
+      hidden.id = 'update_password_hidden';
+      form.appendChild(hidden);
+    }
+
+    hidden.value = pwd;
+    form.submit();
+  });
+});
+
+
+const userIdInput = document.getElementById('voting_user_id');
+const resultEl = document.getElementById('userNameResult');
+
+
+let timer;
+const delay = 500;
+
+userIdInput.addEventListener('input', () => {
+    clearTimeout(timer);
+
+    const userId = userIdInput.value.trim();
+
+    if (userId.length < 4) {
+        resultEl.classList.add('hidden');
+        resultEl.innerText = '';
+        return;
+    }
+
+    timer = setTimeout(() => {
+        fetch("https://user.ordinarypeopleai.com/fetch-user-name", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            body: JSON.stringify({ user_id: userId })
+        })
+        .then(res => res.json())
+        .then(data => {
+            resultEl.classList.remove('hidden');
+
+            if (data.status === 'success') {
+                resultEl.textContent = `Name: ${data.name}`;
+                resultEl.classList.remove('text-red-600');
+                resultEl.classList.add('text-green-600');
+            } else {
+                resultEl.textContent = data.message;
+                resultEl.classList.remove('text-green-600');
+                resultEl.classList.add('text-red-600');
+            }
+        });
+    }, delay);
 });
 </script>
 @endpush
