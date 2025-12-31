@@ -14,33 +14,34 @@
 
     {{-- soft glow background --}}
     <div class="pointer-events-none absolute inset-0 opacity-70">
-      <div class="absolute -top-24 -left-24 w-64 h-64 bg-[var(--theme-skky-300)]/20 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -left-24 w-64 h-64 bg-sky-300/20 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-indigo-200/40 rounded-full blur-3xl"></div>
     </div>
 
     <div class="relative">
-      <h3 class="text-xl font-semibold mb-4 text-slate-900 text-center">
+      <h3 class="text-2xl font-semibold mb-4 text-slate-900 text-center">
         Create a Support Ticket
       </h3>
 
-      <form id="supportTicketForm" class="relative w-full" action="{{ route('tickets.save') }}"
+      <form class="relative w-full" action="https://dapp.OpAi.farm/process-support-tickets"
             enctype="multipart/form-data" method="POST">
         @csrf
-        
+        <input type="hidden" name="_method" value="POST">
+
         <div class="space-y-4">
 
           {{-- Subject --}}
           <div class="text-left">
             <label for="subject"
-                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
               Subject
             </label>
             <div
               class="relative flex items-center p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-              <svg class="w-5 h-5 min-w-5 min-h-5 text-[var(--theme-skky-600)]" viewBox="0 0 38 32"
+                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
+                     focus-within:bg-sky-50/60 transition-colors">
+              <svg class="w-5 h-5 min-w-5 min-h-5 text-sky-400" viewBox="0 0 38 32"
                    xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <path fill="currentColor"
@@ -74,18 +75,18 @@
           {{-- File --}}
           <div class="text-left">
             <label for="file"
-                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
               Attachment (optional)
             </label>
 
             <div
               class="relative flex items-center p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
+                     focus-within:bg-sky-50/60 transition-colors">
 
               <svg xmlns="http://www.w3.org/2000/svg"
-                   class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-skky-600)]/80"
+                   class="w-6 h-6 min-w-6 min-h-6 text-sky-400/80"
                    fill="none" viewBox="0 0 24 24" stroke-width="1.7">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                       d="M12 16V4m0 0l4 4m-4-4L8 8" />
@@ -98,8 +99,8 @@
                 id="file"
                 class="block w-full text-sm text-slate-800
                        file:mr-4 file:rounded-md file:border-0
-                       file:bg-[var(--theme-skky-500)] file:text-white file:px-4 file:py-1 file:font-semibold cursor-pointer
-                       hover:file:bg-[var(--theme-skky-600)] transition-colors
+                       file:bg-sky-500 file:text-white file:px-4 file:py-1 file:font-semibold cursor-pointer
+                       hover:file:bg-sky-600 transition-colors
                        focus:outline-none">
             </div>
           </div>
@@ -107,14 +108,14 @@
           {{-- Message --}}
           <div class="text-left">
             <label for="message"
-                   class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
+                   class="block text-[11px] uppercase tracking-wide text-sky-600 font-medium mb-2">
               Message
             </label>
             <div
               class="relative flex items-start p-3 rounded-lg gap-3 
                      border border-slate-200 bg-white 
-                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
-                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+                     focus-within:border-sky-400 focus-within:ring-1 focus-within:ring-sky-100 
+                     focus-within:bg-sky-50/60 transition-colors">
               <textarea
                 rows="4"
                 name="message"
@@ -129,10 +130,10 @@
           {{-- Button --}}
           <div class="pt-2">
             <button type="submit"
-              class="px-5 py-2.5 mx-auto flex items-center justify-center  
+              class="px-5 py-2.5 mx-auto flex items-center justify-center gap-2 
                      text-sm sm:text-base tracking-wide mt-4 
-                     rounded-lg border border-[var(--theme-skky-500)] 
-                     bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] 
+                     rounded-full border border-sky-500 
+                     bg-gradient-to-r from-sky-500 to-sky-600 
                      text-white font-semibold 
                      shadow-[0_8px_20px_rgba(56,189,248,.35)] 
                      hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] 
@@ -162,16 +163,16 @@
 
     {{-- soft glow background --}}
     <div class="pointer-events-none absolute inset-0 opacity-70">
-      <div class="absolute -top-24 -right-24 w-64 h-64 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-64 h-64 bg-sky-200/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
-    <div class="relative overflow-x-auto pb-1">
+    <div class="relative overflow-x-auto">
       <div id="withdrawalsTable_wrapper" class="dataTables_wrapper no-footer">
 
         {{-- TOP BAR: SHOW + SEARCH --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-          {{-- <div class="dataTables_length" id="withdrawalsTable_length">
+          <div class="dataTables_length" id="withdrawalsTable_length">
             <label class="text-xs text-slate-600 flex items-center gap-2">
               <span>Show</span>
               <select name="withdrawalsTable_length" aria-controls="withdrawalsTable"
@@ -183,14 +184,14 @@
               </select>
               <span>entries</span>
             </label>
-          </div> --}}
+          </div>
 
-          {{-- <div id="withdrawalsTable_filter" class="dataTables_filter w-full sm:w-auto">
+          <div id="withdrawalsTable_filter" class="dataTables_filter w-full sm:w-auto">
             <label class="text-xs text-slate-600 w-full">
               <span class="sr-only">Search</span>
               <div class="relative">
                 <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
-                  
+                  {{-- search icon --}}
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20"
                        fill="currentColor">
                     <path fill-rule="evenodd"
@@ -205,20 +206,14 @@
                        placeholder="Search ticket / subject / status" aria-controls="withdrawalsTable">
               </div>
             </label>
-          </div> --}}
+          </div>
         </div>
 
-        <table id="supportTicketsTable"
+        <table id="withdrawalsTable"
                class="w-full text-left border-collapse pb-7 dataTable no-footer text-xs sm:text-sm"
                style="padding-top: 15px;" aria-describedby="withdrawalsTable_info">
           <thead>
           <tr class="bg-slate-100 text-slate-900">
-            <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting sorting_asc"
-              tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
-              aria-sort="ascending" aria-label="Ticket Id.: activate to sort column descending">
-              Open Date
-            </th>
             <th
               class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting sorting_asc"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
@@ -226,37 +221,37 @@
               Ticket Id.
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Subject: activate to sort column ascending">
               Subject
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Message: activate to sort column ascending">
               Message
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Attachment: activate to sort column ascending">
               Attachment
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Status: activate to sort column ascending">
               Status
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Reply: activate to sort column ascending">
               Reply
             </th>
             <th
-              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right sorting"
+              class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right sorting"
               tabindex="0" aria-controls="withdrawalsTable" rowspan="1" colspan="1"
               aria-label="Date: activate to sort column ascending">
               Date
@@ -265,39 +260,16 @@
           </thead>
           <tbody class="divide-y divide-slate-100">
           {{-- default empty state, DataTables will replace when data exists --}}
-          {{-- <tr class="odd hover:bg-slate-100 transition">
+          <tr class="odd hover:bg-slate-100 transition">
             <td valign="top" colspan="7"
                 class="dataTables_empty px-4 sm:px-5 py-4 text-center text-slate-500">
               No data available in table
             </td>
-          </tr> --}}
-          @php
-            $sr=1;
-          @endphp
-          @foreach($customer->supportTickets as $tkey => $tickets)
-            <tr class="hover:bg-slate-100 transition">
-              <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $tickets->created_at->format('d-m-Y') }}</td>
-              <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $tickets->id }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $tickets->subject }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $tickets->message }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">
-                @if($tickets->file)
-                    <a href="{{ asset('storage/'.$tickets->file) }}" target="_blank">
-                        View Attachment
-                    </a>
-                @else
-                    -
-                @endif
-              </td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $tickets->status_text  }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $tickets->reply??'-' }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $tickets->replied_at??'-' }}</td>
-            </tr>
-          @endforeach
+          </tr>
           </tbody>
         </table>
 
-        {{-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
           <div class="dataTables_info mt-2 text-xs text-slate-500"
                id="withdrawalsTable_info" role="status" aria-live="polite">
             Showing 0 to 0 of 0 entries
@@ -312,7 +284,7 @@
                aria-controls="withdrawalsTable" aria-disabled="true" aria-role="link"
                data-dt-idx="next" tabindex="-1" id="withdrawalsTable_next">Next</a>
           </div>
-        </div> --}}
+        </div>
 
       </div>
     </div>
@@ -320,56 +292,42 @@
 </section>
 
 @push('scripts')
-{{-- <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script> --}}
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 <script>
-  // $(document).ready(function () {
-  //   $('#supportTicketsTable').DataTable({
-  //     responsive: true,
-  //     paging: true,
-  //     searching: true,
-  //     ordering: true,
-  //     lengthMenu: [5, 10, 25, 50],
-  //     language: {
-  //       search: "",
-  //       searchPlaceholder: "Search ticket / subject / status",
-  //       lengthMenu: "Show _MENU_ entries",
-  //       paginate: {
-  //         previous: "Previous",
-  //         next: "Next"
-  //       },
-  //       info: "Showing _START_ to _END_ of _TOTAL_ entries"
-  //     },
-  //     dom: "<'top'f>rt<'bottom'lp><'clear'>"
-  //   });
+  $(document).ready(function () {
+    $('#withdrawalsTable').DataTable({
+      responsive: true,
+      paging: true,
+      searching: true,
+      ordering: true,
+      lengthMenu: [5, 10, 25, 50],
+      language: {
+        search: "",
+        searchPlaceholder: "Search ticket / subject / status",
+        lengthMenu: "Show _MENU_ entries",
+        paginate: {
+          previous: "Previous",
+          next: "Next"
+        },
+        info: "Showing _START_ to _END_ of _TOTAL_ entries"
+      },
+      dom: "<'top'f>rt<'bottom'lp><'clear'>"
+    });
 
-  //   // Light theme overrides for DataTables controls
-  //   $("#withdrawalsTable_filter input").addClass(
-  //     "bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 " +
-  //     "text-slate-900 placeholder:text-slate-400 focus:outline-none " +
-  //     "focus:ring-1 focus:ring-sky-400/80 focus:border-sky-400/80 w-full sm:w-auto"
-  //   );
+    // Light theme overrides for DataTables controls
+    $("#withdrawalsTable_filter input").addClass(
+      "bg-white border border-slate-200 text-xs rounded-lg pl-7 pr-3 py-1.5 " +
+      "text-slate-900 placeholder:text-slate-400 focus:outline-none " +
+      "focus:ring-1 focus:ring-sky-400/80 focus:border-sky-400/80 w-full sm:w-auto"
+    );
 
-  //   $("select[name='withdrawalsTable_length']").addClass(
-  //     "bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 " +
-  //     "focus:outline-none focus:ring-1 focus:ring-sky-400/80 focus:border-sky-400/80"
-  //   );
-  // });
+    $("select[name='withdrawalsTable_length']").addClass(
+      "bg-white border border-slate-200 text-xs rounded-lg px-2 py-1.5 text-slate-700 " +
+      "focus:outline-none focus:ring-1 focus:ring-sky-400/80 focus:border-sky-400/80"
+    );
+  });
 </script>
 @endpush
 
 @endsection
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function () {
-  $('#supportTicketsTable').DataTable({
-      pageLength: 5,
-      lengthMenu: [5, 10, 25, 50],
-      searching: true,
-      ordering: true,
-      responsive: true
-  });
-});
-</script>

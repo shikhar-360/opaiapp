@@ -16,7 +16,7 @@
     
     <div class="mx-auto ">
       {{-- TOP ROW : REFERRAL + PDF --}}
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-6">
+      <div class="grid grid-cols-1 md:grid-cols-1  lg:grid-cols-2 gap-5 mt-6">
         {{-- Referral Link Card --}}
         <div
           class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg hover:shadow-2xl transition-shadow">
@@ -104,17 +104,36 @@
           <div class="relative grid grid-cols-3 gap-3 sm:gap-4 text-center">
 
            
-            <div class="flex flex-col items-center">
-              <div class="flex justify-center items-center">
-                <img src="{{ asset('assets/images/rank/active.webp?v=2') }}" class="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
-              </div>
-              <p class="mt-1 text-xs sm:text-sm font-medium text-slate-600">
-                ACTIVE
-              </p>
-              <p class="text-sm sm:text-lg font-semibold text-slate-900">
-                {{ $customer->myVoteSumamry['ACTIVE'] }}
-              </p>
-            </div>
+<div class="flex flex-col items-center relative">
+  <!-- Icon -->
+  <div class="flex justify-center items-center">
+    <img src="{{ asset('assets/images/rank/active.webp?v=2') }}"
+         class="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
+  </div>
+
+  <!-- Label -->
+  <p class="mt-1 text-xs sm:text-sm font-medium text-slate-600">
+    ACTIVE
+  </p>
+
+  <!-- Value + Overlay -->
+  <div class="relative mt-1">
+    <!-- Blurred Value -->
+    <p class="text-sm sm:text-lg font-semibold text-slate-900 blur-[1px] select-none">
+      {{ $customer->myVoteSumamry['ACTIVE'] }}
+    </p>
+
+    <!-- Coming Soon Badge -->
+    <span
+      class="absolute inset-0 flex items-center justify-center
+             text-[10px] sm:text-xs font-semibold  tracking-wide
+             text-blue-600 bg-indigo-100/80 backdrop-blur-sm
+              rounded-full shadow-sm">
+       Soon
+    </span>
+  </div>
+</div>
+
 
 
             <div class="flex flex-col items-center">
@@ -124,9 +143,18 @@
               <p class="mt-1 text-xs sm:text-sm font-medium text-slate-600">
                 HELPFUL
               </p>
+              <div class="relative mt-1">
               <p class="text-sm sm:text-lg font-semibold text-slate-900">
                 {{ $customer->myVoteSumamry['HELPFULL'] }}
               </p>
+              <span
+      class="absolute inset-0 flex items-center justify-center
+             text-[10px] sm:text-xs font-semibold  tracking-wide
+             text-blue-600 bg-indigo-100/80 backdrop-blur-sm
+              rounded-full shadow-sm">
+       Soon
+    </span>
+    </div>
             </div>
 
 
@@ -137,9 +165,19 @@
               <p class="mt-1 text-xs sm:text-sm font-medium text-slate-600">
                 HONEST
               </p>
+              <div class="relative mt-1">
               <p class="text-sm sm:text-lg font-semibold text-slate-900">
                 {{ $customer->myVoteSumamry['HONEST'] }}
               </p>
+              <span
+      class="absolute inset-0 flex items-center justify-center
+             text-[10px] sm:text-xs font-semibold  tracking-wide
+             text-blue-600 bg-indigo-100/80 backdrop-blur-sm
+              rounded-full shadow-sm">
+       Soon
+    </span>
+
+</div>
             </div>
 
           </div>
@@ -148,7 +186,7 @@
           <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
         </div>
         {{-- Download PDF Card --}}
-        <div
+        <!-- <div
           class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg hover:shadow-2xl transition-shadow">
           <div class="absolute inset-0 pointer-events-none opacity-60">
             <div class="absolute -top-20 -left-20 w-52 h-52 bg-indigo-400/20 rounded-full blur-3xl"></div>
@@ -200,11 +238,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
       
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 mt-6 justify-center items-center">
-        <div class="grid grid-cols-1 gap-5  h-full">
+        <div class="grid grid-cols-1 gap-5  h-full col-span-2 xl:col-span-1">
           <div class="relative group rounded-2xl overflow-hidden border border-blue-300/60 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg ">
             <div class="absolute inset-0 pointer-events-none opacity-70">
               <div class="absolute -top-24 -left-24 w-52 h-52 bg-[var(--theme-skky-400)]/15 rounded-full blur-3xl"></div>
@@ -214,7 +252,7 @@
                 <div class="flex flex-col items-start justify-start  gap-2">
                   <h3
                   class="font-semibold text-md md:text-lg text-[var(--theme-primary-text)] truncate leading-tight">
-                  Badge Rank
+                  Badge of Honor
                   </h3>
                   <span
                     class="inline-flex items-center gap-1 rounded-full bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)]">
@@ -322,7 +360,7 @@
               </div>
           </div>
         </div>
-        <div class="grid grid-cols-1 gap-5  h-full">
+        <div class="grid grid-cols-1 gap-5  h-full col-span-2 xl:col-span-1">
           <div class="w-full p-px overflow-hidden">
             <x-level-grid :currentLevel="$customer->leadership_champions_rank" :totalLevels="5" :vipTargetVolume="$customer->vip_total_volume" :vipTargetDirects="$customer->vip_total_directs" :current_vipvolume="$customer->totalTeamInvestment" :current_vipdirects="$customer->totalActiveDirectsCount"  />
           </div>
@@ -331,7 +369,7 @@
     </div>    
 
     {{-- RANKING SLIDER --}}
-    <div class="mt-4 col-span-2">
+    <div class=" col-span-2">
       <div class="flex items-center justify-between mb-3">
         <h2 class="text-base sm:text-lg font-semibold text-slate-900">
           Level
@@ -352,11 +390,14 @@
         <div class="swiper-wrapper flex">
           @for ($i = 1; $i <= 20; $i++)
           <div class="swiper-slide !w-[140px] sm:!w-[160px] md:!w-[200px]">
-            <div
-              class="level-card p-4 rounded-xl mx-auto border border-blue-300/30
-              bg-gradient-to-t from-[var(--theme-skkky-50)] via-white to-[var(--theme-[var(--theme-skky-100)])]
-              text-center text-slate-900 relative flex flex-col gap-1 items-center justify-center
-              ">
+  <div
+    class="level-card p-4 rounded-xl mx-auto border border-blue-300/30
+    text-center text-slate-900 relative flex flex-col gap-1 items-center justify-center
+    {{ $i <= $customer->level_id
+        ? 'bg-gradient-to-b from-[var(--theme-skky-300)] to-[var(--theme-bllue-300)]'
+        : 'bg-gradient-to-t from-[var(--theme-skkky-50)] via-white to-[var(--theme-skky-100)] opacity-70'
+    }}"
+  >
               <!-- 🔒 Lock Icon -->
               <div
                 class="absolute top-1 right-1 w-4 h-4 rounded-full flex items-center ">
@@ -594,7 +635,7 @@
       {{-- </div> --}}
 
       {{-- MY PACKAGES TABLE --}}
-      <div class="mt-10">
+      <div class="mt-6">
         <h2 class="text-lg font-semibold mb-3 text-slate-900">My Packages</h2>
         <div
           class="p-4 md:p-6 text-slate-900 rounded-2xl w-full mx-auto border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.12)] relative overflow-hidden text-left">
@@ -647,7 +688,7 @@
       
 
       {{-- Leaderboard --}}
-    <h2 class="text-lg font-semibold mb-3 text-slate-900 mt-10">Leaderboard</h2>
+    <h2 class="text-lg font-semibold mb-3 text-slate-900 mt-6">Leaderboard</h2>
 
 {{-- ===================== DIRECT / VOLUME + SUB TABS (BLADE) ===================== --}}
 
@@ -672,7 +713,7 @@
                 data-main-target="#direct-content"
                 aria-selected="true"
                 class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
-                <span class="relative z-[1]">Directs</span>
+                <span class="relative z-[1]">Cores</span>
               </button>
             </li>
 
@@ -682,7 +723,7 @@
                 data-main-target="#volume-content"
                 aria-selected="false"
                 class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
-                <span class="relative z-[1]">Volumes</span>
+                <span class="relative z-[1]">Growth</span>
               </button>
             </li>
 
@@ -700,7 +741,7 @@
 
           <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
             <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-            <span>Directs / Volumes / Votes </span>
+            <span>Cores / Growth / Votes </span>
           </div>
         </div>
       </div>
@@ -822,7 +863,7 @@
                         </th>
                         <th
                           class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                          Directs
+                          Cores
                         </th>
                         {{-- <th
                           class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
@@ -1093,7 +1134,7 @@
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
+                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Cores</th>
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
@@ -1602,39 +1643,11 @@
       }
     }
 
+
     // RANKING SLIDER INIT
-   document.addEventListener('DOMContentLoaded', function() {
 
-  const ACTIVE = [
-    'bg-gradient-to-b',
-    'from-[var(--theme-skky-300)]',
-    'to-[var(--theme-bllue-300)]'
-  ];
-
-  const INACTIVE = [
-    'bg-gradient-to-t',
-    'from-[var(--theme-skkky-50)]',
-    'via-white',
-    'to-[var(--theme-[var(--theme-skky-100)])]'
-  ];
-
-  function updateActive(sw) {
-    sw.slides.forEach(slide => {
-      const card = slide.querySelector('.level-card');
-      if (!card) return;
-      card.classList.remove(...ACTIVE);
-      card.classList.add(...INACTIVE);
-    });
-
-    const activeSlide = sw.slides[sw.activeIndex];
-    const activeCard = activeSlide?.querySelector('.level-card');
-    if (activeCard) {
-      activeCard.classList.remove(...INACTIVE);
-      activeCard.classList.add(...ACTIVE);
-    }
-  }
-
-  const swiper = new Swiper('.rankingsliderbox', {
+document.addEventListener('DOMContentLoaded', function () {
+  new Swiper('.rankingsliderbox', {
     slidesPerView: 'auto',
     spaceBetween: 16,
     loop: false,
@@ -1648,13 +1661,11 @@
       640: { spaceBetween: 14 },
       1024: { spaceBetween: 18 }
     },
-    on: {
-      init() { updateActive(this); },
-      slideChange() { updateActive(this); }
-    }
+   
+    // initialSlide: Math.max(0, {{ (int)($customer->level_id ?? 1) }} - 1),
   });
-
 });
+
   </script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {

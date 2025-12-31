@@ -10,7 +10,7 @@
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
       <div>
         <h2 class="text-lg sm:text-2xl font-semibold text-slate-900">Tools & Tutorials</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Tutorial video links can be placed here (IFrame).</p>
+        <!-- <p class="text-xs sm:text-sm text-slate-500">Tutorial video links can be placed here (IFrame).</p> -->
       </div>
     </div>
 

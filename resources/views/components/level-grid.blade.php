@@ -57,7 +57,7 @@
     <div class="flex items-center justify-between">
         <div>
         <h3 class="font-semibold text-md md:text-lg text-slate-900">
-            VIP Rank Overview
+            LIGHTBEARER Overview
         </h3>
           <p class="text-sm text-slate-500 mt-1">
           You’re on VIP <span class="font-semibold text-slate-800">{{ $currentLevel }}</span>
@@ -158,17 +158,17 @@
           </div>
         @endforeach
 
-        <div class="rounded-lg text-center  text-xs sm:text-[13px] transition">
-          <div class=" border border-indigo-200/70 bg-gradient-to-r from-indigo-50 via-[var(--theme-skkky-50)] to-fuchsia-50 backdrop-blur-sm px-4 py-0.5 rounded-lg shadow-sm">
+        <div class="rounded-lg text-center  text-xs sm:text-[13px] transition col-span-2 sm:col-span-1 ">
+          <div class=" border border-indigo-200/70 bg-gradient-to-r from-indigo-50 via-[var(--theme-skkky-50)] to-fuchsia-50 backdrop-blur-sm px-4 py-1 rounded-lg shadow-sm flex flex-col justify-center">
             <!-- Volume -->
-            <div class="mb-1">
-              <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
+            <div class="">
+              <div class="flex justify-between text-xs font-medium text-slate-700 mb-0.5">
                 <span>Volume</span>
                 <span>{{ (int) $current_vipvolume }} / {{ (int) $vipTargetVolume}}</span>
             </div>
             <!-- Points -->
             <div>
-              <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
+              <div class="flex justify-between text-xs font-medium text-slate-700 ">
                 <span>Directs</span>
                 <span>{{ (int) $current_vipdirects }} / {{ (int) $vipTargetDirects }}</span>
             </div>

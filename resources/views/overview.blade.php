@@ -8,57 +8,35 @@
 {{-- TOP INCOME CARDS --}}
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 mb-8">
 
-  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
-      <img src="{{ asset('assets/images/icons/roi-income.webp?v=1') }}"  class="w-9" alt="Direct Team Investment">
+  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+      <img src="/assets/images/icons/roi-income.webp" class="w-9" alt="Direct Team Investment">
     </div>
     <div>
       <p class="text-sm text-slate-500">ROI Income</p>
       <p class="text-xl font-bold text-sky-600">$0</p>
     </div>
-  </div> -->
-
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-sky-300 to-sky-500 border border-[var(--theme-skky-200)]">
-      <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Total Team Investment">
-    </div>
-    <div>
-      <h3 class="text-base text-slate-600">Core Circle Credits</h3>
-      <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
-    </div>
   </div>
-
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 border border-[var(--theme-skky-200)]">
-      <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  class="w-9" alt="Total Team Investment">
-    </div>
-    <div>
-      <h3 class="text-base text-slate-600">Total Credits</h3>
-      <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
-    </div>
-  </div>
-
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}"  class="w-9" alt="Rank Points">
+      <img src="/assets/images/icons/capping.webp" class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-600">Earned Points</p>
-      <p class="text-lg font-bold text-[var(--theme-high-text)]">{{ $customer->leadership_points??'-' }} </p>
+      <p class="text-sm text-slate-500">Level Income</p>
+      <p class="text-xl font-bold text-sky-600">$0</p>
     </div>
   </div>
 
-
-  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Level Points">
+      <img src="/assets/images/icons/total-withdraw.webp" class="w-9" alt="Total Team Investment">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Level Points</p>
-      <p class="text-lg font-bold text-sky-600">{{ $customer->champions_point??'-' }} </p>
+      <p class="text-sm text-slate-500">Total Income</p>
+      <p class="text-xl font-bold text-sky-600">$0</p>
     </div>
-  </div> -->
+  </div>
 
 </div>
 
@@ -73,30 +51,30 @@
 shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-emerald-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)] opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-cyan-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)]
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200
       relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/roi-income.webp?v=1') }}"  class="w-10 h-10 object-contain">
+        <img src="/assets/images/icons/roi-income.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">ROI Income</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -106,24 +84,24 @@ shadow-[0_15px_40px_rgba(15,23,42,.08)] hover:shadow-[0_18px_45px_rgba(15,23,42,
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-fuchsia-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-fuchsia-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-fuchsia-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/capping.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Level Income</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0.000</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0.000</span>
       </p>
     </div>
   </div>
@@ -139,23 +117,23 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
     <div class="absolute -top-20 -left-20 w-52 h-52 bg-emerald-200/60 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-sky-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-[var(--theme-skky-400)] opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-sky-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/direct-investment.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/direct-investment.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Direct Income</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -179,15 +157,15 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-amber-400 to-fuchsia-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/royalty-income.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/royalty-income.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Royalty Bonus</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -202,29 +180,29 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-emerald-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-emerald-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-emerald-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/star-bonus.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/star-bonus.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Star Bonus</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -235,23 +213,23 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
     <div class="absolute -top-20 -left-20 w-52 h-52 bg-emerald-200/60 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-[var(--theme-cyyan-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-cyan-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-[var(--theme-cyyan-400)] opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/quick-start-bonus.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/quick-start-bonus.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Quick Start Bonus</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0</span>
       </p>
     </div>
   </div>
@@ -266,29 +244,29 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
 
   <div class="absolute inset-0 pointer-events-none opacity-60">
-    <div class="absolute -top-20 -left-20 w-52 h-52 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+    <div class="absolute -top-20 -left-20 w-52 h-52 bg-sky-200/60 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-amber-200/60 rounded-full blur-3xl"></div>
   </div>
 
   <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 sm:p-5">
     <div class="relative">
-      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-amber-400 opacity-40 blur 
+      <div class="absolute inset-0 -m-1 rounded-full bg-gradient-to-r from-sky-400 to-amber-400 opacity-40 blur 
       group-hover:opacity-70 transition-opacity"></div>
 
-      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
-        <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  class="w-10 h-10 object-contain">
+      <div class="min-w-16 w-16 h-16 flex items-center justify-center rounded-2xl bg-sky-50 border border-sky-200 relative shadow-[0_10px_30px_rgba(15,23,42,.10)]">
+        <img src="/assets/images/icons/total-withdraw.webp" class="w-10 h-10 object-contain">
       </div>
     </div>
 
     <div class="w-full min-w-0">
       <h3 class="mb-1 text-sm sm:text-base font-semibold text-slate-900">Total Income</h3>
       <p class="text-sm">
-        <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl">$0.000</span>
+        <span class="text-sky-600 font-extrabold text-lg sm:text-xl">$0.000</span>
       </p>
     </div>
   </div>
 
-  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)]/90 to-transparent opacity-70"></div>
+  <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-sky-400/90 to-transparent opacity-70"></div>
 </div>
 -->
 
@@ -297,11 +275,11 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     class="w-full mx-auto my-10 overflow-hidden rounded-2xl relative border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.08)]">
     {{-- soft glow background --}}
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
-    <form method="POST" action="{{ route('overview.filter') }}" class="relative p-5 md:p-6">
+    <form method="POST" action="https://dapp.OpAi.farm/income-overview" class="relative p-5 md:p-6">
       @csrf
       @method('POST')
 
@@ -310,7 +288,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- Start date --}}
         <label class="relative group w-full">
           <div
-            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-[var(--theme-skky-400)]/80 group-focus-within:ring-1 group-focus-within:ring-[var(--theme-skky-400)]/60 transition">
+            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-sky-400/80 group-focus-within:ring-1 group-focus-within:ring-sky-400/60 transition">
             <span class="pl-3 pr-2 opacity-80 text-slate-400">
               <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -318,7 +296,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 </path>
               </svg>
             </span>
-            <input id="datepicker-range-start" name="start_date" type="text" autocomplete="off" value="{{ $customer->levelIncomeDatefrom }}"
+            <input id="datepicker-range-start" name="start_date" type="text" autocomplete="off"
               placeholder="Select start date"
               class="w-full bg-transparent outline-none placeholder:text-slate-400 py-3 pr-3 border-l border-slate-200 pl-4 text-sm md:text-base text-slate-900 datepicker-input">
           </div>
@@ -327,7 +305,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- TO badge --}}
         <div class="hidden md:flex items-center justify-center">
           <span
-            class="w-8 h-8 grid place-items-center rounded-full bg-white border border-slate-200 text-[11px] font-semibold tracking-widest text-[var(--theme-high-text)]">
+            class="w-8 h-8 grid place-items-center rounded-full bg-white border border-slate-200 text-[11px] font-semibold tracking-widest text-sky-600">
             TO
           </span>
         </div>
@@ -335,7 +313,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- End date --}}
         <label class="relative group w-full">
           <div
-            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-[var(--theme-skky-400)]/80 group-focus-within:ring-1 group-focus-within:ring-[var(--theme-skky-400)]/60 transition">
+            class="flex items-center rounded-xl bg-white border border-slate-200 group-focus-within:border-sky-400/80 group-focus-within:ring-1 group-focus-within:ring-sky-400/60 transition">
             <span class="pl-3 pr-2 opacity-80 text-slate-400">
               <svg class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
                 <path
@@ -343,7 +321,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 </path>
               </svg>
             </span>
-            <input id="datepicker-range-end" name="end_date" type="text" autocomplete="off" value="{{ $customer->levelIncomeDateto }}"
+            <input id="datepicker-range-end" name="end_date" type="text" autocomplete="off"
               placeholder="Select end date"
               class="w-full bg-transparent outline-none placeholder:text-slate-400 py-3 pr-3 border-l border-slate-200 pl-4 text-sm md:text-base text-slate-900 datepicker-input">
           </div>
@@ -352,7 +330,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- CTA --}}
         <div class="md:pl-2">
           <button type="submit"
-            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out">
+            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-primary-text)] to-[var(--theme-primary-bg)] text-black font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
               <path
                 d="M15.8 15.8L21 21M18 10.5A7.5 7.5 0 1 1 3 10.5a7.5 7.5 0 0 1 15 0Z"
                 stroke="#020617" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -370,49 +348,48 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
     
     {{-- soft glow background --}}
     <div class="absolute inset-0 opacity-70 pointer-events-none">
-      <div class="absolute -top-24 -right-24 w-72 h-72 bg-[var(--theme-skky-200)]/60 rounded-full blur-3xl"></div>
+      <div class="absolute -top-24 -right-24 w-72 h-72 bg-sky-200/60 rounded-full blur-3xl"></div>
       <div class="absolute -bottom-28 -left-24 w-72 h-72 bg-indigo-200/60 rounded-full blur-3xl"></div>
     </div>
 
     <div class="relative mb-6">
       {{-- TABS --}}
       <div
-        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner overflow-x-auto">
+        class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner">
         <ul class="flex gap-2" data-tabs-toggle="#default-tab-content" role="tablist">
-          <li class="hidden" role="presentation">
+          <li role="presentation">
             <button id="table-income_all" data-tabs-target="#income_all" type="button" role="tab"
-              aria-controls="income_all" aria-selected="false"
+              aria-controls="income_all" aria-selected="true"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
-              <span class="relative z-[1]">Level Points</span>
+              <span class="relative z-[1]">All Income</span>
               <span
-                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-[var(--theme-primary-text)] border border-[var(--theme-skky-200)]">
-                {{ $customer->levelIncomeCount }}
+                class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-sky-700 border border-sky-200">
+                8
               </span>
             </button>
           </li>
-          <li class="hidden" role="presentation">
+          <li role="presentation">
             <button id="table-income_roi" data-tabs-target="#income_roi" type="button" role="tab"
               aria-controls="income_roi" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
-              <span class="relative z-[1]">Rank Points</span>
+              <span class="relative z-[1]">ROI Income</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-emerald-700 border border-emerald-200">
-                {{ $customer->levelIncomeCount }}
+                3
               </span>
             </button>
           </li>
           <li role="presentation">
             <button id="table-income_direct" data-tabs-target="#income_direct" type="button" role="tab"
-              aria-controls="income_direct" aria-selected="true"
+              aria-controls="income_direct" aria-selected="false"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
-                     
-              <span class="relative z-[1]">Circle Income</span>
+              <span class="relative z-[1]">Level Income</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-amber-700 border border-amber-200">
-                {{ $customer->levelIncomeCount }}
+                2
               </span>
             </button>
           </li>
@@ -431,22 +408,22 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         </ul>
 
         {{-- Hint text --}}
-        <!-- <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
+        <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
           <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
           <span>Click tabs to switch income type</span>
-        </div> -->
+        </div>
       </div>
     </div>
 
     <div id="default-tab-content" class="relative">
       {{-- TAB: ALL INCOME --}}
-      <div class="hidden" id="income_all" role="tabpanel" aria-labelledby="table-income_all">
+      <div id="income_all" role="tabpanel" aria-labelledby="table-income_all">
         <div class="overflow-x-auto">
           <div id="tabledata_all_wrapper" class="dataTables_wrapper no-footer">
             
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-              {{-- <div class="dataTables_length" id="tabledata_all_length">
+              <div class="dataTables_length" id="tabledata_all_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata_all_length" aria-controls="tabledata_all"
@@ -458,9 +435,9 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   </select>
                   <span>entries</span>
                 </label>
-              </div> --}}
+              </div>
 
-              {{-- <div id="tabledata_all_filter" class="dataTables_filter w-full sm:w-auto">
+              <div id="tabledata_all_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
@@ -479,7 +456,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                       placeholder="Search amount / tag / date" aria-controls="tabledata_all">
                   </div>
                 </label>
-              </div> --}}
+              </div>
             </div>
 
             <table id="tabledata_all"
@@ -488,35 +465,75 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Sr.
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Amount 
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
+                    Amount
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
                     Tag
                   </th>
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px] !text-right">
                     Date
                   </th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-100">
                 {{-- DUMMY DATA: ALL INCOME --}}
-                @foreach($customer->levelIncomeDetails as $ovkey => $incomes)
                 <tr class="hover:bg-slate-100 transition">
                   <td class="px-4 sm:px-5 py-3 text-slate-900">1</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}-{{ $incomes->reference_level }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$120.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI Income</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-01 10:12:35</td>
                 </tr>
-                @endforeach
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">2</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$25.50</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI on ROI</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-02 14:03:11</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">3</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$80.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Income</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-03 09:45:27</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">4</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$40.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Royalty Bonus</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-04 18:21:50</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">5</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$15.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Star Bonus</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-05 12:10:09</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">6</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$30.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Quick Start</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-06 16:44:33</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">7</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$10.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">ROI Income</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-07 08:02:19</td>
+                </tr>
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">8</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$60.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Income</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-08 19:31:02</td>
+                </tr>
               </tbody>
             </table>
 
-            {{-- <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-4">
               <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_all_info" role="status"
                 aria-live="polite">
                 Showing 1 to 8 of 8 entries
@@ -531,7 +548,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   aria-controls="tabledata_all" aria-role="link" data-dt-idx="next" tabindex="0"
                   id="tabledata_all_next">Next</a>
               </div>
-            </div> --}}
+            </div>
 
           </div>
         </div>
@@ -644,13 +661,13 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
       </div>
 
       {{-- TAB: DIRECT INCOME --}}
-      <div id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
+      <div class="hidden" id="income_direct" role="tabpanel" aria-labelledby="table-income_direct">
         <div class="overflow-x-auto">
           <div id="tabledata_direct_wrapper" class="dataTables_wrapper no-footer">
 
             {{-- TOP BAR: SHOW + SEARCH --}}
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-              {{-- <div class="dataTables_length" id="tabledata_direct_length">
+              <div class="dataTables_length" id="tabledata_direct_length">
                 <label class="text-xs text-slate-600 flex items-center gap-2">
                   <span>Show</span>
                   <select name="tabledata_direct_length" aria-controls="tabledata_direct"
@@ -662,13 +679,14 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                   </select>
                   <span>entries</span>
                 </label>
-              </div> --}}
+              </div>
 
-              {{-- <div id="tabledata_direct_filter" class="dataTables_filter w-full sm:w-auto">
+              <div id="tabledata_direct_filter" class="dataTables_filter w-full sm:w-auto">
                 <label class="text-xs text-slate-600 w-full">
                   <span class="sr-only">Search</span>
                   <div class="relative">
                     <span class="pointer-events-none absolute inset-y-0 left-2 inline-flex items-center">
+                      {{-- Search icon --}}
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 text-slate-400" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd"
                           d="M9 3.5a5.5 5.5 0 104.384 2.384.75.75 0 011.232-.848A7 7 0 1110 3.5a.75.75 0 010 1.5z"
@@ -682,8 +700,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                       placeholder="Search direct income" aria-controls="tabledata_direct">
                   </div>
                 </label>
-              </div> --}}
-            </div>
+              </div>
             </div>
 
             <table id="tabledata_direct"
@@ -696,7 +713,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                     Sr.
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
-                    Amount ({{ $customer->appData->currency }})
+                    Amount
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
                     Tag
@@ -709,19 +726,22 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               </thead>
               <tbody class="divide-y divide-slate-100">
                 {{-- DUMMY DATA: DIRECT INCOME --}}
-                @foreach($customer->levelIncomeDetails as $ovkey => $incomes)
                 <tr class="hover:bg-slate-100 transition">
-                  <td class="px-4 sm:px-5 py-3 text-slate-900">{{ $loop->iteration }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}-{{ $incomes->reference_level }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">1</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$50.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Referral</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-03 11:43:09</td>
                 </tr>
-                @endforeach
-                
+                <tr class="hover:bg-slate-100 transition">
+                  <td class="px-4 sm:px-5 py-3 text-slate-900">2</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">$90.00</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">Direct Referral</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-slate-600">2025-09-07 17:20:55</td>
+                </tr>
               </tbody>
             </table>
 
-            {{-- <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_direct_info" role="status"
+            <div class="dataTables_info mt-2 text-xs text-slate-500" id="tabledata_direct_info" role="status"
               aria-live="polite">
               Showing 1 to 2 of 2 entries
             </div>
@@ -734,7 +754,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               <a class="paginate_button next px-3 py-1.5 rounded-lg border border-slate-200 text-xs text-slate-600 bg-white hover:bg-slate-200"
                 aria-controls="tabledata_direct" aria-role="link" data-dt-idx="next" tabindex="0"
                 id="tabledata_direct_next">Next</a>
-            </div> --}}
+            </div>
 
           </div>
         </div>
@@ -850,27 +870,6 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
   </div>
 </section>
 @endsection
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script>
-$(document).ready(function () {
-  $('#tabledata_all').DataTable({
-      pageLength: 5,
-      lengthMenu: [5, 10, 25, 50],
-      searching: true,
-      ordering: true,
-      responsive: true
-  });
-  $('#tabledata_direct').DataTable({
-      pageLength: 5,
-      lengthMenu: [5, 10, 25, 50],
-      searching: true,
-      ordering: true,
-      responsive: true
-  });
-});
-</script>
 
 @push('scripts')
 <script>
@@ -883,10 +882,10 @@ $(document).ready(function () {
 
     // Tailwind classes for active & inactive tabs (same as My Directs light theme)
     const activeClasses = [
-      'bg-gradient-to-r', 'from-[var(--theme-skky-500)]', 'to-[var(--theme-skky-600)]',
+      'bg-gradient-to-r', 'from-sky-500', 'to-sky-600',
       'text-white',
       'shadow-[0_10px_25px_rgba(59,130,246,.35)]',
-      'border', 'border-[var(--theme-skky-500)]'
+      'border', 'border-sky-500'
     ];
 
     const inactiveClasses = [
@@ -942,5 +941,4 @@ $(document).ready(function () {
     });
   });
 </script>
-
 @endpush
