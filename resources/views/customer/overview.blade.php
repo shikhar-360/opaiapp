@@ -430,10 +430,10 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         </ul>
 
         {{-- Hint text --}}
-        <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
+        <!-- <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
           <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
           <span>Click tabs to switch income type</span>
-        </div>
+        </div> -->
       </div>
     </div>
 

@@ -58,23 +58,23 @@
             $rank='';
             @endphp
             @if($customer->leadership_rank == 1 || $customer->leadership_rank == 'gold')
-                <img crossorigin="anonymous" src="{{ asset('assets/images/rank/gold-rank.webp?v=1') }}"
+                <img  crossorigin="anonymous" src="{{ asset('assets/images/rank/gold-rank.webp?v=1') }}"
                 alt="Rank"
                 class="w-6 h-6 object-contain">
             @elseif($customer->leadership_rank == 2 || $customer->leadership_rank == 'sapphire')
-                <img crossorigin="anonymous" src="{{ asset('assets/images/rank/sapphire-rank.webp?v=1') }}" 
+                <img  crossorigin="anonymous" src="{{ asset('assets/images/rank/sapphire-rank.webp?v=1') }}" 
                 alt="Rank"
                 class="w-6 h-6 object-contain">
             @elseif($customer->leadership_rank == 3 || $customer->leadership_rank == 'emerald')
-                <img crossorigin="anonymous" src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}" 
+                <img  crossorigin="anonymous" src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}" 
                 alt="Rank"
                 class="w-6 h-6 object-contain">
             @elseif($customer->leadership_rank == 4 || $customer->leadership_rank == 'ruby')
-                <img crossorigin="anonymous" src="{{ asset('assets/images/rank/ruby-rank.webp?v=1') }}" 
+                <img  crossorigin="anonymous" src="{{ asset('assets/images/rank/ruby-rank.webp?v=1') }}" 
                 alt="Rank"
                 class="w-6 h-6 object-contain">
             @elseif($customer->leadership_rank == 5 || $customer->leadership_rank == 'diamond')
-                <img crossorigin="anonymous" src="{{ asset('assets/images/rank/diamond-rank.webp?v=1') }}" 
+                <img  crossorigin="anonymous" src="{{ asset('assets/images/rank/diamond-rank.webp?v=1') }}" 
                 alt="Rank"
                 class="w-8 h-8 object-contain">
             @endif
@@ -126,10 +126,9 @@
          
           <button
             id="rankShareBtn"
-            onclick="downloadRankCard()"
-            class="px-4 py-2 rounded-lg border border-slate-200
-                   bg-white text-slate-700 text-sm font-semibold
-                   hover:bg-slate-100 transition">
+            type="button"
+             onclick="shareOrDownloadRankCard()"
+            class="px-4 py-2 rounded-lg border border-slate-200 bg-white text-slate-700 text-sm font-semibold hover:bg-slate-100 transition">
             Share
           </button>
 
@@ -200,6 +199,111 @@ function closeRankPopup() {
 }
 
 
+/*function isDesktopDevice() {
+    // Best check: userAgentData (new browsers)
+    if (navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean") {
+      return !navigator.userAgentData.mobile;
+    }
+    // Fallback check
+    return window.matchMedia("(pointer:fine)").matches && !/Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  }
+
+  function downloadBlob(blob, filename = "rank-achievement.png") {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1500);
+  }
+
+  function withTimeout(promise, ms = 8000) {
+    return Promise.race([
+      promise,
+      new Promise((_, reject) => setTimeout(() => reject(new Error("share_timeout")), ms)),
+    ]);
+  }
+
+  async function shareOrDownloadRankCard() {
+    const btn = document.getElementById("rankShareBtn");
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.add("opacity-60", "cursor-not-allowed");
+      btn.innerText = "Processing...";
+    }
+
+    try {
+      const node = document.getElementById("rankCaptureBox");
+      if (!node) return;
+
+      // wait images (rank icons etc.)
+      const imgs = node.querySelectorAll("img");
+      await Promise.all([...imgs].map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(res => { img.onload = img.onerror = res; });
+      }));
+
+      // capture
+      const blob = await window.htmlToImage.toBlob(node, {
+        pixelRatio: 2,
+        backgroundColor: "#ffffff",
+        cacheBust: true,
+        skipFonts: true,
+        onClone: (clonedDoc) => {
+          // remove cross-origin stylesheets (avoid cssRules crash)
+          const links = clonedDoc.querySelectorAll('link[rel="stylesheet"]');
+          links.forEach(l => {
+            const href = l.getAttribute("href") || "";
+            if (href.startsWith("http")) l.remove();
+          });
+        }
+      });
+
+      if (!blob) throw new Error("Blob not generated");
+
+      const file = new File([blob], "rank-achievement.png", { type: "image/png" });
+
+      // ✅ DESKTOP: Skip share (avoid stuck), force download
+      if (isDesktopDevice()) {
+        downloadBlob(blob, "rank-achievement.png");
+        return;
+      }
+
+      // ✅ MOBILE: Try share, but with timeout + fallback
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        try {
+          await withTimeout(
+            navigator.share({
+              title: "My New Rank 🎉",
+              text: "I just achieved a new rank!",
+              files: [file],
+            }),
+            8000
+          );
+          return;
+        } catch (e) {
+          // cancelled / failed / timeout → fallback download
+          console.warn("Share failed/cancelled:", e);
+        }
+      }
+
+      // fallback
+      downloadBlob(blob, "rank-achievement.png");
+
+    } catch (e) {
+      console.error("Capture/Share failed:", e);
+      alert("Share failed. Please try again or use download.");
+    } finally {
+      if (btn) {
+        btn.disabled = false;
+        btn.classList.remove("opacity-60", "cursor-not-allowed");
+        btn.innerText = "Share";
+      }
+    }
+  }*/
+
 function isDesktopDevice() {
     // Best check: userAgentData (new browsers)
     if (navigator.userAgentData && typeof navigator.userAgentData.mobile === "boolean") {
@@ -231,10 +335,8 @@ async function shareOrDownloadRankCard() {
     const node = document.getElementById("rankCaptureBox");
     if (!node) return;
 
-    // ✅ detect mobile only (share only on mobile)
     const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    // Optional loading state
     const btn = document.getElementById("rankShareBtn");
     const oldText = btn?.innerHTML;
     if (btn) {
@@ -243,16 +345,14 @@ async function shareOrDownloadRankCard() {
     }
 
     try {
-      // ✅ wait images
+      // wait images
       const imgs = node.querySelectorAll("img");
       await Promise.all([...imgs].map((img) => {
         if (img.complete) return Promise.resolve();
-        return new Promise((res) => {
-          img.onload = img.onerror = res;
-        });
+        return new Promise((res) => (img.onload = img.onerror = res));
       }));
 
-      // ✅ wait fonts (fixes alignment)
+      // wait fonts (fixes alignment)
       if (document.fonts && document.fonts.ready) {
         await document.fonts.ready;
       }
@@ -261,16 +361,12 @@ async function shareOrDownloadRankCard() {
         pixelRatio: 2,
         backgroundColor: "#ffffff",
         cacheBust: true,
-
-        // ✅ remove buttons or anything marked exclude
         filter: (el) => {
           if (!el) return true;
           if (el.closest && el.closest("[data-capture-exclude]")) return false;
           return true;
         },
-
         onClone: (clonedDoc) => {
-          // remove cross-origin stylesheets to avoid cssRules errors
           clonedDoc.querySelectorAll('link[rel="stylesheet"]').forEach((l) => {
             const href = l.getAttribute("href") || "";
             if (href.startsWith("http") && !href.includes(location.host)) l.remove();
@@ -280,23 +376,32 @@ async function shareOrDownloadRankCard() {
 
       if (!blob) throw new Error("Blob not generated");
 
+      // after you create blob + file
       const file = new File([blob], "rank-achievement.png", { type: "image/png" });
 
-      // ✅ SHARE ONLY ON MOBILE (prevents Windows Runtime Broker / Shell Experience)
-      if (isMobile && navigator.canShare && navigator.canShare({ files: [file] })) {
+      const shareText = "I just achieved a new rank! 🎉";
+      const shareUrl = window.location.href;
+
+      // ✅ MOBILE: always try opening share sheet
+      if (/Android|iPhone|iPad|iPod/i.test(navigator.userAgent) && navigator.share) {
+        // 1) Try share with image (only works on browsers that support it)
         try {
-          await navigator.share({
-            title: "My New Rank 🎉",
-            text: "I just achieved a new rank!",
-            files: [file],
-          });
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            await navigator.share({ title: "My New Rank 🎉", text: shareText, files: [file] });
+            return;
+          }
+        } catch (e) {}
+
+        // 2) Force share sheet with text/link (works almost everywhere)
+        try {
+          await navigator.share({ title: "My New Rank 🎉", text: shareText, url: shareUrl });
           return;
         } catch (e) {
-          // cancelled -> fallback download
+          // if even share is blocked, continue to download
         }
       }
 
-      // ✅ Always download on desktop OR fallback
+      // ✅ DESKTOP OR FALLBACK: download
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
@@ -317,8 +422,8 @@ async function shareOrDownloadRankCard() {
     }
   }
 
-  // ✅ keep it global
   window.downloadRankCard = function () {
     return shareOrDownloadRankCard();
   };
 </script>
+

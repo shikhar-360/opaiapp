@@ -27,23 +27,25 @@
          * (YouTube: https://www.youtube-nocookie.com/embed/VIDEO_ID)
          * (Vimeo:   https://player.vimeo.com/video/VIDEO_ID)
          */
-        $videos = [
-          [
-            'title' => 'Getting Started',
-            'embed' => 'https://www.youtube-nocookie.com/embed/ysz5S6PUM-U',
-            'note'  => 'Account setup & basic overview',
-          ],
-          [
-            'title' => 'How Promotions Work',
-            'embed' => 'https://www.youtube-nocookie.com/embed/jfKfPfyJRdk',
-            'note'  => 'Promotion / tools explanation',
-          ],
-          [
-            'title' => 'Support & Help',
-            'embed' => 'https://player.vimeo.com/video/76979871',
-            'note'  => 'How to raise a ticket',
-          ],
-        ];
+        $videos = $customer->tutorials;
+
+        // [
+        //   [
+        //     'title' => 'Getting Started',
+        //     'embed' => 'https://www.youtube-nocookie.com/embed/ysz5S6PUM-U',
+        //     'note'  => 'Account setup & basic overview',
+        //   ],
+        //   [
+        //     'title' => 'How Promotions Work',
+        //     'embed' => 'https://www.youtube-nocookie.com/embed/jfKfPfyJRdk',
+        //     'note'  => 'Promotion / tools explanation',
+        //   ],
+        //   [
+        //     'title' => 'Support & Help',
+        //     'embed' => 'https://player.vimeo.com/video/76979871',
+        //     'note'  => 'How to raise a ticket',
+        //   ],
+        // ];
 
         // Security: allowlist only these iframe hosts
         $allowedHosts = ['youtube.com','www.youtube.com','youtube-nocookie.com','www.youtube-nocookie.com','player.vimeo.com'];
@@ -58,7 +60,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           @foreach($videos as $v)
             @php
-              $src = $v['embed'] ?? '';
+              $src = $v['url'] ?? '';
               $ok  = $isAllowed($src);
             @endphp
 
@@ -68,8 +70,8 @@
               <div class="relative">
                 <div class="mb-3">
                   <h4 class="text-sm font-semibold text-slate-900">{{ $v['title'] ?? 'Tutorial' }}</h4>
-                  @if(!empty($v['note']))
-                    <p class="text-xs text-slate-500 mt-1">{{ $v['note'] }}</p>
+                  @if(!empty($v['sub_title']))
+                    <p class="text-xs text-slate-500 mt-1">{{ $v['sub_title'] }}</p>
                   @endif
                 </div>
 

@@ -24,7 +24,7 @@ use App\Models\VotesModel;
 use App\Models\CustomersModel;
 use App\Models\AppPromotionPackagesModel;
 use App\Models\AppLevelPackagesModel;
-
+use App\Models\AdminTutorialsModel;
 
 class CustomerController extends Controller
 {
@@ -109,6 +109,18 @@ class CustomerController extends Controller
         // $total_directs = $champPlan->directs ?? 0;
         // $customer->vip_total_volume = $total_volume;
         // $customer->vip_total_directs = $total_directs;
+
+        // dd($customer);
+
+
+        //cumulative leadership plan for leadership leader
+        $lplans = collect($customer->leadership_plans)->values();
+        $lrankIndex = is_null($customer->leadership_rank)
+            ? 0
+            : (int) $customer->leadership_rank;
+        $lcumulativePlans = $lplans->slice(0, $lrankIndex + 1);
+        $customer->leader_total_volume  = $lcumulativePlans->sum('team_volume');
+        $customer->leader_total_points = $lcumulativePlans->sum('points');
 
         //cumulative champ plan for VIP circle
         $plans = collect($customer->champions_plans)->values();
@@ -536,7 +548,7 @@ class CustomerController extends Controller
         $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
         $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
 
-        $customer->promotionPackage         =   AppPromotionPackagesModel::where('app_id', $customer->app_id)->get();
+        $customer->tutorials                =   AdminTutorialsModel::where('app_id', $customer->app_id)->get();
         
         return view('customer.tools', compact('customer'));
     }

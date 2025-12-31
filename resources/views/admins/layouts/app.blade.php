@@ -58,6 +58,7 @@
     <a href="{{ route('admin.levelpackages.index') }}">Level Packages</a>
     <a href="{{ route('admin.freedepositpackages.index') }}">Free Packages</a>
     <a href="{{ route('admin.appcustomers.index') }}">Customers</a>
+    <a href="{{ route('admin.tutorials.index') }}">Tutorials</a>
 </div>
 
 {{-- Page Content --}}

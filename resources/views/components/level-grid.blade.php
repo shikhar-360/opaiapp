@@ -51,7 +51,7 @@
     class="relative grid grid-cols-1 gap-4 w-full rounded-2xl
            border border-blue-300/60 bg-white
            shadow-[0_15px_40px_rgba(15,23,42,.08)]
-            px-3 lg:px-4 xl:px-8 py-5 items-center overflow-hidden">
+           px-4 xl:px-8 py-5 items-center overflow-hidden">
 
     {{-- Header --}}
     <div class="flex items-center justify-between">
@@ -149,7 +149,7 @@
           @endphp
 
           <div
-        class="rounded-lg text-center py-2 sm:py-3 text-xs sm:text-[13px] transition flex items-center justify-center
+            class="rounded-lg text-center py-2 sm:py-3 text-xs sm:text-[13px] transition 
                    {{ $isActive 
           ? 'bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold border border-[var(--theme-skky-400)]/80'
           : 'bg-white text-slate-600 border border-slate-200 hover:border-[var(--theme-skky-300)] hover:bg-[var(--theme-skkky-50)]/60'
@@ -158,7 +158,7 @@
           </div>
         @endforeach
 
-    <div class="rounded-lg text-center  text-xs sm:text-[13px] transition col-span-2 sm:col-span-1 ">
+        <div class="rounded-lg text-center  text-xs sm:text-[13px] transition">
           <div class=" border border-indigo-200/70 bg-gradient-to-r from-indigo-50 via-[var(--theme-skkky-50)] to-fuchsia-50 backdrop-blur-sm px-4 py-0.5 rounded-lg shadow-sm">
             <!-- Volume -->
             <div class="mb-1">

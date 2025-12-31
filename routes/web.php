@@ -22,6 +22,7 @@ use App\Http\Controllers\admin\AppLevelPackagesController;
 use App\Http\Controllers\admin\AppCustomersController;
 use App\Http\Controllers\admin\AppFreeDepositPackagesController;
 use App\Http\Controllers\admin\AppLeadershipPackagesController;
+use App\Http\Controllers\admin\AdminTutorialsController;
 
 Route::get('/', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 
@@ -183,6 +184,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // GET /admin/leadershippackages/{app}/edit
         // PUT /admin/leadershippackages/{app}
         // DELETE /admin/leadershippackages/{app}
+
+        Route::resource('tutorials', AdminTutorialsController::class);
+        // GET /admin/tutorials
+        // GET /admin/tutorials/create
+        // POST /admin/tutorials
+        // GET /admin/tutorials/{app}/edit
+        // PUT /admin/tutorials/{app}
+        // DELETE /admin/tutorials/{app}
 
         // Specific Action: Login as Customer
         Route::get('/loginascustomer/{customer}', [AdminController::class, 'loginAsCustomer'])->name('login.as.customer');

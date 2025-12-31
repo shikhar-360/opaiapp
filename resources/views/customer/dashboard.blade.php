@@ -292,10 +292,10 @@
                   <div class="mb-4">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <span>Volume</span>
-                      <span>{{ $customer->totalTeamInvestment??0 }} / {{ number_format($plan->team_volume, 0) }}</span>
+                      <span>{{ $customer->totalTeamInvestment??0 }} / {{ number_format($customer->leader_total_volume, 0) }}</span>
                     </div>
                     @php
-                    $volume_reached = ( $customer->totalTeamInvestment / $plan->team_volume ) * 100 ;
+                    $volume_reached = ( $customer->totalTeamInvestment / $customer->leader_total_volume ) * 100 ;
                     @endphp
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
                       <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full"
@@ -307,10 +307,10 @@
                   <div>
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <span>Points</span>
-                      <span>{{ $customer->leadership_points??0 }} / {{ number_format($plan->points, 0) }}</span>
+                      <span>{{ $customer->leadership_points??0 }} / {{ number_format($customer->leader_total_points, 0) }}</span>
                     </div>
                     @php
-                    $points_reached = ( $customer->leadership_points / $plan->points ) * 100 ;
+                    $points_reached = ( $customer->leadership_points / $customer->leader_total_points ) * 100 ;
                     @endphp
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
                       <div class="h-full bg-gradient-to-r from-emerald-500 to-green-500 rounded-full"
@@ -767,7 +767,7 @@
 
                   {{-- TOP BAR: SHOW + SEARCH --}}
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
-                    <div class="dataTables_length" id="tabledata1_length">
+                    <!-- <div class="dataTables_length" id="tabledata1_length">
                       <label class="text-xs text-slate-600 flex items-center gap-2">
                         <span>Show</span>
                         <select name="tabledata1_length" aria-controls="tabledata1"
@@ -779,9 +779,9 @@
                         </select>
                         <span>entries</span>
                       </label>
-                    </div>
+                    </div> -->
 
-                    <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
+                    <!-- <div id="tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
                       <label class="text-xs text-slate-600 w-full">
                         <span class="sr-only">Search</span>
                         <div class="relative">
@@ -800,7 +800,7 @@
                             placeholder="Search user / wallet / rank" aria-controls="tabledata1">
                         </div>
                       </label>
-                    </div>
+                    </div> -->
                   </div>
 
                   <table id="tabledata1"
@@ -1385,7 +1385,7 @@
                 <div id="votes_tabledata1_wrapper" class="dataTables_wrapper no-footer">
 
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">
-                    <div class="dataTables_length" id="votes_tabledata1_length">
+                    <!-- <div class="dataTables_length" id="votes_tabledata1_length">
                       <label class="text-xs text-slate-600 flex items-center gap-2">
                         <span>Show</span>
                         <select name="votes_tabledata1_length" aria-controls="votes_tabledata1"
@@ -1397,9 +1397,9 @@
                         </select>
                         <span>entries</span>
                       </label>
-                    </div>
+                    </div> -->
 
-                    <div id="votes_tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
+                    <!-- <div id="votes_tabledata1_filter" class="dataTables_filter w-full sm:w-auto">
                       <label class="text-xs text-slate-600 w-full">
                         <span class="sr-only">Search</span>
                         <div class="relative">
@@ -1418,7 +1418,7 @@
                             placeholder="Search votes daily" aria-controls="votes_tabledata1">
                         </div>
                       </label>
-                    </div>
+                    </div> -->
                   </div>
 
                   <table id="votes_tabledata1"
@@ -1757,3 +1757,76 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 @endpush
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function () {
+  $('#tabledata1').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#tabledata2').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#tabledata3').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+
+  $('#vol_tabledata1').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#vol_tabledata2').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#vol_tabledata3').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+
+  $('#votes_tabledata1').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#votes_tabledata2').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+  $('#votes_tabledata3').DataTable({
+      pageLength: 5,
+      lengthMenu: [5, 10, 25, 50],
+      searching: true,
+      ordering: true,
+      responsive: true
+  });
+
+});
+</script>
