@@ -38,7 +38,7 @@
             </h3>
 
             <p class="mt-2 text-sm sm:text-base text-slate-500 max-w-xl">
-              We are building this section for training, tutorials, and educational updates. Stay tuned!
+              We are building this section . Stay tuned!
             </p>
 
            

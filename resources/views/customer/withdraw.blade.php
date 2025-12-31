@@ -34,7 +34,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">ROI Income</h3>
-        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">$0</p>
+        <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">$0</p>
       </div>
     </div> -->
 
@@ -46,7 +46,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">Circle Credits</h3>
-        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myLevelEarning }}</p>
+        <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myLevelEarning }}</p>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
       </div>
       <div>
         <h3 class="text-base text-slate-600">Total Credits</h3>
-        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
+        <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
       </div>
     </div>
 
@@ -83,7 +83,7 @@
   </div>
   <div>
     <h3 class="text-base text-slate-600">Wallet Balance</h3>
-    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
+    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
   </div>
 </div>
 
@@ -95,7 +95,7 @@
   </div>
   <div>
     <h3 class="text-base text-slate-600">Perks Wallet</h3>
-    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">0 TOKEN</p>
+    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">0 TOKEN</p>
   </div>
 </div>
 
@@ -107,7 +107,7 @@
   </div>
   <div>
     <h3 class="text-base text-slate-600">Perks Balance</h3>
-    <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
+    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} 0.000</p>
   </div>
 </div>
 
@@ -333,7 +333,7 @@
                     Available Balance
                 </p>
                   <p class="text-sm">
-                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl tabular-nums">{{ $customer->myAvailableBalance > 0 ? $customer->myAvailableBalance : 0 }}</span>
+                    <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-lg tabular-nums">{{ $customer->myAvailableBalance > 0 ? $customer->myAvailableBalance : 0 }}</span>
                   </p>
               </div>
             </div>
@@ -362,7 +362,7 @@
                     Pending Balance
                 </p>
                   <p class="text-sm">
-                  <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-xl tabular-nums">
+                  <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-lg tabular-nums">
                     $0.000
                   </span>
                   </p>

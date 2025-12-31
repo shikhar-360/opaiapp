@@ -47,6 +47,9 @@ th{
   font-family: "BankGothic";
 
 }
+.bank-g {
+  font-family: "BankGothic";
+}
 
 ::-webkit-scrollbar {
   width: 4px;
@@ -148,9 +151,11 @@ background-image: radial-gradient(62.12% 75.73% at 50% 111.19%, #0A0A0A 0%, #222
 }
 
 .main-bgimg{
+
+                                          
   
 }
-.bg-secondary {
+.bg-secondary {        
   background-color: #ffffff;
 }
 

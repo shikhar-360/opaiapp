@@ -46,7 +46,7 @@
 
   {{-- @include('components.header')  --}}
 
-  <main class="flex-1 main-bgimg relative">
+  <main class="flex-1 main-bgimg relative ">
 
     <img src="/assets/images/white-grid.png"  alt="bnrbg"
              class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">

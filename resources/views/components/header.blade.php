@@ -148,10 +148,29 @@
            class="{{ $baseItemClass }} {{ Route::is('profile') ? $activeClass : $inactiveClass }}">
             <span class="inline-flex items-center justify-center  rounded-lg">
                 <img src="{{ asset('assets/images/menu/profile.webp?v=1') }}"  width="64" height="48" alt="Logo"
-                     class="w-7 h-7 object-contain">
+                     class="w-6 h-6 object-contain">
             </span>
             <span>Profile</span>
         </a>
+
+       {{-- Voting (Coming Soon) --}}
+<a href="javascript:void(0)"
+   class="{{ $baseItemClass }} {{ $inactiveClass }} cursor-not-allowed opacity-80 relative">
+
+    <span class="inline-flex items-center justify-center rounded-lg">
+        <img src="{{ asset('assets/images/menu/voting.webp?v=1') }}"
+             width="64" height="48" alt="Logo"
+             class="w-6 h-6 object-contain">
+    </span>
+
+    <span>My Voice</span>
+
+    {{-- Coming Soon Badge --}}
+    <span
+        class="absolute top-3 right-4 bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full">
+        Coming Soon
+    </span>
+</a>
 
         {{-- Dashboard --}}
         <a href="{{ route('dashboard') }}"
@@ -181,7 +200,7 @@
                     <img src="/assets/images/menu/pay-by-topup.webp" width="64" height="48" alt="Logo"
                             class="w-6 h-6 object-contain">
                 </span>
-                <span>Activate Package</span>
+                <span class="bank-g">Activate Package</span>
             </span>
 
             <svg class="w-4 h-4 transition-transform {{ $isActivateOpen ? 'rotate-180' : '' }}" viewBox="0 0 20 20" fill="currentColor">
@@ -230,7 +249,7 @@
                         <img src="/assets/images/menu/directs.webp" width="64" height="48" alt="Logo"
                              class="w-6 h-6 object-contain">
                     </span>
-                    <span>My Circle</span>
+                    <span class="bank-g">My Circle</span>
                 </span>
 
                 <svg class="w-4 h-4 transition-transform {{ $isCircleOpen ? 'rotate-180' : '' }}" viewBox="0 0 20 20" fill="currentColor">
@@ -254,7 +273,7 @@
                    class="{{ $baseItemClass }} {{ Route::is('team') ? $activeClass : $inactiveClass }} px-2">
                    <span class="inline-flex items-center justify-center   rounded-lg">
                         <img src="{{ asset('assets/images/menu/team.webp?v=1') }}"  width="64" height="48" alt="Logo"
-                     class="w-7 h-7 object-contain">
+                     class="w-5 h-5 object-contain">
                     </span>
                     <span class="text-xs font-semibold">Extended Circle</span>
                 </a>
@@ -264,7 +283,7 @@
                    class="{{ $baseItemClass }} {{ Route::is('genealogy') ? $activeClass : $inactiveClass }} px-2">
                    <span class="inline-flex items-center justify-center   rounded-lg">
                         <img src="{{ asset('assets/images/menu/genealogy.webp?v=1') }}"  width="64" height="48" alt="Logo"
-                     class="w-7 h-7 object-contain">
+                     class="w-6 h-6 object-contain">
                     </span>
                     <span class="text-xs font-semibold">Genealogy</span>
                 </a>
@@ -303,7 +322,7 @@
                         <img src="/assets/images/menu/tool.webp" width="64" height="48" alt="Logo"
                                     class="w-6 h-6 object-contain">
                     </span>
-                    <span>Tools</span>
+                    <span class="bank-g">Tools</span>
                 </span>
 
                 <svg class="w-4 h-4 transition-transform {{ $isToolsOpen ? 'rotate-180' : '' }}" viewBox="0 0 20 20" fill="currentColor">
@@ -315,7 +334,7 @@
         {{-- Tickets --}}
         {{-- <a href="{{ route('tickets') }}"
            class="{{ $baseItemClass }} {{ Route::is('tickets') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('tickets') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center  rounded-lg">
                 <img src="{{ asset('assets/images/menu/tickets.webp?v=1') }}"  width="64" height="48" alt="Logo"
                      class="w-6 h-6 object-contain">
             </span>
@@ -365,7 +384,7 @@
         {{-- Tickets --}}
         <a href="{{ route('tickets') }}"
            class="{{ $baseItemClass }} {{ Route::is('tickets') ? $activeClass : $inactiveClass }}">
-            <span class="inline-flex items-center justify-center {{ Route::is('tickets') ? 'bg-blue-100' : 'bg-[#bfdcff]' }} p-1 rounded-lg">
+            <span class="inline-flex items-center justify-center rounded-lg">
                 <img src="{{ asset('assets/images/menu/tickets.webp?v=1') }}"  width="64" height="48" alt="Logo"
                      class="w-6 h-6 object-contain">
             </span>

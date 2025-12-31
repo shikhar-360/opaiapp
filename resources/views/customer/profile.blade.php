@@ -3,11 +3,11 @@
 @section('title', 'Profile')
 
 @section('content')
-<section class="min-h-screen pt-8 pb-16 lg:pb-8 bg-slate-50/50">
+<section class="min-h-screen pt-10 pb-16 lg:pb-8 bg-slate-50/50">
   <div class="mx-auto max-w-[1400px] px-4">
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1  gap-5 max-w-3xl mx-auto">
 
       {{-- =================  profile ================= --}}
       <div class="space-y-5">
@@ -499,7 +499,7 @@
 
     {{-- ================= voting ================= --}}
     
-      <div class="space-y-5 h-full max-h-[400px]">
+      <!-- <div class="space-y-5 h-full max-h-[400px]">
          <h2 class="text-xl font-semibold mb-4 text-slate-900 text-center">
               Voting
             </h2>
@@ -631,7 +631,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
     </div> 
 
