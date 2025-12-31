@@ -408,6 +408,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
               aria-controls="income_direct" aria-selected="true"
               class="group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold
                      transition flex items-center gap-2">
+                     
               <span class="relative z-[1]">Circle Income</span>
               <span
                 class="inline-flex items-center justify-center text-[10px] px-2 py-0.5 rounded-full bg-white text-amber-700 border border-amber-200">
