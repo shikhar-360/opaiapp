@@ -316,7 +316,7 @@ class CustomerController extends Controller
 
             $validatedWallet = $validator->validated();
 
-            // 4️⃣ Apply "update once" rule
+            //  Apply "update once" rule
             if (isset($validatedWallet['wallet_address']) && $validatedWallet['wallet_address'] !== $customer->wallet_address)
             {
                 $validated['wallet_address'] = $validatedWallet['wallet_address'];
@@ -332,30 +332,36 @@ class CustomerController extends Controller
 
         if ($request->hasFile('profile_pic')) 
         {
-            if ($customer->profile_image && file_exists(public_path($customer->profile_image))) {
+            $request->validate([
+                'profile_pic' => 'image|mimes:jpg,jpeg,png|max:2048',
+            ]);
+
+            /*if ($customer->profile_image && file_exists(public_path($customer->profile_image))) {
                 unlink(public_path($customer->profile_image)); // remove old file
+            }*/
+
+            if ($customer->profile_image && file_exists(storage_path('app/public/' . $customer->profile_image))) 
+            {
+                unlink(storage_path('app/public/' . $customer->profile_image));
             }
-            // $file = $request->file('profile_pic');
-            // $filename = time().'_'.$file->getClientOriginalName();
-            // $path = $file->storeAs('public/user_profiles', $filename);
-            // $validated['profile_image'] = str_replace('public/', 'storage/', $path); // store public URL path
 
             $file = $request->file('profile_pic');
+
             $filename = time() . '_' . $file->getClientOriginalName();
+
             // Store in public disk
             $path = $file->storeAs('user_profiles', $filename, 'public');
+
             // Save only relative path
             $validated['profile_image'] = $path;
-
         }
 
-        // dd($validated);
-
-        // 5️⃣ Update only if something changed
+        // Update only if something changed
         if (!empty($validated)) {
             $customer->update($validated);
         }
 
+        
         return redirect()
             ->back()
             ->with('status_code', 'success')
@@ -668,17 +674,6 @@ class CustomerController extends Controller
         $customer->promotionPackage         =   AppPromotionPackagesModel::where('app_id', $customer->app_id)->get();
         
         return view('customer.stats', compact('customer'));
-    }
-
-    public function showVoting(Request $request)
-    {
-        $customer = Auth::guard('customer')->user();
-        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
-        $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
-
-        $customer->tutorials                =   AdminTutorialsModel::where('app_id', $customer->app_id)->get();
-        
-        return view('customer.voting', compact('customer'));
     }
 
 }

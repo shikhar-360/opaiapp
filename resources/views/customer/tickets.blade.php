@@ -96,6 +96,7 @@
                 type="file"
                 name="file"
                 id="file"
+                accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
                 class="block w-full text-sm text-slate-800
                        file:mr-4 file:rounded-md file:border-0
                        file:bg-[var(--theme-skky-500)] file:text-white file:px-4 file:py-1 file:font-semibold cursor-pointer
