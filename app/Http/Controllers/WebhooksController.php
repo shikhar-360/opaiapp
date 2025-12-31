@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\NinepayTransactionsModel;
 
@@ -60,6 +61,20 @@ class WebhooksController extends Controller
         // dd($explodeString, $transaction_hash, $amount_nofee, $amount_afterfee, $invoice_id, $network_type, $amount_received );
 
         $txn = NinepayTransactionsModel::where('transaction_id', $invoice_id)->first();
+
+        if (!$txn) 
+        {
+            Log::error('Ninepay transaction not found', [
+                'invoice_id' => $invoice_id,
+                'amount_received' => $amount_received,
+                'payload' => request()->all(),
+            ]);
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid Transaction'
+            ], 404);
+        }
 
         $this->ninepays->topupReceived($txn->customer_id, $amount_received, $invoice_id, $transaction_hash);
 

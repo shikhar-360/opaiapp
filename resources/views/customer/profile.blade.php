@@ -62,7 +62,7 @@
                   </label>
 
                   {{-- Hidden input --}}
-                  <input id="profile_pic" name="profile_pic" type="file" accept="image/*" class="hidden">
+                  <input id="profile_pic" name="profile_pic" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" class="hidden">
                 </div>
 
                 {{-- Name + Badge + Rank --}}
