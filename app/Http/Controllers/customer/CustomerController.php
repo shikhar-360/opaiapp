@@ -670,4 +670,15 @@ class CustomerController extends Controller
         return view('customer.stats', compact('customer'));
     }
 
+    public function showVoting(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+        $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
+
+        $customer->tutorials                =   AdminTutorialsModel::where('app_id', $customer->app_id)->get();
+        
+        return view('customer.voting', compact('customer'));
+    }
+
 }
