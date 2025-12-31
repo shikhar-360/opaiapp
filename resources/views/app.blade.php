@@ -49,7 +49,11 @@
   @include('components.header') 
 
   <main class="flex-1 pt-16 md:pt-[56px] md:ml-64 main-bgimg relative ">
+<<<<<<< Updated upstream
 <div class="absolute inset-0 opacity-70 pointer-events-none">
+=======
+<div class="absolute inset-0 opacity-70 pointer-events-none overflow-hidden">
+>>>>>>> Stashed changes
         <div class="absolute -top-24 -right-24 w-80 h-80  bg-indigo-200/60 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-[var(--theme-skky-200)]/60  rounded-full blur-3xl"></div>
       </div>
