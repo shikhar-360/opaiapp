@@ -50,7 +50,11 @@
 
   <main class="flex-1 pt-16 md:pt-[56px] md:ml-64 main-bgimg relative ">
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <div class="absolute inset-0 opacity-70 pointer-events-none">
+=======
+<div class="absolute inset-0 opacity-70 pointer-events-none overflow-hidden">
+>>>>>>> Stashed changes
 =======
 <div class="absolute inset-0 opacity-70 pointer-events-none overflow-hidden">
 >>>>>>> Stashed changes
