@@ -180,7 +180,9 @@ function closeRankPopup() {
   popup.classList.add('pointer-events-none', 'opacity-0');
   popup.classList.remove('opacity-100');
 
-  fetch("https://user.ordinarypeopleai.com/stop-rankpopup", {
+  const stopRankPopupUrl = "{{ route('stop.rankpopup') }}";
+
+  fetch(stopRankPopupUrl, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
