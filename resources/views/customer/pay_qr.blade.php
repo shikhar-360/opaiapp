@@ -168,10 +168,10 @@
                     </select> --}}
                   {{-- ✅ QUICK AMOUNT BUTTONS --}}
                   <div class="flex flex-wrap gap-2 mt-3">
-                    <button type="button" class="amount-btn" onclick="setCoinAmount(5, this)">5</button>
-                    <button type="button" class="amount-btn" onclick="setCoinAmount(10, this)">10</button>
-                    <button type="button" class="amount-btn" onclick="setCoinAmount(25, this)">25</button>
-                    <button type="button" class="amount-btn" onclick="setCoinAmount(50, this)">50</button>
+                    <button type="button" class="amount-btn" onclick="setCoinAmount(5, this)">OP 5</button>
+                    <button type="button" class="amount-btn" onclick="setCoinAmount(10, this)">OP 10</button>
+                    <button type="button" class="amount-btn" onclick="setCoinAmount(25, this)">OP 25</button>
+                    <button type="button" class="amount-btn" onclick="setCoinAmount(50, this)">OP 50</button>
                   </div>
                 </div>
               </div>

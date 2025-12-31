@@ -40,7 +40,7 @@
                      border border-slate-200 bg-white 
                      focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-[var(--theme-skky-100)])] 
                      focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
-              <svg class="w-5 h-5 min-w-5 min-h-5 text-[var(--theme-skky-400)]" viewBox="0 0 38 32"
+              <svg class="w-5 h-5 min-w-5 min-h-5 text-[var(--theme-skky-600)]" viewBox="0 0 38 32"
                    xmlns="http://www.w3.org/2000/svg">
                 <g>
                   <path fill="currentColor"
@@ -85,7 +85,7 @@
                      focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
 
               <svg xmlns="http://www.w3.org/2000/svg"
-                   class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-skky-400)]/80"
+                   class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-skky-600)]/80"
                    fill="none" viewBox="0 0 24 24" stroke-width="1.7">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                       d="M12 16V4m0 0l4 4m-4-4L8 8" />

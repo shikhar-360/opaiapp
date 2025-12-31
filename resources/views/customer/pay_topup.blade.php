@@ -10,7 +10,7 @@
 <section class="min-h-screen w-full py-10 md:py-12 mx-auto max-w-[1400px] bg-slate-50/50">
   <div class="grid grid-cols-1 gap-5 relative z-10 px-4">
 
-    {{-- CARD 1: Packages History + Topup Form --}}
+    {{-- CARD 1: Membership History + Topup Form --}}
     <div class="grid grid-cols-1 gap-5 max-w-2xl mx-auto w-full">
       <div
         class="relative p-5 md:p-7 rounded-2xl w-full mx-auto group overflow-hidden
@@ -26,13 +26,13 @@
         {{-- Header --}}
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4 relative z-10">
           <h2 class="text-xl md:text-2xl font-semibold text-slate-900 tracking-tight">
-            Packages History
+            Membership History
           </h2>
 
-          {{-- ✅ Toggle: Free Package ON/OFF (Only added this; baki kuch change nahi) --}}
+          {{-- ✅ Toggle: Free Membership ON/OFF (Only added this; baki kuch change nahi) --}}
           <div class="flex items-center gap-2 self-end sm:self-auto">
             <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-              Free Package
+              Free Membership
             </span>
             <button type="button"
               @if(($customer->myFreePackage?->status > 0) && ($customer->actualDepositCounts==0))
@@ -55,7 +55,7 @@
         </div>
 
         {{-- Sponsor / Copy referral --}}
-        <div class="mb-6 space-y-2 relative z-10">
+        <!-- <div class="mb-6 space-y-2 relative z-10">
           <div class="flex items-center justify-between gap-2">
             <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
               My Sponsor
@@ -102,17 +102,17 @@
           </div>
 
           
-        </div>
+        </div> -->
 
         {{-- Active Packages --}}
         <div class="w-full flex-1 mb-6 text-slate-900 relative z-10">
           <div class="flex items-center justify-between mb-3">
             <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-              Active / Purchased Packages
+              Active / Purchased Membership
             </p>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 gap-3">
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
             {{-- Example single package (yahan loop laga sakte ho) --}}
             @foreach($customer->myPackageDetails as $pkg)
             <div
@@ -147,7 +147,7 @@
 
         {{-- Activate Package by Topup Balance --}}
         <h2 class="text-lg md:text-xl font-semibold mb-3 text-slate-900 relative z-10">
-          Activate Package By TOPUP Balance
+          Activate Membership By TOPUP Balance
         </h2>
 
         <div
@@ -162,7 +162,7 @@
 
           <div class="space-y-1.5 relative z-10">
             <label for="amount" class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-              Package Amount
+              Membership Amount
             </label>
 
             <div class="relative flex items-center p-3 rounded-lg gap-3
@@ -188,10 +188,10 @@
 
             
             <div class="flex flex-wrap gap-2 mt-3">
-              <button type="button" onclick="setAmount(5, this)" class="amount-btn">5</button>
-              <button type="button" onclick="setAmount(10, this)" class="amount-btn">10</button>
-              <button type="button" onclick="setAmount(25, this)" class="amount-btn">25</button>
-              <button type="button" onclick="setAmount(50, this)" class="amount-btn">50</button>
+              <button type="button" onclick="setAmount(5, this)" class="amount-btn">OP 5</button>
+              <button type="button" onclick="setAmount(10, this)" class="amount-btn">OP 10</button>
+              <button type="button" onclick="setAmount(25, this)" class="amount-btn">OP 25</button>
+              <button type="button" onclick="setAmount(50, this)" class="amount-btn">OP 50</button>
             </div>
           </div>
 

@@ -159,10 +159,10 @@
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     User Id
                   </th>
-                  <th
+                  <!-- <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Wallet Address
-                  </th>
+                  </th> -->
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Direct
@@ -206,7 +206,7 @@
                 <tr class="hover:bg-slate-200 transition">
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $sr++ }}</td>
                   <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $activeDirect->name }}</td>
-                  <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td>
+                  <!-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td> -->
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalDirectsCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($activeDirect->totaldeposit, 2, '.', '') }}</td>

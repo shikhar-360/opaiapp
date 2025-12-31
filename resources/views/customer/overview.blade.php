@@ -24,7 +24,7 @@
     </div>
     <div>
       <h3 class="text-base text-slate-600">Circle Credits</h3>
-      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
+      <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -34,7 +34,7 @@
     </div>
     <div>
       <h3 class="text-base text-slate-600">Total Credits</h3>
-      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
+      <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -44,21 +44,21 @@
       <img src="{{ asset('assets/images/rank/emerald-rank.webp?v=1') }}"  class="w-9" alt="Rank Points">
     </div>
     <div>
-      <p class="text-sm text-slate-500">Rank Points</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->leadership_points??'-' }} </p>
+      <p class="text-sm text-slate-600">Rank Points</p>
+      <p class="text-lg font-bold text-[var(--theme-high-text)]">{{ $customer->leadership_points??'-' }} </p>
     </div>
   </div>
 
 
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
       <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Level Points">
     </div>
     <div>
       <p class="text-sm text-slate-500">Level Points</p>
-      <p class="text-xl font-bold text-sky-600">{{ $customer->champions_point??'-' }} </p>
+      <p class="text-lg font-bold text-sky-600">{{ $customer->champions_point??'-' }} </p>
     </div>
-  </div>
+  </div> -->
 
 </div>
 
@@ -352,7 +352,7 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
         {{-- CTA --}}
         <div class="md:pl-2">
           <button type="submit"
-            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-primary-text)] to-[var(--theme-primary-bg)] text-black font-semibold hover:-translate-y-1 transition-all duration-300 ease-out">
+            class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out">
               <path
                 d="M15.8 15.8L21 21M18 10.5A7.5 7.5 0 1 1 3 10.5a7.5 7.5 0 0 1 15 0Z"
                 stroke="#020617" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
