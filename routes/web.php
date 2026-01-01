@@ -120,6 +120,9 @@ Route::prefix('superadmin')->name('superadmin.')->group(function () {
                                                                 ->middleware('auth:superadmin')
                                                                 ->name('admins.loginAs');
 
+    
+    
+    
     // Route::get('/logoutasadmin', [SuperadminAsAdmin::class, 'returnToSuperadmin'])->name('logoutasadmin');
         
 });
