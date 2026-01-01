@@ -11,7 +11,7 @@
 </style>
 
 @section('content')
-<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
+<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4">
 
   <h2 class="text-lg font-semibold mb-3 text-slate-900">My Extended Circle</h2>
 

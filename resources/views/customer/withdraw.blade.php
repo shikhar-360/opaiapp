@@ -5,7 +5,7 @@
 @section('content')
 <script src="{{asset('assets/js/dialog.js')}}"></script>
 
-<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
+<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 ">
 
   {{-- ALERT / INFO BANNER --}}
   <div
