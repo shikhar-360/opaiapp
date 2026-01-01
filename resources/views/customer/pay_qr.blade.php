@@ -152,7 +152,7 @@
                     {{-- <input type="text" id="amount" name="amount" value=""
                       class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                       placeholder="Select amount below" readonly required> --}}
-                      <input type="text" id="coin_amount" id="coin_amount" readonly value=""
+                      <input type="text" id="coin_amount" name="coin_amount" readonly value=""
                     class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
                     placeholder="Select amount below">
                   </div>
