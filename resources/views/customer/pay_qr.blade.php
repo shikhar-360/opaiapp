@@ -41,16 +41,16 @@
               </h3>
             </div>
 
-            {{-- BITCOIN --}}
-            <div onclick="chooseCoin('evm', 'bitcoin')" class="text-center cursor-pointer">
+            {{-- BSC --}}
+            <div onclick="chooseCoin('evm', 'bsc')" class="text-center cursor-pointer">
               <div
                 class="p-4 rounded-xl border border-slate-200 bg-white
                        hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition-colors">
-                <img src="/assets/images/coin-icon/btc.png" width="64" height="48" alt="bitcoin"
+                <img src="/assets/images/coin-icon/bsc.png" width="64" height="48" alt="bsc"
                   class="w-12 sm:w-14 h-auto mx-auto">
               </div>
               <h3 class="text-base mt-4 text-slate-800 leading-none">
-                BITCOIN
+                BSC
               </h3>
             </div>
 
