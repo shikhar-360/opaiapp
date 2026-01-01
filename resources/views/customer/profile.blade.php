@@ -3,11 +3,11 @@
 @section('title', 'Profile')
 
 @section('content')
-<section class="min-h-screen pt-10 pb-16 lg:pb-8 bg-slate-50/50">
+<section class="min-h-screen pt-8 pb-16 lg:pb-8 bg-slate-50/50">
   <div class="mx-auto max-w-[1400px] px-4">
 
 
-    <div class="grid grid-cols-1  gap-5 max-w-3xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
 
       {{-- =================  profile ================= --}}
       <div class="space-y-5">
@@ -62,7 +62,7 @@
                   </label>
 
                   {{-- Hidden input --}}
-                  <input id="profile_pic" name="profile_pic" type="file" accept="image/*" class="hidden">
+                  <input id="profile_pic" name="profile_pic" type="file" accept=".jpg,.jpeg,.png,image/jpeg,image/png" class="hidden">
                 </div>
 
                 {{-- Name + Badge + Rank --}}
@@ -499,7 +499,7 @@
 
     {{-- ================= voting ================= --}}
     
-      <!-- <div class="space-y-5 h-full max-h-[400px]">
+      <div class="space-y-5 h-full max-h-[400px]">
          <h2 class="text-xl font-semibold mb-4 text-slate-900 text-center">
               Voting
             </h2>
@@ -631,7 +631,7 @@
             </div>
           </div>
         </div>
-      </div> -->
+      </div>
 
     </div> 
 
@@ -820,8 +820,10 @@ userIdInput.addEventListener('input', () => {
         return;
     }
 
+    const fetchUserNameUrl = "{{ route('fetch.user.name') }}";
+    
     timer = setTimeout(() => {
-        fetch("https://user.ordinarypeopleai.com/fetch-user-name", {
+        fetch(fetchUserNameUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
