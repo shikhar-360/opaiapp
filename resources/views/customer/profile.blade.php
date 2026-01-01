@@ -7,7 +7,7 @@
   <div class="mx-auto max-w-[1400px] px-4">
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 max-w-2xl mx-auto">
 
       {{-- =================  profile ================= --}}
       <div class="space-y-5">
@@ -499,7 +499,7 @@
 
     {{-- ================= voting ================= --}}
     
-      <div class="space-y-5 h-full max-h-[400px]">
+      <div class="hidden space-y-5 h-full max-h-[400px]">
          <h2 class="text-xl font-semibold mb-4 text-slate-900 text-center">
               Voting
             </h2>
