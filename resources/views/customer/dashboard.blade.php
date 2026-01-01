@@ -129,7 +129,8 @@
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       {{ $customer->myVoteSumamry['ACTIVE']??0 }}
+       <!-- {{ $customer->myVoteSumamry['ACTIVE']??0 }} -->
+       Soon
     </span>
   </div>
 </div>
@@ -152,7 +153,8 @@
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       {{ $customer->myVoteSumamry['HELPFULL']??0 }}
+       <!-- {{ $customer->myVoteSumamry['HELPFULL']??0 }} -->
+       Soon
     </span>
     </div>
             </div>
@@ -169,12 +171,13 @@
               <p class="text-sm sm:text-lg font-semibold text-slate-900">
                 {{ $customer->myVoteSumamry['HONEST'] }}
               </p>
-              a<span
+              <span
       class="absolute inset-0 flex items-center justify-center
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       {{ $customer->myVoteSumamry['HONEST']??0 }}
+       <!-- {{ $customer->myVoteSumamry['HONEST']??0 }} -->
+       Soon
     </span>
 
 </div>

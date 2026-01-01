@@ -82,9 +82,6 @@ Route::middleware(['customer'])->group(function () {
 
     Route::get('/stats', [CustomerController::class, 'showStats'])->name('stats');
 
-    Route::get('/voting', [CustomerController::class, 'showVoting'])->name('voting');
-    
-
 });
 
 
