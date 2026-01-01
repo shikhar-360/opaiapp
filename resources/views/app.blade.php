@@ -48,11 +48,12 @@
 
   @include('components.header') 
 
-  <main class="flex-1 pt-16 md:pt-[56px] md:ml-64 main-bgimg relative ">
-<div class="absolute inset-0 opacity-70 pointer-events-none overflow-hidden">
+  <main class="flex-1 pt-16 md:pt-[56px] md:ml-64 main-bgimg relative bg-gradient-to-b  from-[#91b2e4a1] from-[0%] via-transparent via-[25%]  to-[#dceafd83] to-[100%] ">
+    
+<!-- <div class="absolute inset-0 opacity-70 pointer-events-none overflow-hidden">
         <div class="absolute -top-24 -right-24 w-80 h-80  bg-indigo-200/60 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-[var(--theme-skky-200)]/60  rounded-full blur-3xl"></div>
-      </div>
+      </div> -->
     <img src="/assets/images/white-grid.png"  alt="bnrbg"
              class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">
     @yield('content')

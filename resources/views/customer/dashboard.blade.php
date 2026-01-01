@@ -733,7 +733,7 @@
                 data-main-target="#votes-content"
                 aria-selected="false"
                 class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
-                <span class="relative z-[1]">Votes</span>
+                <span class="relative z-[1]">Voices</span>
               </button>
             </li>
 
