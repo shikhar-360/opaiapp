@@ -18,7 +18,7 @@
 
 
 @section('content')
-<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 bg-slate-50/50">
+<section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 ">
 
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-5">
 
