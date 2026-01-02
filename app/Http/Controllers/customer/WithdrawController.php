@@ -58,13 +58,24 @@ class WithdrawController extends Controller
 
     public function withdraw(Request $request)
     {
+        $customer = Auth::guard('customer')->user();
+
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.0000001',
             'admin_charge' => 'required|numeric|min:0.0000001',
             'net_amount' => 'required|numeric|min:0.0000001',
         ]);  
+        
         // dd($validated);
-        $customer = Auth::guard('customer')->user();
+        if(!$customer->wallet_address)
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Invalid wallet address'
+                    ]);
+        }
 
         try {
             $withdraw = $this->withdrawServices->processWithdrawal($customer, $validated);

@@ -56,6 +56,7 @@ class DashboardMatriceService
             return DB::table('customer_deposits')
                 ->whereIn('customer_id', $ids)
                 ->where('payment_status', 'success') 
+                ->where('package_id', '!=', 5)
                 ->sum('amount');
         }; 
 
@@ -78,17 +79,20 @@ class DashboardMatriceService
         $veryFirstDeposit = DB::table('customer_deposits')
                                 ->where('customer_id', $customerId)
                                 ->where('payment_status', 'success') 
+                                ->where('package_id', '!=', 5)
                                 ->first();
 
         $myPackages     =   CustomerDepositsModel::select('customer_id', 'app_id', 'package_id', DB::raw('SUM(amount) as total_amount'))
                                                     ->where('customer_id', $customer->id)
                                                     ->where('app_id', $customer->app_id)
+                                                    ->where('package_id', '!=', 5)
                                                     ->groupBy('customer_id', 'app_id', 'package_id')
                                                     ->get();
         
         $myPackageDeatils=   CustomerDepositsModel::select('customer_id', 'app_id', 'package_id', 'amount', 'created_at')
                                                     ->where('customer_id', $customer->id)
                                                     ->where('app_id', $customer->app_id)
+                                                    // ->where('package_id', '!=', 5)
                                                     ->get();
 
         $myFinance      = CustomerFinancialsModel::firstOrCreate([
@@ -161,6 +165,7 @@ class DashboardMatriceService
         $freepackages         =   FreeDepositPackagesModel::where('status',1)
                                         ->where('app_id',$customer->app_id)
                                         ->where('customer_id',$customer->id)
+                                        ->where('package_id', '!=', 5)
                                         ->first();
 
         $volumes = [

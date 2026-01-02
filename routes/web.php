@@ -58,6 +58,7 @@ Route::middleware(['customer'])->group(function () {
 
     Route::get('/pay-topup', [DepositController::class, 'showForm'])->name('pay.topup');
     Route::post('/pay-topup', [DepositController::class, 'deposit'])->name('pay.topup.save');
+    Route::post('/free-topup', [DepositController::class, 'depositFreePackage'])->name('pay.freetopup.save');
    
     Route::get('/withdraw', [WithdrawController::class, 'showForm'])->name('withdraw');
     Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');   
@@ -120,9 +121,6 @@ Route::prefix('superadmin')->name('superadmin.')->group(function () {
                                                                 ->middleware('auth:superadmin')
                                                                 ->name('admins.loginAs');
 
-    
-    
-    
     // Route::get('/logoutasadmin', [SuperadminAsAdmin::class, 'returnToSuperadmin'])->name('logoutasadmin');
         
 });

@@ -35,7 +35,7 @@ class WithdrawService
             }
 
             // 3. Check capping limit
-            $remainingCap = $finance->capping_limit-2500; // - $finance->total_withdraws;
+            $remainingCap = $finance->capping_limit - $finance->total_withdraws;
             if ($remainingCap < $validatedData['amount']) {
                 return response()->json([
                     'status'  => false,

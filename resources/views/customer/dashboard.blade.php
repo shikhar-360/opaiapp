@@ -259,7 +259,22 @@
                   </h3>
                   <span
                     class="inline-flex items-center gap-1 rounded-full bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)]">
-                    Current Rank: <span class="font-semibold">{{ $customer->leadership_rank ? 'Star '.$customer->leadership_rank : '-' }} </span>
+                    Current Rank: <span class="font-semibold">
+                      @php
+                      $rank = match ($customer->leadership_rank) {
+                                                                    5 => 'Diamond',
+                                                                    4 => 'Ruby',
+                                                                    3 => 'Emerald',
+                                                                    2 => 'Sapphire',
+                                                                    1 => 'Gold',
+                                                                    default => '',
+                                                                };
+                      @endphp
+
+                      {{ $rank }}
+                      
+                      {{-- {{ $customer->leadership_rank ? 'Star '.$customer->leadership_rank : '-' }} --}}
+                    </span>
                   </span>
                 </div>
                 <!-- stars row -->
@@ -536,7 +551,7 @@
             $earned = (float) ($customer->myLevelEarning ?? 0);
 
             $rawCapping = (float) ($customer->myFinance['capping_limit'] ?? 0);
-            $cappingLimit = max(0, $rawCapping - 2500); // never negative
+            $cappingLimit = max(0, $rawCapping); // never negative
 
             if ($cappingLimit > 0) {
                 $percentUsed = ($earned / $cappingLimit) * 100;

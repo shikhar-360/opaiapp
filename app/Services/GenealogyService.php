@@ -86,6 +86,7 @@ class GenealogyService
             $totalTeamInvestment = DB::table('customer_deposits')
                 ->whereIn('customer_id', $allTeamIds)
                 ->where('payment_status', 'success')
+                ->where('package_id', '!=', 5)
                 ->sum('amount') ?? 0;
         }
 
@@ -95,6 +96,7 @@ class GenealogyService
              $directInvestment = DB::table('customer_deposits')
                 ->whereIn('customer_id', $directIds)
                 ->where('payment_status', 'success')
+                ->where('package_id', '!=', 5)
                 ->sum('amount') ?? 0;
         }
 
@@ -102,6 +104,7 @@ class GenealogyService
             'my_investment'         => DB::table('customer_deposits')
                 ->where('customer_id', $userId)
                 ->where('payment_status', 'success')
+                ->where('package_id', '!=', 5)
                 ->sum('amount') ?? 0,
             
             'total_direct_count'    => count($directIds),

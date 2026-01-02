@@ -32,6 +32,7 @@ class LeadershipIncomeService
 
             $totalTeamInvestment = CustomerDepositsModel::whereIn('customer_id', $allTeamIds)
                                         ->where('payment_status', 'success') 
+                                        ->where('is_free_deposit', 0)
                                         ->sum('amount');
 
             $leadershipRank = AppLeadershipIncomeModel::where('app_id', $app->id)

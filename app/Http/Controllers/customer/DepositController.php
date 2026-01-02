@@ -135,4 +135,45 @@ class DepositController extends Controller
         }
     }
 
+    public function depositFreePackage(Request $request)
+    {
+
+        $customer = Auth::guard('customer')->user();
+
+        try 
+        {
+            $package = 5;
+
+            $freepackages   =   FreeDepositPackagesModel::where('status',0)
+                                                            ->where('app_id',$customer->app_id)
+                                                            ->where('customer_id',$customer->id)
+                                                            ->first();
+            
+            
+            $myPackages     =   CustomerDepositsModel::select('customer_id', 'app_id', 'package_id')
+                                                            ->where('customer_id', $customer->id)
+                                                            ->where('app_id', $customer->app_id)
+                                                            ->where('is_free_deposit', 1)
+                                                            ->first();
+            // dd($freepackages, $myPackages);
+
+            if (($customer->isFreePackage>0) && (is_null($freepackages) && is_null($myPackages))) 
+            {
+                $txnId = "FREEPACKAGE-".Str::random(8); //DUMMY TXN ID
+                // dd($freepackages, $myPackages, $txnId);
+                $deposit = $this->depositService->createFreeDeposit($customer, $package, 100000, $txnId);
+                // return redirect()->route('pay.topup')->with(['status_code'=>'success', 'message' => 'Free Deposited successfully.']);
+            }
+
+        } 
+        catch (\Exception $e) 
+        {
+            return back()->withErrors(['status_code'=>'error', 'message' => $e->getMessage()]);
+            // return response()->json([
+            //     'status'  => false,
+            //     'message' => $e->getMessage()
+            // ], 422);
+        }
+    }
+
 }

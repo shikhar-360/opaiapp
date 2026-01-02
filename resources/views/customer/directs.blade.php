@@ -216,7 +216,19 @@
                   <td class="px-4 sm:px-5 py-3 text-black">
                     <span
                       class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 border border-slate-300 ">
-                      {{ $activeDirect->leadership_champions_rank??'-' }} 
+                      {{-- {{ $activeDirect->leadership_champions_rank??'-' }} --}}
+                      @php
+                          $rank = match ($customer->leadership_champions_rank) {
+                              5 => 'VIP5',
+                              4 => 'VIP4',
+                              3 => 'VIP3',
+                              2 => 'VIP2',
+                              1 => 'VIP1',
+                              default => '-',
+                          };
+                      @endphp
+
+                      {{ $rank }} 
                     </span>
                   </td>
                   <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $activeDirect->level_id ?? 1 }}</td>
@@ -303,10 +315,10 @@
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     User Id
                   </th>
-                  <th
+                  <!-- <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Wallet Address
-                  </th>
+                  </th> -->
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
                     Direct
@@ -350,8 +362,7 @@
                 
                 <tr class="hover:bg-slate-200 transition">
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $sr++ }}</td>
-                  <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $activeDirect->name }}</td>
-                  <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td>
+                  <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $activeDirect->name }}</td> {{-- {{ $activeDirect->wallet_address }} --}}
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalDirectsCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($activeDirect->totaldeposit, 2, '.', '') }}</td>
@@ -361,7 +372,19 @@
                   <td class="px-4 sm:px-5 py-3 text-black">
                     <span
                       class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 border border-slate-300 ">
-                      {{ $activeDirect->leadership_champions_rank??'-' }} 
+                      {{-- {{ $activeDirect->leadership_champions_rank??'-' }} --}}
+                      @php
+                          $rank = match ($customer->leadership_champions_rank) {
+                              5 => 'VIP5',
+                              4 => 'VIP4',
+                              3 => 'VIP3',
+                              2 => 'VIP2',
+                              1 => 'VIP1',
+                              default => '-',
+                          };
+                      @endphp
+
+                      {{ $rank }}
                     </span>
                   </td>
                   <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $activeDirect->level_id ?? 1 }}</td>

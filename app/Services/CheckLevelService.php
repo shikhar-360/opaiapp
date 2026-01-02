@@ -68,6 +68,7 @@ class CheckLevelService
         $directsCount = CustomersModel::join('customer_deposits', 'customer_deposits.customer_id', '=', 'customers.id')
                                             ->where('customers.sponsor_id', $customer->id)
                                             ->where('customer_deposits.payment_status', 'success')   // only successful deposits
+                                            ->where('customer_deposits.is_free_deposit', 0)
                                             ->distinct('customers.id')
                                             ->count('customers.id');
 

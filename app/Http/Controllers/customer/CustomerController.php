@@ -51,7 +51,8 @@ class CustomerController extends Controller
 
     public function dashboard(Request $request)
     {
-
+        // $pp = "Ordinarypeopleai@010126";
+        // dd(Hash::make($pp));
         // dd($request);
         $customer = Auth::guard('customer')->user();
         

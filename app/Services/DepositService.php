@@ -40,6 +40,7 @@ class DepositService
         // Rule 2 — incremental deposit rule
         $lastDeposit = CustomerDepositsModel::where('customer_id', $customer->id)
                                                 ->where('payment_status', 'SUCCESS')
+                                                ->where('is_free_deposit',0)
                                                 ->orderBy('id', 'DESC')
                                                 ->first();
 
@@ -68,41 +69,22 @@ class DepositService
 
     public function markDepositSuccess($deposit, $isfreePkg)
     {
-
-        DB::beginTransaction();
+        
         try 
         {
-            $freepackages = FreeDepositPackagesModel::where('status',1)
-                                        ->where('app_id',$deposit->app_id)
-                                        ->where('customer_id',$deposit->customer_id)
-                                        // ->where('package_id', $validated['package_id'])
-                                        ->first();
-            if ($freepackages && $isfreePkg) {
-
-                // dd("IF", $deposit, $isfreePkg);
-
-                $deposit->update([
-                    'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
-                    'is_free_deposit'=> 1
-                ]);
-            }
-            else
-            {
-                // dd("ELSE", $deposit, $isfreePkg);
-
-                $deposit->update([
-                    'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
-                ]);
-            
-                $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
-                $depositAmount = $deposit->amount;
-                // Manual assignment ignores $fillable
-                $finance->total_deposit += $depositAmount;
-                $finance->capping_limit += ($depositAmount * 5);
-                $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
-                $finance->save();
-            }
-            
+            DB::beginTransaction();
+            $deposit->update([
+                'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
+            ]);
+        
+            $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
+            $depositAmount = $deposit->amount;
+            // Manual assignment ignores $fillable
+            $finance->total_deposit += $depositAmount;
+            $finance->capping_limit += ($depositAmount * 5);
+            $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
+            $finance->save();
+        
             $firstDeposit = CustomerDepositsModel::where('customer_id', $deposit->customer_id)
                                                 ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
                                                 ->where('id', '!=', $deposit->id)
@@ -147,6 +129,24 @@ class DepositService
                 $sponsor->save();
             }
         }
+    }
+
+    public function createFreeDeposit($customer, $package, $amount, $txnId)
+    {
+        $customer->isFreePackage = 0;
+        $customer->save();
+        
+        return CustomerDepositsModel::create([
+            'app_id'        => $customer->app_id,
+            'customer_id'   => $customer->id,
+            'package_id'    => $package,
+            'amount'        => $amount,
+            'roi_percent'   => 0,
+            'transaction_id'=> $txnId,
+            'payment_status'=> CustomerDepositsModel::STATUS_SUCCESS,
+            'coin_price'    => 0,
+            'is_free_deposit'=> 1,
+        ]);
     }
 
 }
