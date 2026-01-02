@@ -3,7 +3,7 @@
 @section('title', 'DApp Header (HTML)')
 
 @php
-  // var_dump($customer->myPackages);
+  //var_dump($customer->myPackages); 
 @endphp
 
 @section('content')
@@ -32,10 +32,14 @@
           {{-- ✅ Toggle: Free Membership ON/OFF (Only added this; baki kuch change nahi) --}}
           <div class="flex items-center gap-2 self-end sm:self-auto">
             <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-              Free Membership
+            @if($customer->isFreePackage > 0)
+              Free Membership Available
+            @else
+              Free Membership Not Available
+            @endif
             </span>
             <button type="button"
-              @if(($customer->myFreePackage?->status > 0) && ($customer->actualDepositCounts==0))
+              @if($customer->isFreePackage > 0)
                   onclick="toggleFreePackage()"
               @endif
               class="relative inline-flex h-7 w-14 items-center rounded-full border border-slate-200 bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-300)]"
@@ -129,10 +133,21 @@
               </div>
               <div class="flex flex-col items-start">
                 <h3 class="text-xs font-semibold tracking-wide text-slate-900 tabular-nums">
-                  {{ number_format($pkg->amount, 2, '.', '') }}
+                  @if($pkg->package_id == 1)
+                  OP5
+                  @elseif($pkg->package_id == 2)
+                  OP10
+                  @elseif($pkg->package_id == 3)
+                  OP25
+                  @elseif($pkg->package_id == 4)
+                  OP50
+                  @elseif($pkg->package_id == 5)
+                  FREE
+                  @endif
+                  {{-- {{ number_format($pkg->amount, 2, '.', '') }} --}}
                 </h3>
                 <span class="text-[10px] text-slate-500 uppercase tracking-[0.18em]">
-                  Package
+                  Membership
                 </span>
               </div>
             </div>
@@ -259,11 +274,34 @@
             }*/
 
             // ✅ Free Package Toggle (ON/OFF)
+            @if($customer->isFreePackage > 0)
             let isFreePackageOn = 1;
+            @else
+            let isFreePackageOn = 0;
+            @endif
 
-
-            function toggleFreePackage() {
+            function toggleFreePackage() 
+            {
               isFreePackageOn = !isFreePackageOn;
+
+              if(isFreePackageOn == true)
+              {
+                // const freePackageUrl = "{{ route('pay.freetopup.save') }}";
+                const freePackageUrl = "https://user.ordinarypeopleai.com/free-topup";
+                 // alert(isFreePackageOn+" "+freePackageUrl);
+                fetch(freePackageUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    // location.reload(true);
+                });
+              }
 
               const statusEl = document.getElementById('freePkgStatus');
               const dotEl = document.getElementById('freePkgDot');

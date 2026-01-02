@@ -139,10 +139,10 @@ class CustomerAuthController extends Controller
         $sponsor->save();
 
         //Temporary for testing purpose
-        $finance = $this->getCustomerFinance($newCustomer->id, $appId);
-        $finance->total_topup += 500;
-        $finance->capping_limit += (500 * 5);
-        $finance->save();
+        // $finance = $this->getCustomerFinance($newCustomer->id, $appId);
+        // $finance->total_topup += 500;
+        // $finance->capping_limit += (500 * 5);
+        // $finance->save();
         //Temporary for testing purpose
 
         // $this->emailService->sendRegistrationEmail($newCustomer);

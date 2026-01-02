@@ -30,6 +30,8 @@ class WebhooksController extends Controller
         $decodedString = base64_decode($newRequest);
         $explodeString = explode("+", $decodedString);
 
+        Log::info('9 Pay listener attempted topupWebhook:'.$validatedData['auth']);
+
         $transaction_hash = trim($explodeString['0']); //0xd0bc39eba25c1be86fdf65a0d618d83880a49315fcadf6837c482495a263a366
         $amount_nofee = trim($explodeString['1']); //99.5 // Net amount
         $amount_afterfee = trim($explodeString['2']); //100 (full amount)
@@ -61,7 +63,7 @@ class WebhooksController extends Controller
         // dd($explodeString, $transaction_hash, $amount_nofee, $amount_afterfee, $invoice_id, $network_type, $amount_received );
 
         $txn = NinepayTransactionsModel::where('transaction_id', $invoice_id)->first();
-
+        // dd($txn);
         if (!$txn) 
         {
             Log::error('Ninepay transaction not found', [
@@ -92,12 +94,14 @@ class WebhooksController extends Controller
             ], 404);
         }
 
+        
         return response()->json([
             'status'           => 'success',
             'payment_status'   => $txn->payment_status,
-            'amount'           => $txn->amount+$txn->fees_amount,
-            'received_amount'  => $txn->received_amount,
-            'is_paid'          => ($txn->received_amount >= $txn->amount)
+            'amount'           => (float)$txn->amount+(float)$txn->fees_amount,
+            'received_amount'  => (float)$txn->received_amount,
+            'pending_amount'   => (float)$txn->remaining_amount,
+            'is_paid'          => ($txn->remaining_amount <= 0)
         ]);
     }
 }

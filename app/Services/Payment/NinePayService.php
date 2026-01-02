@@ -127,41 +127,52 @@ class NinePayService
 
             // dd($pendingPayment);
 
+            
+
             if ($pendingPayment) {
                 
                 $currentReceivedAmount = (float)$pendingPayment->received_amount;
+
                 $newTotalAmountReceived = $currentReceivedAmount + (float)$amountReceived;
-                $expectedAmount = (float)$pendingPayment->amount;
+
+                $expectedAmount = (float)$pendingPayment->amount + (float)$pendingPayment->fees_amount;
 
                 $pendingPayment->received_amount = $newTotalAmountReceived;
                 $pendingPayment->transaction_hash = $transactionHash;
-                
+            
+                $newRemainingAmount = (float)$pendingPayment->remaining_amount - (float)$amountReceived;    
+
                 // dd(abs($expectedAmount),abs($newTotalAmountReceived));
-                // dd(abs($expectedAmount), abs($newTotalAmountReceived));
                 // if ((abs($expectedAmount - $newTotalAmountReceived) < 0.0001))
-                if (abs($expectedAmount) <= abs($newTotalAmountReceived))
+                // if (abs($expectedAmount) <= abs($newTotalAmountReceived))
+                if ((float)$newRemainingAmount <= 0)
                 {
                     // dd("1", $pendingPayment);
+                    $pendingPayment->remaining_amount = 0;
                     $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_SUCCESS; 
                     $pendingPayment->save(); 
 
-                    $criteria = [
-                        'customer_id'    => $customerId,
-                        'transaction_id' => $transactionId,
-                        'app_id'         => $customer->app_id, 
-                        'payment_status' => NinepayTransactionsModel::STATUS_UNDERPAID
-                    ];
+                    // $criteria = [
+                    //     'customer_id'    => $customerId,
+                    //     'transaction_id' => $transactionId,
+                    //     'app_id'         => $customer->app_id, 
+                    //     'payment_status' => NinepayTransactionsModel::STATUS_UNDERPAID
+                    // ];
 
                     // Define the data you want to update in those records
-                    $updateData = [
-                        'payment_status'   => NinepayTransactionsModel::STATUS_SUCCESS
-                    ];
+                    // $updateData = [
+                    //     'payment_status'   => NinepayTransactionsModel::STATUS_SUCCESS
+                    // ];
 
                     // Perform the mass update
-                    NinepayTransactionsModel::where($criteria)->update($updateData);
+                    // NinepayTransactionsModel::where($criteria)->update($updateData);
                 } 
                 else 
                 {
+                    $feeAmount = $this->ninePayFee($pendingPayment->network_name, $newRemainingAmount);
+                    $newRemainingAmount = $newRemainingAmount + $feeAmount;
+                    $pendingPayment->remaining_amount = $newRemainingAmount;
+
                     $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_UNDERPAID; 
                     // dd("2", $pendingPayment);
                     $pendingPayment->save(); 
@@ -188,13 +199,13 @@ class NinePayService
                 $feeAmount = 0.5;
             }
         }
-        else if ($chain == 'tron') {
-            if ($amount >= 100) {
-                $feeAmount = $amount * 3 / 100;
-            } else {
-                $feeAmount = 3;
-            }
-        }
+        // else if ($chain == 'tron') {
+        //     if ($amount >= 100) {
+        //         $feeAmount = $amount * 3 / 100;
+        //     } else {
+        //         $feeAmount = 3;
+        //     }
+        // }
         else if ($chain == 'bsc') {
             if ($amount >= 100) {
                 $feeAmount = $amount * 1 / 100;
@@ -202,13 +213,13 @@ class NinePayService
                 $feeAmount = 1;
             }
         }
-        else if ($chain == 'eth') {
-            if ($amount >= 100) {
-                $feeAmount = $amount * 5 / 100;
-            } else {
-                $feeAmount = 5;
-            }
-        }
+        // else if ($chain == 'eth') {
+        //     if ($amount >= 100) {
+        //         $feeAmount = $amount * 5 / 100;
+        //     } else {
+        //         $feeAmount = 5;
+        //     }
+        // }
         
         return $feeAmount;
         

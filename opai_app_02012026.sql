@@ -30,8 +30,8 @@ CREATE TABLE `admin_tutorials` (
   `sub_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `url` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_by` bigint unsigned DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `admin_tutorials_app_id_index` (`app_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -165,7 +165,7 @@ CREATE TABLE `app_level_packages` (
 
 LOCK TABLES `app_level_packages` WRITE;
 /*!40000 ALTER TABLE `app_level_packages` DISABLE KEYS */;
-INSERT INTO `app_level_packages` VALUES (1,1,1,1,35.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(2,1,2,2,10.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(3,1,3,2,5.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(4,1,4,3,4.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(5,1,5,3,3.00,'2025-12-02 23:23:04','2025-12-12 04:34:29'),(6,1,6,4,3.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(7,1,7,4,3.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(8,1,8,5,2.50,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(9,1,9,5,2.50,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(10,1,10,6,2.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(11,1,11,6,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(12,1,12,7,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(13,1,13,7,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(14,1,14,8,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(15,1,15,8,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(16,1,16,9,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(17,1,17,9,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(18,1,18,10,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(19,1,19,10,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(20,1,20,11,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04');
+INSERT INTO `app_level_packages` VALUES (1,1,1,1,35.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(2,1,2,2,10.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(3,1,3,2,5.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(4,1,4,3,4.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(5,1,5,3,3.00,'2025-12-02 23:23:04','2025-12-12 04:34:29'),(6,1,6,4,3.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(7,1,7,4,3.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(8,1,8,5,2.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(9,1,9,5,2.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(10,1,10,6,2.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(11,1,11,6,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(12,1,12,7,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(13,1,13,7,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(14,1,14,8,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(15,1,15,8,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(16,1,16,9,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(17,1,17,9,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(18,1,18,10,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(19,1,19,10,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04'),(20,1,20,10,1.00,'2025-12-02 23:23:04','2025-12-02 23:23:04');
 /*!40000 ALTER TABLE `app_level_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,13 +183,13 @@ CREATE TABLE `app_packages` (
   `amount` decimal(10,2) NOT NULL,
   `roi_percent` decimal(5,2) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `app_packages_app_id_index` (`app_id`),
   KEY `app_packages_plan_code_index` (`plan_code`),
   CONSTRAINT `app_packages_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +198,7 @@ CREATE TABLE `app_packages` (
 
 LOCK TABLES `app_packages` WRITE;
 /*!40000 ALTER TABLE `app_packages` DISABLE KEYS */;
-INSERT INTO `app_packages` VALUES (1,1,'P1',5.00,0.50,1,'2025-12-02 01:17:05','2025-12-09 07:27:30'),(2,1,'P2',10.00,1.00,1,'2025-12-02 01:17:05','2025-12-02 01:17:05'),(3,1,'P3',25.00,1.50,1,'2025-12-02 01:17:05','2025-12-12 04:34:43'),(4,1,'P4',50.00,2.00,1,'2025-12-02 01:17:05','2025-12-02 01:17:05');
+INSERT INTO `app_packages` VALUES (1,1,'P1',5.00,0.50,1,'2025-12-02 01:17:05','2025-12-09 07:27:30'),(2,1,'P2',10.00,1.00,1,'2025-12-02 01:17:05','2025-12-02 01:17:05'),(3,1,'P3',25.00,1.50,1,'2025-12-02 01:17:05','2025-12-12 04:34:43'),(4,1,'P4',50.00,2.00,1,'2025-12-02 01:17:05','2025-12-02 01:17:05'),(5,1,'Free',100000.00,0.00,1,'2025-12-02 01:17:05','2025-12-02 01:17:05');
 /*!40000 ALTER TABLE `app_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +221,7 @@ CREATE TABLE `app_promotion_packages` (
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,6 +230,7 @@ CREATE TABLE `app_promotion_packages` (
 
 LOCK TABLES `app_promotion_packages` WRITE;
 /*!40000 ALTER TABLE `app_promotion_packages` DISABLE KEYS */;
+INSERT INTO `app_promotion_packages` VALUES (1,1,'HEAD START 1000',1000,3,'[5,10]','[5,10]','[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]','2025-12-17 05:05:43','2025-12-17 05:05:43'),(2,1,'HEAD START 500',500,2,'[25,50]','[25,50]','[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]','2025-12-17 05:05:43','2025-12-17 05:05:43'),(3,1,'HEAD START 10X',1000,10,'[25,50]','[25]','[]','2025-12-17 10:44:27','2025-12-17 10:44:27'),(4,1,'FOUNDERS CLUB 5000',5000,10,'[5,10,25,50]','[25]','[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]','2025-12-17 10:46:34','2025-12-17 10:46:34');
 /*!40000 ALTER TABLE `app_promotion_packages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -245,8 +246,8 @@ CREATE TABLE `app_settings` (
   `app_id` bigint unsigned NOT NULL,
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `value` json DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `app_settings_app_id_foreign` (`app_id`),
   CONSTRAINT `app_settings_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE
@@ -283,7 +284,7 @@ CREATE TABLE `app_support_tickets` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `app_support_tickets_app_id_index` (`app_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -292,6 +293,7 @@ CREATE TABLE `app_support_tickets` (
 
 LOCK TABLES `app_support_tickets` WRITE;
 /*!40000 ALTER TABLE `app_support_tickets` DISABLE KEYS */;
+INSERT INTO `app_support_tickets` VALUES (1,1,1,'test line','test content to resolve','support_tickets/jzSFPVbc51xtbyWBxOyEOR53jsNslMXE3y0A18hC.png',0,NULL,NULL,'2025-12-31 12:08:24','2025-12-31 12:08:24');
 /*!40000 ALTER TABLE `app_support_tickets` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,8 +314,8 @@ CREATE TABLE `apps` (
   `settings` json DEFAULT NULL,
   `coin_price` decimal(16,6) NOT NULL DEFAULT '0.000000',
   `currency` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `apps_slug_unique` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -406,7 +408,7 @@ CREATE TABLE `customer_deposits` (
   CONSTRAINT `customer_deposits_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_deposits_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_deposits_package_id_foreign` FOREIGN KEY (`package_id`) REFERENCES `app_packages` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -415,7 +417,7 @@ CREATE TABLE `customer_deposits` (
 
 LOCK TABLES `customer_deposits` WRITE;
 /*!40000 ALTER TABLE `customer_deposits` DISABLE KEYS */;
-INSERT INTO `customer_deposits` VALUES (1,1,1,1,5.00,0.50,0.0000,'DEPOSIT-oaYocsxo','success',2.0000,0,'2025-12-13 14:49:40','2025-12-13 14:49:40');
+INSERT INTO `customer_deposits` VALUES (1,1,1,1,5.00,1.00,0.0000,'DEPOSIT-yBn1J93I','success',2,0,'2026-01-01 18:09:45','2026-01-01 18:09:45');
 /*!40000 ALTER TABLE `customer_deposits` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -431,15 +433,17 @@ CREATE TABLE `customer_earning_details` (
   `app_id` bigint unsigned NOT NULL,
   `customer_id` bigint unsigned NOT NULL,
   `reference_id` bigint unsigned NOT NULL,
+  `reference_amount` decimal(12,4) NOT NULL,
+  `reference_level` int DEFAULT NULL,
   `amount_earned` decimal(12,4) NOT NULL,
-  `earning_type` enum('ROI','LEVEL-INCOME','BONUS') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `earning_type` enum('ROI','LEVEL-INCOME','BONUS','LEVEL-REWARD') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `customer_earning_details_app_id_foreign` (`app_id`),
   CONSTRAINT `customer_earning_details_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -474,7 +478,7 @@ CREATE TABLE `customer_financials` (
   KEY `customer_financials_customer_id_foreign` (`customer_id`),
   CONSTRAINT `customer_financials_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_financials_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -483,7 +487,7 @@ CREATE TABLE `customer_financials` (
 
 LOCK TABLES `customer_financials` WRITE;
 /*!40000 ALTER TABLE `customer_financials` DISABLE KEYS */;
-INSERT INTO `customer_financials` VALUES (1,1,1,5.000000,0.000000,0.000000,525.000000,495.0000,'2025-12-31 09:10:55','2025-12-31 09:10:55');
+INSERT INTO `customer_financials` VALUES (1,1,1,25.000000,17.500000,0.000000,625.000000,475.0000,'2025-12-31 09:10:55','2026-01-01 18:12:38');
 /*!40000 ALTER TABLE `customer_financials` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -510,7 +514,7 @@ CREATE TABLE `customer_flush_details` (
   KEY `idx_upline_id` (`upline_id`),
   KEY `idx_reference_id` (`reference_id`),
   KEY `idx_flush_level` (`flush_level`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -545,7 +549,7 @@ CREATE TABLE `customer_withdraws` (
   KEY `customer_withdraws_customer_id_foreign` (`customer_id`),
   CONSTRAINT `customer_withdraws_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
   CONSTRAINT `customer_withdraws_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -591,12 +595,13 @@ CREATE TABLE `customers` (
   `iswallet_editable` tinyint(1) DEFAULT '1',
   `isphone_editable` tinyint(1) DEFAULT '1',
   `profile_image` text COLLATE utf8mb4_unicode_ci,
+  `isFreePackage` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `customers_app_id_foreign` (`app_id`),
   CONSTRAINT `customers_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -605,7 +610,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES (1,1,'User1','rahul@app.coms','9000000001','$2y$12$2F0J8ItT5kLyHWYcDPVtj.Lpaq9JCvU.usA/2q73HPpI4DYfjDMsW','0x8a4b086f9c80648e88bb096627d1223bd759a66f','59A66F','TELUSER123',NULL,NULL,NULL,1,NULL,'customer',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0,1,'user_profiles/1767173660_user1.png','2025-12-01 06:27:18','2025-12-31 09:34:20');
+INSERT INTO `customers` VALUES (1,1,'admin','rahul@app.coms','9000000001','$2y$12$2F0J8ItT5kLyHWYcDPVtj.Lpaq9JCvU.usA/2q73HPpI4DYfjDMsW',NULL,'59A66F','TELUSER123',NULL,NULL,NULL,1,NULL,'customer',1,NULL,NULL,NULL,NULL,0,NULL,NULL,0,1,'user_profiles/1767173660_user1.png',0,'2025-12-01 06:27:18','2026-01-01 18:09:45');
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -678,8 +683,8 @@ CREATE TABLE `free_deposit_packages` (
   `package_id` bigint unsigned NOT NULL,
   `customer_id` bigint unsigned NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `free_deposit_packages_app_id_index` (`app_id`),
   KEY `free_deposit_packages_package_id_index` (`package_id`),
@@ -802,6 +807,7 @@ CREATE TABLE `ninepay_transactions` (
   `amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
   `fees_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
   `received_amount` decimal(16,6) NOT NULL DEFAULT '0.000000',
+  `remaining_amount` decimal(12,4) NOT NULL DEFAULT '0.0000',
   `chain` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `network_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `network_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -812,7 +818,7 @@ CREATE TABLE `ninepay_transactions` (
   `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_ninepay_payment` (`transaction_id`,`app_id`,`customer_id`,`transaction_hash`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -940,7 +946,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('0ytlahZZY0ItWzJaKhGLxCVF25edBQNt4owxZ2SA',NULL,'110.226.126.92','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiWUpuUFBsWTU4RWV3RDdYSzNzQ0xLU1JnN25aUzVNejZ5dXVtajBQbSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjU6Imh0dHA6Ly83Mi42MS4xNDguNTUvdG9vbHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==',1767173792);
+INSERT INTO `sessions` VALUES ('chlRdrfX5sR2MzeJXklIbXJKBMmUFi4eum1Mz2Sr',NULL,'172.69.224.189','Mozilla/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Mobile/15E148 Safari/604.1','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiS3dWMVlsZkIwZHNFQzJTYnUySGxSZFhsVndYT0ZZWVdLZFl2cHBWcSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xldmVsY2FsY3VsYXRvciI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6NTU6ImxvZ2luX2N1c3RvbWVyXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTt9',1767310289),('dAXouc97Xow7I6oMahfxSxg1SsfecAto9wRU4IXE',NULL,'162.159.110.15','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0','YTozOntzOjY6Il90b2tlbiI7czo0MDoiTUVBeU51R01OeU43MG45eXMydlpzbnpRYU1TM0JEbEZRcDRxeEUwaCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1767312612),('DJuCtvYWjNa1ghnfYgtCJ3an0lkPExlBYeHRCQrU',NULL,'172.69.194.154','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.6 Safari/605.1.15','YTozOntzOjY6Il90b2tlbiI7czo0MDoiaTRtd1VIdmlCbVpaNzRmb1ViZmt0VWdadXduMktNSGhnTTZrOXJwUyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjA6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3JlZ2lzdGVyP3Nwb25zb3Jjb2RlPTU5QTY2RiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=',1767304152),('Ep9nUPTNzKBhfvdIwpLQgNd2z4qoj5NcYk05qT4y',NULL,'43.130.37.243','Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1','YTozOntzOjY6Il90b2tlbiI7czo0MDoibm1zMmg5blczSk96SmZuQ0dCY1pJa0Z2M0k5RlJMc0F2bmYzbmg0ciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',1767313500),('FhGvVznCXaIOvaKhJEHpQ0V7IzAf04IsoI3ewF8M',NULL,'172.236.22.96','Mozilla/5.0 (Windows NT 6.1; WOW64; rv:8.0) Gecko/20100101 Firefox/8.0','YTozOntzOjY6Il90b2tlbiI7czo0MDoiR0NnRkllZzRRUGlESFV6QmNBWTFEQUhnN2Q4dTl3QVdDVlRLNVJLdyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',1767328614),('fSPNAWtyeJDegV7Ro3JcJZ3kDbchPEQ4PGz9KwY6',NULL,'151.238.51.60','Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36','YTozOntzOjY6Il90b2tlbiI7czo0MDoiVXl3cGpoek1jd0NPaGFScXNCQ29mcnRFVWJVS2ZVOUpkdDZySUZ3VyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',1767317880),('FzqagPMMTW5FNGywuZVYNIdamoPpcSpYJr3yoqBZ',NULL,'172.64.213.108','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiRWZGT0ZuVHZBckU3NzBtOVdNaml2TWh2T2lFdHhQTUxqeXZEQThHciI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',1767312850),('Ktp8qC3TUbEZTvx3i6uQmRw52Gdj4oeRfJAFv40R',NULL,'147.185.132.26','Hello from Palo Alto Networks, find out more about our scans in https://docs-cortex.paloaltonetworks.com/r/1/Cortex-Xpanse/Scanning-activity','YTozOntzOjY6Il90b2tlbiI7czo0MDoiWEZyY294a1ViTzVVUENCTjBGZ2JoYjU1dFNBclFyNUJsS0ptc1Y5WCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19',1767312452),('qR9oI2huGEJvsdF3Fi8CnNfvppjbZMx0ySipoqSX',NULL,'162.158.216.189','Mozilla/5.0 (iPhone; CPU iPhone OS 18_6_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148','YTozOntzOjY6Il90b2tlbiI7czo0MDoidXU5aXRWdTJSeHJwUEhOajlzZVV2d3EySTdJTVhSSHlzR1Y5Y3YzOSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',1767312600),('uJMoO82z9eOVUgrC2f6hklYYu3kKSDBsy3L74UDz',NULL,'172.71.241.101','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36','YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMUhxQ1R2cFRuQjQ0UFZhV3RVYW9CREEwNnVCUjBXVXlhbE1PSHVzSyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3N0YXRzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',1767312923);
 /*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -964,8 +970,8 @@ CREATE TABLE `users` (
   `role` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'user',
   `meta` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`),
   CONSTRAINT `users_chk_1` CHECK (json_valid(`meta`))
@@ -995,8 +1001,8 @@ CREATE TABLE `votes` (
   `voter_id` bigint unsigned NOT NULL,
   `sponsor_id` bigint unsigned NOT NULL,
   `voted_for` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_vote` (`app_id`,`voter_id`,`sponsor_id`,`voted_for`) USING BTREE,
   KEY `fk_votes_voter` (`voter_id`),
@@ -1004,7 +1010,7 @@ CREATE TABLE `votes` (
   CONSTRAINT `fk_votes_app` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_votes_sponsor` FOREIGN KEY (`sponsor_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_votes_voter` FOREIGN KEY (`voter_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1031,8 +1037,8 @@ CREATE TABLE `wallet_transactions` (
   `amount` decimal(10,4) NOT NULL,
   `transaction_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `transaction_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `wallet_transactions_app_id_foreign` (`app_id`),
   KEY `wallet_transactions_payer_id_foreign` (`payer_id`),
@@ -1061,4 +1067,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-12-31  9:40:02
+-- Dump completed on 2026-01-02  4:40:12

@@ -37,6 +37,7 @@ class CustomersModel extends Authenticatable
         'promotion_status',
         'direct_ids',
         'active_direct_ids',
+        'isFreePackage'
     ];
 
     protected $hidden = [

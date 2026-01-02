@@ -137,7 +137,17 @@
                 @if($myTeam->leadership_rank > 0)
                 <span
                   class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">
-                  {{ $myTeam->leadership_rank }}
+                  {{-- {{ $myTeam->leadership_rank }} --}}
+                  @php
+                      $rank = match ($customer->leadership_rank) {
+                          5 => 'Diamond',
+                          4 => 'Ruby',
+                          3 => 'Emerald',
+                          2 => 'Sapphire',
+                          1 => 'Gold',
+                          default => '-',
+                      };
+                  @endphp
                 </span>
                 @else
                 -

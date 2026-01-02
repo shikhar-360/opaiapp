@@ -74,7 +74,7 @@
       $earned = (float) ($customer->myLevelEarning ?? 0);
 
       $rawCapping = (float) ($customer->myFinance['capping_limit'] ?? 0);
-      $cappingLimit = max(0, $rawCapping - 2500); // never negative
+      $cappingLimit = max(0, $rawCapping); // never negative
 
       if ($cappingLimit > 0) {
           $percentUsed = ($earned / $cappingLimit) * 100;

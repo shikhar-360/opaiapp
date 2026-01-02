@@ -73,7 +73,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -215,7 +215,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -413,7 +413,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -580,20 +580,17 @@
 let txnId = "{{ $customer->QRs['transaction_id'] ?? '' }}"; // passed from controller
 
 function checkPaymentStatus() {
-  console.log(txnId);
+  console.log(txnId, "hello");
     if (txnId !== '') {
         fetch(`/api/payment-status/${txnId}`)
             .then(response => response.json())
             .then(data => {
 
                 if (data.status === "success") {
-
-                    console.log("Payment Status:", data);
-
-                    document.getElementById("coin-amount-text-trc").textContent = data.amount;
-                    document.getElementById("pendingAmount").textContent = (data.amount - data.received_amount).toFixed(2);
+                    // console.log("Payment Status:", data);
+                    document.getElementById("coin-amount-text-trc").textContent = Number(data.amount).toFixed(2);
+                    document.getElementById("pendingAmount").textContent = Number(data.pending_amount).toFixed(2);
                     document.getElementById("transaction_status").textContent = data.payment_status.toUpperCase();
-
                     // When payment is completed
                     if (data.is_paid === true) {
                         showToast("success", "Payment received!");

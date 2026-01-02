@@ -19,7 +19,7 @@
 
     <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--theme-skky-400)] animate-pulse"></span>
     <p class="relative text-xs sm:text-sm md:text-base text-slate-800">
-      Due to Polygon congestion, withdrawals are being processed slowly.
+      Due to BSC congestion, withdrawals are being processed slowly.
     </p>
   </div>
 
