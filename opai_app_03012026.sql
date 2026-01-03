@@ -365,9 +365,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`id`, `app_id`, `name`, `email`, `phone`, `password`, `wallet_address`, `referral_code`, `telegram_username`, `sponsor_id`, `direct_ids`, `active_direct_ids`, `status`, `remember_token`, `role`, `level_id`, `leadership_rank`, `leadership_points`, `leadership_champions_rank`, `champions_point`, `isRankAssigned`, `promotion_status`, `nonce`, `iswallet_editable`, `isphone_editable`, `profile_image`, `isFreePackage`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@ordinarypeopleai.com', '9000000001', '$2y$12$h.XekvtCIrLU2s5uzFpC0.Iff88zJcmkkPL8V.hpdoPLCjtOfN.nK', NULL, '59A66F', 'TELUSER123', NULL, '9', NULL, 1, NULL, 'customer', 1, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 1, 'user_profiles/1767173660_user1.png', 0, '2025-12-01 06:27:18', '2026-01-02 19:09:04'),
-(9, 1, 'Blackshark', 'saad.apoorti@gmail.com', NULL, '$2y$12$OQDOT6rtNFs5CgWclH/LNuIUZOoahpx45NnySJ4ZrnOnRieXf6gKK', NULL, '19F5CMJJ', NULL, 1, '10', NULL, 1, NULL, 'customer', 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:09:04', '2026-01-02 19:12:36'),
-(10, 1, 'Akmal', 'tirmizi.akmal@gmail.com', NULL, '$2y$12$ANjKV8rIBbgr/GVXNIawzO9uC5gDsxltd/tvaRFYONWF2GYba.UrC', NULL, '110C2SOAC', NULL, 9, NULL, NULL, 1, NULL, 'customer', 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:12:36', '2026-01-02 21:25:18');
+(1, 1, 'admin', 'rahul@app.coms', '9000000001', '$2y$12$2F0J8ItT5kLyHWYcDPVtj.Lpaq9JCvU.usA/2q73HPpI4DYfjDMsW', NULL, '59A66F', 'TELUSER123', NULL, '9', NULL, 1, NULL, 'customer', 1, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 1, 'user_profiles/1767173660_user1.png', 0, '2025-12-01 06:27:18', '2026-01-02 19:09:04'),
+(9, 1, 'Blackshark', 'user2@app.coms', NULL, '$2y$12$2F0J8ItT5kLyHWYcDPVtj.Lpaq9JCvU.usA/2q73HPpI4DYfjDMsW', NULL, '19F5CMJJ', NULL, 1, '10', NULL, 1, NULL, 'customer', 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:09:04', '2026-01-02 19:12:36'),
+(10, 1, 'Akmal', 'user3@app.coms', NULL, '$2y$12$2F0J8ItT5kLyHWYcDPVtj.Lpaq9JCvU.usA/2q73HPpI4DYfjDMsW', NULL, '110C2SOAC', NULL, 9, NULL, NULL, 1, NULL, 'customer', 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:12:36', '2026-01-02 21:25:18');
 
 -- --------------------------------------------------------
 
