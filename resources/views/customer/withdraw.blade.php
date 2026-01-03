@@ -239,9 +239,9 @@
                 </span>
               </td>
               <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ $myW->net_amount }}</td>
-              {{-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myW->transaction_type }}</td> --}}
+              {{-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myW->transaction_status }}</td> --}}
               <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myW->transaction_id }}</td>
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myW->transaction_type }}</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myW->transaction_status }}</td>
               <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myW->created_at->format('d-m-Y') }}</td>
               
             </tr>

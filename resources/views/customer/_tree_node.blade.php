@@ -38,7 +38,18 @@
             <div class="flex-1 text-center text-slate-700 shrink-0 whitespace-nowrap">{{ $userNode['my_direct'] }}</div>
             <div class="flex-1 text-center text-emerald-600 shrink-0 whitespace-nowrap"> {{ number_format($userNode['team_investment'], 2) }}</div>
             <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap"> {{ number_format($userNode['direct_investment'], 2) }}</div>
-            <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap"> {{ number_format($userNode['totalInvestment'], 2) }}</div>
+            <div class="flex-1 text-center text-sky-600 shrink-0 whitespace-nowrap"> 
+                {{-- {{ number_format($userNode['totalInvestment'], 2) }} --}}
+                @if($userNode['totalInvestment'] > 0)
+                    @if($userNode['ispaid_package'])
+                    {{ number_format($userNode['totalInvestment'], 2) }}
+                    @else
+                    Free
+                    @endif
+                @else
+                    -
+                @endif
+            </div>
         </div>
 
         {{-- Children Container: Only rendered if children exist --}}

@@ -78,7 +78,7 @@ class WithdrawController extends Controller
         }
 
         try {
-            $withdraw = $this->withdrawServices->processWithdrawal($customer, $validated);
+            $withdraw = $this->withdrawServices->requestWithdraw($customer, $validated);
 
             if (isset($withdraw->original) && !$withdraw->original['status']) {
                 // Both $withdraw and $withdraw->original exist, AND the status is false
@@ -94,7 +94,7 @@ class WithdrawController extends Controller
                     ->route('withdraw')
                     ->with([
                         'status_code'  => 'success',
-                        'message' => 'Withdraw successfully.',
+                        'message' => 'Request submitted successfully.',
                         'withdraw_amount'=>$validated['amount']
                     ]);
 
@@ -106,4 +106,6 @@ class WithdrawController extends Controller
             return back()->withErrors(['status_code'=>'error', 'message' => $e->getMessage()]);
         }
     }
+
+    
 }

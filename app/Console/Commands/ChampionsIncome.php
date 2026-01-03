@@ -31,7 +31,7 @@ class ChampionsIncome extends Command
     {
         $svc->assignLeadershipchampions();
         $this->info('Champions rank assigned successfully.');
-        Log::info('Champions rank assigned successfully.');
+        // Log::info('Champions rank assigned successfully.');
         return self::SUCCESS;
     }
 }

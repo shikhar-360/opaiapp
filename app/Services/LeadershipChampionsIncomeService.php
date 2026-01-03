@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\AppsModel;
 use App\Models\CustomersModel;
@@ -69,6 +70,20 @@ class LeadershipChampionsIncomeService
                     $customer->champions_point           = ($customer->champions_point ?? 0) + ($leadershipChampionsRank->points ?? 0);
                     $customer->isRankAssigned            = 1; //Rank popup purposes
                     $customer->save();
+
+                    Log::info('Leadership Champions rank assigned', [
+                        'app_id'                 => $app->id,
+                        'customer_id'            => $customer->id,
+                        'old_rank_id'            => $customer->getOriginal('leadership_champions_rank'),
+                        'new_rank_id'            => $leadershipChampionsRank->id,
+                        'rank_name'              => $leadershipChampionsRank->rank ?? null,
+                        'team_volume'            => $totalTeamInvestment,
+                        'total_directs'          => count($allDirectIds),
+                        'active_directs'         => count($activeDirectIds),
+                        'points_added'           => $leadershipChampionsRank->points ?? 0,
+                        'total_points_after'     => $customer->champions_point,
+                        'rank_popup_triggered'   => true,
+                    ]);
                 }
             }
         }

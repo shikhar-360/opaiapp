@@ -52,6 +52,7 @@ class GenealogyService
             "team_investment"    => $metrics['total_team_investment'],
             "direct_investment"  => $metrics['direct_investment'],
             "totalInvestment"    => $metrics['my_investment'],
+            "ispaid_package"     => $metrics['ispaid_package'],
             "children"           => [], // Initialize the children array
         ];
 
@@ -100,17 +101,36 @@ class GenealogyService
                 ->sum('amount') ?? 0;
         }
 
+        //New code start
+        $hasPaidDeposit = DB::table('customer_deposits')
+                                ->where('customer_id', $userId)
+                                ->where('payment_status', 'success')
+                                ->where('is_free_deposit', 0)
+                                ->limit(1)
+                                ->exists();
+        $myInvestmentQuery = DB::table('customer_deposits')
+                                ->where('customer_id', $userId)
+                                ->where('payment_status', 'success');
+        if ($hasPaidDeposit) {
+            $myInvestmentQuery->where('is_free_deposit', 0);
+        }
+
+        $myInvestment = (float) $myInvestmentQuery->sum('amount');
+        //New code end
+
         return [
-            'my_investment'         => DB::table('customer_deposits')
-                ->where('customer_id', $userId)
-                ->where('payment_status', 'success')
-                ->where('package_id', '!=', 5)
-                ->sum('amount') ?? 0,
+            // 'my_investment'         => DB::table('customer_deposits')
+            //     ->where('customer_id', $userId)
+            //     ->where('payment_status', 'success')
+            //     ->where('package_id', '!=', 5)
+            //     ->sum('amount') ?? 0,
             
             'total_direct_count'    => count($directIds),
             'total_team_count'      => count($allTeamIds),
             'direct_investment'     => $directInvestment,
             'total_team_investment' => $totalTeamInvestment,
+            'my_investment'         => $myInvestment,           // New code start
+            'ispaid_package'        => $hasPaidDeposit ? 1 : 0, // New code start
         ];
     }
 

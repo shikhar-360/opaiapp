@@ -29,7 +29,8 @@ class NinepayTransactionsModel extends Model
         'tron_9pay_json',
         'payment_address',
         'network_type',
-        'network_name'
+        'network_name',
+        'remaining_amount',
     ];
     
 

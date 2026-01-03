@@ -15,12 +15,12 @@ class WithdrawService
 {
     use ManagesCustomerFinancials;
 
-    public function processWithdrawal($customer, $validatedData)
+    public function requestWithdraw($customer, $validatedData)
     {
        
         return DB::transaction(function () use ($customer, $validatedData) {
 
-            $transactionString = Str::random(6);
+            // $transactionString = Str::random(6);
 
             // 1. Load finance summary
             $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
@@ -63,23 +63,18 @@ class WithdrawService
                 'admin_charge'	        => $adminFee,
                 'amount'	            => $validatedData['amount'],
                 'net_amount'	        => $netAmount,
-                'transaction_id'	    => 'WITHDRAW-'.$transactionString,
-                'transaction_type'      => 'WITHDRAW',
+                // 'transaction_id'	    => 'WITHDRAW-'.$transactionString,
+                // 'transaction_status'      => 'PENDING',
             ]);
             
             // 6. Update finance summary
-            // $finance->decrement('total_income', $validatedData['amount']);
-            // $finance->increment('total_withdraws', $validatedData['amount']);
-            // $finance->decrement('capping_limit', $validatedData['amount']);
-            // $finance->save();
-
             $withdrawAmount = $validatedData['amount'];
 
             // Manual assignment ignores $fillable
-            $finance->total_income = max(0, $finance->total_income - $withdrawAmount);
-            $finance->capping_limit = max(0, $finance->capping_limit - $withdrawAmount);
-            $finance->total_withdraws += $withdrawAmount;
-            $finance->save();
+            // $finance->total_income = max(0, $finance->total_income - $withdrawAmount);
+            // $finance->capping_limit = max(0, $finance->capping_limit - $withdrawAmount);
+            // $finance->total_withdraws += $withdrawAmount;
+            // $finance->save();
 
             return ['status'  => true, 'message' => 'Withdraw success.', 'withdraw' => $withdraw];
         });

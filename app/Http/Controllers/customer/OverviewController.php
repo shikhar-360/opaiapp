@@ -10,6 +10,7 @@ use Carbon\Carbon;
 
 use App\Models\CustomerWithdrawsModel;
 use App\Models\CustomerEarningDetailsModel;
+use App\Models\CustomerFlushDetailsModel;
 
 use App\Services\WithdrawService;
 use App\Services\DashboardMatriceService;
@@ -54,6 +55,11 @@ class OverviewController extends Controller
         $customer->levelIncomeDatefrom  = $dateFrom->format('Y-m-d');
         $customer->levelIncomeDateto    = $dateTo->format('Y-m-d');
 
+        $flush_amount       = CustomerFlushDetailsModel::where('upline_id', $customer->id)
+                                                            ->where('app_id', $customer->app_id)
+                                                            ->where('reason', 'NOT-ELIGIBLE')
+                                                            ->sum('flush_amount');
+        $customer->totalFlushAmount = $flush_amount;
 
         // dd($customer);
         
