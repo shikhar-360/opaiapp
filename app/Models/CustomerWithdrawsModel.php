@@ -16,7 +16,7 @@ class CustomerWithdrawsModel extends Model
         'admin_charge_amount',	
         'net_amount',	
         'transaction_id',	
-        'transaction_type',
+        'transaction_status',
     ];
 
     public function customer()

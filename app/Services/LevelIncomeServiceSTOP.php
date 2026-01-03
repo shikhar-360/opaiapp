@@ -4,7 +4,6 @@ namespace App\Services;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 
 use App\Models\AppLevelPackagesModel;
 use App\Models\CustomerDepositsModel;
@@ -14,14 +13,12 @@ use App\Models\CustomerFlushDetailsModel;
 
 use App\Traits\ManagesCustomerHierarchy;
 use App\Traits\ManagesCustomerFinancials;
-use App\Traits\DepositEligibilityTrait;
 
 class LevelIncomeService
 {
 
     use ManagesCustomerHierarchy;
     use ManagesCustomerFinancials;
-    use DepositEligibilityTrait;
 
     /**
      * Calculate and record the ROI on ROI for elligible customers.
@@ -55,17 +52,10 @@ class LevelIncomeService
             $upline_level = $upline['level'];
             $opened_level = $upline['level_id']; //from DB
 
-            $hasOnlyFreeDeposit = $this->hasOnlyFreeDeposit($upline['id']);
-            // $hasNoDeposit = $this->hasNoDeposit($upline['id']);
-            $hasPaidDeposit = $this->hasPaidDeposit($upline['id']);
-
-            Log::info("Level income: hasOnlyFreeDeposit={$hasOnlyFreeDeposit}, hasPaidDeposit={$hasPaidDeposit}");
-
-            // $actualDepositCounts      =   CustomerDepositsModel::where('customer_id', $upline['id'])
-            //                                                             ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
-            //                                                             ->where('is_free_deposit', 0)
-            //                                                             ->count();
-            
+            $actualDepositCounts      =   CustomerDepositsModel::where('customer_id', $upline['id'])
+                                                                        ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                                        ->where('is_free_deposit', 0)
+                                                                        ->count();
             // Skip if package for this level does not exist
             if (!isset($levelPackages[$upline_level])) {
                 continue;
@@ -73,21 +63,14 @@ class LevelIncomeService
 
             // If do not have actual deposit then level income from 1st 
             $pkg = $levelPackages[1];
-            if($hasOnlyFreeDeposit)
-            {
-                $pkg = $levelPackages[1];
-            }
-            else 
+            if($actualDepositCounts > 0)
             {
                 $pkg = $levelPackages[$upline_level];
             }
 
-            Log::info("Level income: Selected package id={$pkg->id}");
-
             $rewardAmount = $deposit->amount * ($pkg->reward / 100);
 
-            Log::info("Level income: Reward={$rewardAmount}");
-
+            
             // if (($upline_level <= $opened_level) && ($upline['directs'] >= $pkg->directs)) {
 
             if ($upline['directs'] >= $pkg->directs) {
@@ -112,18 +95,10 @@ class LevelIncomeService
                     $uplineCustomer->save();
                 }*/
                 
-                Log::info('Level income created ', [
-                    'app_id'           => $deposit->app_id,
-                    'customer_id'      => $upline['id'],  // upline user
-                    'reference_id'     => $customer->id,
-                    'reference_amount' => $deposit->amount,
-                    'amount_earned'    => $rewardAmount,
-                    'earning_type'     => 'LEVEL-REWARD',
-                    'reference_level'  => $upline_level
-                ]);
 
                 $finance = $this->getCustomerFinance($upline['id'], $deposit->app_id);
                 $finance->increment('total_income', $rewardAmount);
+                // $finance->decrement('total_topup', $deposit->amount); 
                 $finance->save();
             }
             else
@@ -140,16 +115,6 @@ class LevelIncomeService
                     'flush_level'      => $upline_level,
                     'reason'           => 'NOT-ELIGIBLE'
                 ];
-
-                Log::info('Level flush created ', [
-                    'app_id'           => $deposit->app_id,
-                    'upline_id'        => $upline['id'],
-                    'reference_id'     => $customer->id,
-                    'reference_amount' => $deposit->amount,
-                    'flush_amount'     => $rewardAmount,
-                    'flush_level'      => $upline_level,
-                    'reason'           => 'NOT-ELIGIBLE'
-                ]);
             }
 
         }

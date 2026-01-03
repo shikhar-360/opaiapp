@@ -209,17 +209,7 @@
                   <!-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td> -->
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalDirectsCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamCount }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-emerald-600">
-                    @if($activeDirect->totaldeposit > 0)
-                      @if($activeDirect->ispaid_package)
-                      {{ number_format($activeDirect->totaldeposit, 2, '.', '') }}
-                      @else
-                      Free
-                      @endif
-                    @else
-                      -
-                    @endif
-                  </td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($activeDirect->totaldeposit, 2, '.', '') }}</td>
                   <!-- <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->registration_date }}</td> -->
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->activation_date ? \Carbon\Carbon::parse($activeDirect->activation_date)->format('d-m-Y'): '-' }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamInvestment }}</td>

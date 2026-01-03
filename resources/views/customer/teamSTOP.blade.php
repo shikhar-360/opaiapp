@@ -127,17 +127,7 @@
                   $100
                 </span>
               </td> -->
-              <td class="px-4 sm:px-5 py-3 text-emerald-600">
-                @if(!empty($myTeam->customer_deposits))
-                  @if($myTeam->ispaid_package)
-                  {{ number_format($myTeam->totaldeposit, 2, '.', '') }}
-                  @else
-                  Free
-                  @endif
-                @else
-                  -
-                @endif
-              </td>
+              <td class="px-4 sm:px-5 py-3 text-emerald-600">{{ number_format($myTeam->totaldeposit, 2, '.', '') }}</td>
               <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myTeam->referral_code }}</td>
               <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myTeam->sponsor_code }}</td>
               <!-- <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->registration_date }}</td> -->

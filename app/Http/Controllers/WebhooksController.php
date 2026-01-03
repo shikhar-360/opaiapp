@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
 use App\Models\NinepayTransactionsModel;
+use App\Models\CustomerWithdrawsModel;
+use App\Models\CustomersModel;
 
 use App\Services\Payment\NinePayService;
 
@@ -94,14 +96,56 @@ class WebhooksController extends Controller
             ], 404);
         }
 
-        
+        $totalPayable = (float)$txn->amount + (float)$txn->fees_amount;
+
         return response()->json([
             'status'           => 'success',
             'payment_status'   => $txn->payment_status,
-            'amount'           => (float)$txn->amount+(float)$txn->fees_amount,
+            'amount'           => $totalPayable,
             'received_amount'  => (float)$txn->received_amount,
             'pending_amount'   => (float)$txn->remaining_amount,
-            'is_paid'          => ($txn->remaining_amount <= 0)
+            // 'is_paid'          => ($txn->remaining_amount <= 0)
+            'is_paid'          => (
+                                    (float)$txn->remaining_amount <= 0
+                                    && (float)$txn->received_amount >= $totalPayable
+                                ) ? 1 : 0,
         ]);
+    }
+
+
+    public function getPendingWithdraw(Request $request)
+    {
+        $withdrawtxn = CustomerWithdrawsModel::where('transaction_status', 'pending')->whereNull('transaction_id')->first();
+
+        if (!$withdrawtxn) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No pending request'
+            ], 404);
+        }
+
+        $customer = CustomersModel::where('id', $withdrawtxn->customer_id)->first();
+
+        if($customer->wallet_address)
+        {
+            return response()->json([
+                'status'           => 'success',
+                'wallet_address'   => $customer->wallet_address,
+                'amount'           => $withdrawtxn->amount,
+                'request_id'       => $withdrawtxn->id
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No data'
+            ], 404);
+        }
+    }
+
+    public function postSuccessWithdraw (Request $request)
+    {
+        return true;
     }
 }

@@ -24,5 +24,7 @@ use App\Http\Controllers\TestController;
 
 Route::POST('ninepay-gateway-listener', [WebhooksController::class, 'topupWebhook']);
 Route::get('/payment-status/{transaction_id}', [WebhooksController::class, 'topupCheckStatus']);
+Route::get('/pending-withdraw', [WebhooksController::class, 'getPendingWithdraw']);
+Route::POST('/success-withdraw', [WebhooksController::class, 'postSuccessWithdraw']);
 
 Route::POST('/test/promotion1000', [TestController::class, 'testPromotionThounsand']);

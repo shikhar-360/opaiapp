@@ -56,7 +56,7 @@ class DashboardMatriceService
             return DB::table('customer_deposits')
                 ->whereIn('customer_id', $ids)
                 ->where('payment_status', 'success') 
-                ->where('package_id', '!=', 5)
+                ->where('is_free_deposit', 0)
                 ->sum('amount');
         }; 
 
@@ -64,7 +64,7 @@ class DashboardMatriceService
             if (empty($ids)) { return 0; }
             return DB::table('customer_withdraws')
                 ->whereIn('customer_id', $ids)
-                ->where('transaction_type', 'WITHDRAW') 
+                ->where('transaction_status', 'success') 
                 ->sum('amount');
         };
 
@@ -79,7 +79,7 @@ class DashboardMatriceService
         $veryFirstDeposit = DB::table('customer_deposits')
                                 ->where('customer_id', $customerId)
                                 ->where('payment_status', 'success') 
-                                ->where('package_id', '!=', 5)
+                                ->where('is_free_deposit', 0)
                                 ->first();
 
         $myPackages     =   CustomerDepositsModel::select('customer_id', 'app_id', 'package_id', DB::raw('SUM(amount) as total_amount'))
@@ -114,12 +114,12 @@ class DashboardMatriceService
         
         $myTotalWithdraws = CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_type', 'WITHDRAW')
+                                                        ->where('transaction_status', 'success')
                                                         ->sum('amount');
         
         $myWithdraws    =   CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_type', 'WITHDRAW')
+                                                        ->where('transaction_status', 'success')
                                                         ->get();
 
         $voteTypes      = ['HONEST', 'ACTIVE', 'HELPFULL'];
@@ -231,6 +231,7 @@ class DashboardMatriceService
                                             ->whereIn('customers.id', $activeDirectIds)
                                             // ----------------------------------------------------
                                             ->where('customer_deposits.payment_status', 'success') 
+                                            ->where('customer_deposits.is_free_deposit', 0)
                                             ->groupBy([
                                                 'customers.id',
                                                 'customer_deposits.customer_id', // Group by FK as well
@@ -269,6 +270,7 @@ class DashboardMatriceService
                 return DB::table('customer_deposits')
                     ->whereIn('customer_id', $ids)
                     ->where('payment_status', 'success') 
+                    ->where('is_free_deposit', 0)
                     ->sum('amount');
             };
 
@@ -276,7 +278,7 @@ class DashboardMatriceService
                 if (empty($ids)) { return 0; }
                 return DB::table('customer_withdraws')
                     ->whereIn('customer_id', $ids)
-                    ->where('transaction_type', 'WITHDRAW') 
+                    ->where('transaction_status', 'success') 
                     ->sum('amount');
             };
 
@@ -396,6 +398,7 @@ class DashboardMatriceService
                 return DB::table('customer_deposits')
                     ->whereIn('customer_id', $ids)
                     ->where('payment_status', 'success') 
+                    ->where('is_free_deposit', 0)
                     ->sum('amount');
             };
 
@@ -403,7 +406,7 @@ class DashboardMatriceService
                 if (empty($ids)) { return 0; }
                 return DB::table('customer_withdraws')
                     ->whereIn('customer_id', $ids)
-                    ->where('transaction_type', 'WITHDRAW') 
+                    ->where('transaction_status', 'success') 
                     ->sum('amount');
             };
 
@@ -448,6 +451,7 @@ class DashboardMatriceService
                                             ->leftJoin('customer_deposits', 'customers.id', '=', 'customer_deposits.customer_id')
                                             ->whereIn('customers.id', $allTeamIds)
                                             ->where('customer_deposits.payment_status', 'success') 
+                                            ->where('customer_deposits.is_free_deposit', 0)
                                             ->get();
         $sponsorIds = $customerData->pluck('sponsor_id')->unique()->filter()->toArray();
         $sponsors = CustomersModel::whereIn('id', $sponsorIds)->pluck('referral_code', 'id');
@@ -524,7 +528,8 @@ class DashboardMatriceService
                                                 ])
                                                 ->leftJoin('customer_deposits', function ($join) {
                                                     $join->on('customers.id', '=', 'customer_deposits.customer_id')
-                                                         ->where('customer_deposits.payment_status', 'success');
+                                                         ->where('customer_deposits.payment_status', 'success')
+                                                         ->where('customer_deposits.is_free_deposit', 0);
                                                 })
                                                 ->whereIn('customers.id', $allDirectIds)
                                                 ->groupBy([
@@ -561,6 +566,7 @@ class DashboardMatriceService
                 return DB::table('customer_deposits')
                     ->whereIn('customer_id', $ids)
                     ->where('payment_status', 'success') 
+                    ->where('is_free_deposit', 0)
                     ->sum('amount');
             };
 
@@ -568,7 +574,7 @@ class DashboardMatriceService
                 if (empty($ids)) { return 0; }
                 return DB::table('customer_withdraws')
                     ->whereIn('customer_id', $ids)
-                    ->where('transaction_type', 'WITHDRAW') 
+                    ->where('transaction_status', 'success') 
                     ->sum('amount');
             };
 
@@ -682,6 +688,7 @@ class DashboardMatriceService
                     ->where('customer_deposits.payment_status', 'success')
                     ->where('customer_deposits.created_at', '>=', $fromDate)
                     ->where('customer_deposits.app_id', $customer->app_id)
+                    ->where('customer_deposits.is_free_deposit', 0)
                     ->groupBy(
                         'customer_deposits.customer_id',
                         'customers.referral_code',

@@ -690,10 +690,27 @@
                   <td class="px-4 py-2">
                     <span
                       class="inline-block rounded-md border border-[var(--theme-skky-300)]/70 px-2 py-0.5 text-[11px] sm:text-xs bg-[var(--theme-skkky-50)] text-sky-800">
-                      {{ $myPkgs->package_id }}
+                      {{-- {{ $myPkgs->package_id }} --}}
+                      @php
+                      $pkgname = match ($myPkgs->package_id) {
+                                                                    5 => 'Free',
+                                                                    4 => 'OP4',
+                                                                    3 => 'OP3',
+                                                                    2 => 'OP2',
+                                                                    1 => 'OP1',
+                                                                    default => '-',
+                                                                };
+                      @endphp
+                      {{ $pkgname }}
                     </span>
                   </td>
-                  <td class="px-4 py-2">{{ number_format($myPkgs->amount, 2, '.', '') }} </td>
+                  <td class="px-4 py-2">
+                    @if($myPkgs->is_free_deposit)
+                    Free
+                    @else
+                    {{ number_format($myPkgs->amount, 2, '.', '') }} 
+                    @endif
+                  </td>
                   <td class="px-4 py-2 text-right">{{ $myPkgs->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach

@@ -49,7 +49,16 @@
     </div>
   </div>
 
-
+  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
+      <img src="{{ asset('assets/images/rank/emerald-.webp?v=1') }}"  class="w-9" alt="Flush">
+    </div>
+    <div>
+      <h3 class="text-base text-slate-600">Total Flush Amount</h3>
+      <p class="text-lg font-bold text-[var(--theme-high-text)]">{{ $customer->totalFlushAmount??'-' }} </p>
+    </div>
+  </div> -->
+  
   <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
       <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Level Points">

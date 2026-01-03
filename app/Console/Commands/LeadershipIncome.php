@@ -31,7 +31,7 @@ class LeadershipIncome extends Command
     {
         $svc->assignLeadership();
         $this->info('Leadership rank assigned successfully.');
-        Log::info('Leadership rank assigned successfully.');
+        // Log::info('Leadership rank assigned successfully.');
         return self::SUCCESS;
     }
 }
