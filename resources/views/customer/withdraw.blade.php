@@ -115,9 +115,19 @@
   </div>
 
   {{-- WITHDRAW BUTTON --}}
-  <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 max-w-lg mx-auto">
+  <div class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mb-8 max-w-xl mx-auto mt-4">
+    <button data-dialog-target="p2p-dialog" type="submit"
+      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
+      <span>P2P Withdraw</span>
+      <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+        aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
+        <path clip-rule="evenodd" fill-rule="evenodd"
+          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
+        </path>
+      </svg>
+    </button>
     <button data-dialog-target="dialog" type="submit"
-      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
+      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide  rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
       <span>Earning Withdraw</span>
       <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
         aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
@@ -126,16 +136,17 @@
         </path>
       </svg>
     </button>
-        <!-- <button data-dialog-target="withdraw-success" type="button"
-      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide mt-4 rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold shadow-[0_8px_20px_rgba(56,189,248,.30)] hover:shadow-[0_14px_28px_rgba(56,189,248,.45)] transition-all duration-300 ease-out">
-      <span>Withdraw Success</span>
+      
+          <button data-dialog-target="self-transfer-dialog" type="submit"
+      class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide  rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
+      <span>Self Transfer</span>
       <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
         aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
         <path clip-rule="evenodd" fill-rule="evenodd"
           d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
         </path>
       </svg>
-    </button> -->
+    </button>
   </div>
 
   {{-- WITHDRAWALS TABLE CARD (SAME THEME AS DIRECTS TABLE) --}}
@@ -289,7 +300,7 @@
       <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
       <div class="pointer-events-none absolute -bottom-14 -left-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
 
-      <div class="relative flex items-start justify-between gap-3">
+      <div class="relative flex items-center justify-between gap-3">
         <h2 class="flex shrink-0 items-center text-xl font-semibold text-slate-900 tracking-tight">
             Withdraw
           </h2>
@@ -453,14 +464,13 @@
               <div class="flex items-center justify-center pt-1">
                 <button {{ $customer->myAvailableBalance < 10 ? '':'' }}
                         type="submit"
-                        class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-2
+                        class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
                        text-sm md:text-base capitalize tracking-wide mt-2
                        rounded-lg border border-[var(--theme-skky-500)]
                        bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
                        font-semibold
-                       shadow-[0_8px_20px_rgba(56,189,248,.30)]
-                       hover:shadow-[0_14px_28px_rgba(56,189,248,.45)]
-                       active:scale-95 transition-all duration-300 ease-out group">
+                       hover:-translate-y-1
+                       active:scale-95 transition-all duration-300 ease-out group cursor-pointer">
 
                 <span>Withdraw</span>
                 <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
@@ -482,7 +492,7 @@
   </div>
 </div>
 
-<!-- WITHDRAW SUCCESS POPUP -->
+<!-- WITHDRAW SUCCESS POPUP --> 
 <div data-dialog-backdrop="withdraw-success"
   class="fixed inset-0 z-[999] grid place-items-center
          bg-black/60 backdrop-blur-sm p-3
@@ -582,6 +592,286 @@
 
 
 
+
+<!-- P2P WITHDRAW POPUP -->
+<div data-dialog-backdrop="p2p-dialog"
+  class="fixed inset-0 z-[999] grid place-items-center
+         bg-black/60 backdrop-blur-sm p-3
+         pointer-events-none opacity-0 transition-opacity duration-300">
+
+  <div data-dialog="p2p-dialog" class="w-full max-w-xl">
+    <div
+      class="relative p-5 md:p-7 rounded-2xl w-full mx-auto overflow-hidden text-left
+             border border-slate-200 bg-white
+             shadow-[0_15px_40px_rgba(15,23,42,.10)] backdrop-blur-2xl">
+
+      <!-- glow -->
+      <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-14 -left-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
+
+      <!-- header -->
+      <div class="relative flex items-center justify-between gap-3">
+        <h2 class="flex shrink-0 items-center text-xl font-semibold text-slate-900 tracking-tight">
+          P2P Withdraw
+        </h2>
+
+        <button data-dialog-close="p2p-dialog"
+          class="relative h-9 w-9 bg-white border border-slate-200 flex items-center justify-center
+                 rounded-lg text-center hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)]
+                 transition"
+          type="button">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+            class="h-5 w-5 text-slate-700">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="relative pt-5 leading-normal">
+
+        <!-- Available Balance Card -->
+        <div
+          class="relative group rounded-2xl overflow-hidden
+                 border border-slate-200 bg-white
+                 shadow-[0_12px_32px_rgba(15,23,42,.08)]
+                 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--theme-skky-500)]/70
+                 hover:shadow-[0_16px_38px_rgba(59,130,246,0.18)] mb-6 h-20">
+
+          <div class="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full blur-3xl bg-[var(--theme-cyyan-400)]/15"></div>
+          <div class="pointer-events-none absolute -bottom-12 -right-12 w-36 h-36 rounded-full blur-3xl bg-emerald-400/15"></div>
+
+          <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
+            <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
+                        bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
+              <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}" width="100" height="100" alt="Logo"
+                class="w-9 h-9 object-contain">
+            </div>
+
+            <div class="w-full min-w-0">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium mb-1">
+                Available Balance
+              </p>
+              <p class="text-sm">
+                <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-lg tabular-nums">
+                  {{ $customer->myAvailableBalance > 0 ? $customer->myAvailableBalance : 0 }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- P2P Form -->
+       <form class="relative space-y-4" action="#" method="POST">
+  @csrf
+
+  {{-- Show Username --}}
+  <div class="space-y-1.5">
+    <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+      Username
+    </p>
+
+    <div
+      class="relative flex items-center p-3 rounded-lg gap-3
+             border border-slate-200 bg-white
+             shadow-sm">
+      <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
+        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+
+      <div class="w-full border-l border-slate-200 pl-4">
+        <p class="text-slate-900 text-sm md:text-base font-semibold">
+          {{ $p2pUserName ?? 'N/A' }}
+        </p>
+        <p class="text-xs text-slate-500">
+          ID: {{ $p2pUserId ?? 'N/A' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {{-- Show Amount --}}
+  <div class="space-y-1.5">
+    <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+      Amount
+    </p>
+
+    <div
+      class="relative flex items-center p-3 rounded-lg gap-3
+             border border-slate-200 bg-white
+             shadow-sm">
+      <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
+        <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5" />
+        <path d="M3 5V9C3 10.6569 7.02944 12 12 12C16.9706 12 21 10.6569 21 9V5" stroke="currentColor" stroke-width="1.5" />
+        <path d="M3 9V13C3 14.6569 7.02944 16 12 16C16.9706 16 21 14.6569 21 13V9" stroke="currentColor" stroke-width="1.5" />
+        <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+
+      <div class="w-full border-l border-slate-200 pl-4">
+        <p class="text-slate-900 text-sm md:text-base font-extrabold tabular-nums">
+          {{ $customer->appData->currency }} {{ $p2pAmount ?? '0.00' }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  {{-- Hidden inputs for submit --}}
+  <input type="hidden" name="user_id" value="{{ $p2pUserId ?? '' }}">
+  <input type="hidden" name="amount" value="{{ $p2pAmount ?? '' }}">
+
+  {{-- Button --}}
+  <div class="flex items-center justify-center pt-1">
+    <button type="submit"
+      class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
+             text-sm md:text-base capitalize tracking-wide mt-2
+             rounded-lg border border-[var(--theme-skky-500)]
+             bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
+             font-semibold
+            hover:-translate-y-1 
+             active:scale-95 transition-all duration-300 ease-out group cursor-pointer">
+      <span>Transfer</span>
+      <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
+        aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+        <path clip-rule="evenodd" fill-rule="evenodd"
+          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"></path>
+      </svg>
+    </button>
+  </div>
+</form>
+
+      </div>
+
+      <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- SELF TRANSFER POPUP -->
+<div data-dialog-backdrop="self-transfer-dialog"
+  class="fixed inset-0 z-[999] grid place-items-center
+         bg-black/60 backdrop-blur-sm p-3
+         pointer-events-none opacity-0 transition-opacity duration-300">
+
+  <div data-dialog="self-transfer-dialog" class="w-full max-w-xl">
+    <div
+      class="relative p-5 md:p-7 rounded-2xl w-full mx-auto overflow-hidden text-left
+             border border-slate-200 bg-white
+             shadow-[0_15px_40px_rgba(15,23,42,.10)] backdrop-blur-2xl">
+
+      <!-- glow -->
+      <div class="pointer-events-none absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--theme-skky-300)]/20 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-14 -left-10 w-40 h-40 rounded-full bg-cyan-300/20 blur-3xl"></div>
+
+      <!-- header -->
+      <div class="relative flex items-center justify-between gap-3">
+        <h2 class="flex shrink-0 items-center text-xl font-semibold text-slate-900 tracking-tight">
+          Self Transfer
+        </h2>
+
+        <button data-dialog-close="self-transfer-dialog"
+          class="relative h-9 w-9 bg-white border border-slate-200 flex items-center justify-center
+                 rounded-lg text-center hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)]
+                 transition"
+          type="button">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+            class="h-5 w-5 text-slate-700">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="relative pt-5 leading-normal">
+
+        <!-- Available Balance Card -->
+        <div
+          class="relative group rounded-2xl overflow-hidden 
+                 border border-slate-200 bg-white
+                 shadow-[0_12px_32px_rgba(15,23,42,.08)]
+                 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--theme-skky-500)]/70
+                 hover:shadow-[0_16px_38px_rgba(59,130,246,0.18)] mb-6 h-20">
+
+          <div class="pointer-events-none absolute -top-10 -left-10 w-32 h-32 rounded-full blur-3xl bg-[var(--theme-cyyan-400)]/15"></div>
+          <div class="pointer-events-none absolute -bottom-12 -right-12 w-36 h-36 rounded-full blur-3xl bg-emerald-400/15"></div>
+
+          <div class="relative z-10 flex items-center gap-3 w-full h-full p-4 md:p-5">
+            <div class="min-w-14 w-14 h-14 flex items-center justify-center rounded-2xl
+                        bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
+              <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}" width="100" height="100" alt="Logo"
+                class="w-9 h-9 object-contain">
+            </div>
+
+            <div class="w-full min-w-0">
+              <p class="text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium mb-1">
+                Available Balance
+              </p>
+              <p class="text-sm">
+                <span class="text-[var(--theme-high-text)] font-extrabold text-lg sm:text-lg tabular-nums">
+                  {{ $customer->myAvailableBalance > 0 ? $customer->myAvailableBalance : 0 }}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Self Transfer Form -->
+        <form class="relative space-y-4" action="#" method="POST">
+          @csrf
+
+          <!-- Amount -->
+          <div class="space-y-1.5">
+            <label for="self_amount"
+              class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+              Enter Amount
+            </label>
+
+            <div
+              class="relative flex items-center p-3 rounded-lg gap-3
+                     border border-slate-200 bg-white
+                     focus-within:border-[var(--theme-skky-400)] focus-within:ring-1 focus-within:ring-[var(--theme-skky-200)]
+                     focus-within:bg-[var(--theme-skkky-50)]/60 transition-colors">
+              <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
+                <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 5V9C3 10.6569 7.02944 12 12 12C16.9706 12 21 10.6569 21 9V5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 9V13C3 14.6569 7.02944 16 12 16C16.9706 16 21 14.6569 21 13V9" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor" stroke-width="1.5" />
+              </svg>
+
+              <input type="number" step="0.01" name="amount" id="self_amount" autocomplete="off"
+                placeholder="Enter Amount (min 10)" required
+                class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none
+                       text-sm md:text-base [caret-color:#60a5fa] border-l border-slate-200 pl-4">
+            </div>
+          </div>
+
+          <!-- Button -->
+          <div class="flex items-center justify-center pt-1">
+            <button type="submit"
+              class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
+                     text-sm md:text-base capitalize tracking-wide mt-2
+                     rounded-lg border border-[var(--theme-skky-500)]
+                     bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
+                     font-semibold
+                     hover:-translate-y-1 cursor-pointer
+                     active:scale-95 transition-all duration-300 ease-out group">
+              <span>Transfer</span>
+              <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
+                aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                  d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"></path>
+              </svg>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
+      <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
+    </div>
+  </div>
+</div>
+
+
 </section>
 @endsection
 
@@ -602,6 +892,7 @@ document.addEventListener('click', function (e) {
     if (!closeBtn) return;
 
     const dialogName = closeBtn.getAttribute('data-dialog-close');
+
 
     const backdrop = document.querySelector(
         `[data-dialog-backdrop="${dialogName}"]`
