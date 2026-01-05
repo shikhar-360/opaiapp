@@ -8,20 +8,20 @@
 <section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 ">
 
   {{-- ALERT / INFO BANNER --}}
-  <div
-    class="inline-flex items-center gap-2 px-4 py-2.5 mb-6 rounded-2xl border border-slate-200
+  <!-- <div
+    class="hidden inline-flex items-center gap-2 px-4 py-2.5 mb-6 rounded-2xl border border-slate-200
            bg-white shadow-[0_10px_30px_rgba(15,23,42,.08)] relative overflow-hidden">
     {{-- soft glow --}}
-    <div class="absolute inset-0 opacity-60 pointer-events-none">
+    <div class="hidden absolute inset-0 opacity-60 pointer-events-none">
       <div class="absolute -left-10 -top-10 w-32 h-32 bg-[var(--theme-skky-200)]/40 rounded-full blur-3xl"></div>
       <div class="absolute -right-12 -bottom-12 w-40 h-40 bg-rose-200/40 rounded-full blur-3xl"></div>
     </div>
 
-    <span class="relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--theme-skky-400)] animate-pulse"></span>
-    <p class="relative text-xs sm:text-sm md:text-base text-slate-800">
+    <span class="hidden relative inline-flex h-2.5 w-2.5 rounded-full bg-[var(--theme-skky-400)] animate-pulse"></span>
+    <p class="hidden relative text-xs sm:text-sm md:text-base text-slate-800">
       Due to BSC congestion, withdrawals are being processed slowly.
     </p>
-  </div>
+  </div> -->
 
   {{-- TOP WITHDRAW STATS (THEME SAME AS DIRECTS PAGE CARDS) --}}
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 sm:gap-5 mb-8">
@@ -76,7 +76,7 @@
 
 
     {{-- Wallet Balance --}}
-<div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+<div class="hidden neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
   <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 border border-blue-200">
     <img src="{{ asset('assets/images/icons/wallet-balance.webp?v=1') }}"  width="100" height="100" alt="Wallet Balance"
          class="w-9 h-9 object-contain">
@@ -95,12 +95,12 @@
   </div>
   <div>
     <h3 class="text-base text-slate-600">Perks Wallet</h3>
-    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">0 TOKEN</p>
+    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">OPX</p>
   </div>
 </div>
 
 {{-- Token Balance --}}
-<div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+<div class="hidden neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
   <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 border border-blue-200">
     <img src="{{ asset('assets/images/icons/token-balance.webp?v=1') }}"  width="100" height="100" alt="Perks Balance"
          class="w-9 h-9 object-contain">

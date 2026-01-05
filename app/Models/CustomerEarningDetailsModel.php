@@ -16,6 +16,7 @@ class CustomerEarningDetailsModel extends Model
 	    'amount_earned',
 	    'earning_type',
 	    'status',
-	    'reference_level'
+	    'reference_level',
+	    'flush_amount'
     ];
 }

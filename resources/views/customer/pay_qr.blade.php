@@ -29,7 +29,7 @@
 
           <div class="grid grid-cols-2 gap-5">
             {{-- POLYGON --}}
-            <div onclick="chooseCoin('evm', 'polygon')" class="text-center cursor-pointer">
+            <div onclick="chooseCoin('evm', 'polygon')" class=" text-center cursor-pointer">
               <div
                 class="p-4 rounded-xl border border-slate-200 bg-white
                        hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition-colors">
@@ -109,7 +109,7 @@
                 <path d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z" fill="currentColor"></path>
                 </svg>
               </span>
-              Choose Coin
+              Choose Coin (<span id="selected_network" class="uppercase"></span>)
             </h3>
 
             <div class="w-full flex-1 text-center mx-auto mt-6">
@@ -250,10 +250,10 @@
           <div class="flex items-center gap-3">
             <img src="/assets/images/9logo.png" width="100" height="100" alt="Logo" class="h-8 w-auto invert">
             <div class="flex flex-col">
-              <span class="text-xs uppercase tracking-[0.15em] text-slate-500">EVM Network</span>
+              <!-- <span class="text-xs uppercase tracking-[0.15em] text-slate-500">EVM Network</span> -->
               <h3 class="text-md sm:text-xl font-semibold text-slate-900 flex items-center gap-1">
                 <span class="uppercase text-[var(--theme-high-text)]" id="chainSelected"></span>
-                <span class="text-slate-800">Chain</span>
+                <span class="text-slate-800 uppercase" id="selected_network2">{{ $customer->QRs['network_name'] ?? '' }}</span>
               </h3>
             </div>
           </div>
@@ -291,7 +291,7 @@
               <div class="bg-white px-3 py-2 rounded-lg flex items-center justify-between gap-2 border border-slate-200">
                 <div class="flex flex-col gap-1 text-left w-full">
                   <span id="copyOgEvmAddress" class="text-xs font-mono text-slate-800 truncate">
-                    {{$hasQR ? $customer->QRs['ethAddress']:''}}
+                    {{$hasQR ? substr($customer->QRs['ethAddress'], 0, 10) . '...' . substr($customer->QRs['ethAddress'], -10):''}}
                   </span>
                 </div>
                 <button type="button"
@@ -481,6 +481,8 @@
     document.getElementById('coinChoose').style.display = 'block';
     document.getElementById('paymentChoose').style.display = 'none';
     
+    document.getElementById('selected_network').textContent = network;
+    document.getElementById('selected_network2').textContent = network;
     
   }
 
@@ -592,9 +594,10 @@ function checkPaymentStatus() {
                     document.getElementById("pendingAmount").textContent = Number(data.pending_amount).toFixed(2);
                     document.getElementById("transaction_status").textContent = data.payment_status.toUpperCase();
                     // When payment is completed
-                    if (data.is_paid === true) {
-                        showToast("success", "Payment received!");
-                        clearInterval(checkInterval);
+                    if (Boolean(data.is_paid)) 
+                    {
+                        // showToast("success", "Payment received!");
+                        // clearInterval(checkInterval);
                         window.location.href = "/pay-topup";
                     }
                 }

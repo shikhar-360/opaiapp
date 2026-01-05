@@ -3,6 +3,7 @@ namespace App\Services;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
@@ -55,6 +56,17 @@ class DepositService
 
     public function createPendingDeposit($customer, $package, $amount, $txnId)
     {
+        Log::info('New Deposit Created ', [
+            'app_id'        => $customer->app_id,
+            'customer_id'   => $customer->id,
+            'package_id'    => $package->id,
+            'amount'        => $amount,
+            'roi_percent'   => $package->roi_percent,
+            'transaction_id'=> $txnId,
+            'payment_status'=> CustomerDepositsModel::STATUS_PENDING,
+            'coin_price'    => 2
+        ]);
+
         return CustomerDepositsModel::create([
             'app_id'        => $customer->app_id,
             'customer_id'   => $customer->id,

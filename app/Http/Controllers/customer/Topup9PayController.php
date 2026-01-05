@@ -61,6 +61,7 @@ class Topup9PayController extends Controller
                 'qrFeesAmount'      => $pendingTxn->fees_amount,
                 'qrPendingAmount'   => $pendingTxn->remaining_amount,
                 'transaction_id'    => $pendingTxn->transaction_id,
+                'network_name'      => $pendingTxn->network_name,
             ];
         }
         // dd($customer);

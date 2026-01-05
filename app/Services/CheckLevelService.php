@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Facades\Log;
+
 use App\Models\UsersModel;
 use App\Models\AppLevelPackagesModel;
 use App\Models\CustomersModel;
-use Illuminate\Support\Facades\Log;
+
+use App\Traits\ManagesCustomerHierarchy;
 
 class CheckLevelService
 {
+    use ManagesCustomerHierarchy;
     /**
      * Check & update user level based on directs
      */
@@ -95,5 +99,34 @@ class CheckLevelService
             'message' => 'Levels updated',
             'data' => $results
         ];
+    }
+
+    /*public function checkCustomerLevel($customer)
+    {
+        $directsCount = CustomersModel::join('customer_deposits', 'customer_deposits.customer_id', '=', 'customers.id')
+            ->where('customers.sponsor_id', $customer->id)
+            ->where('customer_deposits.payment_status', 'success')
+            ->where('customer_deposits.is_free_deposit', 0)
+            ->distinct('customers.id')
+            ->count('customers.id');
+
+        $levelPackage = AppLevelPackagesModel::where('app_id', $customer->app_id)
+            ->where('directs', '<=', $directsCount)
+            ->orderBy('directs', 'DESC')
+            ->first();
+
+        return $levelPackage?->id; // 👈 only return level id
+    }*/
+
+    public function updateCustomerActualLevel()
+    {
+        CustomersModel::where('status', 1)
+                        ->chunk(200, function ($customers) {
+                            foreach ($customers as $customer) {
+                                $customer->update([
+                                    'actual_level_id' => $this->getLevel($customer) ?? 1
+                                ]);
+                            }
+                        });
     }
 }

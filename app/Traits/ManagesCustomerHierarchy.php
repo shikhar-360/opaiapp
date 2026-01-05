@@ -56,6 +56,7 @@ trait ManagesCustomerHierarchy
                 "directs"        => count($directs),
                 "active_directs" => count($activeDirects),
                 "level_id"       => $sponsor->level_id,
+                "actual_level"  => $sponsor->actual_level_id,
             ];
 
             $current = $sponsor;

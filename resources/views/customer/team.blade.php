@@ -15,6 +15,19 @@
 
   <h2 class="text-lg font-semibold mb-3 text-slate-900">My Extended Circle</h2>
 
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 mb-5">
+    {{-- Total Team Investment --}}
+    <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+      <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
+        <img src="{{ asset('assets/images/icons/total-team-investment.webp?v=1') }}"  class="w-9" alt="Extended Circle Contribution">
+      </div>
+      <div>
+        <h3 class="text-base text-slate-600">Extended Circle Contribution</h3>
+        <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+      </div>
+    </div>
+  </div>
+
   <div
     class="p-4 md:p-6 text-slate-900 rounded-2xl w-full mx-auto border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.10)] relative overflow-hidden text-left">
 
@@ -81,7 +94,8 @@
               </th> -->
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                All Package
+                <!-- All Packages -->
+                Membership
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
@@ -101,7 +115,8 @@
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                Team Volume
+                <!-- Team Volume -->
+                Core Volume
               </th>
               <th
                 class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
@@ -127,21 +142,45 @@
                   $100
                 </span>
               </td> -->
-              <td class="px-4 sm:px-5 py-3 text-emerald-600">
-                @if(!empty($myTeam->customer_deposits))
-                  @if($myTeam->ispaid_package)
-                  {{ number_format($myTeam->totaldeposit, 2, '.', '') }}
-                  @else
-                  Free
-                  @endif
+              <td class="px-4 sm:px-5 py-3 text-emerald-600"> 
+                
+                @php
+                    $paidAmount = $myTeam->customerDeposits
+                        ->where('is_free_deposit', 0)
+                        ->sum('amount');
+                @endphp
+
+                @if($paidAmount > 0)
+                    {{ number_format($paidAmount, 2, '.', '') }}
+                @elseif($myTeam->isFreePackage)
+                    Free
                 @else
-                  -
+                    -
                 @endif
+
+                {{-- @if($myTeam->ispaid_package && $myTeam->customer_deposits > 0)
+                    {{ number_format($myTeam->customer_deposits, 2, '.', '') }}
+                @elseif(!$myTeam->ispaid_package)
+                    Free
+                @else
+                    -
+                @endif --}}
               </td>
               <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $myTeam->referral_code }}</td>
               <td class="px-4 sm:px-5 py-3 text-slate-800">{{ $myTeam->sponsor_code }}</td>
               <!-- <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->registration_date }}</td> -->
-              <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->activation_date ? \Carbon\Carbon::parse($myTeam->activation_date)->format('d-m-Y'): '-' }}</td>
+              <td class="px-4 sm:px-5 py-3 text-slate-700">
+                <!-- {{ $myTeam->activation_date ? \Carbon\Carbon::parse($myTeam->activation_date)->format('d-m-Y'): '-' }} -->
+                @php
+                $activationDate = $myTeam->customerDeposits
+                                              ->sortBy('created_at')
+                                              ->where('is_free_deposit', 0)
+                                              ->first()?->created_at;
+                @endphp
+                 
+                {{ optional($activationDate)->format('d-m-Y') ?? '-' }}
+
+              </td>
               <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $myTeam->totalTeamInvestment ?? 0 }}</td>
               <td class="px-4 sm:px-5 py-3">
                 @if($myTeam->leadership_rank > 0)

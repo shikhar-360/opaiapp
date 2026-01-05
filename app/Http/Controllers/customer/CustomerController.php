@@ -55,7 +55,11 @@ class CustomerController extends Controller
         // dd(Hash::make($pp));
         // dd($request);
         $customer = Auth::guard('customer')->user();
-        
+        // dd($customer);
+        // $customerUplines = $this->getUplines($customer);
+        // dd($customerUplines);
+        // dd($this->getLevel($customer));
+
         $this->check_level_service->checkCustomerLevel($customer);
 
         // dd($customer);
@@ -65,7 +69,6 @@ class CustomerController extends Controller
 
         $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
         // dd($dashboard_matrics);
-
 
         $customer->totalDirectInvestment    =   $dashboard_matrics['totalDirectInvestment'];
         $customer->totalActiveDirectVolume  =   $dashboard_matrics['totalActiveDirectVolume'];
@@ -409,14 +412,11 @@ class CustomerController extends Controller
         $customer = Auth::guard('customer')->user();
         // dd($customer->leadershipIncome);
         $customer->myTeamData = $this->dashbaord_matrice_services->getMyTeamDataGrouped($customer->id);
-        
-        // dd($customer->myTeamData);
+        $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
+        $customer->totalTeamInvestment      =   $dashboard_matrics['totalTeamInvestment'];
+        $customer->appData                 =   $dashboard_matrics['appData'];
 
-        // foreach($customer->activeDirectsData as $keys => $activeDirect)
-        // {
-        //     echo "<pre>"; print_r($activeDirect); echo "</pre>";
-        // }
-        // dd($customer->activeDirectsData);
+        // dd($customer);
         return view('customer.team', compact('customer'));
     }
 

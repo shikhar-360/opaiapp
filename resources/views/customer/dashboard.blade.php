@@ -257,8 +257,8 @@
                   class="font-semibold text-md md:text-lg text-[var(--theme-primary-text)] truncate leading-tight">
                   Badge of Honor
                   </h3>
-                  <span
-                    class="inline-flex items-center gap-1 rounded-full bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)]">
+                  <!-- <span
+                    class="hidden inline-flex items-center gap-1 rounded-full bg-[var(--theme-skkky-50)] border border-[var(--theme-skky-200)] px-3 py-1 text-[11px] sm:text-xs font-medium text-[var(--theme-primary-text)]">
                     Current Rank: <span class="font-semibold">
                       @php
                       $rank = match ($customer->leadership_rank) {
@@ -270,11 +270,8 @@
                                                                     default => '',
                                                                 };
                       @endphp
-
                       {{ $rank }}
-                      
-                      {{-- {{ $customer->leadership_rank ? 'Star '.$customer->leadership_rank : '-' }} --}}
-                    </span>
+                    </span> -->
                   </span>
                 </div>
                 <!-- stars row -->
@@ -360,7 +357,7 @@
                   </div>
 
                   <!-- Points -->
-                  <div>
+                  <div class="hidden">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <span>Points</span>
                       <span>{{ $customer->leadership_points??0 }} / {{ number_format($customer->leader_total_points, 0) }}</span>
@@ -654,7 +651,7 @@
 
       {{-- MY PACKAGES TABLE --}}
       <div class="mt-6">
-        <h2 class="text-lg font-semibold mb-3 text-slate-900">My Packages</h2>
+        <h2 class="text-lg font-semibold mb-3 text-slate-900">Membership</h2>
         <div
           class="p-4 md:p-6 text-slate-900 rounded-2xl w-full mx-auto border border-slate-200 bg-white backdrop-blur-2xl shadow-[0_15px_40px_rgba(15,23,42,.12)] relative overflow-hidden text-left">
           <div class="absolute inset-0 opacity-80 pointer-events-none">
@@ -665,17 +662,19 @@
             <table class="w-full text-left border-collapse pb-4 text-sm text-slate-900">
               <thead>
                 <tr class="bg-slate-100 text-slate-900">
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px] text-center">
                     Sr No.
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
-                    Package
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px] text-center">
+                    <!-- Package -->
+                    Membership
                   </th>
-                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
-                    Amount
-                  </th>
+                  <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px]">
+                   -- Amount --
+                    Volume
+                  </th> -->
                   <th
-                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px] text-right">
+                    class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-[var(--theme-primary-text)] text-sm sm:text-[16px] text-center">
                     Date
                   </th>
                 </tr>
@@ -686,32 +685,32 @@
                 @endphp
                 @foreach($customer->myPackageDetails as $myPkgs)
                 <tr class="hover:bg-slate-200 transition-colors">
-                  <td class="px-4 py-2">{{ $sr++ }}</td>
-                  <td class="px-4 py-2">
+                  <td class="w-1/3 px-4 py-2 text-center">{{ $sr++ }}</td>
+                  <td class="w-1/3 px-4 py-2 text-center">
                     <span
                       class="inline-block rounded-md border border-[var(--theme-skky-300)]/70 px-2 py-0.5 text-[11px] sm:text-xs bg-[var(--theme-skkky-50)] text-sky-800">
                       {{-- {{ $myPkgs->package_id }} --}}
                       @php
                       $pkgname = match ($myPkgs->package_id) {
                                                                     5 => 'Free',
-                                                                    4 => 'OP4',
-                                                                    3 => 'OP3',
-                                                                    2 => 'OP2',
-                                                                    1 => 'OP1',
+                                                                    4 => 'OP50',
+                                                                    3 => 'OP25',
+                                                                    2 => 'OP10',
+                                                                    1 => 'OP5',
                                                                     default => '-',
                                                                 };
                       @endphp
                       {{ $pkgname }}
                     </span>
                   </td>
-                  <td class="px-4 py-2">
-                    @if($myPkgs->is_free_deposit)
+                  <!-- <td class="px-4 py-2">
+                    @if($myPkgs->package_id == 5 )
                     Free
                     @else
                     {{ number_format($myPkgs->amount, 2, '.', '') }} 
                     @endif
-                  </td>
-                  <td class="px-4 py-2 text-right">{{ $myPkgs->created_at->format('d-m-Y') }}</td>
+                  </td> -->
+                  <td class="w-1/3 px-4 py-2 text-center">{{ $myPkgs->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -758,7 +757,7 @@
                 data-main-target="#volume-content"
                 aria-selected="false"
                 class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
-                <span class="relative z-[1]">Growth</span>
+                <span class="relative z-[1]">Volume</span>
               </button>
             </li>
 
@@ -776,7 +775,7 @@
 
           <div class="hidden sm:flex items-center gap-2 text-[11px] text-slate-500 pr-2">
             <span class="inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-            <span>Cores / Growth / Votes </span>
+            <span>Cores / Volume / Voices </span>
           </div>
         </div>
       </div>
@@ -1417,7 +1416,7 @@
 
           {{-- SUB TABS (Votes) --}}
           <div
-            class="incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner mb-4">
+            class="hidden incomeOverview_tab flex items-center justify-between gap-3 flex-wrap p-1.5 rounded-2xl bg-slate-100/80 backdrop-blur-md border border-slate-200 shadow-inner mb-4">
             <ul class="flex gap-2" data-tabs-toggle="#votes-tab-content" role="tablist">
               <li role="presentation">
                 <button data-tabs-target="#votes-panel-daily" type="button" role="tab" aria-selected="true"
@@ -1457,7 +1456,18 @@
 
             {{-- Votes Daily --}}
             <div id="votes-panel-daily" role="tabpanel">
-              <div class="overflow-x-auto">
+
+              <div class="relative flex flex-col items-center text-center">
+                <h3 class="mt-4 text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                  Coming Soon
+                </h3>
+
+                <p class="mt-2 text-sm sm:text-base text-slate-500 max-w-xl">
+                  We are building this section . Stay tuned!
+                </p>
+              </div>
+
+              <div class="hidden overflow-x-auto">
                 <div id="votes_tabledata1_wrapper" class="dataTables_wrapper no-footer">
 
                   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3 relative z-10">

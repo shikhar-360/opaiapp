@@ -106,13 +106,13 @@ class NinePayService
         }
     }
 
-    public function topupReceived($customerId, $amountReceived, $transactionId, $transactionHash)
+    public function topupReceived($customerId, $amountReceived, $transactionId, $transactionHash, $amountAfterfee)
     {
         $appid = 0;
         
-        // dd($customerId, $amountReceived, $transactionId, $transactionHash);
+        // dd($customerId, $amountReceived, $transactionId, $transactionHash, $amountAfterfee);
         $refreshedFinance = array();
-        DB::transaction(function () use ($customerId, $amountReceived, $transactionId, $transactionHash) {
+        DB::transaction(function () use ($customerId, $amountReceived, $transactionId, $transactionHash, $amountAfterfee) {
 
             $customer = CustomersModel::where('id',$customerId)->first();
 
@@ -126,8 +126,6 @@ class NinePayService
                                                         ->first();
 
             // dd($pendingPayment);
-
-            
 
             if ($pendingPayment) {
                 
@@ -181,7 +179,7 @@ class NinePayService
                 // dd("3", $pendingPayment);
 
                 $finance = $this->getCustomerFinance($customerId, $customer->app_id);
-                $finance->increment('total_topup', $amountReceived);
+                $finance->increment('total_topup', $amountAfterfee);
                 $finance->save();
             }
         });
