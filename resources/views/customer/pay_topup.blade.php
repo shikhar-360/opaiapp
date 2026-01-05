@@ -35,7 +35,7 @@
             @if($customer->isFreePackage > 0)
               Free Membership Available
             @else
-              Free Membership Not Available
+              Free Membership (Non-Repeatable)
             @endif
             </span>
             <button type="button"
@@ -371,6 +371,15 @@
         </h3>
 
         <div class="space-y-4 relative z-10">
+
+          <div class="flex items-start gap-3">
+            <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)]"></div>
+            <p class="text-sm leading-relaxed text-slate-600">
+              <span class="text-slate-900 font-medium">Free Membership:</span>
+              The Free Membership can be activated only once per account. Once utilized, this option will no longer be available.
+            </p>
+          </div>
+
           <div class="flex items-start gap-3">
             <div class="mt-[6px] w-2.5 h-2.5 rounded-full bg-gradient-to-r from-[var(--theme-skky-400)] to-[var(--theme-cyyan-400)]"></div>
             <p class="text-sm leading-relaxed text-slate-600">
@@ -387,6 +396,7 @@
               The top-up balance is not applicable for any other purposes.
             </p>
           </div>
+          
         </div>
       </div>
     </div>

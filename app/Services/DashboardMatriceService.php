@@ -515,7 +515,7 @@ class DashboardMatriceService
                                                 ])
                                                 ->get();*/
 
-        $customerData = CustomersModel::select([
+        /*$customerData = CustomersModel::select([
                                                     'customers.id',
                                                     'customers.name',
                                                     'customers.wallet_address',
@@ -541,7 +541,36 @@ class DashboardMatriceService
                                                     'customers.created_at',
                                                     'customers.leadership_champions_rank'
                                                 ])
+                                                ->get();*/
+
+        $customerData = CustomersModel::select([
+                                                    'customers.id',
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.created_at AS registration_date',
+                                                    'customers.referral_code',
+                                                    'customers.leadership_champions_rank',
+                                                    DB::raw('COALESCE(SUM(customer_deposits.amount), 0) AS totaldeposit'),
+                                                    DB::raw('MIN(customer_deposits.created_at) AS activation_date'),
+                                                ])
+                                                ->leftJoin('customer_deposits', function ($join) {
+                                                    $join->on('customers.id', '=', 'customer_deposits.customer_id')
+                                                        ->where('customer_deposits.payment_status', 'success')
+                                                        ->where('customer_deposits.is_free_deposit', 0);
+                                                })
+                                                ->whereIn('customers.id', $allDirectIds)
+                                                ->groupBy([
+                                                    'customers.id',
+                                                    'customers.name',
+                                                    'customers.wallet_address',
+                                                    'customers.level_id',
+                                                    'customers.referral_code',
+                                                    'customers.created_at',
+                                                    'customers.leadership_champions_rank'
+                                                ])
                                                 ->get();
+        $customerData->load('customerDeposits');
 
         foreach($customerData as $ckey => $customerd)
         {
@@ -590,6 +619,7 @@ class DashboardMatriceService
             $customerData[$ckey]['totalTeamCount']          = count($allTeamIds);
             $customerData[$ckey]['totalTeamInvestment']     = $sumDeposits($activeDirectIds);
         }
+
 
         return $customerData;
     }

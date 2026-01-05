@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TestController;
+
 use App\Http\Controllers\customer\CustomerAuthController;
 use App\Http\Controllers\customer\CustomerController;
 use App\Http\Controllers\customer\DepositController;
@@ -85,6 +87,7 @@ Route::middleware(['customer'])->group(function () {
 
 });
 
+// Route::get('/test-income', [TestController::class, 'testLevelIncome'])->name('testincome');
 
 Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
     Route::get('/logoutascustomer', [AdminController::class, 'returnToAdmin'])->name('logoutascustomer');

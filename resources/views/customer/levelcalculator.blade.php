@@ -9,8 +9,8 @@
     {{-- HEADER --}}
     <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-4">
       <div>
-        <h2 class="text-lg sm:text-2xl font-semibold text-slate-900">Level Calculator</h2>
-        <p class="text-xs sm:text-sm text-slate-500">Select a rank to see details.</p>
+        <h2 class="text-lg sm:text-2xl font-semibold text-slate-900">Circle Calculator</h2>
+        <!-- <p class="text-xs sm:text-sm text-slate-500">Select a rank to see details.</p> -->
       </div>
     </div>
 
@@ -32,7 +32,7 @@
             >
               <span class="relative z-[1]">L{{ $pkg->level }}</span>
               <span class="text-[10px] sm:text-xs text-white-500 group-[.is-active]:text-white/90">
-                ({{ $pkg->directs }}D)
+                ({{ $pkg->directs }}C)
               </span>
             </button>
           @empty
@@ -65,7 +65,7 @@
                 <div class="relative">
                   <h3 class="text-base font-semibold text-slate-900">Level L{{ $pkg->level }}</h3>
                   <p class="text-xs sm:text-sm text-slate-500 mt-1">
-                    Required Active Directs: <b class="text-slate-900">{{ $pkg->directs }}</b>
+                    Active Cores Required: <b class="text-slate-900">{{ $pkg->directs }}</b>
                   </p>
 
                   <div class="mt-4 space-y-3">
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-slate-50 px-3 py-3">
-                      <span class="text-xs sm:text-sm text-slate-600">Active Directs Needed</span>
+                      <span class="text-xs sm:text-sm text-slate-600">Active Cores Required</span>
                       <b class="font-mono text-sm text-slate-900">{{ $pkg->directs }}</b>
                     </div>
 
@@ -100,7 +100,7 @@
                 <div class="mt-4">
                   <div class="flex items-center justify-between text-xs sm:text-sm mb-2">
                     <span class="text-slate-600">
-                      Active Directs
+                      Active Cores
                       <!-- <b class="text-slate-900">{{ $achievedDirects }}</b>
                       /
                       <b class="text-slate-900">{{ $requiredDirects }}</b> -->
@@ -119,7 +119,7 @@
                     @if($achievedDirects >= $requiredDirects && $requiredDirects > 0)
                       ✅ Requirement completed
                     @else
-                      {{ max(0, $requiredDirects - $achievedDirects) }} active direct/s remaining
+                      {{ max(0, $requiredDirects - $achievedDirects) }} active core/s remaining
                     @endif
                   </div>
                 </div>

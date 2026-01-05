@@ -20,7 +20,7 @@
 @section('content')
 <section class="w-full py-10 md:py-12 mx-auto max-w-[1400px] px-4 ">
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-5">
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 mb-5">
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-sky-300 to-sky-500 border border-[var(--theme-skky-200)]">
@@ -29,17 +29,6 @@
     <div>
       <h3 class=" text-base text-slate-600">Core Circle Contribution</h3>
       <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
-    </div>
-  </div>
-
-  {{-- Total Team Investment --}}
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-300 to-emerald-500 border border-[var(--theme-skky-200)]">
-      <img src="{{ asset('assets/images/icons/total-team-investment.webp?v=1') }}"  class="w-9" alt="Extended Circle Contribution">
-    </div>
-    <div>
-      <h3 class="text-base text-slate-600">Extended Circle Contribution</h3>
-      <p class="text-xl font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalTeamInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
     </div>
   </div>
 
@@ -165,15 +154,18 @@
                   </th> -->
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Direct
+                    <!-- Direct -->
+                    Core
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Team
+                    <!-- Team -->
+                    Circle
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Package
+                    <!-- Package -->
+                    Membership
                   </th>
                   <!-- <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
@@ -185,7 +177,8 @@
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Team Volume
+                    <!-- Team Volume -->
+                    Circle Volume
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
@@ -202,33 +195,46 @@
                 @php
                 $sr = 1;
                 @endphp
-                @foreach($customer->allDirectsData as $ackey => $activeDirect)
+                {{-- @dd($customer->allDirectsData); --}}
+                @foreach($customer->allDirectsData as $ackey => $allDirects)
                 <tr class="hover:bg-slate-200 transition">
                   <td class="px-4 sm:px-5 py-3 text-black">{{ $sr++ }}</td>
-                  <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $activeDirect->name }}</td>
-                  <!-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $activeDirect->wallet_address }}</td> -->
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalDirectsCount }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamCount }}</td>
+                  <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $allDirects->name }}</td>
+                  <!-- <td class="px-4 sm:px-5 py-3 font-mono text-[11px] text-slate-500">{{ $allDirects->wallet_address }}</td> -->
+                  <td class="px-4 sm:px-5 py-3 text-black">{{ $allDirects->totalDirectsCount }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-black">{{ $allDirects->totalTeamCount }}</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600">
-                    @if($activeDirect->totaldeposit > 0)
-                      @if($activeDirect->ispaid_package)
-                      {{ number_format($activeDirect->totaldeposit, 2, '.', '') }}
-                      @else
-                      Free
-                      @endif
+                    
+                    @php
+                        $hasFreeDeposit = $allDirects->customerDeposits
+                            ->where('is_free_deposit', 1)
+                            ->isNotEmpty();
+
+                        $paidAmount = $allDirects->customerDeposits
+                            ->where('is_free_deposit', 0)
+                            ->sum('amount');
+                    @endphp
+
+                    @if($paidAmount > 0)
+                        {{ number_format($paidAmount, 2, '.', '') }}
+                    @elseif($hasFreeDeposit)
+                        Free
                     @else
-                      -
+                        -
                     @endif
+
+
+                    
                   </td>
-                  <!-- <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->registration_date }}</td> -->
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->activation_date ? \Carbon\Carbon::parse($activeDirect->activation_date)->format('d-m-Y'): '-' }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-black">{{ $activeDirect->totalTeamInvestment }}</td>
+                  <!-- <td class="px-4 sm:px-5 py-3 text-black">{{ $allDirects->registration_date }}</td> -->
+                  <td class="px-4 sm:px-5 py-3 text-black">{{ $allDirects->activation_date ? \Carbon\Carbon::parse($allDirects->activation_date)->format('d-m-Y'): '-' }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-black">{{ $allDirects->totalTeamInvestment }}</td>
                   <td class="px-4 sm:px-5 py-3 text-black">
                     <span
                       class="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-[11px] text-slate-700 border border-slate-300 ">
-                      {{-- {{ $activeDirect->leadership_champions_rank??'-' }} --}}
+                      {{-- {{ $allDirects->leadership_champions_rank??'-' }} --}}
                       @php
-                          $rank = match ($activeDirect->leadership_champions_rank) {
+                          $rank = match ($allDirects->leadership_champions_rank) {
                               5 => 'VIP5',
                               4 => 'VIP4',
                               3 => 'VIP3',
@@ -241,7 +247,7 @@
                       {{ $rank }} 
                     </span>
                   </td>
-                  <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $activeDirect->level_id ?? 1 }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $allDirects->level_id ?? 1 }}</td>
                 </tr>
                 @endforeach
               </tbody>
@@ -339,7 +345,8 @@
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Package
+                    <!-- Package -->
+                    Membership
                   </th>
                   <!-- <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-sky-700 text-xs sm:text-[13px]">
@@ -351,7 +358,8 @@
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                    Team Volume
+                    <!-- Team Volume -->
+                    Circle Volume
                   </th>
                   <th
                     class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">

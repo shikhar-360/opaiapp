@@ -35,8 +35,8 @@ class WebhooksController extends Controller
         Log::info('9 Pay listener attempted topupWebhook:'.$validatedData['auth']);
 
         $transaction_hash = trim($explodeString['0']); //0xd0bc39eba25c1be86fdf65a0d618d83880a49315fcadf6837c482495a263a366
-        $amount_nofee = trim($explodeString['1']); //99.5 // Net amount
-        $amount_afterfee = trim($explodeString['2']); //100 (full amount)
+        $amount_nofee = trim($explodeString['1']); //11  // full amount
+        $amount_afterfee = trim($explodeString['2']); //9 // Net amount
         $invoice_id = trim($explodeString['3']); // INV43456789 
         $network_type = trim($explodeString['4']); //bsc-testnet
         // $customer_id = 1; //testing
@@ -56,7 +56,7 @@ class WebhooksController extends Controller
             return response()->json(['error' => 'amount_afterfee cannot be greater than amount_withoutfee'], 400);
         }
 
-        $allowed_networks = ['bsc-testnet', 'bsc-mainnet', 'polygon', 'matic', 'eth', 'eth-goerli'];
+        $allowed_networks = ['bsc-testnet', 'bsc-mainnet', 'polygon', 'matic', 'eth', 'eth-goerli', 'bsc'];
 
         if (!in_array($network_type, $allowed_networks)) {
             return response()->json(['error' => 'Unsupported network'], 400);
@@ -80,7 +80,7 @@ class WebhooksController extends Controller
             ], 404);
         }
 
-        $this->ninepays->topupReceived($txn->customer_id, $amount_received, $invoice_id, $transaction_hash);
+        $this->ninepays->topupReceived($txn->customer_id, $amount_received, $invoice_id, $transaction_hash, $amount_afterfee);
 
         // dd($topup_response);
     }

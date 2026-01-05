@@ -11,14 +11,14 @@
     <div class="mx-auto">
       {{-- HEADER --}}
       <div class=" items-center  mb-3 mt-8">
-        <h2 class="text-base sm:text-lg font-semibold text-slate-900">Stats</h2>
-        <p class="text-sm text-slate-600">Performance snapshot across referrals, volume, and rewards.</p>
+        <h2 class="text-base sm:text-lg font-semibold text-slate-900">Performance snapshot</h2>
+        <!-- <p class="text-sm text-slate-600">Performance snapshot across referrals, volume, and rewards.</p> -->
       </div>
 
       {{-- METRIC CARDS ROW 1 --}}
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 sm:gap-5">
         {{-- Referral level --}}
-        <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-4 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
+        <!-- <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-4 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
           <div class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[var(--theme-skky-400)]/15 via-transparent to-fuchsia-400/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100"></div>
 
           <div class="relative flex items-center gap-3 sm:gap-4">
@@ -35,7 +35,7 @@
           </div>
 
           <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent opacity-100"></div>
-        </div>
+        </div> -->
 
         {{-- Team --}}
         <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-4 sm:p-4 shadow-md backdrop-blur-xl transition-all duration-300 hover:-translate-y-1">
@@ -115,7 +115,7 @@
             </div>
 
             <div class="flex-1 min-w-0">
-              <h3 class="text-sm sm:text-base font-medium text-sky-900 truncate">Level Income</h3>
+              <h3 class="text-sm sm:text-base font-medium text-sky-900 truncate">Circle Credit</h3>
               <div class="text-start mt-2">
                 <p class="text-lg sm:text-lg font-semibold text-slate-900 leading-none">{{ number_format($customer->myLevelEarning, 2, '.', '') }} {{ $customer->appData->currency }}</p>
               </div>
@@ -137,7 +137,7 @@
             <div class="flex-1 min-w-0">
               <h3 class="text-sm sm:text-base text-fuchsia-900 truncate">Total Points</h3>
               <div class="text-start mt-2">
-                <p class="text-lg sm:text-lg font-bold text-slate-900 leading-none">{{ $customer->leadership_points+$customer->champions_point }} {{ $customer->appData->currency }}</p>
+                <p class="text-lg sm:text-lg font-bold text-slate-900 leading-none">{{ $customer->leadership_points+$customer->champions_point }} </p>
               </div>
             </div>
           </div>
@@ -165,7 +165,7 @@
         {{-- My Circle --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/my-circle.webp" class="w-9" alt="Core Circle">
+            <img src="/assets/images/icons/my-circle-count.webp" class="w-9" alt="Core Circle">
           </div>
           <div>
             <h3 class="text-base text-slate-600">Core Circle</h3>
@@ -176,10 +176,10 @@
         {{-- My Circle Count --}}
         <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-400 to-blue-700 border border-[var(--theme-skky-200)]">
-            <img src="/assets/images/icons/my-circle-count.webp" class="w-8" alt="Core Circle Count">
+            <img src="/assets/images/icons/my-circle.webp" class="w-8" alt="Active Circle Count">
           </div>
           <div>
-            <h3 class="text-base text-slate-600">Core Circle Count</h3>
+            <h3 class="text-base text-slate-600">Active Core Circle</h3>
             <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{  $customer->totalActiveDirectsCount }}</p>
           </div>
         </div>
@@ -212,7 +212,7 @@
             <img src="/assets/images/icons/my-circle-growth.webp" class="w-9" alt="My Circle Growth">
           </div>
           <div>
-            <h3 class="text-base text-slate-600">Core Growth</h3>
+            <h3 class="text-base text-slate-600">Core Volume</h3>
             <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->totalDirectInvestment, 2, '.', '') }} {{ $customer->appData->currency }}</p>
           </div>
         </div>
@@ -223,13 +223,13 @@
             <img src="/assets/images/icons/extended-growth.webp" class="w-8" alt="Extended Growth">
           </div>
           <div>
-            <h3 class="text-base text-slate-600">Extended Growth</h3>
+            <h3 class="text-base text-slate-600">Extended Volume</h3>
             <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->totalTeamInvestment??0 }}  {{ $customer->appData->currency }}</p>
           </div>
         </div>
 
         {{-- Total Withdraw --}}
-        <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+        <div class="hidden neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
           <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
             <img src="/assets/images/icons/total-withdraw.webp" class="w-9" alt="Total Withdraw">
           </div>
