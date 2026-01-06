@@ -57,9 +57,9 @@
     <div class="flex items-center justify-between">
         <div>
         <h3 class="font-semibold text-md md:text-lg text-slate-900">
-            LIGHTBEARER Overview
+            Lightbearer
         </h3>
-          <p class="text-sm text-slate-500 mt-1">
+          <p class="hidden text-sm text-slate-500 mt-1">
           You’re on VIP <span class="font-semibold text-slate-800">{{ $currentLevel }}</span>
             of {{ str_pad($totalLevels, 2, '0', STR_PAD_LEFT) }}
           </p>
@@ -142,8 +142,7 @@
   <div
     class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 p-2 sm:p-3
            rounded-2xl bg-[var(--theme-[var(--theme-skky-100)])]/70">
-    
-        @foreach ($levels as $n)
+        <!-- @foreach ($levels as $n)
           @php
             $isActive = $n <= $cl;
           @endphp
@@ -156,20 +155,30 @@
         }}">
             VIP {{ str_pad($n, 2, '0', STR_PAD_LEFT) }}
           </div>
-        @endforeach
-
+        @endforeach -->
+        
+        <div
+            class="rounded-lg text-center py-2 sm:py-3 text-xs sm:text-[13px] transition bg-white text-slate-600 border border-slate-200 hover:border-[var(--theme-skky-300)] hover:bg-[var(--theme-skkky-50)]/60">
+            Next Rank: VIP {{ str_pad($levels[$cl], 2, '0', STR_PAD_LEFT) }}
+          </div>
         <div class="rounded-lg text-center  text-xs sm:text-[13px] transition col-span-2 sm:col-span-1 ">
           <div class=" border border-indigo-200/70 bg-gradient-to-r from-indigo-50 via-[var(--theme-skkky-50)] to-fuchsia-50 backdrop-blur-sm px-4 py-1 rounded-lg shadow-sm flex flex-col justify-center">
+            <!-- Next Rank -->
+            <!-- <div class="">
+              <div class="flex justify-between text-xs font-medium text-slate-700 mb-0.5">
+                <span>Next Rank</span>
+                <span>VIP {{ str_pad($levels[$cl], 2, '0', STR_PAD_LEFT) }}</span>
+            </div> -->
             <!-- Volume -->
             <div class="">
               <div class="flex justify-between text-xs font-medium text-slate-700 mb-0.5">
-                <span>Volume</span>
+                <span>Total Circle</span>
                 <span>{{ (int) $current_vipvolume }} / {{ (int) $vipTargetVolume}}</span>
             </div>
             <!-- Points -->
             <div>
               <div class="flex justify-between text-xs font-medium text-slate-700 ">
-                <span>Directs</span>
+                <span>Core Circle</span>
                 <span>{{ (int) $current_vipdirects }} / {{ (int) $vipTargetDirects }}</span>
             </div>
           </div>

@@ -200,7 +200,7 @@
                     <img src="/assets/images/menu/pay-by-topup.webp" width="64" height="48" alt="Logo"
                             class="w-6 h-6 object-contain">
                 </span>
-                <span class="bank-g">Activate Package</span>
+                <span class="bank-g">Activate Membership</span>
             </span>
 
             <svg class="w-4 h-4 transition-transform {{ $isActivateOpen ? 'rotate-180' : '' }}" viewBox="0 0 20 20" fill="currentColor">

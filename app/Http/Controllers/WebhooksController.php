@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
 
 use App\Models\NinepayTransactionsModel;
 use App\Models\CustomerWithdrawsModel;
@@ -115,37 +116,88 @@ class WebhooksController extends Controller
 
     public function getPendingWithdraw(Request $request)
     {
-        $withdrawtxn = CustomerWithdrawsModel::where('transaction_status', 'pending')->whereNull('transaction_id')->first();
+        Log::info('Get Pending Withdraw1:', $request->all());
+
+        // $withdrawtxn = CustomerWithdrawsModel::where('transaction_status', 'pending')->whereNull('transaction_id')->first();
+        $withdrawtxn = CustomerWithdrawsModel::query()
+                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                ->where('customer_withdraws.transaction_status', 'pending')
+                                                ->whereNull('customer_withdraws.transaction_id')
+                                                ->whereNotNull('customers.wallet_address')
+                                                ->select('customer_withdraws.*','customers.wallet_address') 
+                                                ->first();
+
+        Log::info('Get Pending Withdraw2:', [$withdrawtxn]);
 
         if (!$withdrawtxn) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No pending request'
-            ], 404);
+            return response()->json((object)[], 200);
         }
 
-        $customer = CustomersModel::where('id', $withdrawtxn->customer_id)->first();
+        Log::info('Get Pending Withdraw3:', [
+            'status'           => 'success',
+            'wallet_address'   => $withdrawtxn->wallet_address,
+            'amount'           => $withdrawtxn->amount,
+            'request_id'       => $withdrawtxn->id
+        ]);
 
-        if($customer->wallet_address)
-        {
-            return response()->json([
-                'status'           => 'success',
-                'wallet_address'   => $customer->wallet_address,
-                'amount'           => $withdrawtxn->amount,
-                'request_id'       => $withdrawtxn->id
-            ]);
-        }
-        else
-        {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No data'
-            ], 404);
-        }
+        return response()->json([
+            'status'           => 'success',
+            'wallet_address'   => $withdrawtxn->wallet_address,
+            'amount'           => $withdrawtxn->amount,
+            'request_id'       => $withdrawtxn->id
+        ]);
     }
 
     public function postSuccessWithdraw (Request $request)
     {
-        return true;
+        Log::info('POST Success Withdraw:', $request->all());
+        
+        $validatedData = $request->validate([
+            'request_id'        =>  'required|numeric|min:1',
+            'transaction_hash'  =>  'required|string|min:10',
+        ]);
+
+        $withdraw_request = CustomerWithdrawsModel::query()
+                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                ->where('customer_withdraws.id', $validatedData['request_id'])
+                                                ->where('customer_withdraws.transaction_status', 'pending')
+                                                ->whereNull('customer_withdraws.transaction_id')
+                                                ->whereNotNull('customers.wallet_address')
+                                                ->select('customer_withdraws.*','customers.wallet_address') 
+                                                ->first();
+        if (!$withdraw_request) {
+            return response()->json((object)[], 200);
+        }
+
+        if ($withdraw_request) {
+            $withdraw_request->transaction_status = 'success';
+            $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
+            $withdraw_request->save();
+        }
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
+
+    // By Nomaan
+    function store_user_data(Request $request){
+        $countryCode = $request->input('countryCode');
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $phone = $request->input('phone');
+        $telegram = $request->input('telegram');
+        DB::table('landing_user')->insert([
+            'country_code' => $countryCode,
+            'name'         => $name,
+            'email'        => $email,
+            'phone'        => $phone,
+            'telegram'     => $telegram,
+        ]);
+        return response()->json([
+            'status' => true,
+            'message' => 'Data inserted successfully'
+        ]);
+    }
+
 }

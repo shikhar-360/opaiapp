@@ -120,13 +120,26 @@ class CheckLevelService
 
     public function updateCustomerActualLevel()
     {
+
         CustomersModel::where('status', 1)
                         ->chunk(200, function ($customers) {
                             foreach ($customers as $customer) {
-                                $customer->update([
+                                /*$customer->update([
                                     'actual_level_id' => $this->getLevel($customer) ?? 1
+                                ]);*/
+
+                                $level = $this->getLevel($customer) ?? 1;
+
+                                $customer->update([
+                                    'actual_level_id' => $level
                                 ]);
+                                
+                                /*Log::info('Customer level updated', [
+                                                                        'customer_id' => $customer->id,
+                                                                        'actual_level' => $level,
+                                                                    ]);*/
                             }
                         });
+        // Log::info('Customer actual levels checked successfully.');
     }
 }

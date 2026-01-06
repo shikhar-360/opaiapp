@@ -5,15 +5,18 @@ namespace App\Services;
 use App\Models\Withdrawal;
 use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerWithdrawsModel;
+use App\Models\CustomersModel;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use App\Traits\ManagesCustomerFinancials;
+use App\Traits\ManagesCustomerHierarchy;
 
 class WithdrawService
 {
     use ManagesCustomerFinancials;
+    use ManagesCustomerHierarchy;
 
     public function requestWithdraw($customer, $validatedData)
     {
@@ -64,11 +67,11 @@ class WithdrawService
                 'amount'	            => $validatedData['amount'],
                 'net_amount'	        => $netAmount,
                 // 'transaction_id'	    => 'WITHDRAW-'.$transactionString,
-                // 'transaction_status'      => 'PENDING',
+                'transaction_type'      =>  'WITHDRAW'
             ]);
             
             // 6. Update finance summary
-            $withdrawAmount = $validatedData['amount'];
+            // $withdrawAmount = $validatedData['amount'];
 
             // Manual assignment ignores $fillable
             // $finance->total_income = max(0, $finance->total_income - $withdrawAmount);
@@ -77,6 +80,100 @@ class WithdrawService
             // $finance->save();
 
             return ['status'  => true, 'message' => 'Withdraw success.', 'withdraw' => $withdraw];
+        });
+    }
+
+    public function requestSelfTransfer($customer, $validatedData)
+    {
+        return DB::transaction(function () use ($customer, $validatedData) {
+
+            $transactionString = Str::random(6);
+
+            // 1. Load finance summary
+            $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
+            // dd($finance);
+            if ($finance->total_income < $validatedData['self_amount']) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Insufficient income balance.',
+                    'finance' => $finance
+                ], 401);
+            }
+
+            // 5. Record selftransfer
+            $transfer = CustomerWithdrawsModel::create([
+                'app_id'                =>  $customer->app_id,
+                'customer_id'           =>  $customer->id,
+                'admin_charge'          =>  0,
+                'amount'                =>  $validatedData['self_amount'],
+                'net_amount'            =>  0,
+                'transaction_id'        =>  'SELFTRANSFER-'.$transactionString,
+                'transaction_status'    =>  'success',
+                'transaction_type'      =>  'selftransfer',
+                'to_customer'           =>  $customer->id,
+            ]);
+            
+            // Manual assignment ignores $fillable
+            $finance->total_income = max(0, $finance->total_income - $validatedData['self_amount']);
+            $finance->total_topup = max(0, $finance->total_topup + $validatedData['self_amount']);
+            $finance->save();
+
+            return ['status'  => true, 'message' => 'Selftransfer success.', 'Transfer' => $transfer];
+        });
+    }
+
+    public function requestP2PTransfer($customer, $validatedData)
+    {
+        return DB::transaction(function () use ($customer, $validatedData) {
+
+            $transactionString = Str::random(6);
+
+            // 1. Load finance summary
+            $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
+            // dd($finance);
+            if ($finance->total_income < $validatedData['p2p_amount']) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Insufficient income balance.',
+                    'finance' => $finance
+                ], 401);
+            }
+
+            $uplines = $this->getUplines($customer);
+            $downlines = $this->getDownlines($customer);
+            $customer_team = collect($uplines)->merge($downlines);
+            $customer_team_data = CustomersModel::where('referral_code', $validatedData['team_user_id'])->first();
+            $name = $customer_team->firstWhere('id', $customer_team_data->id)['name'] ?? '-';
+
+            if($name == '-')
+            {
+
+            }
+            else
+            {
+                // 5. Record p2p transfer
+                $transfer = CustomerWithdrawsModel::create([
+                    'app_id'                =>  $customer->app_id,
+                    'customer_id'           =>  $customer->id,
+                    'to_customer'           =>  $customer_team_data->id,
+                    'admin_charge'          =>  0,
+                    'amount'                =>  $validatedData['p2p_amount'],
+                    'net_amount'            =>  0,
+                    'transaction_id'        =>  'P2PTRANSFER-'.$transactionString,
+                    'transaction_status'    =>  'success',
+                    'transaction_type'      =>  'p2ptransfer',
+                    'to_customer'           =>  $customer_team_data->id,
+                ]);
+            }
+            // Manual assignment ignores $fillable
+            $finance->total_income = max(0, $finance->total_income - $validatedData['p2p_amount']);
+            $finance->save();
+
+            $financeTo = $this->getCustomerFinance($customer_team_data->id, $customer_team_data->app_id);
+            $financeTo->total_topup = max(0, $financeTo->total_topup + $validatedData['p2p_amount']);
+            $financeTo->save();
+
+            return ['status'  => true, 'message' => 'Selftransfer success.', 'Transfer' => $transfer];
         });
     }
 }

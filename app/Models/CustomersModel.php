@@ -120,5 +120,8 @@ class CustomersModel extends Authenticatable
         return $this->hasMany(CustomerDepositsModel::class, 'customer_id', 'id');
     }
 
-
+    public function downlines()
+    {
+        return $this->hasMany(CustomersModel::class, 'sponsor_id');
+    }
 }
