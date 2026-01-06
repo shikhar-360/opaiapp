@@ -199,5 +199,23 @@ class WebhooksController extends Controller
             'message' => 'Data inserted successfully'
         ]);
     }
+    function get_all_user_data(){
+        $data = DB::table('landing_user')->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Data inserted successfully',
+            'data' => $data
+        ]);
+    }
+    function get_user_data(Request $request){
+        $id = $request->input('id');
+
+        $data = DB::table('landing_user')->where('id',$id)->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Data inserted successfully',
+            'data' => $data
+        ]);
+    }
 
 }
