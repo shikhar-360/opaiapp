@@ -28,7 +28,7 @@
     </div>
   </div>
 
-  <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 border border-[var(--theme-skky-200)]">
       <img src="{{ asset('assets/images/icons/total-withdraw.webp?v=1') }}"  class="w-9" alt="Total Team Investment">
     </div>
@@ -36,7 +36,7 @@
       <h3 class="text-base text-slate-600">Total Credits</h3>
       <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myLevelEarning }} {{ $customer->appData->currency }}</p>
     </div>
-  </div>
+  </div> -->
 
 
   <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">

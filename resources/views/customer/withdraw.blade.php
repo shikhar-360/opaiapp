@@ -51,7 +51,7 @@
     </div>
 
     {{-- Total Income --}}
-    <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+    <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
       <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 border border-amber-200">
         <img src="{{ asset('assets/images/icons/total-income.webp?v=1') }}"  width="100" height="100" alt="Total Credits"
              class="w-9 h-9 object-contain">
@@ -60,7 +60,7 @@
         <h3 class="text-base text-slate-600">Total Credits</h3>
         <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->appData->currency }} {{ $customer->myTotalEarning }}</p>
       </div>
-    </div>
+    </div> -->
 
     {{-- Total Withdraw --}}
     <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
@@ -351,7 +351,7 @@
           </div>
 
         
-            <div
+            <!-- <div
             class="relative group rounded-2xl overflow-hidden
                    border border-slate-200 bg-white
                    shadow-[0_12px_32px_rgba(15,23,42,.08)]
@@ -379,7 +379,7 @@
                   </p>
                 </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
           {{-- FORM (STATIC / NO ACTION) --}}
@@ -405,7 +405,7 @@
                 </svg>
 
                 <input type="text" name="amount" id="amount" autocomplete="off"
-                       placeholder="Enter Amount (min withdraw 10)" required
+                       placeholder="Enter Amount" required
                 class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none
                        text-sm md:text-base [caret-color:#60a5fa] border-l border-slate-200 pl-4">
             </div>
@@ -462,7 +462,8 @@
 
               {{-- button --}}
               <div class="flex items-center justify-center pt-1">
-                <button {{ $customer->myAvailableBalance < 10 ? '':'' }}
+                <button 
+                      {{ $customer->myAvailableBalance < 10 ? '':'' }}
                         type="submit"
                         class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
                        text-sm md:text-base capitalize tracking-wide mt-2
@@ -492,7 +493,7 @@
   </div>
 </div>
 
-<!-- WITHDRAW SUCCESS POPUP --> 
+<!-- WITHDRAW SUCCESS POPUP -->
 <div data-dialog-backdrop="withdraw-success"
   class="fixed inset-0 z-[999] grid place-items-center
          bg-black/60 backdrop-blur-sm p-3
@@ -661,83 +662,85 @@
         </div>
 
         <!-- P2P Form -->
-       <form class="relative space-y-4" action="#" method="POST">
-  @csrf
+        <form class="relative space-y-4" id="withdraw-p2ptransfer-form" action="{{ route('withdraw.p2ptransfer.save') }}" method="POST">
+          @csrf
 
-  {{-- Show Username --}}
-  <div class="space-y-1.5">
-    <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-      Username
-    </p>
+          {{-- Show Username --}}
+          <div class="space-y-1.5">
+            <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+              Username
+            </p>
 
-    <div
-      class="relative flex items-center p-3 rounded-lg gap-3
-             border border-slate-200 bg-white
-             shadow-sm">
-      <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
+            <div
+              class="relative flex items-center p-3 rounded-lg gap-3
+                    border border-slate-200 bg-white
+                    shadow-sm">
+              <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
 
-      <div class="w-full border-l border-slate-200 pl-4">
-        <p class="text-slate-900 text-sm md:text-base font-semibold">
-          {{ $p2pUserName ?? 'N/A' }}
-        </p>
-        <p class="text-xs text-slate-500">
-          ID: {{ $p2pUserId ?? 'N/A' }}
-        </p>
-      </div>
-    </div>
-  </div>
+              <div class="w-full border-l border-slate-200 pl-4">
+                <input type="text" id="team_user_id" name="team_user_id" value=""
+                             placeholder="Enter User Id"
+                             class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                             required aria-describedby="hs-validation-name-success-helper" autocomplete="off">
+                <p class="text-slate-900 text-sm md:text-base font-semibold" id="teamUserNameResult">
+                 
+                </p>
+                {{-- <p class="text-xs text-slate-500">
+                  ID: N/A
+                </p> --}}
+              </div>
+            </div>
+          </div>
 
-  {{-- Show Amount --}}
-  <div class="space-y-1.5">
-    <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-      Amount
-    </p>
+          {{-- Show Amount --}}
+          <div class="space-y-1.5">
+            <p class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
+              Amount
+            </p>
 
-    <div
-      class="relative flex items-center p-3 rounded-lg gap-3
-             border border-slate-200 bg-white
-             shadow-sm">
-      <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
-        <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5" />
-        <path d="M3 5V9C3 10.6569 7.02944 12 12 12C16.9706 12 21 10.6569 21 9V5" stroke="currentColor" stroke-width="1.5" />
-        <path d="M3 9V13C3 14.6569 7.02944 16 12 16C16.9706 16 21 14.6569 21 13V9" stroke="currentColor" stroke-width="1.5" />
-        <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor" stroke-width="1.5" />
-      </svg>
+            <div
+              class="relative flex items-center p-3 rounded-lg gap-3
+                    border border-slate-200 bg-white
+                    shadow-sm">
+              <svg class="w-6 h-6 min-w-6 min-h-6 text-[var(--theme-primary-text)]" viewBox="0 0 24 24" fill="none">
+                <ellipse cx="12" cy="5" rx="9" ry="3" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 5V9C3 10.6569 7.02944 12 12 12C16.9706 12 21 10.6569 21 9V5" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 9V13C3 14.6569 7.02944 16 12 16C16.9706 16 21 14.6569 21 13V9" stroke="currentColor" stroke-width="1.5" />
+                <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor" stroke-width="1.5" />
+              </svg>
 
-      <div class="w-full border-l border-slate-200 pl-4">
-        <p class="text-slate-900 text-sm md:text-base font-extrabold tabular-nums">
-          {{ $customer->appData->currency }} {{ $p2pAmount ?? '0.00' }}
-        </p>
-      </div>
-    </div>
-  </div>
-
-  {{-- Hidden inputs for submit --}}
-  <input type="hidden" name="user_id" value="{{ $p2pUserId ?? '' }}">
-  <input type="hidden" name="amount" value="{{ $p2pAmount ?? '' }}">
-
-  {{-- Button --}}
-  <div class="flex items-center justify-center pt-1">
-    <button type="submit"
-      class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
-             text-sm md:text-base capitalize tracking-wide mt-2
-             rounded-lg border border-[var(--theme-skky-500)]
-             bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
-             font-semibold
-            hover:-translate-y-1 
-             active:scale-95 transition-all duration-300 ease-out group cursor-pointer">
-      <span>Transfer</span>
-      <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
-        aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
-        <path clip-rule="evenodd" fill-rule="evenodd"
-          d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"></path>
-      </svg>
-    </button>
-  </div>
-</form>
+              <div class="w-full border-l border-slate-200 pl-4">
+                <p class="text-slate-900 text-sm md:text-base font-extrabold tabular-nums">
+                  <input type="text" id="p2p_amount" name="p2p_amount" value=""
+                             placeholder="Enter Amount"
+                             class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none text-base [caret-color:#60a5fa]"
+                             required aria-describedby="hs-validation-name-success-helper" autocomplete="off">
+                </p>
+              </div>
+            </div>
+          </div>
+          {{-- Button --}}
+          <div class="flex items-center justify-center pt-1">
+            <button type="submit"
+              class="px-5 py-2.5 text-white mx-auto flex items-center justify-center gap-0
+                    text-sm md:text-base capitalize tracking-wide mt-2
+                    rounded-lg border border-[var(--theme-skky-500)]
+                    bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)]
+                    font-semibold
+                    hover:-translate-y-1 
+                    active:scale-95 transition-all duration-300 ease-out group cursor-pointer">
+              <span>Transfer</span>
+              <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
+                aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path clip-rule="evenodd" fill-rule="evenodd"
+                  d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"></path>
+              </svg>
+            </button>
+          </div>
+        </form>
 
       </div>
 
@@ -815,7 +818,7 @@
         </div>
 
         <!-- Self Transfer Form -->
-        <form class="relative space-y-4" action="#" method="POST">
+        <form class="relative space-y-4" id="withdraw-selftransfer-form" action="{{ route('withdraw.selftransfer.save') }}" method="POST">
           @csrf
 
           <!-- Amount -->
@@ -837,8 +840,8 @@
                 <path d="M3 13V17C3 18.6569 7.02944 20 12 20C16.9706 20 21 18.6569 21 17V13" stroke="currentColor" stroke-width="1.5" />
               </svg>
 
-              <input type="number" step="0.01" name="amount" id="self_amount" autocomplete="off"
-                placeholder="Enter Amount (min 10)" required
+              <input type="number" step="0.01" name="self_amount" id="self_amount" autocomplete="off"
+                placeholder="Enter Amount" required
                 class="w-full bg-transparent text-slate-900 placeholder:text-slate-400 outline-none
                        text-sm md:text-base [caret-color:#60a5fa] border-l border-slate-200 pl-4">
             </div>
@@ -854,7 +857,7 @@
                      font-semibold
                      hover:-translate-y-1 cursor-pointer
                      active:scale-95 transition-all duration-300 ease-out group">
-              <span>Transfer</span>
+              <span>Self Transfer</span>
               <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
                 aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                 <path clip-rule="evenodd" fill-rule="evenodd"
@@ -877,13 +880,13 @@
 
 @if (session('status_code') === 'success')
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-  const backdrop = document.querySelector('[data-dialog-backdrop="withdraw-success"]');
-  if (backdrop) {
-      backdrop.classList.remove('opacity-0', 'pointer-events-none');
-      backdrop.classList.add('opacity-100');
-  }
-});
+// document.addEventListener('DOMContentLoaded', function () {
+//   const backdrop = document.querySelector('[data-dialog-backdrop="withdraw-success"]');
+//   if (backdrop) {
+//       backdrop.classList.remove('opacity-0', 'pointer-events-none');
+//       backdrop.classList.add('opacity-100');
+//   }
+// });
 </script>
 @endif
 <script>
@@ -903,26 +906,6 @@ document.addEventListener('click', function (e) {
         backdrop.classList.remove('opacity-100');
     }
 });
- /* function openRankPopup() {
-    const popup = document.querySelector('[data-dialog-backdrop="rank-dialog"]');
-    if (!popup) return;
-
-    popup.classList.remove('pointer-events-none', 'opacity-0');
-    popup.classList.add('opacity-100');
-  }
-
-  function closeRankPopup() {
-    const popup = document.querySelector('[data-dialog-backdrop="rank-dialog"]');
-    if (!popup) return;
-
-    popup.classList.add('pointer-events-none', 'opacity-0');
-    popup.classList.remove('opacity-100');
-  }*/
-
-
-  /*document.querySelectorAll('[data-dialog-close]').forEach(btn => {
-    btn.addEventListener('click', closeRankPopup);
-  });*/
 
 document.addEventListener("DOMContentLoaded", function () {  
   document.getElementById('amount').addEventListener('input', function () {
@@ -938,6 +921,52 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('admin_charge').value = adminCharge.toFixed(2);
       document.getElementById('net_amount').value = finalAmount.toFixed(2);
   });
+
+  const teamUserIdInput = document.getElementById('team_user_id');
+  const resultEl = document.getElementById('teamUserNameResult');
+
+  let timer;
+  const delay = 500;
+
+  teamUserIdInput.addEventListener('input', () => {
+      clearTimeout(timer);
+
+      const userId = teamUserIdInput.value.trim();
+
+      if (userId.length < 4) {
+          resultEl.classList.add('hidden');
+          resultEl.innerText = '';
+          return;
+      }
+
+      const fetchUserNameUrl = "https://user.ordinarypeopleai.com/fetch-teamuser-name";
+
+      timer = setTimeout(() => {
+          fetch(fetchUserNameUrl, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'X-CSRF-TOKEN': "{{ csrf_token() }}"
+              },
+              body: JSON.stringify({ user_id: userId })
+          })
+          .then(res => res.json())
+          .then(data => {
+              resultEl.classList.remove('hidden');
+
+              if (data.status === 'success') {
+                  resultEl.textContent = `Name: ${data.name}`;
+                  resultEl.classList.remove('text-red-600');
+                  resultEl.classList.add('text-green-600');
+              } else {
+                  resultEl.textContent = data.message;
+                  resultEl.classList.remove('text-green-600');
+                  resultEl.classList.add('text-red-600');
+              }
+          });
+      }, delay);
+  });
+
 });
 </script>
 

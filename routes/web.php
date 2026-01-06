@@ -63,7 +63,9 @@ Route::middleware(['customer'])->group(function () {
     Route::post('/free-topup', [DepositController::class, 'depositFreePackage'])->name('pay.freetopup.save');
    
     Route::get('/withdraw', [WithdrawController::class, 'showForm'])->name('withdraw');
-    Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');   
+    Route::post('/withdraw', [WithdrawController::class, 'withdraw'])->name('withdraw.save');  
+    Route::post('/self-transfer', [WithdrawController::class, 'selfTransfer'])->name('withdraw.selftransfer.save');   
+    Route::post('/p2p-transfer', [WithdrawController::class, 'p2pTransfer'])->name('withdraw.p2ptransfer.save');    
 
     Route::get('/overview', [OverviewController::class, 'incomeOverview'])->name('overview');
     Route::post('/overview', [OverviewController::class, 'incomeOverview'])->name('overview.filter');
@@ -82,7 +84,8 @@ Route::middleware(['customer'])->group(function () {
 
     Route::post('/fetch-user-name', [CustomerController::class, 'fetchUserName'])->name('fetch.user.name');
     Route::post('/stop-rankpopup', [CustomerController::class, 'stopRankPopup'])->name('stop.rankpopup');
-
+    Route::post('/fetch-teamuser-name', [CustomerController::class, 'fetchTeamUserName'])->name('fetch.teamuser.name');
+    
     Route::get('/stats', [CustomerController::class, 'showStats'])->name('stats');
 
 });

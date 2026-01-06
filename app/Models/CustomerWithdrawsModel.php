@@ -17,6 +17,8 @@ class CustomerWithdrawsModel extends Model
         'net_amount',	
         'transaction_id',	
         'transaction_status',
+        'transaction_type',
+        'to_customer',
     ];
 
     public function customer()

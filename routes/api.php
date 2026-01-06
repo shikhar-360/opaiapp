@@ -27,4 +27,8 @@ Route::get('/payment-status/{transaction_id}', [WebhooksController::class, 'topu
 Route::get('/pending-withdraw', [WebhooksController::class, 'getPendingWithdraw']);
 Route::POST('/success-withdraw', [WebhooksController::class, 'postSuccessWithdraw']);
 
+//by nomaan
 Route::POST('/test/promotion1000', [TestController::class, 'testPromotionThounsand']);
+Route::POST('/store-user-data', [WebhooksController::class, 'store_user_data']);
+Route::get('/get-all-user-data', [WebhooksController::class, 'get_all_user_data']);
+Route::POST('/get-user-data', [WebhooksController::class, 'get_user_data']);

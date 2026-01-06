@@ -85,4 +85,30 @@ trait ManagesCustomerHierarchy
         return $maxDepth + 1; 
     }
 
+    protected function getDownlines($customer, $level = 1, &$downlines = [])
+    {
+        $children = CustomersModel::where('sponsor_id', $customer->id)->where('app_id', $customer->app_id)->where('status',1)->get();
+
+        foreach ($children as $child) 
+        {
+
+            $directs = array_filter(explode('/', $child->direct_ids ?? ''));
+            $activeDirects = array_filter(explode('/', $child->active_direct_ids ?? ''));
+
+            $downlines[] = [
+                'id'             => $child->id,
+                'name'           => $child->name,
+                'level'          => $level,
+                'directs'        => count($directs),
+                'active_directs' => count($activeDirects),
+                'level_id'       => $child->level_id,
+                'actual_level'   => $child->actual_level_id ?? null,
+            ];
+
+            $this->getDownlines($child, $level + 1, $downlines);
+        }
+
+        return $downlines;
+    }
+
 }

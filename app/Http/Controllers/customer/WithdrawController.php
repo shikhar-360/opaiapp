@@ -11,11 +11,15 @@ use App\Models\CustomerWithdrawsModel;
 use App\Services\WithdrawService;
 use App\Services\DashboardMatriceService;
 
+use App\Traits\ManagesCustomerFinancials;
+
 class WithdrawController extends Controller
 {
     protected $withdrawServices;
     protected $dashbaord_matrice_services;
 
+    use ManagesCustomerFinancials;
+    
     public function __construct(WithdrawService $withdrawService, DashboardMatriceService $dashbaord_matrice_service)
     {
         $this->withdrawServices = $withdrawService;
@@ -108,4 +112,64 @@ class WithdrawController extends Controller
     }
 
     
+    public function selfTransfer(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        $validated = $request->validate([
+            'self_amount' => 'required|numeric|min:0.0000001',
+        ]);  
+        
+        $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
+        // dd($finance);
+        if ($finance->total_income < $validated['self_amount']) 
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Insufficient income balance.'
+                    ]);
+        }
+
+        $withdraw = $this->withdrawServices->requestSelfTransfer($customer, $validated);
+        
+        return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'success',
+                        'message' => 'Self Transfered Successfully.'
+                    ]);
+    }
+
+    public function p2pTransfer(Request $request)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        $validated = $request->validate([
+            'p2p_amount' => 'required|numeric|min:0.0000001',
+            'team_user_id' => 'required|string|min:6'
+        ]);  
+        
+        $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
+        // dd($finance);
+        if ($finance->total_income < $validated['p2p_amount']) 
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Insufficient income balance.'
+                    ]);
+        }
+
+        $withdraw = $this->withdrawServices->requestP2PTransfer($customer, $validated);
+        
+        return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'success',
+                        'message' => 'Transfered P2P Successfully.'
+                    ]);
+    }
 }

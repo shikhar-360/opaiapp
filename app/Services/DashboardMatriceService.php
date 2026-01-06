@@ -115,11 +115,13 @@ class DashboardMatriceService
         $myTotalWithdraws = CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
                                                         ->where('transaction_status', 'success')
+                                                        ->whereIn('transaction_type', ['withdraw','selftransfer','p2ptransfer'])
                                                         ->sum('amount');
         
         $myWithdraws    =   CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
                                                         ->where('transaction_status', 'success')
+                                                        ->whereIn('transaction_type', ['withdraw','selftransfer','p2ptransfer'])
                                                         ->get();
 
         $voteTypes      = ['HONEST', 'ACTIVE', 'HELPFULL'];

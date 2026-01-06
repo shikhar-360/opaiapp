@@ -17,7 +17,7 @@ use App\Services\LeadershipChampionsIncomeService;
 use App\Services\PromotionThounsandService;
 use App\Services\CheckLevelService;
 
-// use App\Traits\ManagesCustomerHierarchy;
+use App\Traits\ManagesCustomerHierarchy;
 use App\Models\AppLeadershipChampionsIncomeModel;
 use App\Models\AppLeadershipIncomeModel;
 use App\Models\VotesModel;
@@ -28,7 +28,7 @@ use App\Models\AdminTutorialsModel;
 
 class CustomerController extends Controller
 {
-    // use ManagesCustomerHierarchy;
+    use ManagesCustomerHierarchy;
 
     protected $dashbaord_matrice_services;
     protected $genealogy_services;
@@ -675,6 +675,40 @@ class CustomerController extends Controller
         $customer->promotionPackage         =   AppPromotionPackagesModel::where('app_id', $customer->app_id)->get();
         
         return view('customer.stats', compact('customer'));
+    }
+
+    public function fetchTeamUserName(Request $request)
+    {
+        $authCustomer = Auth::guard('customer')->user();
+        
+        $request->validate([
+            'user_id' => 'required|string',
+        ]);
+
+        $customer = CustomersModel::where('referral_code', $request->user_id)->first();
+        
+        $uplines = $this->getUplines($authCustomer);
+        $downlines = $this->getDownlines($authCustomer);
+
+        $customer_team = collect($uplines)->merge($downlines);
+
+        $name = $customer_team->firstWhere('id', $customer->id)['name'] ?? '-';
+
+        if($name == '-')
+        {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'User not found',
+            ]);
+        }
+        else
+        {
+            return response()->json([
+                'status' => 'success',
+                'name' => $name,
+            ]);
+        }
+        
     }
 
 }
