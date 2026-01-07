@@ -757,7 +757,7 @@
                 data-main-target="#volume-content"
                 aria-selected="false"
                 class="main-tab group relative px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition flex items-center gap-2">
-                <span class="relative z-[1]">Volume</span>
+                <span class="relative z-[1]">Points</span>
               </button>
             </li>
 
@@ -1309,7 +1309,10 @@
                         <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_4 }}</span>
                         </td> -->
-                        <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $dailyVolume->total }}</td>
+                        <td class="px-4 sm:px-5 py-3 text-left text-black">
+                          {{ $dailyVolume->leadership_points + $dailyVolume->champions_point }}
+                          {{-- {{ $dailyVolume->total }} --}}
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -1353,7 +1356,10 @@
                         <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_4 }}</span>
                         </td> -->
-                        <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $weeklyVolume->total }}</td>
+                        <td class="px-4 sm:px-5 py-3 text-left text-black">
+                          {{ $weeklyVolume->leadership_points + $weeklyVolume->champions_point }}
+                          {{-- {{ $weeklyVolume->total }} --}}
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>
@@ -1397,7 +1403,10 @@
                         <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_4 }}</span>
                         </td> -->
-                        <td class="px-4 sm:px-5 py-3 text-left text-black">{{ $monthlyVolume->total }}</td>
+                        <td class="px-4 sm:px-5 py-3 text-left text-black">
+                          {{ $monthlyVolume->leadership_points + $monthlyVolume->champions_point }}
+                          {{-- {{ $monthlyVolume->total }} --}}
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>

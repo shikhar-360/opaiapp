@@ -77,7 +77,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your package.</p>
+            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your membership.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -219,7 +219,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your package.</p>
+            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your membership.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -417,7 +417,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your package.</p>
+            <p>QR to Top-Up Transfer : Amount paid via QR is added to Top-Up Balance. Use Pay by Top-Up to activate your membership.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
