@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 06, 2026 at 04:42 AM
+-- Generation Time: Jan 07, 2026 at 05:10 AM
 -- Server version: 8.0.44-0ubuntu0.24.04.2
 -- PHP Version: 8.2.30
 
@@ -178,7 +178,7 @@ CREATE TABLE `app_level_packages` (
 --
 
 INSERT INTO `app_level_packages` (`id`, `app_id`, `level`, `directs`, `reward`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, 35.00, '2025-12-02 23:23:04', '2025-12-02 23:23:04'),
+(1, 1, 1, 1, 35.00, '2025-12-02 23:23:04', '2026-01-06 09:52:18'),
 (2, 1, 2, 2, 10.00, '2025-12-02 23:23:04', '2025-12-02 23:23:04'),
 (3, 1, 3, 2, 5.00, '2025-12-02 23:23:04', '2025-12-02 23:23:04'),
 (4, 1, 4, 3, 4.00, '2025-12-02 23:23:04', '2025-12-02 23:23:04'),
@@ -351,6 +351,7 @@ CREATE TABLE `customers` (
   `leadership_champions_rank` int DEFAULT '0',
   `champions_point` int DEFAULT NULL,
   `isRankAssigned` int NOT NULL DEFAULT '0',
+  `isWithdrawAssigned` int NOT NULL DEFAULT '0',
   `promotion_status` text COLLATE utf8mb4_unicode_ci,
   `nonce` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `iswallet_editable` tinyint(1) DEFAULT '1',
@@ -365,14 +366,14 @@ CREATE TABLE `customers` (
 -- Dumping data for table `customers`
 --
 
-INSERT INTO `customers` (`id`, `app_id`, `name`, `email`, `phone`, `password`, `wallet_address`, `referral_code`, `telegram_username`, `sponsor_id`, `direct_ids`, `active_direct_ids`, `status`, `remember_token`, `role`, `level_id`, `actual_level_id`, `leadership_rank`, `leadership_points`, `leadership_champions_rank`, `champions_point`, `isRankAssigned`, `promotion_status`, `nonce`, `iswallet_editable`, `isphone_editable`, `profile_image`, `isFreePackage`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', 'admin@ordinarypeopleai.com', '9000000001', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '59A66F', 'TELUSER123', NULL, '9/11/12/14', '11', 1, NULL, 'customer', 1, 4, NULL, NULL, NULL, NULL, 0, NULL, NULL, 0, 1, 'user_profiles/1767173660_user1.png', 0, '2025-12-01 06:27:18', '2026-01-05 20:05:07'),
-(9, 1, 'unknown1', 'unknown1@app.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', '0xb7a538425d25fba4712886df7747cac897b4138e', '19F5CMJJ', NULL, 1, '10', '10', 1, NULL, 'customer', 1, 3, 0, 0, NULL, NULL, 0, NULL, NULL, 0, 1, NULL, 0, '2026-01-02 19:09:04', '2026-01-05 20:23:14'),
-(10, 1, 'unknown2', 'unknown2@app.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAmC', NULL, '110C2SOAC', NULL, 9, '13', '13', 1, NULL, 'customer', 1, 2, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:12:36', '2026-01-05 19:52:48'),
-(11, 1, 'unknown3', 'unknown3@app.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', '0x5eEC36681A4755742ECc57a3820143e9c8E50C95', '111XXK02D', 'UnknownMe', 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 1, '2026-01-03 09:58:39', '2026-01-04 05:01:11'),
-(12, 1, 'unknown4', 'unknown4@app.com', '05678904311', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '112ETX9QV', NULL, 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-03 13:46:32', '2026-01-04 05:01:11'),
-(13, 1, 'unknown5', 'unknown5@app.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '113PSXBO6', 'abc', 10, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-03 14:27:10', '2026-01-04 05:01:11'),
-(14, 1, 'unknown6', 'unknown6@app.com', '07375710971', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '114WIZR4J', 'Tactical Human', 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-05 06:54:20', '2026-01-05 06:57:38');
+INSERT INTO `customers` (`id`, `app_id`, `name`, `email`, `phone`, `password`, `wallet_address`, `referral_code`, `telegram_username`, `sponsor_id`, `direct_ids`, `active_direct_ids`, `status`, `remember_token`, `role`, `level_id`, `actual_level_id`, `leadership_rank`, `leadership_points`, `leadership_champions_rank`, `champions_point`, `isRankAssigned`, `isWithdrawAssigned`, `promotion_status`, `nonce`, `iswallet_editable`, `isphone_editable`, `profile_image`, `isFreePackage`, `created_at`, `updated_at`) VALUES
+(1, 1, 'admin', 'rahul@app.coms', '9000000001', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '59A66F', 'TELUSER123', NULL, '9/11/12/14', '11', 1, NULL, 'customer', 1, 4, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, 1, 'user_profiles/1767173660_user1.png', 0, '2025-12-01 06:27:18', '2026-01-07 04:52:08'),
+(9, 1, 'Blackshark', 'saad.apoorti@gmail.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', '0xb7a538425d25fba4712886df7747cac897b4138e', '19F5CMJJ', NULL, 1, '10', '10', 1, NULL, 'customer', 1, 3, 0, 0, NULL, NULL, 0, 0, NULL, NULL, 0, 1, NULL, 0, '2026-01-02 19:09:04', '2026-01-05 20:23:14'),
+(10, 1, 'Akmal', 'tirmizi.akmal@gmail.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '110C2SOAC', NULL, 9, '13', '13', 1, NULL, 'customer', 1, 2, 0, 0, 0, NULL, 0, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-02 19:12:36', '2026-01-07 00:05:43'),
+(11, 1, 'Unknown', 'unknown@app.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', '0x5eEC36681A4755742ECc57a3820143e9c8E50C95', '111XXK02D', 'UnknownMe', 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, 0, NULL, NULL, 1, 1, NULL, 1, '2026-01-03 09:58:39', '2026-01-04 05:01:11'),
+(12, 1, 'Albert', 'bogdanchain98@gmail.com', '05678904311', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '112ETX9QV', NULL, 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-03 13:46:32', '2026-01-04 05:01:11'),
+(13, 1, 'John', 'akmal.tirmizi@rediffmail.com', NULL, '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', '0xb67298cc3bd1842a76594dfe5cf1303c04ab9c9f', '113PSXBO6', 'abc', 10, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, 0, NULL, NULL, 0, 1, NULL, 0, '2026-01-03 14:27:10', '2026-01-07 00:40:05'),
+(14, 1, 'LAZER FOCUS', 'tutorial010126@gmail.com', '07375710971', '$2y$12$lvW.jg.njHMZjS5qXPkIUOtVHrtSgv3dKYHalbBNTv0uvW6OHnJAm', NULL, '114WIZR4J', 'Tactical Human', 1, NULL, NULL, 1, NULL, 'customer', 1, 1, 0, 0, 0, NULL, 0, 0, NULL, NULL, 1, 1, NULL, 0, '2026-01-05 06:54:20', '2026-01-05 06:57:38');
 
 -- --------------------------------------------------------
 
@@ -467,7 +468,7 @@ CREATE TABLE `customer_financials` (
 --
 
 INSERT INTO `customer_financials` (`id`, `app_id`, `customer_id`, `total_deposit`, `total_income`, `total_withdraws`, `capping_limit`, `total_topup`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 0.000000, 1.100000, 0.000000, 0.000000, 1.4000, '2025-12-31 09:10:55', '2026-01-05 14:07:01'),
+(1, 1, 1, 0.000000, 1.100000, 0.000000, 0.000000, 1.4000, '2025-12-31 09:10:55', '2026-01-06 09:28:29'),
 (8, 1, 9, 0.000000, 5.250000, 0.000000, 0.000000, 5.5000, '2026-01-02 19:09:09', '2026-01-05 14:06:18'),
 (9, 1, 10, 10.000000, 1.750000, 0.000000, 50.000000, 0.0000, '2026-01-02 19:12:55', '2026-01-03 14:33:58'),
 (10, 1, 11, 5.000000, 0.000000, 0.000000, 25.000000, 5.0000, '2026-01-03 09:59:14', '2026-01-03 10:24:57'),
@@ -500,6 +501,41 @@ CREATE TABLE `customer_flush_details` (
 
 INSERT INTO `customer_flush_details` (`id`, `app_id`, `upline_id`, `reference_id`, `reference_amount`, `flush_amount`, `flush_level`, `reason`, `created_at`, `updated_at`) VALUES
 (4, 1, 1, 10, 10.00, 1.00, 2, 'NOT-ELIGIBLE', '2026-01-03 09:01:58', '2026-01-03 09:01:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_settings`
+--
+
+CREATE TABLE `customer_settings` (
+  `id` bigint UNSIGNED NOT NULL,
+  `app_id` bigint UNSIGNED NOT NULL,
+  `customer_id` bigint UNSIGNED NOT NULL,
+  `isP2P` tinyint(1) NOT NULL DEFAULT '0',
+  `isSelfTransfer` tinyint(1) NOT NULL DEFAULT '0',
+  `isFreePackage` tinyint(1) NOT NULL DEFAULT '1',
+  `isWithdraw` tinyint(1) NOT NULL DEFAULT '0',
+  `isRankAssigned` tinyint(1) NOT NULL DEFAULT '0',
+  `isWithdrawAssigned` tinyint(1) NOT NULL DEFAULT '0',
+  `iswallet_editable` tinyint(1) NOT NULL DEFAULT '0',
+  `isphone_editable` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customer_settings`
+--
+
+INSERT INTO `customer_settings` (`id`, `app_id`, `customer_id`, `isP2P`, `isSelfTransfer`, `isFreePackage`, `isWithdraw`, `isRankAssigned`, `isWithdrawAssigned`, `iswallet_editable`, `isphone_editable`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, '2026-01-06 12:51:40', '2026-01-06 13:23:46'),
+(2, 1, 9, 0, 0, 0, 0, 0, 0, 0, 0, '2026-01-06 12:51:40', '2026-01-06 12:51:40'),
+(3, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0, '2026-01-06 12:51:40', '2026-01-06 12:51:40'),
+(4, 1, 11, 0, 0, 1, 0, 0, 0, 0, 0, '2026-01-06 12:51:40', '2026-01-06 12:51:40'),
+(5, 1, 12, 0, 0, 0, 0, 0, 0, 0, 0, '2026-01-06 12:51:51', '2026-01-06 12:51:51'),
+(6, 1, 13, 0, 0, 0, 0, 0, 0, 0, 0, '2026-01-06 12:51:51', '2026-01-06 12:51:51'),
+(7, 1, 14, 0, 0, 0, 0, 0, 0, 0, 0, '2026-01-06 12:52:00', '2026-01-06 12:52:00');
 
 -- --------------------------------------------------------
 
@@ -656,7 +692,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2025_12_02_061151_create_app_packages_table', 8),
 (9, '2025_12_03_093456_create_free_deposit_packages_table', 9),
 (10, '2025_12_03_103914_create_wallet_transactions_table', 10),
-(11, '2025_12_30_123116_create_admin_tutorials_table', 11);
+(11, '2025_12_30_123116_create_admin_tutorials_table', 11),
+(12, '2026_01_06_122603_create_customer_settings_table', 12);
 
 -- --------------------------------------------------------
 
@@ -791,18 +828,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('1AKfPtF0OYDPwQ2Eoxkb7kSsZjxhAXoMKroWDkiB', NULL, '206.168.34.199', 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiaVFqYnpKdUtIaloyWFJzRVByMXZtVlVEQUVxb3dpZ0g3bWlaY2pjdCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjU6Imh0dHA6Ly83Mi42MS4xNDguNTUvbG9naW4iO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1767657199),
-('2wyJlmNNahp3u8SNb0sgBQU7izQuJkOsKAZlFroE', NULL, '162.158.22.53', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV0FPdXFuSmFsTmdXYnRyUUI4SlVsUEFRc2Y1bE4wZnBYbmFmWjhwTyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzI6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767673838),
-('eNcA1mkZqUTUfl3KFr974PC6eSsQOtvxCEu4Apym', NULL, '167.94.138.167', 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoibTBVVmlaaGFTZ1l0a2tneHZiaGxUYWhGM2lsWEhnRld2UmQ4Z2w1RSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1767656935),
-('GJR4eGlOZGynCNV4XlrIM4jL28UPvHLyorlw5lfO', NULL, '172.70.162.171', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYktNOXhHbHp1TG9VTWlIQVJFNExDbWk3YzFTV09Ec1NpZWtnYUZrWSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767640102),
-('KpojOZy1YUeg1FNrAAdQDy16JzBnxDgiMU59Mgek', NULL, '49.51.141.76', 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiYTJTQXlzc2Y0S2lobmpqbVJKZzZrWEpXazhleVR3WFpBdzBzT0dHNSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1767654512),
-('Ma9bzbTKfuSiAQ00LBj2BnbLYc5hQMkFKejkTFgD', NULL, '162.158.170.104', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiR1BxNTN5UXR6Y3FTa0NWckF6elVSWktaVzdmdXdNbFF5ZnZ6anlSTSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NjA6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3JlZ2lzdGVyP3Nwb25zb3Jjb2RlPTU5QTY2RiI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fX0=', 1767643521),
-('oOvV6cFmZTMoBm2eMfp0f5fv7l6OoizfB0AnJysB', NULL, '205.210.31.220', 'Hello from Palo Alto Networks, find out more about our scans in https://docs-cortex.paloaltonetworks.com/r/1/Cortex-Xpanse/Scanning-activity', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiSDhGbEhiSkdrakVsb3BwSFBSbERmclJTSVBoYTBkMGdidnZoM1Y3ZyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1767656178),
-('QsIj3rjAJwOZohcaUo4KRp3qvwmARyOuEdWDvAql', NULL, '172.71.99.196', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiQTdWTFR4NlNRaXNYWEdOam9pcW9oWXhrWlB6QjFtYzFEOFJCc3NKRSI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3Byb2ZpbGUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1767644275),
-('TM6zM09zQR00lHnpNgzupPCjmPmEz3rJ2JLgphSP', NULL, '172.69.222.156', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiUWlUYWV6aXNzMmZNbG82S09hY0ZyOHFXNFVBNGMyUmRBUXRQVk0zYiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3N0YXRzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1NToibG9naW5fY3VzdG9tZXJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxMDt9', 1767642768),
-('UPHzcivEtdgfYidyImAvIjeSWMIgAR980d9Pi7iU', NULL, '172.71.124.159', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiNUhSaTZGb25FeWQwV0xzeWNuNDMyVVRzZVh2VlRTQUUzbTVKa0tGMiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NDA6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL3RpY2tldHMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjU1OiJsb2dpbl9jdXN0b21lcl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjk7fQ==', 1767645085),
-('wD0UMFcFOhbdQzJRxdJ3AhPtram9ymP4dc4wOnAi', NULL, '185.247.137.111', 'Mozilla/5.0 (compatible; InternetMeasurement/1.0; +https://internet-measurement.com/)', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiV3lzUTVoOHN5YW5qRU81bHluTjV4RWZ2VXhVcVNvRWd5clBFUVpHUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly9zcnYxMjM1OTMwLmhzdGdyLmNsb3VkIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767667479),
-('XpAu95VGqlhRSmKn7Jwkjiv64Skyh3NgobbJuWcZ', NULL, '167.94.138.167', 'Mozilla/5.0 (compatible; CensysInspect/1.1; +https://about.censys.io/)', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiTFVkdTZ1UHAxaFVJcHhIUW9wYkZhYjZEcVU2MDFRWHdjT2xiRHRiYyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MTk6Imh0dHA6Ly83Mi42MS4xNDguNTUiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX19', 1767656888);
+('lbXwbgZBtgTMupYscNltbunFyNyuLrNKK0y93R1q', NULL, '172.70.108.219', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36', 'YTozOntzOjY6Il90b2tlbiI7czo0MDoiWkVQMmZjVHhGZ05ITkd6SHF5SWhqS2NSc3FGZWZ5Z2Rpd1dhTkc4UCI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzg6Imh0dHA6Ly91c2VyLm9yZGluYXJ5cGVvcGxlYWkuY29tL2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==', 1767762362);
 
 -- --------------------------------------------------------
 
@@ -990,6 +1016,14 @@ ALTER TABLE `customer_flush_details`
   ADD KEY `idx_upline_id` (`upline_id`),
   ADD KEY `idx_reference_id` (`reference_id`),
   ADD KEY `idx_flush_level` (`flush_level`);
+
+--
+-- Indexes for table `customer_settings`
+--
+ALTER TABLE `customer_settings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `customer_settings_app_id_customer_id_unique` (`app_id`,`customer_id`),
+  ADD KEY `customer_settings_customer_id_foreign` (`customer_id`);
 
 --
 -- Indexes for table `customer_withdraws`
@@ -1198,10 +1232,16 @@ ALTER TABLE `customer_flush_details`
   MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `customer_settings`
+--
+ALTER TABLE `customer_settings`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `customer_withdraws`
 --
 ALTER TABLE `customer_withdraws`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -1237,7 +1277,7 @@ ALTER TABLE `landing_user`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `ninepay_transactions`
@@ -1329,6 +1369,13 @@ ALTER TABLE `customer_earning_details`
 ALTER TABLE `customer_financials`
   ADD CONSTRAINT `customer_financials_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `customer_financials_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `customer_settings`
+--
+ALTER TABLE `customer_settings`
+  ADD CONSTRAINT `customer_settings_app_id_foreign` FOREIGN KEY (`app_id`) REFERENCES `apps` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `customer_settings_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `customer_withdraws`

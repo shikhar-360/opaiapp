@@ -15,8 +15,8 @@
 
         <div class="mb-3">
             <label>Volume (₹)</label>
-            <input type="number" name="volume" step="0.01" value="{{ old('volume') }}" class="form-control">
-            @error('volume') <small class="text-danger">{{ $message }}</small> @enderror
+            <input type="number" name="team_volume" step="0.01" value="{{ old('team_volume') }}" class="form-control">
+            @error('team_volume') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
 
         <div class="mb-3">
@@ -24,6 +24,8 @@
             <input type="number" name="points" step="0.01" value="{{ old('points') }}" class="form-control">
             @error('points') <small class="text-danger">{{ $message }}</small> @enderror
         </div>
+
+        
 
         <button class="btn btn-success">Save Package</button>
         <a href="{{ route('admin.leadershippackages.index') }}" class="btn btn-secondary">Back</a>

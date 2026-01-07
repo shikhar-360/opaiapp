@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\Models\CustomersModel;
 use App\Models\ForgotPasswordRequestsModel;
+use App\Models\CustomerSettingsModel;
 
 // use Elliptic\EC; 
 // use kornrunner\Keccak;
@@ -137,6 +138,11 @@ class CustomerAuthController extends Controller
         
         $sponsor->direct_ids = trim(($sponsor->direct_ids ?? '') . '/' . $newCustomer->id, '/');
         $sponsor->save();
+
+        CustomerSettingsModel::create([
+            'app_id'      => $appId,
+            'customer_id' => $newCustomer->id,
+        ]);
 
         //Temporary for testing purpose
         // $finance = $this->getCustomerFinance($newCustomer->id, $appId);

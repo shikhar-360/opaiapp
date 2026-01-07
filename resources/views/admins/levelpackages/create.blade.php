@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <br><br><br><h2>Add New Level Package</h2>
+    <h2>Add New Level Package</h2>
 
     <form action="{{ route('admin.levelpackages.store') }}" method="POST">
         @csrf

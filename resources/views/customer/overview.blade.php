@@ -51,16 +51,6 @@
 
   <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
     <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
-      <img src="{{ asset('assets/images/rank/emerald-.webp?v=1') }}"  class="w-9" alt="Flush">
-    </div>
-    <div>
-      <h3 class="text-base text-slate-600">Total Flush Amount</h3>
-      <p class="text-lg font-bold text-[var(--theme-high-text)]">{{ $customer->totalFlushAmount??'-' }} </p>
-    </div>
-  </div> -->
-  
-  <!-- <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
-    <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-sky-50 border border-sky-200">
       <img src="{{ asset('assets/images/icons/capping.webp?v=1') }}"  class="w-9" alt="Level Points">
     </div>
     <div>
@@ -708,6 +698,9 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                     Amount ({{ $customer->appData->currency }})
                   </th>
                   <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
+                    Flush Amount ({{ $customer->appData->currency }})
+                  </th>
+                  <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-amber-700 text-xs sm:text-[13px]">
                     Tag
                   </th>
                   <th
@@ -722,7 +715,10 @@ hover:shadow-[0_18px_45px_rgba(15,23,42,.14)] transition-shadow">
                 <tr class="hover:bg-slate-100 transition">
                   <td class="px-4 sm:px-5 py-3 text-slate-900">{{ $loop->iteration }}</td>
                   <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->amount_earned }}</td>
-                  <td class="px-4 sm:px-5 py-3 text-slate-700">{{ $incomes->earning_type }}-{{ $incomes->reference_level }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-emerald-600 font-semibold">{{ $incomes->flush_amount }}</td>
+                  <td class="px-4 sm:px-5 py-3 text-slate-700">
+                    {{-- {{ $incomes->earning_type }} --}}
+                    Circle {{ $incomes->reference_level }}</td>
                   <td class="px-4 sm:px-5 py-3 text-right text-slate-600">{{ $incomes->created_at->format('d-m-Y') }}</td>
                 </tr>
                 @endforeach

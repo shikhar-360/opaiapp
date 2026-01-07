@@ -63,8 +63,12 @@
 
   @stack('scripts')
 
-  @if($customer->isRankAssigned == 1)
+  @if($customer->isRankAssigned === 1)
   <x-rank-success-modal :customer="$customer" />
+  @endif
+  
+  @if($customer->isWithdrawAssigned > 0)
+  <x-withdraw-success-modal :customer="$customer" />
   @endif
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>

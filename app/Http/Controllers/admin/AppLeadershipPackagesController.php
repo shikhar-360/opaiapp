@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-use App\Models\AppLeadershipPackagesModel;
+use App\Models\AppLeadershipIncomeModel;
 
 class AppLeadershipPackagesController extends Controller
 {
@@ -16,7 +16,7 @@ class AppLeadershipPackagesController extends Controller
     public function index()
     {
         $admin = Auth::guard('admin')->user();
-        $packages = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->get();
+        $packages = AppLeadershipIncomeModel::where('app_id', $admin->app_id)->get();
         return view('admins.leadershippackages.index', compact('packages'));
     }
 
@@ -35,7 +35,7 @@ class AppLeadershipPackagesController extends Controller
     {
         $validated = $request->validate([
             'rank'  => 'required|string|max:255',
-            'volume' => 'required|numeric|min:0',
+            'team_volume' => 'required|numeric|min:0',
             'points' => 'required|numeric|min:0',
         ]);
 
@@ -43,7 +43,7 @@ class AppLeadershipPackagesController extends Controller
         
         $validated['app_id'] = $admin->app_id;
 
-        AppLeadershipPackagesModel::create($validated);
+        AppLeadershipIncomeModel::create($validated);
 
         return redirect()->route('admin.leadershippackages.index')
                          ->with('success', 'Package created successfully.');
@@ -55,7 +55,7 @@ class AppLeadershipPackagesController extends Controller
     public function show($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipIncomeModel::where('app_id', $admin->app_id)->findOrFail($id);
         return view('admins.leadershippackages.show', compact('package'));
     }
 
@@ -65,7 +65,7 @@ class AppLeadershipPackagesController extends Controller
     public function edit($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipIncomeModel::where('app_id', $admin->app_id)->findOrFail($id);
         return view('admins.leadershippackages.edit', compact('package'));
     }
 
@@ -75,11 +75,11 @@ class AppLeadershipPackagesController extends Controller
     public function update(Request $request, $id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipIncomeModel::where('app_id', $admin->app_id)->findOrFail($id);
 
         $validated = $request->validate([
             'rank'  => 'required|string|max:255',
-            'volume' => 'required|numeric|min:0',
+            'team_volume' => 'required|numeric|min:0',
             'points' => 'required|numeric|min:0',
         ]);
 
@@ -95,7 +95,7 @@ class AppLeadershipPackagesController extends Controller
     public function destroy($id)
     {
         $admin = Auth::guard('admin')->user();
-        $package = AppLeadershipPackagesModel::where('app_id', $admin->app_id)->findOrFail($id);
+        $package = AppLeadershipIncomeModel::where('app_id', $admin->app_id)->findOrFail($id);
         $package->delete();
 
         return redirect()->route('admin.leadershippackages.index')

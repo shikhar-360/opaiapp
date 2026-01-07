@@ -13,7 +13,7 @@
     <div class="card p-3">
         <p><strong>ID:</strong> {{ $package->id }}</p>
         <p><strong>Rank:</strong> {{ $package->rank }}</p>
-        <p><strong>Volume:</strong> {{ $package->volume }}₹ </p>
+        <p><strong>Volume:</strong> {{ $package->team_volume }}₹ </p>
         <p><strong>Points:</strong> {{ $package->points }}%</p>
         <a href="{{ route('admin.leadershippackages.edit', $package->id) }}" class="btn btn-warning">Edit</a>
 

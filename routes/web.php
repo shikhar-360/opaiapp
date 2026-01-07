@@ -85,6 +85,7 @@ Route::middleware(['customer'])->group(function () {
     Route::post('/fetch-user-name', [CustomerController::class, 'fetchUserName'])->name('fetch.user.name');
     Route::post('/stop-rankpopup', [CustomerController::class, 'stopRankPopup'])->name('stop.rankpopup');
     Route::post('/fetch-teamuser-name', [CustomerController::class, 'fetchTeamUserName'])->name('fetch.teamuser.name');
+    Route::post('/stop-withdrawpopup', [CustomerController::class, 'stopWithdrawPopup'])->name('stop.withdrawpopup');
     
     Route::get('/stats', [CustomerController::class, 'showStats'])->name('stats');
 
@@ -199,6 +200,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // GET /admin/tutorials/{app}/edit
         // PUT /admin/tutorials/{app}
         // DELETE /admin/tutorials/{app}
+
+        Route::resource('championspackages', AppChampionsPackagesController::class);
+        // GET /admin/championspackages
+        // GET /admin/championspackages/create
+        // POST /admin/championspackages
+        // GET /admin/championspackages/{app}/edit
+        // PUT /admin/championspackages/{app}
+        // DELETE /admin/championspackages/{app}
 
         // Specific Action: Login as Customer
         Route::get('/loginascustomer/{customer}', [AdminController::class, 'loginAsCustomer'])->name('login.as.customer');

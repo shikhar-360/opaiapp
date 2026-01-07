@@ -176,4 +176,48 @@ class WithdrawService
             return ['status'  => true, 'message' => 'Selftransfer success.', 'Transfer' => $transfer];
         });
     }
+
+    public function updateWithdraw($validatedData)
+    {
+        $withdraw_request = CustomerWithdrawsModel::query()
+                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                ->where('customer_withdraws.id', $validatedData['request_id'])
+                                                ->where('customer_withdraws.transaction_status', 'pending')
+                                                ->whereNull('customer_withdraws.transaction_id')
+                                                ->whereNotNull('customers.wallet_address')
+                                                ->select('customer_withdraws.*','customers.wallet_address', 'customers.isWithdrawAssigned') 
+                                                ->first();
+        if (!$withdraw_request) {
+            return response()->json((object)[], 200);
+        }
+
+        if ($withdraw_request) 
+        {
+            $finance = $this->getCustomerFinance($withdraw_request->customer_id, $withdraw_request->app_id);
+
+            if((float)$finance->total_income > (float)$withdraw_request->amount)
+            {
+                $withdraw_request->transaction_status = 'success';
+                $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
+                $withdraw_request->save();
+                
+                $customer = CustomersModel::where('id', $withdraw_request->customer_id)->where('app_id', $withdraw_request->app_id)->first();
+
+                if (!$customer) {
+                    return response()->json([
+                        'status'  => 'error',
+                        'message' => 'Customer not found'
+                    ], 404);
+                }
+
+                $customer->isWithdrawAssigned = $validatedData['request_id'];
+                $customer->save();
+
+                // $finance = $this->getCustomerFinance($withdraw_request->customer_id, $withdraw_request->app_id);    
+                $finance->total_income = max(0, $finance->total_income - $withdraw_request->amount);
+                $finance->total_withdraws += $withdraw_request->amount;
+                $finance->save();
+            }
+        }
+    }
 }

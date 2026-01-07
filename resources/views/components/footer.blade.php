@@ -3,7 +3,7 @@
     <div class="flex flex-col md:flex-row justify-between items-center text-center">
 
       <div class="text-center mb-4 md:mb-0">
-        <p>&copy; {{ now()->year }} <span class="text-[var(--theme-high-text)] text-xl font-bold">OpAi</span> All rights reserved.</p>
+        <p>&copy; {{ now()->year }} <span class="text-[var(--theme-high-text)] text-xl font-bold">OPAI</span> All rights reserved.</p>
       </div>
 
       <div class="flex gap-1 mx-auto sm:mx-0">

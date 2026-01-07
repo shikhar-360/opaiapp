@@ -39,6 +39,7 @@ class CustomersModel extends Authenticatable
         'active_direct_ids',
         'isFreePackage',
         'actual_level_id',
+        'isWithdrawAssigned',
     ];
 
     protected $hidden = [
@@ -123,5 +124,10 @@ class CustomersModel extends Authenticatable
     public function downlines()
     {
         return $this->hasMany(CustomersModel::class, 'sponsor_id');
+    }
+
+    public function customerSettings()
+    {
+        return $this->hasOne(CustomerSettingsModel::class, 'customer_id', 'id');
     }
 }

@@ -45,7 +45,7 @@ class OverviewController extends Controller
         
         $levelIncomeDetails = CustomerEarningDetailsModel::where('customer_id', $customer->id)
                                                             ->where('app_id', $customer->app_id)
-                                                            ->where('earning_type', 'LEVEL-REWARD')
+                                                            // ->where('earning_type', 'LEVEL-REWARD')
                                                             ->whereBetween('created_at', [$dateFrom, $dateTo])
                                                             ->latest()
                                                             ->get();
@@ -55,11 +55,11 @@ class OverviewController extends Controller
         $customer->levelIncomeDatefrom  = $dateFrom->format('Y-m-d');
         $customer->levelIncomeDateto    = $dateTo->format('Y-m-d');
 
-        $flush_amount       = CustomerFlushDetailsModel::where('upline_id', $customer->id)
-                                                            ->where('app_id', $customer->app_id)
-                                                            ->where('reason', 'NOT-ELIGIBLE')
-                                                            ->sum('flush_amount');
-        $customer->totalFlushAmount = $flush_amount;
+        // $flush_amount       = CustomerFlushDetailsModel::where('upline_id', $customer->id)
+        //                                                     ->where('app_id', $customer->app_id)
+        //                                                     ->where('reason', 'NOT-ELIGIBLE')
+        //                                                     ->sum('flush_amount');
+        // $customer->totalFlushAmount = $flush_amount;
 
         // dd($customer);
         

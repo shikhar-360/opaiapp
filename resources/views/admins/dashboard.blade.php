@@ -72,10 +72,44 @@
         <div class="col-md-4 mb-3">
             <div class="card shadow-sm p-4 text-center">
                 <h5>Total Customers</h5>
-                <h2>{{ $customers ?? 0 }}</h2>
+                <h2>{{ $data["total_customers"] ?? 0 }}</h2>
                 <a href="{{ route('admin.appcustomers.index') }}">CUSTOMERS</a>
             </div>
         </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Total Active Customers</h5>
+                <h2>{{ $data["total_activated_customers"] ?? 0 }}</h2>
+                <a href="{{ route('admin.appcustomers.index') }}">CUSTOMERS</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Total Activated Plan (By Admin)</h5>
+                <h2>{{ $data["total_activated_amount_free"] ?? 0 }}</h2>
+                <a href="{{ route('admin.appcustomers.index') }}">FREE PACKAGES</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Total Withdraws</h5>
+                <h2>{{ $data["total_withdraws"] ?? 0 }}</h2>
+                <a href="{{ route('admin.appcustomers.index') }}">WITHDRAWS</a>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm p-4 text-center">
+                <h5>Total USDT</h5>
+                <h2>{{ $data["total_usdt"] ?? 0 }}</h2>
+                <a href="{{ route('admin.appcustomers.index') }}">9Pay Transactions</a>
+            </div>
+        </div>
+
+        {{  var_dump($data) }}
     </div>
 
 </div>
