@@ -104,7 +104,7 @@
     </div>
 
     {{-- button --}}
-    <div class="">
+    <div class=" flex gap-3 flex-wrap justify-center max-w-72 mx-auto">
        <button
                 id="btnLogin"
                 class="relative w-full mx-auto max-w-32 px-4 py-3 cursor-pointer 
@@ -122,6 +122,27 @@
                 </path>
             </svg>
         </button>
+             <button
+    id="btnLogin"
+    class="relative w-full mx-auto max-w-32 px-4 py-3 cursor-pointer 
+           flex items-center justify-center text-base capitalize tracking-wide mt-4 
+           rounded-lg border border-slate-400
+           bg-gradient-to-r from-white via-slate-100 to-sky-100
+           text-slate-700 font-semibold 
+           transition-all duration-300 ease-out group 
+           hover:-translate-y-0.5 hover:shadow-md
+           focus-visible:outline-none focus-visible:ring-2 
+           focus-visible:ring-slate-300 focus-visible:ring-offset-2 
+           focus-visible:ring-offset-slate-100">
+    <span>Initiate</span>
+    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+         fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
+        </path>
+    </svg>
+</button>
+
     </div>
 </form>
 

@@ -140,7 +140,7 @@
     {{-- Levels grid --}}
 <div class="relative z-10">
   <div
-    class="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 p-2 sm:p-3
+    class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 justify-center items-center
            rounded-2xl bg-[var(--theme-[var(--theme-skky-100)])]/70">
         <!-- @foreach ($levels as $n)
           @php
@@ -158,10 +158,10 @@
         @endforeach -->
         
         <div
-            class="rounded-lg text-center py-2 sm:py-3 text-xs sm:text-[13px] transition bg-white text-slate-600 border border-slate-200 hover:border-[var(--theme-skky-300)] hover:bg-[var(--theme-skkky-50)]/60">
+            class="w-full rounded-lg text-center py-3 text-sm transition bg-white text-slate-600 border border-slate-200 hover:border-[var(--theme-skky-300)] hover:bg-[var(--theme-skkky-50)]/60">
             Next Rank: VIP {{ str_pad($levels[$cl], 2, '0', STR_PAD_LEFT) }}
           </div>
-        <div class="rounded-lg text-center  text-xs sm:text-[13px] transition col-span-2 sm:col-span-1 ">
+        <div class="rounded-lg text-center  text-xs sm:text-[13px] transition  ">
           <div class=" border border-indigo-200/70 bg-gradient-to-r from-indigo-50 via-[var(--theme-skkky-50)] to-fuchsia-50 backdrop-blur-sm px-4 py-1 rounded-lg shadow-sm flex flex-col justify-center">
             <!-- Next Rank -->
             <!-- <div class="">

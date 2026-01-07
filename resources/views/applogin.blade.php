@@ -53,7 +53,7 @@
       </div> -->
 
     <img src="/assets/images/white-grid.png"  alt="bnrbg"
-             class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">
+             class="absolute top-0 left-0 w-full h-full object-cover -z-10 opacity-100">
              
     @yield('content')
 
