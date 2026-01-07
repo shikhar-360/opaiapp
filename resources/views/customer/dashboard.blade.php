@@ -37,7 +37,7 @@
 
             <div class="w-full min-w-0">
               <h3 class="text-base sm:text-lg text-slate-900 leading-none mb-2 font-semibold">
-                OpAi Referral Link
+                OPAI Referral Link
               </h3>
 
               <div class="flex items-stretch gap-2 bg-slate-50 rounded-xl border border-slate-200 p-1.5">
@@ -893,11 +893,11 @@
                         </th>
                         <th
                           class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                          Referral Code
+                          Cores
                         </th>
                         <th
                           class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">
-                          Cores
+                          Extended
                         </th>
                         {{-- <th
                           class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">
@@ -907,17 +907,17 @@
                     </thead>
                     <tbody class="divide-y divide-slate-100">
                       @foreach($customer->leaderBoard["directs"]["daily"] as $dailyDirects)
-                      <tr class="hover:bg-slate-200 transition">
-                        <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects->name }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
-                        <td class="px-4 sm:px-5 py-3 text-black">
-                          <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
-                        </td>
-                        <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
-                        <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_rank'] }}</td>
-                        <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td> -->
-                      </tr>
+                        <tr class="hover:bg-slate-200 transition">
+                          <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
+                          <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects->name }}</td>
+                          <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
+                          <td class="px-4 sm:px-5 py-3 text-black">
+                            <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
+                          </td>
+                          <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
+                          <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_rank'] }}</td>
+                          <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td> -->
+                        </tr>
                       @endforeach
                       <!-- <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">1</td>
@@ -1051,8 +1051,8 @@
                       <tr class="bg-slate-100 text-slate-900">
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Directs</th>
+                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Cores</th>
+                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Extended</th>
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th> -->
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th> -->
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->
@@ -1167,8 +1167,8 @@
                       <tr class="bg-slate-100 text-slate-900">
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Name</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Referral Code</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Cores</th>
+                        <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px]">Extended</th>
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Level</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">Rank</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold tracking-wide text-nowrap text-[var(--theme-primary-text)] text-[14px] sm:text-[16px] !text-right">champions Rank</th> -->

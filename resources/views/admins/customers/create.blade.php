@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-3">Add Customer</h2>
+    <h2 class="mb-3">Add User</h2>
 
     <form action="{{ route('admin.appcustomers.store') }}" method="POST">
         @csrf

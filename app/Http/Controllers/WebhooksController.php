@@ -11,14 +11,16 @@ use App\Models\CustomerWithdrawsModel;
 use App\Models\CustomersModel;
 
 use App\Services\Payment\NinePayService;
+use App\Services\WithdrawService;
 
 class WebhooksController extends Controller
 {
     protected $ninepays;
 
-    public function __construct(NinePayService $ninepay)
+    public function __construct(NinePayService $ninepay, WithdrawService $withdrawsvc)
     {
         $this->ninepays = $ninepay;
+        $this->withdrawsvc = $withdrawsvc;
     }
 
     public function topupWebhook(Request $request)
@@ -148,7 +150,7 @@ class WebhooksController extends Controller
         ]);
     }
 
-    public function postSuccessWithdraw (Request $request)
+    /*public function postSuccessWithdraw (Request $request)
     {
         Log::info('POST Success Withdraw:', $request->all());
         
@@ -178,6 +180,39 @@ class WebhooksController extends Controller
         return response()->json([
             'success' => true
         ], 200);
+    }*/
+
+    public function postSuccessWithdraw (Request $request)
+    {
+        Log::info('POST Success Withdraw:', $request->all());
+        
+        $validatedData = $request->validate([
+            'request_id'        =>  'required|numeric|min:1',
+            'transaction_hash'  =>  'required|string|min:10',
+        ]);
+
+        $withdraw_request = CustomerWithdrawsModel::query()
+                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                ->where('customer_withdraws.id', $validatedData['request_id'])
+                                                ->where('customer_withdraws.transaction_status', 'pending')
+                                                ->whereNull('customer_withdraws.transaction_id')
+                                                ->whereNotNull('customers.wallet_address')
+                                                ->select('customer_withdraws.*','customers.wallet_address') 
+                                                ->first();
+        if (!$withdraw_request) {
+            return response()->json((object)[], 200);
+        }
+
+        if ($withdraw_request) {
+            // $withdraw_request->transaction_status = 'success';
+            // $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
+            // $withdraw_request->save();
+            $this->withdrawsvc->updateWithdraw($validatedData);
+        }
+
+        return response()->json([
+            'success' => true
+        ], 200);
     }
 
     // By Nomaan
@@ -199,5 +234,22 @@ class WebhooksController extends Controller
             'message' => 'Data inserted successfully'
         ]);
     }
+    function get_all_user_data(){
+        $data = DB::table('landing_user')->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Data inserted successfully',
+            'data' => $data
+        ]);
+    }
+    function get_user_data(Request $request){
+        $id = $request->input('id');
 
+        $data = DB::table('landing_user')->where('id',$id)->get();
+        return response()->json([
+            'status' => true,
+            'message' => 'Data inserted successfully',
+            'data' => $data
+        ]);
+    }
 }

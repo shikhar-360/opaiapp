@@ -63,6 +63,7 @@
 
   @stack('scripts')
 
+  
 </body>
 
 <!-- Notyf JS -->

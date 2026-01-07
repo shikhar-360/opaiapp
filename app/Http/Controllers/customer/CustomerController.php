@@ -114,6 +114,12 @@ class CustomerController extends Controller
         // $customer->vip_total_volume = $total_volume;
         // $customer->vip_total_directs = $total_directs;
 
+        // The net_amount of the assigned withdraw for withdraw success popup
+        $latest_withdraw_amount = optional(
+            $customer->myWithdraws->firstWhere('id', $customer->isWithdrawAssigned)
+        )->net_amount ?? 0;
+        $customer->latest_withdraw_amount = $latest_withdraw_amount;
+
         // dd($customer);
 
 
@@ -709,6 +715,25 @@ class CustomerController extends Controller
             ]);
         }
         
+    }
+
+    public function stopWithdrawPopup(Request $request)
+    {
+        $authCustomer = Auth::guard('customer')->user();
+        
+        $request->validate([
+            'user_id' => 'required|numeric',
+        ]);
+
+        CustomersModel::where('id', $authCustomer->id)
+                            ->update([
+                                'isWithdrawAssigned' => 0
+                            ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => "Withdraw popup stopped",
+        ]);
     }
 
 }

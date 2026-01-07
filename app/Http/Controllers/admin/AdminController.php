@@ -12,6 +12,9 @@ use App\Models\CustomersModel;
 use App\Models\AppPackagesModel; 
 use App\Models\AppLevelPackagesModel; 
 use App\Models\UsersModel;
+use App\Models\CustomerDepositsModel; 
+use App\Models\CustomerWithdrawsModel;
+use App\Models\NinepayTransactionsModel;
 
 class AdminController extends Controller
 {
@@ -56,7 +59,42 @@ class AdminController extends Controller
     // --- Dashboard ---
     public function dashboard()
     {
-        return view('admins.dashboard');
+        $admin = Auth::guard('admin')->user();
+
+        // 1. Total Customers
+        $data['total_customers'] = CustomersModel::where('app_id', $admin->app_id)->count();
+
+        // 2. Total Activated Customers
+        $data['total_activated_customers'] = CustomersModel::where('app_id', $admin->app_id)->where('status', 1)->count();
+
+        // 3. Total Activated Packages
+        $data['total_activated_packages'] = CustomerDepositsModel::where('app_id', $admin->app_id)->where('payment_status', 1)->count();
+
+        // 4. Total Activated Amount (Paid)
+        $data['total_activated_amount'] = CustomerDepositsModel::where('app_id', $admin->app_id)
+                                                                    ->where('payment_status', 1)
+                                                                    ->where('is_free_deposit', 0)
+                                                                    ->sum('amount');
+
+        // 5. Total Activated Amount (Free Package)
+        $data['total_activated_amount_free'] = CustomerDepositsModel::where('app_id', $admin->app_id)
+                                                                        ->where('payment_status', 1)
+                                                                        ->where('is_free_deposit', 1)
+                                                                        ->sum('amount');
+
+        // 6. Total Withdraws
+        $data['total_withdraws'] = CustomerWithdrawsModel::where('app_id', $admin->app_id)
+                                                            ->where('transaction_status', 'success')
+                                                            ->sum('amount');
+
+        // 7. Total USDT (Wallet balance or deposits)
+        $data['total_usdt'] = NinepayTransactionsModel::where('app_id', $admin->app_id)
+                                                            ->where('currency', 'USDT')
+                                                            ->where('network_type', 'credit')
+                                                            ->where('payment_status', 'success')
+                                                            ->sum('amount');
+            
+        return view('admins.dashboard', compact('data'));
     }
 
     // --- Specific Action: Login As Customer ---

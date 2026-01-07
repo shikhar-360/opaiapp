@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <br><br><br>
+    
     <h2>Edit Level Package</h2>
 
     <form action="{{ route('admin.levelpackages.update', $package->id) }}" method="POST">

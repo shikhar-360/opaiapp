@@ -11,13 +11,14 @@
     <style>
         body {
             background: #f8f9fa;
+            padding-top: 56px; /* ADD THIS */
         }
         .sidebar {
             width: 240px;
             background: #343a40;
             height: 100vh;
             position: fixed;
-            top: 0;
+            top: 56px; /* CHANGE from 0 */
             left: 0;
             padding-top: 60px;
         }
@@ -56,9 +57,12 @@
     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
     <a href="{{ route('admin.packages.index') }}">Packages</a>
     <a href="{{ route('admin.levelpackages.index') }}">Level Packages</a>
+    <a href="{{ route('admin.leadershippackages.index') }}">Leadership Income</a>
+    <a href="{{ route('admin.championspackages.index') }}">Champions Income</a>
     <a href="{{ route('admin.freedepositpackages.index') }}">Free Packages</a>
     <a href="{{ route('admin.appcustomers.index') }}">Customers</a>
     <a href="{{ route('admin.tutorials.index') }}">Tutorials</a>
+    
 </div>
 
 {{-- Page Content --}}

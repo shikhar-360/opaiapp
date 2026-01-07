@@ -118,7 +118,7 @@
   <div class="flex flex-wrap justify-center items-center gap-3 sm:gap-4 mb-8 max-w-xl mx-auto mt-4">
     <button data-dialog-target="p2p-dialog" type="submit"
       class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
-      <span>P2P Withdraw</span>
+      <span>P2P Transfer</span>
       <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
         aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
         <path clip-rule="evenodd" fill-rule="evenodd"
@@ -128,7 +128,7 @@
     </button>
     <button data-dialog-target="dialog" type="submit"
       class="px-5 py-2.5 mx-auto flex items-center justify-center gap-0 text-base capitalize tracking-wide  rounded-lg border border-[var(--theme-secondary-border)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-cyyan-400)] text-white font-semibold hover:-translate-y-1 transition-all duration-300 ease-out cursor-pointer">
-      <span>Earning Withdraw</span>
+      <span>Instant Withdraw</span>
       <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
         aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">s
         <path clip-rule="evenodd" fill-rule="evenodd"
@@ -494,7 +494,7 @@
 </div>
 
 <!-- WITHDRAW SUCCESS POPUP -->
-<div data-dialog-backdrop="withdraw-success"
+{{-- <div data-dialog-backdrop="withdraw-success"
   class="fixed inset-0 z-[999] grid place-items-center
          bg-black/60 backdrop-blur-sm p-3
          pointer-events-none opacity-0 transition-opacity duration-300">
@@ -589,7 +589,7 @@
                   bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
     </div>
   </div>
-</div>
+</div> --}}
 
 
 
@@ -613,7 +613,7 @@
       <!-- header -->
       <div class="relative flex items-center justify-between gap-3">
         <h2 class="flex shrink-0 items-center text-xl font-semibold text-slate-900 tracking-tight">
-          P2P Withdraw
+          P2P Transfer
         </h2>
 
         <button data-dialog-close="p2p-dialog"
@@ -857,7 +857,7 @@
                      font-semibold
                      hover:-translate-y-1 cursor-pointer
                      active:scale-95 transition-all duration-300 ease-out group">
-              <span>Self Transfer</span>
+              <span>Transfer To Topup</span>
               <svg class="w-5 h-5 transition-transform duration-500 group-hover:translate-x-1"
                 aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
                 <path clip-rule="evenodd" fill-rule="evenodd"
@@ -878,7 +878,7 @@
 </section>
 @endsection
 
-@if (session('status_code') === 'success')
+{{-- @if (session('status_code') === 'success') --}}
 <script>
 // document.addEventListener('DOMContentLoaded', function () {
 //   const backdrop = document.querySelector('[data-dialog-backdrop="withdraw-success"]');
@@ -888,7 +888,7 @@
 //   }
 // });
 </script>
-@endif
+{{-- @endif --}}
 <script>
 document.addEventListener('click', function (e) {
     const closeBtn = e.target.closest('[data-dialog-close]');
