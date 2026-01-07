@@ -3,18 +3,17 @@
 @section('title', 'Register')
 
 @section('content')
-<section class="w-full py-10 md:py-12 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center relative overflow-hidden">
+<section class="w-full pb-16 md:pb-12 pt-0 md:pt-6 px-4 mx-auto min-h-[calc(90vh-50px)] flex items-center justify-center relative overflow-hidden">
 
   <div class="w-full max-w-2xl mx-auto">
-    <div class="relative rounded-3xl border border-slate-200/70 bg-white/60 backdrop-blur-xl shadow-[0_30px_90px_rgba(15,23,42,0.10)] overflow-hidden">
+    <div class="relative p-6 md:p-8 rounded-2xl w-full mx-auto group overflow-hidden neo-card border !border-blue-300/60">
 
-        {{-- soft glow background --}}
-      <div class="pointer-events-none absolute inset-0">
-        <div class="absolute -top-28 -left-28 h-60 w-60 rounded-full bg-sky-200 blur-3xl opacity-70"></div>
-        <div class="absolute -bottom-28 -right-28 h-72 w-72 rounded-full bg-indigo-200 blur-3xl opacity-70"></div>
+<div class="pointer-events-none absolute inset-0 opacity-70">
+          <div class="absolute -top-24 -left-24 h-40 w-40 rounded-full bg-[var(--theme-skky-200)]/60 blur-3xl group-hover:translate-y-3 transition-transform duration-300"></div>
+          <div class="absolute -bottom-24 -right-24 h-44 w-44 rounded-full bg-indigo-200/60 blur-3xl group-hover:-translate-y-1 transition-transform duration-300"></div>
         </div>
 
-      <div class="relative p-5">
+      <div class="relative ">
 
         {{-- Logo --}}
         <!-- in opaiapphtml/assets/images/opai_7202.webp -->
@@ -29,7 +28,7 @@
         <div class="mt-6 text-center">
           <h1 class="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight">
             Welcome to
-            <span class="bg-gradient-to-r from-sky-500 via-cyan-500 to-sky-400 bg-clip-text text-transparent">
+            <span class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
               OpAi
             </span>
           </h1>
@@ -37,6 +36,7 @@
               Create your account to access your dashboard.
             </p>
         </div>
+
             {{-- Form --}}
             <form id="registerForm" method="POST" action="{{ route('register.submit') }}" enctype="multipart/form-data" class="mt-8">
               @csrf
@@ -87,7 +87,7 @@
                     <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter Name"
                           class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
                     <!-- <input type="hidden" name="sponsor_code" value="{{ $sponsorcode }}"> -->
-                    
+
                     <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -111,7 +111,7 @@
                     <input type="email" id="email" name="email" value="{{ old('email') }}"
                            placeholder="Enter Email"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-                    
+
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -136,7 +136,7 @@
                     <input type="text" id="mobile_number" name="phone" value="{{ old('phone') }}"
                            placeholder="Enter Mobile Number"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-                    
+
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -162,7 +162,7 @@
                     <input type="text" id="telegram_username" name="telegram_username"
                             value="{{ old('telegram_username') }}" placeholder="Enter Telegram Username"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-                    
+
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -171,7 +171,7 @@
                   </div>
                 </div>
 
-                
+
                 {{-- Password --}}
             <div>
               <label class="block text-[11px] uppercase tracking-wide font-medium text-slate-700 mb-2">Password</label>
@@ -184,11 +184,11 @@
                     </svg>
                 </span>
 
-                    <input type="password" id="password" name="password" 
+                    <input type="password" id="password" name="password"
                            placeholder="Enter Password"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200"
                            required>
-                    
+
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -214,7 +214,7 @@
                            placeholder="Re-enter Password"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200"
                            required>
-                    
+
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -225,18 +225,44 @@
 
               </div>
 
-          {{-- Button --}}
-          <div class="mt-8 flex justify-center">
-            <button type="submit" id="btnLogin"
-                    class="w-full max-w-sm h-12 rounded-xl text-white font-semibold
-                           bg-gradient-to-r from-sky-500 via-cyan-400 to-sky-300
-                           shadow-[0_18px_40px_rgba(14,165,233,0.25)]
-                           hover:opacity-95 transition">
-              Create Your Account
-                </button>
+{{-- Terms Checkbox --}}
+<div class="mt-6 mx-auto">
+  <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
+    <input id="termsCheck" type="checkbox"
+           class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+           disabled>
+    <span>
+      I have read all
+      <button type="button" id="openTermsBtn"
+              class="text-slate-900 underline underline-offset-4 cursor-pointer">
+        Terms &amp; Conditions
+      </button>
+    </span>
+  </label>
 
-                
-                </div>
+  <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
+    Please read and accept the Terms &amp; Conditions to continue.
+  </p>
+</div>
+
+          {{-- Button --}}
+          <div class="mt-4 flex justify-center">
+            <button type="submit" id="btnLogin"
+                    class="relative w-full mx-auto max-w-48 px-4 py-3 cursor-pointer
+                       flex items-center justify-center text-base capitalize tracking-wide mt-4
+                       rounded-lg border border-[var(--theme-skky-500)]
+                       bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-400)] to-[var(--theme-skky-300)]
+                       text-white font-semibold
+                       transition-all duration-300 ease-out group
+                       hover:-translate-y-0.5
+                       focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-skky-400)] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100">
+              Create Your Account
+            </button>
+          </div>
+
+        
+
+
 
           {{-- Login --}}
           <p class="text-sm text-slate-600 mt-4 text-center">
@@ -245,7 +271,7 @@
           </p>
 
           {{-- Community --}}
-          <div class="mt-8">
+          <div class="mt-4">
             <div class="flex items-center gap-4">
               <span class="h-px flex-1 bg-slate-200"></span>
               <span class="text-[11px] tracking-[0.25em] text-slate-500">COMMUNITY</span>
@@ -283,7 +309,7 @@
                   </svg>
                   </a>
                 </div>
-              
+
           </div>
         </div>
 
@@ -291,5 +317,127 @@
       </div>
     </div>
   </div>
+
+{{-- Terms Modal --}}
+<div id="termsModal" class="fixed inset-0 z-50 hidden">
+  <!-- Backdrop -->
+  <div id="termsBackdrop" class="absolute inset-0 bg-slate-900/60"></div>
+
+  <!-- Center Wrapper -->
+  <div class="fixed inset-0 flex items-center justify-center p-4 md:p-6">
+    <!-- Modal Box -->
+    <div
+      class="w-full max-w-3xl rounded-2xl bg-white shadow-xl h-full
+             overflow-hidden max-h-[90vh] flex flex-col">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 border-b border-slate-200">
+        <h3 class="text-base font-semibold text-slate-900">
+          Terms &amp; Conditions
+        </h3>
+        <button type="button" id="closeTermsBtn"
+                class="rounded-lg px-3 py-1.5 text-slate-600 hover:bg-slate-100">
+          Close
+        </button>
+      </div>
+
+      <!-- Body : PDF (NO iframe) -->
+      <div class="flex-1 overflow-hidden p-3 md:p-4">
+        <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
+          <object
+            data="opai.pdf"
+            type="application/pdf"
+            class="w-full h-full">
+            
+           
+            <p class="p-4 text-sm text-slate-600 text-center">
+              PDF preview not supported.
+              <a href="/assets/terms.pdf" target="_blank"
+                 class="text-slate-900 underline">
+                Open PDF
+              </a>
+            </p>
+          </object>
+        </div>
+      </div>
+
+    
+      <div class="flex items-center justify-end gap-3 px-4 md:px-5 py-3 md:py-4 border-t border-slate-200">
+        <button type="button" id="declineTermsBtn"
+                class="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50">
+          Decline
+        </button>
+
+        <button type="button" id="agreeTermsBtn"
+                class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:opacity-90">
+          I Agree
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
 </section>
+
+<script>
+  (function () {
+    const registerForm = document.getElementById('registerForm');
+
+    const termsCheck = document.getElementById('termsCheck');
+    const openTermsBtn = document.getElementById('openTermsBtn');
+    const termsModal = document.getElementById('termsModal');
+    const termsBackdrop = document.getElementById('termsBackdrop');
+
+    const closeTermsBtn = document.getElementById('closeTermsBtn');
+    const declineTermsBtn = document.getElementById('declineTermsBtn');
+    const agreeTermsBtn = document.getElementById('agreeTermsBtn');
+
+    const termsError = document.getElementById('termsError');
+
+    function openModal() {
+      termsModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      termsModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    openTermsBtn.addEventListener('click', openModal);
+
+    closeTermsBtn.addEventListener('click', closeModal);
+    termsBackdrop.addEventListener('click', closeModal);
+
+    declineTermsBtn.addEventListener('click', function () {
+      termsCheck.checked = false;
+      termsCheck.disabled = true;
+      closeModal();
+    });
+
+    agreeTermsBtn.addEventListener('click', function () {
+      termsCheck.checked = true;
+      termsCheck.disabled = true; // lock after agree
+      termsError.classList.add('hidden');
+      closeModal();
+    });
+
+    // Esc close
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !termsModal.classList.contains('hidden')) closeModal();
+    });
+
+    // Form submit guard
+    registerForm.addEventListener('submit', function (e) {
+      if (!termsCheck.checked) {
+        e.preventDefault();
+        termsError.classList.remove('hidden');
+        openModal();
+      }
+    });
+  })();
+</script>
+
 @endsection

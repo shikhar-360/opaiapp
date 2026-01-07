@@ -90,11 +90,18 @@
             </div>
           </div>
         </div>
+
+
         {{-- VOTING  --}}
         <div class="relative group grid items-center rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg hover:shadow-2xl transition-shadow p-2">
           
 
-
+<div class="absolute inset-0 z-20 flex items-center justify-center
+            bg-white/70 backdrop-blur-sm
+            text-blue-600 font-semibold tracking-wide
+            text-base sm:text-lg rounded-2xl">
+  Coming Soon
+</div>
                   <div class="absolute inset-0 pointer-events-none opacity-60">
                     <div class="absolute -top-20 -left-20 w-52 h-52 bg-indigo-400/20 rounded-full blur-3xl"></div>
                     <div class="absolute -bottom-24 -right-24 w-56 h-56 bg-blue-400/20 rounded-full blur-3xl"></div>
@@ -119,19 +126,19 @@
   <!-- Value + Overlay -->
   <div class="relative mt-1">
     <!-- Blurred Value -->
-    <p class="text-sm sm:text-lg font-semibold text-slate-900 blur-[1px] select-none">
+    <p class="text-sm sm:text-lg font-semibold text-slate-900  select-none">
       {{ $customer->myVoteSumamry['ACTIVE'] }}
     </p>
 
     <!-- Coming Soon Badge -->
-    <span
+    <!-- <span
       class="absolute inset-0 flex items-center justify-center
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       <!-- {{ $customer->myVoteSumamry['ACTIVE']??0 }} -->
+       {{ $customer->myVoteSumamry['ACTIVE']??0 }}
        Soon
-    </span>
+    </span> -->
   </div>
 </div>
 
@@ -148,14 +155,14 @@
               <p class="text-sm sm:text-lg font-semibold text-slate-900">
                 {{ $customer->myVoteSumamry['HELPFULL'] }}
               </p>
-              <span
+              <!-- <span
       class="absolute inset-0 flex items-center justify-center
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       <!-- {{ $customer->myVoteSumamry['HELPFULL']??0 }} -->
+       {{ $customer->myVoteSumamry['HELPFULL']??0 }}
        Soon
-    </span>
+    </span> -->
     </div>
             </div>
 
@@ -171,14 +178,14 @@
               <p class="text-sm sm:text-lg font-semibold text-slate-900">
                 {{ $customer->myVoteSumamry['HONEST'] }}
               </p>
-              <span
+              <!-- <span
       class="absolute inset-0 flex items-center justify-center
              text-[10px] sm:text-xs font-semibold  tracking-wide
              text-blue-600 bg-indigo-100/80 backdrop-blur-sm
               rounded-full shadow-sm">
-       <!-- {{ $customer->myVoteSumamry['HONEST']??0 }} -->
+       {{ $customer->myVoteSumamry['HONEST']??0 }}
        Soon
-    </span>
+    </span> -->
 
 </div>
             </div>
@@ -188,6 +195,9 @@
 
           <div class="absolute inset-x-3 bottom-0 h-px bg-gradient-to-r from-transparent via-[var(--theme-skky-400)] to-transparent"></div>
         </div>
+
+
+
         {{-- Download PDF Card --}}
         <!-- <div
           class="relative group rounded-2xl overflow-hidden border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-[var(--theme-skkky-50)] backdrop-blur-xl shadow-lg hover:shadow-2xl transition-shadow">

@@ -54,7 +54,7 @@
         <div class="absolute -bottom-28 -left-24 w-96 h-96 bg-[var(--theme-skky-200)]/60  rounded-full blur-3xl"></div>
       </div> -->
     <img src="/assets/images/white-grid.png"  alt="bnrbg"
-             class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100">
+             class="absolute top-14 left-0 w-full h-full object-cover -z-10 opacity-100 ">
     @yield('content')
 
   </main>
