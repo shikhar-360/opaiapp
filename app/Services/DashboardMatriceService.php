@@ -680,6 +680,8 @@ class DashboardMatriceService
                         'customers.name',
                         'customers.referral_code',
                         'customer_deposits.customer_id',
+                        'customers.leadership_points',
+                        'customers.champions_point',
                     ];
 
         foreach ($packageIds as $pid) {
@@ -724,7 +726,9 @@ class DashboardMatriceService
                     ->groupBy(
                         'customer_deposits.customer_id',
                         'customers.referral_code',
-                        'customers.name'
+                        'customers.name',
+                        'customers.leadership_points',
+                        'customers.champions_point'
                     );
 
         $volumeSummary = DB::query()
