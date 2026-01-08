@@ -21,7 +21,7 @@
         </a>
         <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
           <img src="{{ asset('assets/images/youtube.svg') }}" alt="youtube"
-               class="w-auto h-8 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out ">
+               class="w-auto h-6 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out ">
         </a>
       </div>
 
