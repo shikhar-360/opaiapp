@@ -171,12 +171,12 @@
                 {{-- Wallet Address --}}
                 @php
                 $wareadonly = '';
-                if(!$customer['iswallet_editable'])
+                if(!$customer->customer_settings->iswallet_editable)
                 {
                   $wareadonly = 'readonly';
                 }
                 $phreadonly = '';
-                if(!$customer['isphone_editable'])
+                if(!$customer->customer_settings->isphone_editable)
                 {
                   $phreadonly = 'readonly';
                 }
@@ -191,7 +191,7 @@
           <div class="text-left">
                   <label for="walletaddress"
                            class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
-                    Wallet Address
+                    Wallet Address (BEP20)
                   </label>
                   <div
                       class="relative flex items-center p-3 rounded-lg gap-3 
@@ -216,7 +216,7 @@
                 <div class="text-left">
                   <label for="confirm_walletaddress"
                           class="block text-[11px] uppercase tracking-wide text-[var(--theme-high-text)] font-medium mb-2">
-                  Confirm Wallet Address
+                  Confirm Wallet Address (BEP20)
                   </label>
                   <div
                     class="relative flex items-center p-3 rounded-lg gap-3 
@@ -296,14 +296,38 @@
                 </div>
                 
                 {{-- Terms checkbox --}}
-                <div class="flex items-center justify-center gap-2 pt-2">
+                <!-- <div class="flex items-center justify-center gap-2 pt-2">
                   <input id="termsCheck" type="checkbox"
                         class=" w-4 h-4 rounded border-slate-300 text-sky-600 focus:ring-sky-300" required>
                   <label for="termsCheck" class="text-sm text-slate-700">
                     I have read and agree to the the details.
                 
                   </label>
-                </div>
+                </div> -->
+
+
+                {{-- Terms Checkbox --}}
+<div class="mt-6 mx-auto">
+  <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
+    <input id="termsCheck" type="checkbox"
+           class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+           disabled>
+    <span>
+      I have read all
+      <button type="button" id="openTermsBtn"
+              class="text-slate-900 underline underline-offset-4 cursor-pointer">
+        Terms &amp; Conditions
+      </button>
+    </span>
+  </label>
+
+  <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
+    Please read and accept the Terms &amp; Conditions to continue.
+  </p>
+</div>
+
+
+
 
                 {{-- Submit --}}
                 <div class="pt-2">
@@ -692,6 +716,66 @@
 </div>
 {{-- /PASSWORD POPUP --}}
 
+
+{{-- Terms Modal --}}
+<div id="termsModal" class="fixed inset-0 z-50 hidden">
+  
+  <div id="termsBackdrop" class="absolute inset-0 bg-slate-900/60"></div>
+
+  
+  <div class="fixed inset-0 flex items-center justify-center p-4 md:p-6">
+    
+    <div
+      class="w-full max-w-3xl rounded-2xl bg-white shadow-xl h-full
+             overflow-hidden max-h-[90vh] flex flex-col">
+
+      
+      <div class="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 border-b border-slate-200">
+        <h3 class="text-base font-semibold text-slate-900">
+          Terms &amp; Conditions
+        </h3>
+        <button type="button" id="closeTermsBtn"
+                class="rounded-lg px-3 py-1.5 text-slate-600 hover:bg-slate-100">
+          Close
+        </button>
+      </div>
+
+
+      <div class="flex-1 overflow-hidden p-3 md:p-4">
+        <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
+          <object
+            data="{{ asset('storage/opai.pdf') }}"
+            type="application/pdf"
+            class="w-full h-full">
+            
+           
+            <p class="p-4 text-sm text-slate-600 text-center">
+              PDF preview not supported.
+              <a href="/assets/terms.pdf" target="_blank"
+                 class="text-slate-900 underline">
+                Open PDF
+              </a>
+            </p>
+          </object>
+        </div>
+      </div>
+
+    
+      <div class="flex items-center justify-end gap-3 px-4 md:px-5 py-3 md:py-4 border-t border-slate-200">
+        <button type="button" id="declineTermsBtn"
+                class="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50">
+          Decline
+        </button>
+
+        <button type="button" id="agreeTermsBtn"
+                class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:opacity-90">
+          I Agree
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div> 
 </section>
 @endsection
 
@@ -847,5 +931,62 @@ userIdInput.addEventListener('input', () => {
         });
     }, delay);
 });
+
+(function () {
+    const profileForm = document.getElementById('profileForm');
+
+    const termsCheck = document.getElementById('termsCheck');
+    const openTermsBtn = document.getElementById('openTermsBtn');
+    const termsModal = document.getElementById('termsModal');
+    const termsBackdrop = document.getElementById('termsBackdrop');
+
+    const closeTermsBtn = document.getElementById('closeTermsBtn');
+    const declineTermsBtn = document.getElementById('declineTermsBtn');
+    const agreeTermsBtn = document.getElementById('agreeTermsBtn');
+
+    const termsError = document.getElementById('termsError');
+
+    function openModal() {
+      termsModal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      termsModal.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    openTermsBtn.addEventListener('click', openModal);
+
+    closeTermsBtn.addEventListener('click', closeModal);
+    termsBackdrop.addEventListener('click', closeModal);
+
+    declineTermsBtn.addEventListener('click', function () {
+      termsCheck.checked = false;
+      termsCheck.disabled = true;
+      closeModal();
+    });
+
+    agreeTermsBtn.addEventListener('click', function () {
+      termsCheck.checked = true;
+      termsCheck.disabled = true; // lock after agree
+      termsError.classList.add('hidden');
+      closeModal();
+    });
+
+    // Esc close
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !termsModal.classList.contains('hidden')) closeModal();
+    });
+
+    // Form submit guard
+    profileForm.addEventListener('submit', function (e) {
+      if (!termsCheck.checked) {
+        e.preventDefault();
+        termsError.classList.remove('hidden');
+        openModal();
+      }
+    });
+  })();
 </script>
 @endpush

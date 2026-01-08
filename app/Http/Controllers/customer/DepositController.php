@@ -16,6 +16,7 @@ use App\Models\FreeDepositPackagesModel;
 use App\Models\CustomersModel;
 use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
+use App\Models\CustomerSettingsModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -52,8 +53,11 @@ class DepositController extends Controller
                                                                         ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
                                                                         ->where('is_free_deposit', 0)
                                                                         ->count();
-                                                                        
-        // dd($customer->myPackageDetails);
+        
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();                                              
+        // dd($customer->customer_settings->isFreePackage);
         return view('customer.pay_topup', compact('customer'));
     }
 
