@@ -25,6 +25,7 @@ use App\Models\CustomersModel;
 use App\Models\AppPromotionPackagesModel;
 use App\Models\AppLevelPackagesModel;
 use App\Models\AdminTutorialsModel;
+use App\Models\CustomerSettingsModel;
 
 class CustomerController extends Controller
 {
@@ -153,227 +154,160 @@ class CustomerController extends Controller
         $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
         $customer->leadership_rank          =   AppLeadershipIncomeModel::where('app_id', $customer->app_id)->where('id', $customer->leadership_rank)->value('rank');
         $customer->champions_rank           =   AppLeadershipChampionsIncomeModel::where('app_id', $customer->app_id)->where('id', $customer->leadership_champions_rank)->value('id');
+
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+
         return view('customer.profile', compact('customer'));
     }
 
-    /*public function saveProfile(Request $request)
-    {
-        $customer = Auth::guard('customer')->user();
-
-        $baseValidator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-        ]);
-
-        if ($baseValidator->fails()) {
-             return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('name')]); 
-        }
-
-        $validated = $baseValidator->validated();
-
-        // 2️⃣ Conditional rules
-        $walletRules = [];
-
-        if ($customer->iswallet_editable && $request->filled('wallet_address')) {
-            $walletRules['wallet_address'] = [
-                'string',
-                'min:40',
-                'max:45',
-                Rule::unique('customers')->ignore($customer->id),
-            ];
-        }
-
-        if ($customer->isphone_editable && $request->filled('phone')) {
-            $walletRules['phone'] = [
-                'digits_between:9,15',
-                Rule::unique('customers')->ignore($customer->id),
-            ];
-        }
-
-        // 3️⃣ Validate conditional fields
-        if (!empty($walletRules)) 
-        {
-            $validator = Validator::make($request->all(), $walletRules);
-
-            if ($validator->fails()) {
-                // 👇 THIS will now show errors instead of redirecting silently
-                // return back()->withErrors($validator)->withInput();
-                // For debugging:
-                // dd($validator->errors()->toArray());
-                return back()
-                        ->withInput()
-                        ->with([
-                            'status_code' => 'error',
-                            'errors_data' => $validator->errors()->toArray(),
-                        ]);
-            }
-
-            $validatedWallet = $validator->validated();
-
-            // 4️⃣ Apply "update once" rule
-            if (isset($validatedWallet['wallet_address']) && $validatedWallet['wallet_address'] !== $customer->wallet_address)
-            {
-                $validated['wallet_address'] = $validatedWallet['wallet_address'];
-                $validated['iswallet_editable'] = 0;
-            }
-
-            if (isset($validatedWallet['phone']) && $validatedWallet['phone'] !== $customer->phone)
-            {
-                $validated['phone'] = $validatedWallet['phone'];
-                $validated['isphone_editable'] = 0;
-            }
-        }
-
-        if ($request->hasFile('profile_pic')) 
-        {
-            if ($customer->profile_image && file_exists(public_path($customer->profile_image))) {
-                unlink(public_path($customer->profile_image)); // remove old file
-            }
-            // $file = $request->file('profile_pic');
-            // $filename = time().'_'.$file->getClientOriginalName();
-            // $path = $file->storeAs('public/user_profiles', $filename);
-            // $validated['profile_image'] = str_replace('public/', 'storage/', $path); // store public URL path
-
-            $file = $request->file('profile_pic');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            // Store in public disk
-            $path = $file->storeAs('user_profiles', $filename, 'public');
-            // Save only relative path
-            $validated['profile_image'] = $path;
-
-        }
-
-        // dd($validated);
-
-        // 5️⃣ Update only if something changed
-        if (!empty($validated)) {
-            $customer->update($validated);
-        }
-
-        return redirect()
-            ->back()
-            ->with('status_code', 'success')
-            ->with('message', 'Profile updated successfully!');
-    }*/
-
     public function saveProfile(Request $request)
     {
-
         $customer = Auth::guard('customer')->user();
 
-        $baseValidator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'hdnpassword' => 'required|string|max:255',
-        ]);
+        $customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+        /* -------------------------------
+         | 1️⃣ Base rules
+         --------------------------------*/
+        $rules = [
+            'name'        => 'required|string|max:255',
+            'hdnpassword' => 'required|string',
+        ];
 
-        if ($baseValidator->fails()) {
-             return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('name')]); 
-        }
+        /* -------------------------------
+         | 2️⃣ Conditional Wallet Rules
+         --------------------------------*/
 
-        if (!Hash::check($request->hdnpassword, $customer->password)) {
-            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'Incorrect password.']); 
-        }
-
-        $validated = $baseValidator->validated();
-
-        // 2️⃣ Conditional rules
-        $walletRules = [];
-
-        if ($customer->iswallet_editable && $request->filled('wallet_address')) {
+        if ($customer_settings->iswallet_editable && $request->filled('wallet_address')) {
 
             $request->merge([
                 'wallet_address'        => strtolower(trim($request->wallet_address)),
                 'confirm_walletaddress' => strtolower(trim($request->confirm_walletaddress ?? '')),
             ]);
-            
-            $walletRules['wallet_address'] = [
+
+            $rules['wallet_address'] = [
                 'string',
                 'min:40',
                 'max:45',
                 Rule::unique('customers')->ignore($customer->id),
             ];
 
-            $walletRules['confirm_walletaddress'] = [
+            $rules['confirm_walletaddress'] = [
                 'required_with:wallet_address',
                 'same:wallet_address',
             ];
         }
-        
-        if ($customer->isphone_editable && $request->filled('phone')) {
-            $walletRules['phone'] = [
+
+        /* -------------------------------
+         | 3️⃣ Conditional Phone Rules
+         --------------------------------*/
+        if ($customer_settings->isphone_editable && $request->filled('phone')) {
+            $rules['phone'] = [
                 'digits_between:9,15',
                 Rule::unique('customers')->ignore($customer->id),
             ];
         }
 
-        // 3️⃣ Validate conditional fields
-        if (!empty($walletRules)) 
-        {
-            $validator = Validator::make($request->all(), $walletRules);
-
-            if ($validator->fails()) {
-                // 👇 THIS will now show errors instead of redirecting silently
-                // return back()->withErrors($validator)->withInput();
-                // For debugging:
-                // dd($validator->errors()->toArray());
-                return back()
-                        ->withErrors($validator)
-                        ->withInput()
-                        ->with([
-                            'status_code' => 'error',
-                            'message' => $validator->errors()->first(),
-                        ]);
-            }
-
-            $validatedWallet = $validator->validated();
-
-            //  Apply "update once" rule
-            if (isset($validatedWallet['wallet_address']) && $validatedWallet['wallet_address'] !== $customer->wallet_address)
-            {
-                $validated['wallet_address'] = $validatedWallet['wallet_address'];
-                $validated['iswallet_editable'] = 0;
-            }
-
-            if (isset($validatedWallet['phone']) && $validatedWallet['phone'] !== $customer->phone)
-            {
-                $validated['phone'] = $validatedWallet['phone'];
-                $validated['isphone_editable'] = 0;
-            }
+        /* -------------------------------
+         | 4️⃣ Profile Pic Rule (if uploaded)
+         --------------------------------*/
+        if ($request->hasFile('profile_pic')) {
+            $rules['profile_pic'] = 'image|mimes:jpg,jpeg,png|max:2048';
         }
 
-        if ($request->hasFile('profile_pic')) 
+        /* -------------------------------
+         | 5️⃣ Run Validation ONCE
+         --------------------------------*/
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) 
         {
-            $request->validate([
-                'profile_pic' => 'image|mimes:jpg,jpeg,png|max:2048',
-            ]);
+            return back()
+                    ->withInput()
+                    ->withErrors($validator)   // ✅ pass validator directly
+                    ->with([
+                        'status_code' => 'error',
+                        'message'     => $validator->errors()->first(), // first error message
+                    ]);
+        }
 
-            /*if ($customer->profile_image && file_exists(public_path($customer->profile_image))) {
-                unlink(public_path($customer->profile_image)); // remove old file
-            }*/
+        $validated = $request->validate($rules);
 
-            if ($customer->profile_image && file_exists(storage_path('app/public/' . $customer->profile_image))) 
-            {
+
+        /* -------------------------------
+         | 6️⃣ Password Check (manual)
+         --------------------------------*/
+        if (!Hash::check($validated['hdnpassword'], $customer->password)) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'status_code' => 'error',
+                    'message' => 'Incorrect password.',
+                ]);
+        }
+
+        unset($validated['hdnpassword']);
+
+        /* -------------------------------
+         | 7️⃣ Handle Profile Image
+         --------------------------------*/
+        if ($request->hasFile('profile_pic')) {
+
+            if ($customer->profile_image && file_exists(storage_path('app/public/' . $customer->profile_image))) {
                 unlink(storage_path('app/public/' . $customer->profile_image));
             }
 
             $file = $request->file('profile_pic');
+            $path = $file->storeAs(
+                'user_profiles',
+                time() . '_' . $file->getClientOriginalName(),
+                'public'
+            );
 
-            $filename = time() . '_' . $file->getClientOriginalName();
-
-            // Store in public disk
-            $path = $file->storeAs('user_profiles', $filename, 'public');
-
-            // Save only relative path
             $validated['profile_image'] = $path;
         }
 
-        // Update only if something changed
-        if (!empty($validated)) {
-            $customer->update($validated);
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) 
+        {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'status_code' => 'error',
+                    'message'     => $validator->errors()->first(), 
+                ]);
         }
 
-        
-        return redirect()
-            ->back()
+        /* -------------------------------
+         | 8️⃣ Apply "Update Once" Rules
+         --------------------------------*/
+        $settingsDirty = false;
+
+        if (isset($validated['wallet_address'])) {
+            $customer_settings->iswallet_editable = 0;
+            $settingsDirty = true;
+        }
+
+        if (isset($validated['phone'])) {
+            $customer_settings->isphone_editable = 0;
+            $settingsDirty = true;
+        }
+
+        if ($settingsDirty) {
+            $customer_settings->save();
+        }
+
+        /* -------------------------------
+         | 9️⃣ Update Customer
+         --------------------------------*/
+        $customer->update($validated);
+
+        return back()
             ->with('status_code', 'success')
             ->with('message', 'Profile updated successfully!');
     }

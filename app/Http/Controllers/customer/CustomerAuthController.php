@@ -48,15 +48,22 @@ class CustomerAuthController extends Controller
         
         $sponsorcode = $request->query('sponsorcode');
 
-        if(empty($sponsorcode))
+        // if(empty($sponsorcode))
+        // {
+        //     return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+        // }
+
+        if(empty($sponsorcode) || !$sponsorcode)
         {
-            return back()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+            $sponsorcode = '';
+            return view('customer.register', compact('sponsorcode'));
         }
 
         $sponsor = CustomersModel::where('referral_code', $sponsorcode)->first();
         
         
-        if (!$sponsor) {
+        if (!$sponsor) 
+        {
             return redirect()->route('login')->with('status', 'Invalid referral code');
         }
 
@@ -87,7 +94,7 @@ class CustomerAuthController extends Controller
         {
             if($validator->errors()->get('sponsor_code'))
             {
-               return back()->withInput()->withErrors(['status_code'=>'error', 'message' => $validator->errors()->get('sponsor_code')]); 
+                return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'Please ask your mentor or referrer for Mentor ID']);  //$validator->errors()->get('sponsor_code')
             }
             else if($validator->errors()->get('name'))
             {
@@ -117,7 +124,7 @@ class CustomerAuthController extends Controller
         $sponsor = CustomersModel::where('referral_code', $validated['sponsor_code'])->first();
         if(!$sponsor)
         {
-            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'Invalid referral code']);
+            return back()->withInput()->withErrors(['status_code'=>'error', 'message' => 'Please ask your mentor or referrer for Mentor ID']);
         }
 
         // Auto find app ID from sponsor
@@ -143,6 +150,8 @@ class CustomerAuthController extends Controller
             'app_id'      => $appId,
             'customer_id' => $newCustomer->id,
         ]);
+
+        $this->getCustomerFinance($newCustomer->id, $appId);
 
         //Temporary for testing purpose
         // $finance = $this->getCustomerFinance($newCustomer->id, $appId);

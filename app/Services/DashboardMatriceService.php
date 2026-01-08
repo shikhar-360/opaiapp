@@ -657,6 +657,7 @@ class DashboardMatriceService
                             )
                             ->where('created_at', '>=', $fromDate)
                             ->where('app_id', $customer->app_id)
+                            ->where('sponsor_id','>', 1)
                             ->groupBy('sponsor_id')
                             ->orderByDesc('total_votes')   // 👈 DESCENDING ORDER
                             ->get()
@@ -723,6 +724,7 @@ class DashboardMatriceService
                     ->where('customer_deposits.created_at', '>=', $fromDate)
                     ->where('customer_deposits.app_id', $customer->app_id)
                     ->where('customer_deposits.is_free_deposit', 0)
+                    ->where('customer_deposits.customer_id','>', 1)
                     ->groupBy(
                         'customer_deposits.customer_id',
                         'customers.referral_code',
@@ -760,7 +762,7 @@ class DashboardMatriceService
         ->get();
         */
 
-        $customers = CustomersModel::whereNotNull('active_direct_ids')->where('app_id',$customer->app_id)->get();
+        $customers = CustomersModel::whereNotNull('active_direct_ids')->where('app_id',$customer->app_id)->where('id','>', 1)->get();
 
         return $customers->map(function ($row) {
                                                 $row->active_direct_count = count(

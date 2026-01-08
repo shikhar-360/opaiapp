@@ -45,7 +45,7 @@
             {{-- Sponsor ID (FIRST FIELD) --}}
             <div>
               <label class="block text-[11px] uppercase tracking-wide font-medium text-slate-700 mb-2">
-                Sponsor ID
+                Mentor ID
               </label>
               <div class="relative">
                 <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
@@ -58,10 +58,11 @@
                   </svg>
                 </span>
 
-                <input type="text" name="sponsor_code" placeholder="Enter Sponsor ID"
+                <input type="text" name="sponsor_code" placeholder="Enter Mentor ID"
                        class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200"
                        value="{{ $sponsorcode }}"
-                       readonly>
+                      {{ $sponsorcode ? 'readonly' : '' }}
+                      >
 
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   {{-- check icon --}}
@@ -87,7 +88,7 @@
                     <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Enter Name"
                           class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
                     <!-- <input type="hidden" name="sponsor_code" value="{{ $sponsorcode }}"> -->
-
+                    
                     <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                         <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -111,7 +112,7 @@
                     <input type="email" id="email" name="email" value="{{ old('email') }}"
                            placeholder="Enter Email"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-
+                    
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -136,7 +137,7 @@
                     <input type="text" id="mobile_number" name="phone" value="{{ old('phone') }}"
                            placeholder="Enter Mobile Number"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-
+                    
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -162,7 +163,7 @@
                     <input type="text" id="telegram_username" name="telegram_username"
                             value="{{ old('telegram_username') }}" placeholder="Enter Telegram Username"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200">
-
+                    
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -171,7 +172,7 @@
                   </div>
                 </div>
 
-
+                
                 {{-- Password --}}
             <div>
               <label class="block text-[11px] uppercase tracking-wide font-medium text-slate-700 mb-2">Password</label>
@@ -184,11 +185,11 @@
                     </svg>
                 </span>
 
-                    <input type="password" id="password" name="password"
+                    <input type="password" id="password" name="password" 
                            placeholder="Enter Password"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200"
                            required>
-
+                    
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -214,7 +215,7 @@
                            placeholder="Re-enter Password"
                            class="w-full h-12 rounded-xl border border-slate-200 bg-white pl-11 pr-10 outline-none focus:ring-2 focus:ring-sky-200"
                            required>
-
+                    
                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-emerald-500">
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
                     <path d="M20 6 9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -226,7 +227,7 @@
               </div>
 
 {{-- Terms Checkbox --}}
-<div class="mt-6 mx-auto">
+<!-- <div class="mt-6 mx-auto">
   <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
     <input id="termsCheck" type="checkbox"
            class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
@@ -243,7 +244,7 @@
   <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
     Please read and accept the Terms &amp; Conditions to continue.
   </p>
-</div>
+</div> -->
 
           {{-- Button --}}
           <div class="mt-4 flex justify-center">
@@ -257,11 +258,11 @@
                        hover:-translate-y-0.5
                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-skky-400)] focus-visible:ring-offset-2 focus-visible:ring-offset-slate-100">
               Create Your Account
-            </button>
+                </button>
           </div>
 
-        
 
+                
 
 
           {{-- Login --}}
@@ -309,7 +310,7 @@
                   </svg>
                   </a>
                 </div>
-
+              
           </div>
         </div>
 
@@ -319,18 +320,18 @@
   </div>
 
 {{-- Terms Modal --}}
-<div id="termsModal" class="fixed inset-0 z-50 hidden">
-  <!-- Backdrop -->
+<!-- <div id="termsModal" class="fixed inset-0 z-50 hidden">
+  
   <div id="termsBackdrop" class="absolute inset-0 bg-slate-900/60"></div>
 
-  <!-- Center Wrapper -->
+  
   <div class="fixed inset-0 flex items-center justify-center p-4 md:p-6">
-    <!-- Modal Box -->
+    
     <div
       class="w-full max-w-3xl rounded-2xl bg-white shadow-xl h-full
              overflow-hidden max-h-[90vh] flex flex-col">
 
-      <!-- Header -->
+      
       <div class="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 border-b border-slate-200">
         <h3 class="text-base font-semibold text-slate-900">
           Terms &amp; Conditions
@@ -341,11 +342,11 @@
         </button>
       </div>
 
-      <!-- Body : PDF (NO iframe) -->
+
       <div class="flex-1 overflow-hidden p-3 md:p-4">
         <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
           <object
-            data="opai.pdf"
+            data="{{ asset('storage/opai.pdf') }}"
             type="application/pdf"
             class="w-full h-full">
             
@@ -376,7 +377,7 @@
 
     </div>
   </div>
-</div>
+</div> -->
 
 
 </section>

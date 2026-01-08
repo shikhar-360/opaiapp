@@ -37,7 +37,7 @@
           <h1 class="text-2xl xl:text-3xl font-semibold text-slate-900 text-center tracking-tight">
             Welcome to
             <span class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
-              OpAi
+              OPAI
             </span>
           </h1>
 
@@ -122,26 +122,28 @@
                 </path>
             </svg>
         </button>
-             <button
-    id="btnLogin"
-    class="relative w-full mx-auto max-w-32 px-4 py-3 cursor-pointer 
-           flex items-center justify-center text-base capitalize tracking-wide mt-4 
-           rounded-lg border border-slate-400
-           bg-gradient-to-r from-white via-slate-100 to-sky-100
-           text-slate-700 font-semibold 
-           transition-all duration-300 ease-out group 
-           hover:-translate-y-0.5 hover:shadow-md
-           focus-visible:outline-none focus-visible:ring-2 
-           focus-visible:ring-slate-300 focus-visible:ring-offset-2 
-           focus-visible:ring-offset-slate-100">
-    <span>Initiate</span>
-    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
-         fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" clip-rule="evenodd"
-            d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
-        </path>
-    </svg>
-</button>
+
+        <a href="{{ route('register') }}"
+           class="relative w-full mx-auto max-w-32 px-4 py-3 cursor-pointer 
+                       flex items-center justify-center text-base capitalize tracking-wide mt-4 
+                       rounded-lg border border-slate-400
+                       bg-gradient-to-r from-white via-slate-100 to-sky-100
+                       text-slate-700 font-semibold 
+                       transition-all duration-300 ease-out group 
+                       hover:-translate-y-0.5 hover:shadow-md
+                       focus-visible:outline-none focus-visible:ring-2 
+                       focus-visible:ring-slate-300 focus-visible:ring-offset-2 
+                       focus-visible:ring-offset-slate-100">
+            <span>Initiate</span>
+            <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1"
+                 fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z">
+                </path>
+            </svg>
+        </a>
+
+             
 
     </div>
 </form>
@@ -152,13 +154,13 @@
              
 
               {{-- Sign up link --}}
-              <div class="text-sm font-medium text-slate-600 mt-2 text-center">
+              <!-- <div class="text-sm font-medium text-slate-600 mt-2 text-center">
                 New here?
                 <a href="{{ route('register') }}"
                    class="text-[var(--theme-high-text)] underline underline-offset-4 decoration-[var(--theme-skky-400)]/80 hover:text-[var(--theme-skky-500)] hover:decoration-[var(--theme-skky-500)] transition">
                   Sign Up
                 </a>
-              </div>
+              </div> -->
 
               {{-- Forget Password Link --}}
               <!-- <div class="text-sm font-medium text-slate-600 mt-2 text-center">

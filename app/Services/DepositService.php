@@ -9,6 +9,7 @@ use App\Models\PackagesModel;
 use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\FreeDepositPackagesModel;
+use App\Models\CustomerSettingsModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -145,8 +146,7 @@ class DepositService
 
     public function createFreeDeposit($customer, $package, $amount, $txnId)
     {
-        $customer->isFreePackage = 0;
-        $customer->save();
+        CustomerSettingsModel::where('customer_id', $customer->id)->where('app_id', $customer->app_id)->update(['isFreePackage' => 0]);
         
         return CustomerDepositsModel::create([
             'app_id'        => $customer->app_id,

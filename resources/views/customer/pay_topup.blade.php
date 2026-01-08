@@ -32,14 +32,20 @@
           {{-- ✅ Toggle: Free Membership ON/OFF (Only added this; baki kuch change nahi) --}}
           <div class="flex items-center gap-2 self-end sm:self-auto">
             <span class="text-[10px] sm:text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-            @if($customer->isFreePackage > 0)
+            {{--  @if($customer->isFreePackage > 0)
               Free Membership Available
+            @else
+              Free Membership (Non-Repeatable)
+            @endif --}}
+            @if($customer->customer_settings->isFreePackage)
+            Free Membership Available
             @else
               Free Membership (Non-Repeatable)
             @endif
             </span>
             <button type="button"
-              @if($customer->isFreePackage > 0)
+              {{-- @if($customer->isFreePackage > 0) --}}
+              @if($customer->customer_settings->isFreePackage)
                   onclick="toggleFreePackage()"
               @endif
               class="relative inline-flex h-7 w-14 items-center rounded-full border border-slate-200 bg-slate-100 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--theme-skky-300)]"
@@ -274,7 +280,8 @@
             }*/
 
             // ✅ Free Package Toggle (ON/OFF)
-            @if($customer->isFreePackage > 0)
+            {{--@if($customer->isFreePackage > 0)--}}
+            @if($customer->customer_settings->isFreePackage)
             let isFreePackageOn = 1;
             @else
             let isFreePackageOn = 0;

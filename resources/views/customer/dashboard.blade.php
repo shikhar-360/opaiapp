@@ -1292,7 +1292,7 @@
                       <tr class="bg-slate-100 text-slate-900">
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                        <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th> -->
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
@@ -1306,7 +1306,7 @@
                       <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                         <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->name }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->referral_code }}</td>
+                        <!-- <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyVolume->referral_code }}</td> -->
                         <!-- <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $dailyVolume->package_1 }}</span>
                         </td>
@@ -1339,7 +1339,7 @@
                       <tr class="bg-slate-100 text-slate-900">
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                        <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th> -->
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
@@ -1353,7 +1353,7 @@
                       <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                         <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->name }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->referral_code }}</td>
+                        <!-- <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyVolume->referral_code }}</td> -->
                         <!-- <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $weeklyVolume->package_1 }}</span>
                         </td>
@@ -1386,7 +1386,7 @@
                       <tr class="bg-slate-100 text-slate-900">
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Sr.</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Name</th>
-                        <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th>
+                        <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Referral Code</th> -->
                         <!-- <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 1</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px]">Package 2</th>
                         <th class="px-4 sm:px-5 py-3 font-semibold text-[14px] sm:text-[16px] !text-right">Package 3</th>
@@ -1400,7 +1400,7 @@
                       <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                         <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->name }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->referral_code }}</td>
+                        <!-- <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyVolume->referral_code }}</td> -->
                         <!-- <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] text-indigo-700 border border-indigo-300">{{ $monthlyVolume->package_1 }}</span>
                         </td>

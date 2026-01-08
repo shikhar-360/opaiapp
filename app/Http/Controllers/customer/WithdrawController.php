@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 use App\Models\CustomerWithdrawsModel;
+use App\Models\CustomerSettingsModel;
 
 use App\Services\WithdrawService;
 use App\Services\DashboardMatriceService;
@@ -57,12 +58,29 @@ class WithdrawController extends Controller
 
         // $customer->withdrawDetails          =   $withdrawDetails;      
 
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
         return view('customer.withdraw', compact('customer'));
     }
 
     public function withdraw(Request $request)
     {
+
         $customer = Auth::guard('customer')->user();
+
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+        if(!$customer->customer_settings->isWithdraw)
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Permission denied'
+                    ]);
+        }
 
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.0000001',
@@ -114,7 +132,21 @@ class WithdrawController extends Controller
     
     public function selfTransfer(Request $request)
     {
+
         $customer = Auth::guard('customer')->user();
+
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+        if(!$customer->customer_settings->isSelfTransfer)
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Permission denied'
+                    ]);
+        }
 
         $validated = $request->validate([
             'self_amount' => 'required|numeric|min:0.0000001',
@@ -146,6 +178,20 @@ class WithdrawController extends Controller
     {
         $customer = Auth::guard('customer')->user();
 
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+        if(!$customer->customer_settings->isP2P)
+        {
+            return redirect()
+                    ->route('withdraw')
+                    ->with([
+                        'status_code'  => 'error',
+                        'message' => 'Permission denied'
+                    ]);
+        }
+        
+                                                                
         $validated = $request->validate([
             'p2p_amount' => 'required|numeric|min:0.0000001',
             'team_user_id' => 'required|string|min:6'
