@@ -416,7 +416,7 @@
             <div class="space-y-1.5">
               <label for="adminFees"
               class="block text-[11px] uppercase tracking-[0.18em] text-[var(--theme-primary-text)] font-medium">
-                Admin Fees 5%
+                Admin Fees {{ $customer->appData->admin_withdraw_fee }}%
               </label>
 
               <div
@@ -913,8 +913,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('amount').addEventListener('input', function () {
       let amount = parseFloat(this.value) || 0;
 
+      let admin_fee = {{ $customer->appData->admin_withdraw_fee ?? 0 }}
       // 5% admin charge
-      let adminCharge = amount * 0.05;
+      let adminCharge = amount * (admin_fee/100); //0.05;
 
       // final amount = amount - admin charge
       let finalAmount = amount - adminCharge;

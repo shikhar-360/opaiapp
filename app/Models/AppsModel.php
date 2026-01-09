@@ -16,6 +16,8 @@ class AppsModel extends Model
         'settings',
         'currency',
         'coin_price', 
+        'admin_withdraw_fee',
+        'cappingx'
     ];
 
     protected $casts = [
