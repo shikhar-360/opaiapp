@@ -13,12 +13,15 @@ class OtpMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $user;
+    public string $otp;
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct($otp, $user)
     {
-        //
+        $this->user = $user;
+        $this->otp = $otp;
     }
 
     /**
@@ -37,7 +40,7 @@ class OtpMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.forgotpasswordotp',
         );
     }
 

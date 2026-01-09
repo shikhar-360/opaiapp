@@ -27,6 +27,7 @@ use App\Http\Controllers\admin\AppLeadershipPackagesController;
 use App\Http\Controllers\admin\AdminTutorialsController;
 use App\Http\Controllers\admin\AppChampionsPackagesController;
 use App\Http\Controllers\admin\AppCustomersReportController;
+use App\Http\Controllers\admin\AppController;
 
 Route::get('/', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 
@@ -43,6 +44,8 @@ Route::get('/logout', [CustomerAuthController::class, 'logout'])->name('logout')
 // Forget Password
 Route::get('/forgot', [CustomerAuthController::class, 'showForgotPassword'])->name('forgot');
 Route::post('/forgot', [CustomerAuthController::class, 'forgot'])->name('forgot.submit');
+Route::get('/verifyotp', [CustomerAuthController::class, 'showVerifyOtpForm'])->name('verifyotp');
+Route::post('/verifyotp', [CustomerAuthController::class, 'processOtp'])->name('verifyotp.submit');
 Route::get('/reset-password', [CustomerAuthController::class, 'showResetPasswordForm'])->name('password.reset');
 Route::post('/reset-password', [CustomerAuthController::class, 'processResetPassword'])->name('password.update');
 
@@ -228,6 +231,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // GET /admin/championspackages/{app}/edit
         // PUT /admin/championspackages/{app}
         // DELETE /admin/championspackages/{app}
+
+        Route::resource('adminapp', AppController::class);
+        // GET /admin/adminapp
+        // GET /admin/adminapp/{app}/edit
+        // PUT /admin/adminapp/{app}
 
         // Specific Action: Login as Customer
         Route::get('/loginascustomer/{customer}', [AdminController::class, 'loginAsCustomer'])->name('login.as.customer');
