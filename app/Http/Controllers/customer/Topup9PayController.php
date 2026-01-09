@@ -40,7 +40,7 @@ class Topup9PayController extends Controller
 
         $pendingTxn = NinepayTransactionsModel::where("customer_id", $customer->id)
                                                 ->where("app_id", $customer->app_id)
-                                                ->whereIn("payment_status", ['pending', 'underpaid'])
+                                                ->whereIn("payment_status", [NinepayTransactionsModel::PAYMENT_STATUS_PENDING, NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID])
                                                 ->latest()
                                                 ->first();
         $remaining = 0;
@@ -81,7 +81,7 @@ class Topup9PayController extends Controller
         // Fetch last pending/underpaid transaction
         $pendingTxn = NinepayTransactionsModel::where("customer_id", $customer->id)
                                                 ->where("app_id", $customer->app_id)
-                                                ->whereIn("payment_status", ['pending', 'underpaid'])
+                                                ->whereIn("payment_status", [NinepayTransactionsModel::PAYMENT_STATUS_PENDING, NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID])
                                                 ->latest()
                                                 ->first();
         $eth_array = array();
@@ -113,7 +113,7 @@ class Topup9PayController extends Controller
             }
             else if($remaining > 0)
             {
-                $pendingTxn->payment_status  = NinepayTransactionsModel::STATUS_UNDERPAID;
+                $pendingTxn->payment_status  = NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID;
                 $pendingTxn->save();
 
                 // Create NEW top-up transaction with same payment address
@@ -122,7 +122,7 @@ class Topup9PayController extends Controller
                     'app_id'          => $customer->app_id,
                     'amount'          => $remaining,
                     'received_amount' => 0,
-                    'payment_status'  => NinepayTransactionsModel::STATUS_PENDING,
+                    'payment_status'  => NinepayTransactionsModel::PAYMENT_STATUS_PENDING,
                     'payment_address' => $pendingTxn->payment_address, // REUSE ADDRESS
                     'eth_9pay_json'   => $pendingTxn->eth_9pay_json,         // REUSE QR
                     'tron_9pay_json'  => $pendingTxn->tron_9pay_json,         // REUSE QR
@@ -186,7 +186,7 @@ class Topup9PayController extends Controller
                         'amount'          => $validated['coin_amount'],
                         'received_amount' => 0,
                         'remaining_amount'=> $validated['coin_amount']+$ninepay_fee,
-                        'payment_status'  => NinepayTransactionsModel::STATUS_PENDING,
+                        'payment_status'  => NinepayTransactionsModel::PAYMENT_STATUS_PENDING,
                         'payment_address' => $eth_array['address'],
                         'eth_9pay_json'   => $ninepay_eth,
                         'tron_9pay_json'  => $ninepay_tron,
@@ -237,7 +237,7 @@ class Topup9PayController extends Controller
             'transaction_id' => 'required|string|exists:ninepay_transactions,transaction_id',
         ]);
         NinepayTransactionsModel::where('transaction_id', $validated['transaction_id'])
-                                    ->update(['payment_status' => NinepayTransactionsModel::STATUS_CANCEL]);
+                                    ->update(['payment_status' => NinepayTransactionsModel::PAYMENT_STATUS_CANCEL]);
          return redirect()
                     ->route('pay.qr')
                     ->with([

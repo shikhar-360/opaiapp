@@ -8,12 +8,12 @@ class CustomerWithdrawsModel extends Model
 {
     protected $table = 'customer_withdraws';
 
-    public const STATUS_PENDING             = 'pending';
-    public const STATUS_SUCCESS             = 'success';
+    public const TRANSACTION_STATUS_PENDING      = 'pending';
+    public const TRANSACTION_STATUS_SUCCESS      = 'success';
 
-    public const TRANSACTION_WITHDRAW       = 'withdraw';
-    public const TRANSACTION_SELFTRANSFER   = 'selftransfer';
-    public const TRANSACTION_P2PTRANSFER    = 'p2ptransfer';
+    public const TRANSACTION_TYPE_WITHDRAW       = 'withdraw';
+    public const TRANSACTION_TYPE_SELFTRANSFER   = 'selftransfer';
+    public const TRANSACTION_TYPE_P2PTRANSFER    = 'p2ptransfer';
 
     protected $fillable = [
         'app_id',	

@@ -160,8 +160,8 @@ class WithdrawService
                     'amount'                =>  $validatedData['p2p_amount'],
                     'net_amount'            =>  0,
                     'transaction_id'        =>  'P2PTRANSFER-'.$transactionString,
-                    'transaction_status'    =>  'success',
-                    'transaction_type'      =>  'p2ptransfer',
+                    'transaction_status'    =>  CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS,
+                    'transaction_type'      =>  CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER,
                     'to_customer'           =>  $customer_team_data->id,
                 ]);
             }

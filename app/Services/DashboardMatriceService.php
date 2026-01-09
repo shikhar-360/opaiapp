@@ -102,7 +102,7 @@ class DashboardMatriceService
 
         $myLevelEarning = CustomerEarningDetailsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('earning_type', 'LEVEL-REWARD')
+                                                        ->where('earning_type', CustomerEarningDetailsModel::EARNING_TYPE_REWARD)
                                                         ->sum('amount_earned');
 
         $myTotalEarning = CustomerEarningDetailsModel::where('customer_id', $customer->id)
@@ -114,14 +114,14 @@ class DashboardMatriceService
         
         $myTotalWithdraws = CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_status', 'success')
-                                                        ->whereIn('transaction_type', ['withdraw','selftransfer','p2ptransfer'])
+                                                        ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
+                                                        ->whereIn('transaction_type', [CustomerWithdrawsModel::TRANSACTION_TYPE_WITHDRAW,CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER,CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER])
                                                         ->sum('amount');
         
         $myWithdraws    =   CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_status', 'success')
-                                                        ->whereIn('transaction_type', ['withdraw','selftransfer','p2ptransfer'])
+                                                        ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
+                                                        ->whereIn('transaction_type', [CustomerWithdrawsModel::TRANSACTION_TYPE_WITHDRAW,CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER,CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER])
                                                         ->get();
 
         $voteTypes      = ['HONEST', 'ACTIVE', 'HELPFULL'];

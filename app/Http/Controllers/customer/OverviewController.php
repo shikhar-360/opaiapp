@@ -45,7 +45,7 @@ class OverviewController extends Controller
         
         $levelIncomeDetails = CustomerEarningDetailsModel::where('customer_id', $customer->id)
                                                             ->where('app_id', $customer->app_id)
-                                                            // ->where('earning_type', 'LEVEL-REWARD')
+                                                            // ->where('earning_type', CustomerEarningDetailsModel::EARNING_TYPE_REWARD)
                                                             ->whereBetween('created_at', [$dateFrom, $dateTo])
                                                             ->latest()
                                                             ->get();
