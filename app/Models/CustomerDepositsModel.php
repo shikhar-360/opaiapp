@@ -8,10 +8,16 @@ class CustomerDepositsModel extends Model
 {
     protected $table = "customer_deposits";
 
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_SUCCESS = 'success';
-    public const STATUS_FAILED = 'failed';
-    public const STATUS_UNDERPAID = 'underpaid';
+    public const STATUS_PENDING     = 'pending';
+    public const STATUS_SUCCESS     = 'success';
+    public const STATUS_FAILED      = 'failed';
+    public const STATUS_UNDERPAID   = 'underpaid';
+
+    public const PAYMENT_STATUS_PENDING     = 'pending';
+    public const PAYMENT_STATUS_SUCCESS     = 'success';
+    
+    public const TRANSACTION_PREFIX_FREE   = 'freepackage';
+    public const TRANSACTION_PREFIX_PAID   = 'deposit';
 
     protected $fillable = [
         'app_id',

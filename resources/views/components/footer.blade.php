@@ -6,23 +6,29 @@
         <p>&copy; {{ now()->year }} <span class="text-[var(--theme-high-text)] text-xl font-bold">OPAI</span> All rights reserved.</p>
       </div>
 
+      {{-- Social Media --}}
+
       <div class="flex gap-1 mx-auto sm:mx-0">
-        <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
+        <a href="https://x.com/opainetwork" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
+          <img src="{{ asset('assets/images/x.webp') }}" alt="x"
+               class="w-auto h-7 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out">
+        </a>
+        <!-- <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
           <img src="{{ asset('assets/images/instagram.svg') }}" alt="instagram"
                class="w-auto h-7 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out invert">
-        </a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
+        </a> -->
+        <!-- <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
           <img src="{{ asset('assets/images/telegram.svg') }}" alt="telegram"
                class="w-auto h-7 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out invert">
-        </a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
-          <img src="{{ asset('assets/images/facebook.svg') }}" alt="facebook"
+        </a> -->
+        <a href="https://www.facebook.com/people/OPAI/61584302932195/" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
+          <img src="{{ asset('assets/images/Fb.webp') }}" alt="facebook"
                class="w-auto h-7 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out ">
         </a>
-        <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
+        <!-- <a href="#" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg opacity-85 hover:opacity-100">
           <img src="{{ asset('assets/images/youtube.svg') }}" alt="youtube"
-               class="w-auto h-6 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out ">
-        </a>
+               class="w-auto h-8 hover:-rotate-[25deg] transition-transform duration-300 ease-in-out ">
+        </a> -->
       </div>
 
     </div>

@@ -920,10 +920,10 @@
                         <tr class="hover:bg-slate-200 transition">
                           <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                           <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects->name }}</td>
-                          <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $dailyDirects['referral_code'] }}</td>
                           <td class="px-4 sm:px-5 py-3 text-black">
                             <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $dailyDirects['active_direct_count'] }}</span>
                           </td>
+                          <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $customer->totalTeamCount }}</td>
                           <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['level_id'] }}</td>
                           <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_rank'] }}</td>
                           <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $dailyDirects['leadership_champions_rank'] }}</td> -->
@@ -1073,10 +1073,10 @@
                       <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                         <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyDirects['name'] }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $weeklyDirects['referral_code'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $weeklyDirects['active_direct_count'] }}</span>
                         </td>
+                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $customer->totalTeamCount }}</td>
                         <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['level_id'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_rank'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $weeklyDirects['leadership_champions_rank'] }}</td> -->
@@ -1189,10 +1189,10 @@
                       <tr class="hover:bg-slate-200 transition">
                         <td class="px-4 sm:px-5 py-3 text-black">{{ $loop->iteration }}</td>
                         <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyDirects['name'] }}</td>
-                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $monthlyDirects['referral_code'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-black">
                           <span class="inline-flex items-center rounded-full bg-amber-50 px-2 py-0.5 text-[11px] text-amber-700 border border-amber-300">{{ $monthlyDirects['active_direct_count'] }}</span>
                         </td>
+                        <td class="px-4 sm:px-5 py-3 font-medium text-slate-900">{{ $customer->totalTeamCount }}</td>
                         <!-- <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['level_id'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_rank'] }}</td>
                         <td class="px-4 sm:px-5 py-3 text-right text-black">{{ $monthlyDirects['leadership_champions_rank'] }}</td> -->

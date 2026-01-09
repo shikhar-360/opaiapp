@@ -8,12 +8,11 @@ class NinepayTransactionsModel extends Model
 {
     protected $table = "ninepay_transactions";
 
-    // Define the constants here:
-    public const STATUS_PENDING = 'pending';
-    public const STATUS_SUCCESS = 'success';
-    public const STATUS_FAILED = 'failed';
-    public const STATUS_UNDERPAID = 'underpaid';
-    public const STATUS_CANCEL = 'cancel';
+    public const PAYMENT_STATUS_PENDING     = 'pending';
+    public const PAYMENT_STATUS_SUCCESS     = 'success';
+    public const PAYMENT_STATUS_FAILED      = 'failed';
+    public const PAYMENT_STATUS_UNDERPAID   = 'underpaid';
+    public const PAYMENT_STATUS_CANCEL      = 'cancel';
     
     protected $fillable = [
         'app_id',

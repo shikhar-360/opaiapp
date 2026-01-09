@@ -29,7 +29,7 @@
           <h1 class="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight">
             Welcome to
             <span class="bg-gradient-to-r from-[var(--theme-skky-500)] via-[var(--theme-cyyan-500)] to-[var(--theme-skky-400)] bg-clip-text text-transparent">
-              OpAi
+              OPAI
             </span>
           </h1>
           <p class="mt-3 text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
@@ -226,25 +226,25 @@
 
               </div>
 
-{{-- Terms Checkbox --}}
-<!-- <div class="mt-6 mx-auto">
-  <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
-    <input id="termsCheck" type="checkbox"
-           class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
-           disabled>
-    <span>
-      I have read all
-      <button type="button" id="openTermsBtn"
-              class="text-slate-900 underline underline-offset-4 cursor-pointer">
-        Terms &amp; Conditions
-      </button>
-    </span>
-  </label>
+          {{-- Terms Checkbox --}}
+          <div class="mt-6 mx-auto">
+            <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
+              <input id="termsCheck" type="checkbox"
+                     class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+                     disabled>
+              <span>
+                I have read all
+                <button type="button" id="openTermsBtn"
+                        class="text-slate-900 underline underline-offset-4 cursor-pointer">
+                  Terms &amp; Conditions
+                </button>
+              </span>
+            </label>
 
-  <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
-    Please read and accept the Terms &amp; Conditions to continue.
-  </p>
-</div> -->
+            <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
+              Please read and accept the Terms &amp; Conditions to continue.
+            </p>
+          </div>
 
           {{-- Button --}}
           <div class="mt-4 flex justify-center">
@@ -271,46 +271,49 @@
             <a href="{{route('login')}}" class="text-slate-900 underline underline-offset-4">LOGIN</a>
           </p>
 
-          {{-- Community --}}
+          {{-- Community ss--}}
           <div class="mt-4">
             <div class="flex items-center gap-4">
               <span class="h-px flex-1 bg-slate-200"></span>
               <span class="text-[11px] tracking-[0.25em] text-slate-500">COMMUNITY</span>
               <span class="h-px flex-1 bg-slate-200"></span>
-                </div>
+            </div>
 
             <div class="mt-4 flex justify-center">
               <div class="inline-flex items-center gap-4 rounded-xl bg-white border border-slate-200 px-6 py-3 shadow-sm">
+                {{-- x --}}
+                <a href="https://x.com/opainetwork" class="text-slate-800 hover:text-slate-950">
+                  <img src="{{ asset('assets/images/x.webp') }}" alt="x"
+                    class="w-auto h-5">
+                </a>
                 {{-- instagram --}}
-                <a href="#" class="text-slate-800 hover:text-slate-950">
+                <!-- <a href="#" class="text-slate-800 hover:text-slate-950">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="2"/>
                     <path d="M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="currentColor" stroke-width="2"/>
                     <path d="M17.5 6.5h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
                   </svg>
-                  </a>
+                  </a> -->
                 {{-- facebook --}}
-                <a href="#" class="text-slate-800 hover:text-slate-950">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <path d="M14 9h3V6h-3a4 4 0 0 0-4 4v3H7v3h3v6h3v-6h3l1-3h-4v-3a1 1 0 0 1 1-1Z" fill="currentColor"/>
-                  </svg>
+                <a href="https://www.facebook.com/people/OPAI/61584302932195/" class="text-slate-800 hover:text-slate-950">
+                  <img src="{{ asset('assets/images/Fb.webp') }}" alt="facebook"
+                        class="w-auto h-5">
                   </a>
                 {{-- youtube --}}
-                <a href="#" class="text-slate-800 hover:text-slate-950">
+                <!-- <a href="#" class="text-slate-800 hover:text-slate-950">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <path d="M22 12s0-4-1-5-5-1-9-1-8 0-9 1-1 5-1 5 0 4 1 5 5 1 9 1 8 0 9-1 1-5 1-5Z" stroke="currentColor" stroke-width="2"/>
                     <path d="M10 15V9l6 3-6 3Z" fill="currentColor"/>
                   </svg>
-                  </a>
+                  </a> -->
                 {{-- telegram --}}
-                <a href="#" class="text-slate-800 hover:text-slate-950">
+                <!-- <a href="#" class="text-slate-800 hover:text-slate-950">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <path d="M22 2 11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     <path d="M22 2 15 22l-4-9-9-4 20-7Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                   </a>
-                </div>
-              
+                </div> -->
           </div>
         </div>
 
@@ -320,7 +323,7 @@
   </div>
 
 {{-- Terms Modal --}}
-<!-- <div id="termsModal" class="fixed inset-0 z-50 hidden">
+<div id="termsModal" class="fixed inset-0 z-50 hidden">
   
   <div id="termsBackdrop" class="absolute inset-0 bg-slate-900/60"></div>
 
@@ -346,7 +349,7 @@
       <div class="flex-1 overflow-hidden p-3 md:p-4">
         <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
           <object
-            data="{{ asset('storage/opai.pdf') }}"
+            data="{{ asset('storage/Signup-T&C.pdf') }}"
             type="application/pdf"
             class="w-full h-full">
             
@@ -377,7 +380,7 @@
 
     </div>
   </div>
-</div> -->
+</div>
 
 
 </section>

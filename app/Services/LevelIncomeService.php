@@ -207,7 +207,7 @@ class LevelIncomeService
                 'reference_amount' => $deposit->amount,
                 'amount_earned'    => $amountEarned,
                 'flush_amount'     => $flushAmount,
-                'earning_type'     => $amountEarned > 0 ? 'LEVEL-REWARD' : 'FLUSH-INCOME',
+                'earning_type'     => $amountEarned > 0 ? CustomerEarningDetailsModel::EARNING_TYPE_REWARD : CustomerEarningDetailsModel::EARNING_TYPE_FLUSH,
                 'reference_level'  => $level
             ];
 
@@ -219,7 +219,7 @@ class LevelIncomeService
                 'flushed'       => $flushAmount,
                 'cap'           => $upline_fin_cap,
                 'current_income'=> $upline_fin_income,
-                'earning_type'  => $amountEarned > 0 ? 'LEVEL-REWARD' : 'FLUSH-INCOME',
+                'earning_type'  => $amountEarned > 0 ? CustomerEarningDetailsModel::EARNING_TYPE_REWARD : CustomerEarningDetailsModel::EARNING_TYPE_FLUSH,
             ]);
 
             $level++;
