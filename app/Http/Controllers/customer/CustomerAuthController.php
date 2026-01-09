@@ -288,13 +288,26 @@ class CustomerAuthController extends Controller
         return view('customer.forgot');
     }
 
-    public function forgot(Request $request)
+    public function forgot(Request $request) 
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email|exists:customers,email',
         ]);
+       
+        if ($validator->fails()) {
+             if ($validator->errors()->has('email')) {
+                $emailError = $validator->errors()->first('email');
+                return redirect()->route('forgot')->with(['status_code'=>'error', 'message' => $emailError]);
+            }
+        }
 
-        $customer = CustomersModel::where('email', $validated['email'])->first();
+        $email = $validator->validated()['email'];
+
+        // $validated = $request->validate([
+        //     'email' => 'required|email|exists:customers,email',
+        // ]);
+
+        $customer = CustomersModel::where('email', $email)->first();
 
         // Generate unique reset code
         do {
@@ -312,15 +325,21 @@ class CustomerAuthController extends Controller
         ]);
 
         // Create reset URL
-        $resetUrl = url('/reset-password?code=' . $code);
+        // $resetUrl = url('/reset-password?code=' . $code);
+        // // Send mail
+        // $this->emailService->sendForgotPasswordEmail(
+        //     $customer->email,
+        //     $resetUrl
+        // );
 
-        // Send mail
-        $this->emailService->sendForgotPasswordEmail(
-            $customer->email,
-            $resetUrl
-        );
-
-        return back()->withInput()->withErrors(['status_code'=>'success', 'message' => 'Your forgot password request send successfully, please check you mail']);
+        // Send OTP mail
+        $resp = $this->emailService->sendOtpEmail(
+                                        $customer->email,
+                                        $code,
+                                        $customer
+                                    );
+        // dd($resp);
+        return redirect()->route('verifyotp')->with(['status_code'=>'success', 'message' => 'OTP sent, please check your mail.']);
     }
 
     function randomString($length = 6) 
@@ -423,6 +442,52 @@ class CustomerAuthController extends Controller
                 'status_code' => 'success',
                 'message' => 'Password reset successfully. Please login.'
             ]);
+    }
+
+    public function showVerifyOtpForm(Request $request) 
+    {
+        return view('customer.verifyotp');
+    }
+
+    public function processOtp(Request $request) 
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:customers,email',
+            'code'  => 'required|min:6',
+        ]);
+       
+        if ($validator->fails()) {
+             if ($validator->errors()->has('email')) {
+                $emailError = $validator->errors()->first('email');
+                return redirect()->route('verifyotp')->with(['status_code'=>'error', 'message' => $emailError]);
+            }
+        }
+
+        $email = $validator->validated()['email'];
+        $otpcode = $validator->validated()['code'];
+
+        $customer = CustomersModel::where('email', $email)->first();
+        
+        if (!$customer) {
+            return redirect()->route('verifyotp')->with(['status_code'=>'error', 'message' => 'Invalid request']);
+        }
+        
+        $resetRequest = ForgotPasswordRequestsModel::where('customer_id', $customer->id)->where('code', $otpcode)->latest()->first();
+
+        // Invalid or expired
+        if (
+            !$resetRequest ||
+            $resetRequest->expires_at->isPast()
+        ) {
+            return redirect()->route('verifyotp')->with(['status_code'=>'error', 'message' => 'OTP is invalid or expired.']);
+        }
+
+        // Valid reset link
+        return view('customer.resetpassword', [
+            'code' => $otpcode,
+            'customer_id' => $resetRequest->customer_id,
+        ]);
+
     }
 
 }

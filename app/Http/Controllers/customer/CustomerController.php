@@ -27,6 +27,7 @@ use App\Models\AppLevelPackagesModel;
 use App\Models\AdminTutorialsModel;
 use App\Models\CustomerSettingsModel;
 
+
 class CustomerController extends Controller
 {
     use ManagesCustomerHierarchy;
@@ -67,6 +68,8 @@ class CustomerController extends Controller
         // $customers = CustomersModel::with('referrals')->find(10);
         // $customerUplines = $this->getUplines($customers);
         // dd($customerUplines);
+
+        
 
         $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
         // dd($dashboard_matrics);

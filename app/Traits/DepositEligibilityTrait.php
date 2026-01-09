@@ -9,14 +9,14 @@ trait DepositEligibilityTrait
     protected function hasAnyDeposit(int $customerId): bool
     {
         return CustomerDepositsModel::where('customer_id', $customerId)
-            ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+            ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
             ->exists();
     }
 
     protected function hasPaidDeposit(int $customerId): bool
     {
         return CustomerDepositsModel::where('customer_id', $customerId)
-            ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+            ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
             ->where('is_free_deposit', 0)
             ->exists();
     }
@@ -24,7 +24,7 @@ trait DepositEligibilityTrait
     protected function hasFreeDeposit(int $customerId): bool
     {
         return CustomerDepositsModel::where('customer_id', $customerId)
-            ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+            ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
             ->where('is_free_deposit', 1)
             ->exists();
     }

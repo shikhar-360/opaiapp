@@ -134,7 +134,7 @@ class LevelIncomeService
      */
     public function releaseLevelIncome(CustomerDepositsModel $deposit)
     {       
-
+        
         $customer = CustomersModel::with('referrals')->find($deposit->customer_id);
 
         if (!$customer) {
@@ -172,7 +172,25 @@ class LevelIncomeService
             if ($upline['actual_level'] >= $level) 
             {
 
+                // Level Eligibility check start
+                
                 $rewardPercent = (float) $levelConfigs[$level]->reward;
+
+                if($this->hasAnyDeposit($upline['id']))
+                {
+                    if($this->hasOnlyFreeDeposit($upline['id']))
+                    {
+                        $rewardPercent = (float) $levelConfigs[1]->reward;
+                    }
+                }
+                else
+                {
+                    $rewardPercent = (float) $levelConfigs[1]->reward;
+                }   
+                // Level Eligibility check end
+
+                // $rewardPercent = (float) $levelConfigs[$level]->reward;
+
                 $rewardAmount  = ($deposit->amount * $rewardPercent) / 100;
 
                 // CAPING
