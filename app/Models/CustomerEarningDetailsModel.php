@@ -8,6 +8,9 @@ class CustomerEarningDetailsModel extends Model
 {
     protected $table = "customer_earning_details";
 
+    public const EARNING_TYPE_FLUSH     = 'FLUSH-INCOME';
+    public const EARNING_TYPE_REWARD    = 'LEVEL-REWARD';
+    
     protected $fillable = [
         'app_id',
 	    'customer_id',

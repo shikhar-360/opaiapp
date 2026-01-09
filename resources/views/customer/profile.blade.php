@@ -744,7 +744,7 @@
       <div class="flex-1 overflow-hidden p-3 md:p-4">
         <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
           <object
-            data="{{ asset('storage/opai.pdf') }}"
+            data="{{ asset('storage/Wallet-Binding-T&C.pdf') }}"
             type="application/pdf"
             class="w-full h-full">
             

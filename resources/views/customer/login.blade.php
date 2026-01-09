@@ -184,37 +184,46 @@
                 class="relative flex items-center justify-center rounded-xl p-3 gap-4 leading-none mx-auto w-full max-w-fit 
                        border border-slate-200 bg-white shadow-[0_16px_45px_rgba(15,23,42,0.08)]">
 
-                <a href="#"
+
+                <a href="https://x.com/opainetwork"
+                   type="button" target="_blank"
+                   class="inline-flex items-center justify-center text-xs text-slate-600 hover:text-[var(--theme-high-text)] transition-transform duration-200 hover:-translate-y-0.5">
+                  <span class="[&>svg]:h-6 [&>svg]:w-8 relative z-20">
+                   <img src="/assets/images/x.webp" width="22" height="22" alt="x">
+                  </span>
+                </a>
+
+                <!-- <a href="#"
                    type="button" target="_blank"
                    class="inline-flex items-center justify-center text-xs text-slate-600 hover:text-[var(--theme-high-text)] transition-transform duration-200 hover:-translate-y-0.5 invert">
                   <span class="[&>svg]:h-6 [&>svg]:w-8 relative z-20">
                    <img src="/assets/images/instagram.svg" width="24" height="24" alt="telegram">
                   </span>
-                </a>
+                </a> -->
 
-                <a href="#"
+                <a href="https://www.facebook.com/people/OPAI/61584302932195/"
                    type="button" target="_blank"
                    class="inline-flex items-center justify-center text-xs text-slate-600 hover:text-[var(--theme-high-text)] transition-transform duration-200 hover:-translate-y-0.5">
                   <span class="relative z-20">
-                    <img src="/assets/images/facebook.svg" width="28" height="28" alt="facebook">
+                    <img src="/assets/images/Fb.webp" width="22" height="22" alt="facebook">
                   </span>
                 </a>
 
-                <a href="#"
+                <!-- <a href="#"
                    type="button" target="_blank"
                    class="inline-flex items-center justify-center text-xs text-slate-600 hover:text-[var(--theme-high-text)] transition-transform duration-200 hover:-translate-y-0.5">
                   <span class="relative z-20">
                     <img src="/assets/images/youtube.svg" width="28" height="28" alt="youtube">
                   </span>
-                </a>
+                </a> -->
 
-                <a href="#"
+                <!-- <a href="#"
                    type="button" target="_blank"
                    class="inline-flex items-center justify-center text-xs text-slate-600 hover:text-[var(--theme-high-text)] transition-transform duration-200 hover:-translate-y-0.5 invert">
                   <span class="relative z-20">
                     <img src="/assets/images/telegram.svg" width="24" height="24" alt="telegram">
                   </span>
-                </a>
+                </a> -->
               </div>
             </div>
           </div>

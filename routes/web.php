@@ -25,6 +25,8 @@ use App\Http\Controllers\admin\AppCustomersController;
 use App\Http\Controllers\admin\AppFreeDepositPackagesController;
 use App\Http\Controllers\admin\AppLeadershipPackagesController;
 use App\Http\Controllers\admin\AdminTutorialsController;
+use App\Http\Controllers\admin\AppChampionsPackagesController;
+use App\Http\Controllers\admin\AppCustomersReportController;
 
 Route::get('/', [CustomerAuthController::class, 'showLoginForm'])->name('login');
 
@@ -151,6 +153,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
         
+        // Customer deposits report
+        Route::match(['get', 'post'], 'appcustomers/deposits-report', [AppCustomersReportController::class, 'depositDetails'])
+    ->name('appcustomers.depositsreport');
+        // Customer earning report
+        Route::match(['get', 'post'], 'appcustomers/earnings-report', [AppCustomersReportController::class, 'earningDetails'])
+    ->name('appcustomers.earningsreport');
+        // Customer withdraws report
+        Route::match(['get', 'post'], 'appcustomers/withdraws-report', [AppCustomersReportController::class, 'withdrawDetails'])
+    ->name('appcustomers.withdrawsreport');   
+        // Customer p2ptransfer report
+        Route::match(['get', 'post'], 'appcustomers/p2ptransfer-report', [AppCustomersReportController::class, 'p2pTransferDetails'])
+    ->name('appcustomers.p2ptransfersreport');   
+        // Customer selftransfer report
+        Route::match(['get', 'post'], 'appcustomers/selftransfer-report', [AppCustomersReportController::class, 'selfTransferDetails'])
+    ->name('appcustomers.selftransfersreport');
+
+
+
         // Resourceful Routes for Management
         // Use standard Laravel resource controllers for managing items
         Route::resource('packages', AppPackagesController::class);
