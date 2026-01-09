@@ -50,7 +50,7 @@ class DepositController extends Controller
         $customer->myFreePackage            =   $dashboard_matrics['myFreePackage'];
 
         $customer->actualDepositCounts      =   CustomerDepositsModel::where('customer_id', $customer->id)
-                                                                        ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                                        ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
                                                                         ->where('is_free_deposit', 0)
                                                                         ->count();
         

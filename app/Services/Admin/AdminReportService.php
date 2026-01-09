@@ -10,50 +10,6 @@ use App\Models\CustomerWithdrawsModel;
 
 class AdminReportService
 {
-    public function dashboardSummary(): array
-    {
-        return [
-            'total_customers' => $this->totalCustomers(),
-            'active_customers' => $this->activeCustomers(),
-            'total_deposits' => $this->totalDeposits(),
-            'total_deposit_amount' => $this->totalDepositAmount(),
-            'total_withdraw_amount' => $this->totalWithdrawAmount(),
-            'total_usdt' => $this->totalUSDT(),
-        ];
-    }
-
-    public function totalCustomers(): int
-    {
-        return CustomersModel::count();
-    }
-
-    public function activeCustomers(): int
-    {
-        return CustomersModel::where('status', 1)->count();
-    }
-
-    public function totalDeposits(): int
-    {
-        return CustomerDepositsModel::where('payment_status', 'success')->count();
-    }
-
-    public function totalDepositAmount(): float
-    {
-        return (float) CustomerDepositsModel::where('payment_status', 'success')
-            ->sum('amount');
-    }
-
-    public function totalWithdrawAmount(): float
-    {
-        return (float) CustomerWithdrawsModel::where('transaction_status', 'success')
-            ->sum('amount');
-    }
-
-    public function totalUSDT(): float
-    {
-        return (float) DB::table('customer_wallets')->sum('usdt_balance');
-    }
-
     /**
         * Export data as CSV.
         *
@@ -94,6 +50,52 @@ class AdminReportService
 
         return response()->stream($callback, 200, $headers);
     }
+
+    public function dashboardSummary(): array
+    {
+        return [
+            'total_customers' => $this->totalCustomers(),
+            'active_customers' => $this->activeCustomers(),
+            'total_deposits' => $this->totalDeposits(),
+            'total_deposit_amount' => $this->totalDepositAmount(),
+            'total_withdraw_amount' => $this->totalWithdrawAmount(),
+            'total_usdt' => $this->totalUSDT(),
+        ];
+    }
+
+    public function totalCustomers(): int
+    {
+        return CustomersModel::count();
+    }
+
+    public function activeCustomers(): int
+    {
+        return CustomersModel::where('status', 1)->count();
+    }
+
+    public function totalDeposits(): int
+    {
+        return CustomerDepositsModel::where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)->count();
+    }
+
+    public function totalDepositAmount(): float
+    {
+        return (float) CustomerDepositsModel::where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
+            ->sum('amount');
+    }
+
+    public function totalWithdrawAmount(): float
+    {
+        return (float) CustomerWithdrawsModel::where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
+            ->sum('amount');
+    }
+
+    public function totalUSDT(): float
+    {
+        return (float) DB::table('customer_wallets')->sum('usdt_balance');
+    }
+
+    
 
     public function depositDetails($from, $to, $search)
     {
@@ -217,7 +219,7 @@ class AdminReportService
                                         ->leftJoin('customers as tc', 'tc.id', '=', 'customer_withdraws.to_customer')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
-                                        ->where('customer_withdraws.transaction_type', 'p2ptransfer')
+                                        ->where('customer_withdraws.transaction_type', CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER)
                                         ->whereBetween('customer_withdraws.created_at', [$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
@@ -261,7 +263,7 @@ class AdminReportService
                                         ->join('customers as c', 'c.id', '=', 'customer_withdraws.customer_id')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
-                                        ->where('customer_withdraws.transaction_type', 'selftranfer')
+                                        ->where('customer_withdraws.transaction_type', CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER)
                                         ->whereBetween('customer_withdraws.created_at', [$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {

@@ -119,7 +119,7 @@ class NinePayService
             $appid = $customer->app_id;
 
             $pendingPayment = NinepayTransactionsModel::where('customer_id', $customerId)
-                                                        ->whereIn('payment_status', [NinepayTransactionsModel::STATUS_PENDING,NinepayTransactionsModel::STATUS_UNDERPAID])
+                                                        ->whereIn('payment_status', [NinepayTransactionsModel::PAYMENT_STATUS_PENDING,NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID])
                                                         ->where('transaction_id', $transactionId)
                                                         // ->whereNull('transaction_hash')
                                                         ->where('app_id', $customer->app_id)
@@ -147,19 +147,19 @@ class NinePayService
                 {
                     // dd("1", $pendingPayment);
                     $pendingPayment->remaining_amount = 0;
-                    $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_SUCCESS; 
+                    $pendingPayment->payment_status = NinepayTransactionsModel::PAYMENT_STATUS_SUCCESS; 
                     $pendingPayment->save(); 
 
                     // $criteria = [
                     //     'customer_id'    => $customerId,
                     //     'transaction_id' => $transactionId,
                     //     'app_id'         => $customer->app_id, 
-                    //     'payment_status' => NinepayTransactionsModel::STATUS_UNDERPAID
+                    //     'payment_status' => NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID
                     // ];
 
                     // Define the data you want to update in those records
                     // $updateData = [
-                    //     'payment_status'   => NinepayTransactionsModel::STATUS_SUCCESS
+                    //     'payment_status'   => NinepayTransactionsModel::PAYMENT_STATUS_SUCCESS
                     // ];
 
                     // Perform the mass update
@@ -171,7 +171,7 @@ class NinePayService
                     $newRemainingAmount = $newRemainingAmount + $feeAmount;
                     $pendingPayment->remaining_amount = $newRemainingAmount;
 
-                    $pendingPayment->payment_status = NinepayTransactionsModel::STATUS_UNDERPAID; 
+                    $pendingPayment->payment_status = NinepayTransactionsModel::PAYMENT_STATUS_UNDERPAID; 
                     // dd("2", $pendingPayment);
                     $pendingPayment->save(); 
                 }
