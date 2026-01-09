@@ -53,8 +53,9 @@
 </nav>
 
 {{-- Sidebar --}}
-<div class="sidebar">
+<div class="sidebar">a
     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+    <a href="{{ route('admin.adminapp.index') }}">App Settings</a>
     <a href="{{ route('admin.packages.index') }}">Packages</a>
     <a href="{{ route('admin.levelpackages.index') }}">Level Packages</a>
     <a href="{{ route('admin.leadershippackages.index') }}">Leadership Income</a>
