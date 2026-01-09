@@ -10,7 +10,7 @@ use App\Models\AppLevelPackagesModel;
 use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\CustomerEarningDetailsModel;
-use App\Models\CustomerFlushDetailsModel;
+
 
 use App\Traits\ManagesCustomerHierarchy;
 use App\Traits\ManagesCustomerFinancials;

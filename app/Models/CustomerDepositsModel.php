@@ -10,6 +10,7 @@ class CustomerDepositsModel extends Model
 
     public const PAYMENT_STATUS_PENDING     = 'pending';
     public const PAYMENT_STATUS_SUCCESS     = 'success';
+    public const PAYMENT_STATUS_FAILED      = 'failed';
     
     public const TRANSACTION_PREFIX_FREE   = 'freepackage';
     public const TRANSACTION_PREFIX_PAID   = 'deposit';
