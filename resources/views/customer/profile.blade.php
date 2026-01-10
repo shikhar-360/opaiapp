@@ -731,7 +731,7 @@
              overflow-hidden max-h-[90vh] flex flex-col">
 
       
-      <div class="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 border-b border-slate-200">
+      <div class="flex items-center justify-between px-4 md:px-5 py-3 md:py-4 border-b border-slate-400">
         <h3 class="text-md sm:text-xl font-semibold text-slate-900">
           Terms &amp; Conditions
         </h3>
