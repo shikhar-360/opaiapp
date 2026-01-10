@@ -307,24 +307,24 @@
 
 
                 {{-- Terms Checkbox --}}
-<div class="mt-6 mx-auto">
-  <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
-    <input id="termsCheck" type="checkbox"
-           class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
-           disabled>
-    <span>
-      I have read all
-      <button type="button" id="openTermsBtn"
-              class="text-slate-900 underline underline-offset-4 cursor-pointer">
-        Terms &amp; Conditions
-      </button>
-    </span>
-  </label>
+                <div class="mt-6 mx-auto">
+                  <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
+                    <input id="termsCheck" name="termsCheck" type="checkbox"
+                           class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
+                           disabled>
+                    <span>
+                      I have read all
+                      <button type="button" id="openTermsBtn"
+                              class="text-slate-900 underline underline-offset-4 cursor-pointer">
+                        Terms &amp; Conditions
+                      </button>
+                    </span>
+                  </label>
 
-  <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
-    Please read and accept the Terms &amp; Conditions to continue.
-  </p>
-</div>
+                  <p id="termsError" class="mt-2 text-xs text-red-600 hidden text-center">
+                    Please read and accept the Terms &amp; Conditions to continue.
+                  </p>
+                </div>
 
 
 
@@ -744,12 +744,10 @@
 
       <div class="flex-1 overflow-hidden p-3 md:p-4">
         <div class="h-full w-full rounded-xl border border-slate-200 bg-slate-50 overflow-hidden">
-          <object
+          <!-- <object
             data="{{ asset('storage/Wallet-Binding-T&C.pdf') }}"
             type="application/pdf"
             class="w-full h-full">
-            
-           
             <p class="p-4 text-sm text-slate-600 text-center">
               PDF preview not supported.
               <a href="/assets/terms.pdf" target="_blank"
@@ -757,7 +755,13 @@
                 Open PDF
               </a>
             </p>
-          </object>
+          </object> -->
+          <div class="w-full h-screen bg-gray-100 flex justify-center">
+            <div
+                id="pdf-viewer"
+                class="w-full max-w-4xl h-full overflow-y-auto bg-white p-4">
+            </div>
+          </div>
         </div>
       </div>
 
@@ -781,6 +785,7 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   function updateMultiSelectState() {
@@ -989,5 +994,35 @@ userIdInput.addEventListener('input', () => {
       }
     });
   })();
+
+
+const pdfUrl = "{{ asset('storage/Wallet-Binding-TnC.pdf') }}";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
+
+pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    const container = document.getElementById('pdf-viewer');
+
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        pdf.getPage(pageNum).then(page => {
+            const scale = 1.3;
+            const viewport = page.getViewport({ scale });
+
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            canvas.classList.add('mb-6', 'mx-auto');
+
+            container.appendChild(canvas);
+
+            page.render({
+                canvasContext: context,
+                viewport: viewport
+            });
+        });
+    }
+});
 </script>
 @endpush

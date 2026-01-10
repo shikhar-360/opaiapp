@@ -582,7 +582,6 @@
 let txnId = "{{ $customer->QRs['transaction_id'] ?? '' }}"; // passed from controller
 
 function checkPaymentStatus() {
-  console.log(txnId, "hello");
     if (txnId !== '') {
         fetch(`/api/payment-status/${txnId}`)
             .then(response => response.json())

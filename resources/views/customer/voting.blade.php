@@ -195,7 +195,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     timer = setTimeout(() => {
-      fetch("https://user.ordinarypeopleai.com/fetch-user-name", {
+      const userNameUrl = "{{ route('fetch.user.name') }}";
+      fetch(userNameUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

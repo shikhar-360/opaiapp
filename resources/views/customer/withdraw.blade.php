@@ -942,7 +942,7 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
       }
 
-      const fetchUserNameUrl = "https://user.ordinarypeopleai.com/fetch-teamuser-name";
+      const fetchUserNameUrl = "{{ route('fetch.teamuser.name') }}";
 
       timer = setTimeout(() => {
           fetch(fetchUserNameUrl, {

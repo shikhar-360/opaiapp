@@ -293,9 +293,7 @@
 
               if(isFreePackageOn == true)
               {
-                // const freePackageUrl = "{{ route('pay.freetopup.save') }}";
-                const freePackageUrl = "https://user.ordinarypeopleai.com/free-topup";
-                 // alert(isFreePackageOn+" "+freePackageUrl);
+                const freePackageUrl = "{{ route('pay.freetopup.save') }}";
                 fetch(freePackageUrl, {
                     method: 'POST',
                     headers: {
