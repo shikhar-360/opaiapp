@@ -10,6 +10,7 @@ use App\Models\CustomerDepositsModel;
 use App\Models\CustomersModel;
 use App\Models\FreeDepositPackagesModel;
 use App\Models\CustomerSettingsModel;
+use App\Models\AppsModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -41,7 +42,7 @@ class DepositService
 
         // Rule 2 — incremental deposit rule
         $lastDeposit = CustomerDepositsModel::where('customer_id', $customer->id)
-                                                ->where('payment_status', 'SUCCESS')
+                                                ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
                                                 ->where('is_free_deposit',0)
                                                 ->orderBy('id', 'DESC')
                                                 ->first();
@@ -57,15 +58,18 @@ class DepositService
 
     public function createPendingDeposit($customer, $package, $amount, $txnId)
     {
+        $coin_price = AppsModel::where('id', $customer->app_id)->value('coin_price');
+        $opx_tokens = (float)$amount/(float)$coin_price;
+
         Log::info('New Deposit Created ', [
             'app_id'        => $customer->app_id,
             'customer_id'   => $customer->id,
             'package_id'    => $package->id,
             'amount'        => $amount,
-            'roi_percent'   => $package->roi_percent,
             'transaction_id'=> $txnId,
-            'payment_status'=> CustomerDepositsModel::STATUS_PENDING,
-            'coin_price'    => 2
+            'payment_status'=> CustomerDepositsModel::PAYMENT_STATUS_PENDING,
+            'coin_price'    => $coin_price,
+            'tokens'        => $opx_tokens,
         ]);
 
         return CustomerDepositsModel::create([
@@ -73,33 +77,33 @@ class DepositService
             'customer_id'   => $customer->id,
             'package_id'    => $package->id,
             'amount'        => $amount,
-            'roi_percent'   => $package->roi_percent,
             'transaction_id'=> $txnId,
-            'payment_status'=> CustomerDepositsModel::STATUS_PENDING,
-            'coin_price'    => 2
+            'payment_status'=> CustomerDepositsModel::PAYMENT_STATUS_PENDING,
+            'coin_price'    => $coin_price,
+            'tokens'        => $opx_tokens,
         ]);
     }
 
-    public function markDepositSuccess($deposit, $isfreePkg)
+    public function markDepositSuccess($deposit)
     {
-        
         try 
         {
             DB::beginTransaction();
             $deposit->update([
-                'payment_status' => CustomerDepositsModel::STATUS_SUCCESS,
+                'payment_status' => CustomerDepositsModel::PAYMENT_STATUS_SUCCESS,
             ]);
-        
+
             $finance = $this->getCustomerFinance($deposit->customer_id, $deposit->app_id);
             $depositAmount = $deposit->amount;
             // Manual assignment ignores $fillable
             $finance->total_deposit += $depositAmount;
             $finance->capping_limit += ($depositAmount * 5);
             $finance->total_topup = max(0, $finance->total_topup - $depositAmount);
+            $finance->total_tokens += $deposit->tokens;
             $finance->save();
         
             $firstDeposit = CustomerDepositsModel::where('customer_id', $deposit->customer_id)
-                                                ->where('payment_status', CustomerDepositsModel::STATUS_SUCCESS)
+                                                ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
                                                 ->where('id', '!=', $deposit->id)
                                                 ->doesntExist();
             if ($firstDeposit) {
@@ -153,9 +157,8 @@ class DepositService
             'customer_id'   => $customer->id,
             'package_id'    => $package,
             'amount'        => $amount,
-            'roi_percent'   => 0,
             'transaction_id'=> $txnId,
-            'payment_status'=> CustomerDepositsModel::STATUS_SUCCESS,
+            'payment_status'=> CustomerDepositsModel::PAYMENT_STATUS_SUCCESS,
             'coin_price'    => 0,
             'is_free_deposit'=> 1,
         ]);

@@ -130,4 +130,16 @@ class CustomersModel extends Authenticatable
     {
         return $this->hasOne(CustomerSettingsModel::class, 'customer_id', 'id');
     }
+
+    public function customerFinance()
+    {
+        return $this->hasOne(CustomerFinancialsModel::class, 'customer_id', 'id');
+    }
+
+    public function firstPaidDeposit()
+    {
+        return $this->hasOne(CustomerDepositsModel::class, 'customer_id', 'id')
+            ->where('is_free_deposit', 0)
+            ->orderBy('created_at', 'asc');
+    }
 }

@@ -1,7 +1,7 @@
 @extends('admins.layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     
     <h2 class="mb-3">User Deposits</h2>
 
@@ -79,17 +79,19 @@
             <th>Wallet Address</th>
             <th>Package</th>
             <th>Amount</th>
+            <th>Coin Price</th>
+            <th>Tokens</th>
         </tr>
         </thead>
 
         <tbody>
-        @forelse ($deposit_details as $d)
+        @foreach ($deposit_details as $d)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $d->created_at->format("d-m-Y") }}</td>
+                <td>{{ $d->depositdate }}</td>
                 <td>{{ $d->name }}</td>
                 <td>{{ $d->referral_code }}</td>
-                <td>{{ $d->wallet_address }}</td>
+                <td>{{ substr($d->wallet_address,0,5) }}...{{ substr($d->wallet_address,-6) }}</td>
                 <td>
                 @php
                 $pkgname = match ($d->package_id)   {
@@ -104,7 +106,8 @@
                 {{ $pkgname }}
                 </td>
                 <td>{{ $pkgname!='Free'?$d->amount:'-' }}</td>
-
+                <td>{{ $d->coin_price }}</td>
+                <td>{{ $d->tokens }}</td>
                 {{-- <td>
                     <a href="{{ route('admin.login.as.customer', $c->id) }}" class="btn btn-info btn-sm px-2 py-0">Login as Customer</a>
                     <a href="{{ route('admin.appcustomers.edit', $c->id) }}" class="btn btn-warning btn-sm px-2 py-0">Edit</a>
@@ -118,9 +121,7 @@
                     </form>
                 </td> --}}
             </tr>
-        @empty
-            <tr><td colspan="6" class="text-center">No deposits found.</td></tr>
-        @endforelse
+        @endforeach
         </tbody>
     </table>
 </div>
@@ -144,5 +145,9 @@ function dwnld()
     // document.getElementById('depositSearch').value = $('#deposit_datatable').DataTable().search(); 
     document.getElementById('isDownload').value = 1
 }
-
+$('#deposit_datatable').DataTable({
+    language: {
+        emptyTable: "No data found"
+    }
+});
 </script>

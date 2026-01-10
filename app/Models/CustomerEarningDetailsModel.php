@@ -22,4 +22,9 @@ class CustomerEarningDetailsModel extends Model
 	    'reference_level',
 	    'flush_amount'
     ];
+
+	public function getEarndateAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
+    }
 }

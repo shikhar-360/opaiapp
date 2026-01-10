@@ -204,7 +204,7 @@
               
               <input type="text" name="amount" id="amount" value="0" placeholder="0.0" required="required" readonly="" class="w-full bg-transparent text-slate-900 placeholder:text-slate-400
                        outline-none text-sm md:text-base [caret-color:#60a5fa]">
-              <input type="hidden" name="hdn_freepackage" id="hdn_freepackage" value="{{ $customer->actualDepositCounts }}">
+              
             </div>
 
             
@@ -311,7 +311,7 @@
               const statusEl = document.getElementById('freePkgStatus');
               const dotEl = document.getElementById('freePkgDot');
               const trackEl = document.getElementById('freePkgTrack');
-              const isFreePackage = document.getElementById('hdn_freepackage');
+              
 
               if (isFreePackageOn) {
                 statusEl.innerText = 'ON';
@@ -324,7 +324,7 @@
                 trackEl.classList.add('bg-[var(--theme-skky-500)]');
                 trackEl.classList.remove('bg-transparent');
 
-                isFreePackage.value = 1;
+                
                 typeof showToast === 'function' && showToast('success', 'Free Package: ON');
 
               } else {
@@ -338,7 +338,7 @@
                 trackEl.classList.remove('bg-[var(--theme-skky-500)]');
                 trackEl.classList.add('bg-transparent');
 
-                isFreePackage.value = 0;
+                
                 typeof showToast === 'function' && showToast('info', 'Free Package: OFF');
               }
             }

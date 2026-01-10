@@ -171,6 +171,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         // Customer selftransfer report
         Route::match(['get', 'post'], 'appcustomers/selftransfer-report', [AppCustomersReportController::class, 'selfTransferDetails'])
     ->name('appcustomers.selftransfersreport');
+    //     Route::match(['get', 'post'], 'appcustomers/report', [AppCustomersReportController::class, 'customerDetails'])
+    // ->name('appcustomers.report');
+        Route::match(['get', 'post'], 'appcustomers/index-report', [AppCustomersController::class, 'indexFilter'])->name('appcustomers.filterreport');
 
 
 

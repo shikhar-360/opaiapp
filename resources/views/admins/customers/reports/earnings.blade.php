@@ -1,7 +1,7 @@
 @extends('admins.layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     
     <h2 class="mb-3">User Earnings</h2>
 
@@ -87,13 +87,13 @@
         </thead>
 
         <tbody>
-        @forelse ($earning_details as $d)
+        @foreach ($earning_details as $d)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $d->created_at->format("d-m-Y") }}</td>
+                <td>{{ $d->earndate }}</td>
                 <td>{{ $d->name }}</td>
                 <td>{{ $d->referral_code }}</td>
-                <td>{{ $d->wallet_address }}</td>
+                <td>{{ substr($d->wallet_address,0,5) }}...{{ substr($d->wallet_address,-6) }}</td>
                 <td>{{ $d->reference_id }}</td>
                 <td>{{ 'C'.$d->reference_level }}</td>
                 <td>{{ $d->reference_amount }}</td>
@@ -114,9 +114,7 @@
                     </form>
                 </td> --}}
             </tr>
-        @empty
-            <tr><td colspan="6" class="text-center">No data found.</td></tr>
-        @endforelse
+        @endforeach
         </tbody>
     </table>
 </div>
@@ -140,5 +138,9 @@ function dwnld()
     // document.getElementById('depositSearch').value = $('#deposit_datatable').DataTable().search(); 
     document.getElementById('isDownload').value = 1
 }
-
+$('#earning_datatable').DataTable({
+    language: {
+        emptyTable: "No data found"
+    }
+});
 </script>

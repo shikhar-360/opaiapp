@@ -22,6 +22,73 @@ class AppCustomersReportController extends Controller
         $this->adminReportService = $admin_report_service;
     }
     
+    /*public function customerDetails(Request $request)
+    {
+        $admin = Auth::guard('admin')->user();
+        // Default dates
+        $from   = now()->subDays(30)->format('Y-m-d');
+        $to     = now()->format('Y-m-d');
+        $search = '';
+
+        // Validate only when form is submitted
+        if ($request->isMethod('post')) {
+            // dd($request->all());
+            $validated = $request->validate([
+                'from'   =>  'required|date',
+                'to'     =>  'required|date|after_or_equal:from',
+                'search' =>  'nullable'
+            ]);
+
+            $from           =   $validated['from'];
+            $to             =   $validated['to'];
+            $search         =   $validated['search'];
+        }
+
+        // Get data once
+        $customer_details = $this->adminReportService->customerDetails($from, $to, $search);
+        // dd($customer_details);
+        // DOWNLOAD MODE
+        if ($request->input('isDownload') == 1) {
+
+            $customer_details = $customer_details->map(function ($row) {
+                return [
+                    'customer_name' =>    $row->name,
+                    'phone'         =>    $row->phone,
+                    'email'         =>    $row->email,
+                    'status'        =>    $row->status,
+                    'referral_code' =>    $row->referral_code,
+                    'wallet_address'=>    $row->wallet_address,
+                    'sponsor'       =>    $row->sponsor?->referral_code ?? '-',
+                    'created_at'    =>    $row->created_at->format('d-m-Y'),
+                    'activation_date'=>   optional($customer->firstPaidDeposit?->created_at)->format('d-m-Y') ?? '-',
+                ];
+            });
+            
+            $columns = [                
+                'Member Name'     =>  'customer_name',
+                'Phone'             =>  'phone',
+                'Eamil'             =>  'email',
+                'Status'            =>  'status',
+                'Referral Code'     =>  'referral_code',
+                'Wallet Address'    =>  'wallet_address',
+                'Sponsor Code'      =>  'sponsor',
+                'Reg Date'          =>  'created_at',
+                'Activation date'   =>  'activation_date',
+            ];
+
+            $filename = "members_{$from}_to_{$to}";
+
+            return $this->adminReportService->exportCsv($customer_details, $columns, $filename);
+        }
+        
+        // NORMAL VIEW MODE
+        return view(
+            'admins.customers.index',
+            compact('customer_details', 'from', 'to', 'search')
+        );
+
+    }*/
+
     public function depositDetails(Request $request)
     {
         $admin = Auth::guard('admin')->user();
