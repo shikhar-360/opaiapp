@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class CustomerDepositsModel extends Model
 {
@@ -20,12 +21,11 @@ class CustomerDepositsModel extends Model
         'customer_id',
         'package_id',
         'amount',
-        'roi_percent',
-        'roi_earned',
         'transaction_id',
         'payment_status',
         'is_free_deposit',
         'coin_price',
+        'tokens'
     ];
 
     protected $casts = [
@@ -42,5 +42,10 @@ class CustomerDepositsModel extends Model
 
     public function earnings() {
         return $this->hasMany(CustomerEarningDetailsModel::class); //, 'reference_id'
+    }
+
+    public function getDepositdateAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
     }
 }

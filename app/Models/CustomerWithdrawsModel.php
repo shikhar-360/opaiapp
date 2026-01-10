@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class CustomerWithdrawsModel extends Model
 {
@@ -16,13 +17,13 @@ class CustomerWithdrawsModel extends Model
     public const TRANSACTION_TYPE_P2PTRANSFER    = 'p2ptransfer';
 
     protected $fillable = [
-        'app_id',	
-        'customer_id',	
-        'admin_charge',	
-        'amount',	
-        'admin_charge_amount',	
-        'net_amount',	
-        'transaction_id',	
+        'app_id',   
+        'customer_id',  
+        'admin_charge', 
+        'amount',   
+        'admin_charge_amount',  
+        'net_amount',   
+        'transaction_id',   
         'transaction_status',
         'transaction_type',
         'to_customer',
@@ -36,5 +37,10 @@ class CustomerWithdrawsModel extends Model
     public function app()
     {
         return $this->belongsTo(AppsModel::class, 'app_id');
+    }
+
+    public function getWithdrawdateAttribute($value)
+    {
+        return \Carbon\Carbon::parse($value)->format('d-m-Y');
     }
 }

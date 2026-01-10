@@ -97,6 +97,11 @@
             <h5>Account Info (Read Only)</h5>
             <div class="row">
                 <div class="col-md-4 mb-3">
+                    <label>Sponsor Code</label>
+                    <input class="form-control" value="{{ $c->sponsor?->referral_code ?? 'N/A' }}" readonly>
+                </div>
+
+                <div class="col-md-4 mb-3">
                     <label>Referral Code</label>
                     <input class="form-control" value="{{ $customer->referral_code }}" readonly>
                 </div>
@@ -142,6 +147,42 @@
                         <option value="1" {{ $customer->customer_settings->isWithdraw ? 'selected' : '' }}>Active</option>
                         <option value="0" {{ !$customer->customer_settings->isWithdraw ? 'selected' : '' }}>Inactive</option>
                     </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-4">
+            <h5>Financials</h5>
+         
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label>Total Deposits</label>
+                    <input class="form-control" value="{{ $customer->finance->total_deposit }}" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Total Income</label>
+                    <input class="form-control" value="{{ $customer->finance->total_income }}" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Total Withdraws</label>
+                    <input class="form-control" value="{{ $customer->finance->total_withdraws }}" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Capping Limit</label>
+                    <input class="form-control" value="{{ $customer->finance->capping_limit }}" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Total Topup</label>
+                    <input class="form-control" value="{{ $customer->finance->total_topup }}" readonly>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Total Tokens</label>
+                    <input class="form-control" name="total_tokens" value="{{ $customer->finance->total_tokens }}">
                 </div>
             </div>
         </div>

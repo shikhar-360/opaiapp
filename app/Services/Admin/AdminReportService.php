@@ -1,6 +1,8 @@
 <?php
 // app/Services/Email/EmailService.php
 namespace App\Services\Admin;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 use App\Models\CustomersModel;
 use App\Models\CustomerSettingsModel;
@@ -99,12 +101,13 @@ class AdminReportService
 
     public function depositDetails($from, $to, $search)
     {
+        $admin = Auth::guard('admin')->user();
         return CustomerDepositsModel::query()
                                         ->join('customers as c', 'c.id', '=', 'customer_deposits.customer_id')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
                                         // ->where('customer_deposits.payment_status', 'success')
-                                        ->whereBetween('customer_deposits.created_at', [$from, $to])
+                                        ->whereBetween(DB::raw('DATE(customer_deposits.created_at)'),[$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
                                             $query->where(function ($q) use ($search) {
@@ -119,8 +122,10 @@ class AdminReportService
                                             'customer_deposits.package_id',
                                             'customer_deposits.amount',
                                             'customer_deposits.is_free_deposit',
-                                            'customer_deposits.created_at',
+                                            'customer_deposits.created_at as depositdate',
                                             'customer_deposits.payment_status',
+                                            'customer_deposits.coin_price',
+                                            'customer_deposits.tokens',
 
                                             'c.name',
                                             'c.referral_code',
@@ -135,12 +140,13 @@ class AdminReportService
 
     public function earningDetails($from, $to, $search)
     {
+        $admin = Auth::guard('admin')->user();
         return CustomerEarningDetailsModel::query()
                                         ->join('customers as c', 'c.id', '=', 'customer_earning_details.customer_id')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
                                         // ->where('customer_deposits.payment_status', 'success')
-                                        ->whereBetween('customer_earning_details.created_at', [$from, $to])
+                                        ->whereBetween(DB::raw('DATE(customer_earning_details.created_at)'),[$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
                                             $query->where(function ($q) use ($search) {
@@ -158,7 +164,7 @@ class AdminReportService
                                             'customer_earning_details.amount_earned',
                                             'customer_earning_details.flush_amount',
                                             'customer_earning_details.earning_type',
-                                            'customer_earning_details.created_at',
+                                            'customer_earning_details.created_at as earndate',
 
                                             'c.name',
                                             'c.referral_code',
@@ -173,12 +179,13 @@ class AdminReportService
 
     public function withdrawDetails($from, $to, $search)
     {
+        $admin = Auth::guard('admin')->user();
         return CustomerWithdrawsModel::query()
                                         ->join('customers as c', 'c.id', '=', 'customer_withdraws.customer_id')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
                                         ->where('customer_withdraws.transaction_type', 'withdraw')
-                                        ->whereBetween('customer_withdraws.created_at', [$from, $to])
+                                        ->whereBetween(DB::raw('DATE(customer_withdraws.created_at)'),[$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
                                             $query->where(function ($q) use ($search) {
@@ -199,7 +206,7 @@ class AdminReportService
                                             'customer_withdraws.transaction_type',
                                             'customer_withdraws.transaction_id',
                                             'customer_withdraws.transaction_status',
-                                            'customer_withdraws.created_at',
+                                            'customer_withdraws.created_at as withdrawdate',
                                             
                                             'c.name',
                                             'c.referral_code',
@@ -214,13 +221,14 @@ class AdminReportService
 
     public function withdrawP2PDetails($from, $to, $search)
     {
+        $admin = Auth::guard('admin')->user();
         return CustomerWithdrawsModel::query()
                                         ->join('customers as c', 'c.id', '=', 'customer_withdraws.customer_id')
                                         ->leftJoin('customers as tc', 'tc.id', '=', 'customer_withdraws.to_customer')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
                                         ->where('customer_withdraws.transaction_type', CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER)
-                                        ->whereBetween('customer_withdraws.created_at', [$from, $to])
+                                        ->whereBetween(DB::raw('DATE(customer_withdraws.created_at)'),[$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
                                             $query->where(function ($q) use ($search) {
@@ -242,7 +250,7 @@ class AdminReportService
                                             'customer_withdraws.transaction_type',
                                             'customer_withdraws.transaction_id',
                                             'customer_withdraws.transaction_status',
-                                            'customer_withdraws.created_at',
+                                            'customer_withdraws.created_at as withdrawdate',
                                             
                                             'c.name',
                                             'c.referral_code',
@@ -259,12 +267,13 @@ class AdminReportService
 
     public function withdrawSelfDetails($from, $to, $search)
     {
+        $admin = Auth::guard('admin')->user();
         return CustomerWithdrawsModel::query()
                                         ->join('customers as c', 'c.id', '=', 'customer_withdraws.customer_id')
                                         ->leftJoin('customer_settings as cs', 'cs.customer_id', '=', 'c.id')
                                         ->leftJoin('customer_financials as cf', 'cf.customer_id', '=', 'c.id')
                                         ->where('customer_withdraws.transaction_type', CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER)
-                                        ->whereBetween('customer_withdraws.created_at', [$from, $to])
+                                        ->whereBetween(DB::raw('DATE(customer_withdraws.created_at)'),[$from, $to])
                                         // 🔍 SEARCH FILTER
                                         ->when(!empty($search), function ($query) use ($search) {
                                             $query->where(function ($q) use ($search) {
@@ -285,7 +294,7 @@ class AdminReportService
                                             'customer_withdraws.transaction_type',
                                             'customer_withdraws.transaction_id',
                                             'customer_withdraws.transaction_status',
-                                            'customer_withdraws.created_at',
+                                            'customer_withdraws.created_at as withdrawdate',
                                             
                                             'c.name',
                                             'c.referral_code',
@@ -296,5 +305,29 @@ class AdminReportService
                                         ])
                                         ->orderBy('customer_withdraws.created_at', 'desc')
                                         ->get();
+    }
+
+    public function customerDetails($from, $to, $search)
+    {
+        $admin = Auth::guard('admin')->user();
+        return  CustomersModel::query()
+                                ->where('customers.app_id', $admin->app_id)
+                                ->whereBetween(DB::raw('DATE(customers.created_at)'),[$from, $to])
+                                ->when($search, function ($query) use ($search) {
+                                    $query->where(function ($q) use ($search) {
+                                        $q->where('customers.name', 'like', "%{$search}%")
+                                          ->orWhere('customers.referral_code', 'like', "%{$search}%")
+                                          ->orWhere('customers.wallet_address', 'like', "%{$search}%")
+                                          ->orWhere('customers.email', 'like', "%{$search}%")
+                                          ->orWhere('customers.phone', 'like', "%{$search}%");
+                                    });
+                                })
+                                ->with([
+                                    'sponsor:id,referral_code',
+                                    'firstPaidDeposit:id,customer_id,created_at',
+                                    'customerFinance'
+                                ])
+                                ->orderBy('customers.id', 'desc')
+                                ->get();
     }
 }

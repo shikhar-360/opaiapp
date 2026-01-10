@@ -48,12 +48,17 @@
 <nav class="navbar navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ route('admin.dashboard') }}">Admin Panel</a>
+        <!-- <input id="globalSearch" type="text" placeholder="Search..." class="form-control form-control-sm mx-3" style="width: 50%;">
+        <div id="searchDropdown"
+             class="dropdown-menu w-100 shadow"
+             style="max-height: 300px; overflow-y: auto;">
+        </div> -->
         <a href="{{  route('admin.logout') }}" class="btn btn-danger btn-sm">Logout</a>
     </div>
 </nav>
 
 {{-- Sidebar --}}
-<div class="sidebar">a
+<div class="sidebar">
     <a href="{{ route('admin.dashboard') }}">Dashboard</a>
     <a href="{{ route('admin.adminapp.index') }}">App Settings</a>
     <a href="{{ route('admin.packages.index') }}">Packages</a>
@@ -63,6 +68,7 @@
     <a href="{{ route('admin.freedepositpackages.index') }}">Free Packages</a>
     <a href="{{ route('admin.appcustomers.index') }}">Customers</a>
     <a href="{{ route('admin.tutorials.index') }}">Tutorials</a>
+    <a href="{{ route('admin.appcustomers.earningsreport') }}">Earnings</a>
     <a href="{{ route('admin.appcustomers.depositsreport') }}">Deposits</a>
     <a href="{{ route('admin.appcustomers.withdrawsreport') }}">Withdraws</a>
     <a href="{{ route('admin.appcustomers.p2ptransfersreport') }}">P2P Transfers</a>

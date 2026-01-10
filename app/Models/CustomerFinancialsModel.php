@@ -14,6 +14,7 @@ class CustomerFinancialsModel extends Model
         'total_deposit',
         'total_income',
         'total_withdraws',
-        'capping_limit'
+        'capping_limit',
+        'total_tokens',
     ];
 }
