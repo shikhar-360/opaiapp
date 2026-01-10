@@ -114,8 +114,8 @@ function closeWithdrawPopup() {
   popup.classList.add('pointer-events-none', 'opacity-0');
   popup.classList.remove('opacity-100');
 
-  const stopWithdrawPopupUrl = "https://user.ordinarypeopleai.com/stop-withdrawpopup";
-
+  // const stopWithdrawPopupUrl = "https://user.ordinarypeopleai.com/stop-withdrawpopup";
+  const stopWithdrawPopupUrl = "{{ route('stop.withdrawpopup') }}";
   fetch(stopWithdrawPopupUrl, {
       method: 'POST',
       headers: {

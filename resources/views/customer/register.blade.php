@@ -229,7 +229,7 @@
           {{-- Terms Checkbox --}}
           <div class="mt-6 mx-auto">
             <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
-              <input id="termsCheck" type="checkbox"
+              <input id="termsCheck" name="termsCheck" type="checkbox"
                      class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
                      disabled>
               <span>
@@ -454,7 +454,7 @@
   })();
 
 
-const pdfUrl = "https://user.ordinarypeopleai.com/storage/Signup-T&C.pdf";
+const pdfUrl = "{{ asset('storage/Signup-TnC.pdf') }}";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
