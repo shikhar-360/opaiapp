@@ -3,6 +3,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AppsModel extends Model
 {
     protected $table = 'apps';
@@ -74,5 +76,10 @@ class AppsModel extends Model
         }
 
         return $slug;
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 }

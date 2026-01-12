@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class CustomerFinancialsModel extends Model
 {
     protected $table = 'customer_financials';
@@ -17,4 +19,9 @@ class CustomerFinancialsModel extends Model
         'capping_limit',
         'total_tokens',
     ];
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
+    }
 }

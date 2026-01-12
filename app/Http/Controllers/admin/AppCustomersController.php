@@ -250,13 +250,28 @@ class AppCustomersController extends Controller
 
         $customer->update($validated);
 
-        $customer->customerSettings()->updateOrCreate(
-            $custoemrSettingsData
-        );
+        // $customer->customerSettings()->updateOrCreate(
+        //     $custoemrSettingsData
+        // );
+        $settings = $customer->customerSettings()->first();
+        if ($settings) {
+            $settings->fill($custoemrSettingsData);
+            $settings->save(); 
+        } 
+        else 
+        {
+            $customer->customerSettings()->create($custoemrSettingsData); 
+        }
 
-        $customer->customerFinance()->update(
-            $customerFinanceData
-        );
+        // $customer->customerFinance()->update(
+        //     $customerFinanceData
+        // );
+        $finance = $customer->customerFinance()->first();
+        if ($finance) 
+        {
+            $finance->fill($customerFinanceData);
+            $finance->save(); 
+        }
 
         return redirect()->route('admin.appcustomers.index')
                          ->with('success', 'Customer updated successfully.');

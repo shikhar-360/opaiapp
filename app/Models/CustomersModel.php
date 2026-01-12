@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Observers\AdminAuditObserver;
+
 class CustomersModel extends Authenticatable
 {
     use Notifiable;
@@ -71,6 +73,7 @@ class CustomersModel extends Authenticatable
 
     protected static function booted()
     {
+
         /*static::creating(function ($customer) {
             if (empty($customer->referral_code)) 
             {
@@ -91,6 +94,8 @@ class CustomersModel extends Authenticatable
                 $customer->saveQuietly();
             }
         });
+
+        static::observe(AdminAuditObserver::class);
     }
 
     private static function generateUniqueReferralCode($appId, int $id): string

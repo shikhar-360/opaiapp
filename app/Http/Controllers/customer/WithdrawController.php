@@ -53,6 +53,7 @@ class WithdrawController extends Controller
         $customer->myAvailableBalance       =   $dashboard_matrics['myTotalEarning'] - $dashboard_matrics['myTotalWithdraws'];
         $customer->myWithdraws              =   $dashboard_matrics['myWithdraws'];
         $customer->appData                  =   $dashboard_matrics['appData'];
+        $customer->myFinance                =   $dashboard_matrics['myFinance'];
         // dd($customer->myWithdraws);
         // $withdrawDetails = CustomerWithdrawsModel::where('customer_id', $customer->id)->where('app_id', $customer->app_id)->get();
 

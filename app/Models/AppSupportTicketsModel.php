@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AppSupportTicketsModel extends Model
 {
     use HasFactory;
@@ -38,5 +40,10 @@ class AppSupportTicketsModel extends Model
     public function getStatusTextAttribute()
     {
         return self::statusLabels()[$this->status] ?? 'Unknown';
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 }

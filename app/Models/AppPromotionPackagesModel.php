@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AppPromotionPackagesModel extends Model
 {
     protected $table = 'app_promotion_packages';
@@ -22,4 +24,9 @@ class AppPromotionPackagesModel extends Model
         'package_benefits' => 'array',
         'benefit_levels' => 'array',
     ];
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
+    }
 }
