@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class FreeDepositPackagesModel extends Model
 {
     protected $table = 'free_deposit_packages';
@@ -42,5 +44,10 @@ class FreeDepositPackagesModel extends Model
     public function customer()
     {
         return $this->belongsTo(CustomersModel::class, 'customer_id');
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 }

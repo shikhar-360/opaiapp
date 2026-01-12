@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class PackagesModel extends Model
 {
     protected $table = 'app_packages';
@@ -19,5 +21,10 @@ class PackagesModel extends Model
     public function app()
     {
         return $this->belongsTo(AppsModel::class, 'app_id');
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 }

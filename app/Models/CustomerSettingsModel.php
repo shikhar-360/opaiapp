@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class CustomerSettingsModel extends Model
 {
     use HasFactory;
@@ -29,5 +31,8 @@ class CustomerSettingsModel extends Model
         'isWithdraw'     => 'boolean',
     ];
 
-
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
+    }
 }

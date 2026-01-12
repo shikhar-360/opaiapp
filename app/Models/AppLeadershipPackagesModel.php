@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AppLeadershipPackagesModel extends Model
 {
     use HasFactory;
@@ -21,6 +23,11 @@ class AppLeadershipPackagesModel extends Model
     public function app()
     {
         return $this->belongsTo(AppsModel::class, 'app_id');
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 
 }

@@ -95,7 +95,7 @@
   </div>
   <div>
     <h3 class="text-base text-slate-600">Perks Wallet</h3>
-    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">OPX</p>
+    <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ number_format((float) $customer->myFinance->total_tokens, 2, '.', '') }} OPX</p>
   </div>
 </div>
 

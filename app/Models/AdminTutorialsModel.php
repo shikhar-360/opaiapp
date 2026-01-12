@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AdminTutorialsModel extends Model
 {
     use HasFactory;
@@ -19,4 +21,9 @@ class AdminTutorialsModel extends Model
         'url',
         'created_by',
     ];
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
+    }
 }

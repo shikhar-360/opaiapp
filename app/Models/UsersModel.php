@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Observers\AdminAuditObserver;
 
 class UsersModel extends Authenticatable
 {
@@ -51,5 +52,10 @@ class UsersModel extends Authenticatable
     public function passwordResetToken()
     {
         return $this->hasOne(PasswordResetToken::class, 'email', 'email');
+    }
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
     }
 }

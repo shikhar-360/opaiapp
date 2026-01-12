@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use App\Observers\AdminAuditObserver;
+
 class AppLeadershipIncomeModel extends Model
 {
     use HasFactory;
@@ -17,4 +19,9 @@ class AppLeadershipIncomeModel extends Model
         'team_volume',	
         'points',	
     ];
+
+    protected static function booted()
+    {
+        static::observe(AdminAuditObserver::class);
+    }
 }

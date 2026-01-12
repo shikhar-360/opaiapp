@@ -7,26 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 
 use App\Observers\AdminAuditObserver;
 
-class AppLevelPackagesModel extends Model
+class AdminAuditLogsModel extends Model
 {
     use HasFactory;
 
-    protected $table = 'app_level_packages';
+    protected $table = 'admin_audit_logs';
 
     protected $fillable = [
+        'admin_id',
         'app_id',
-        'level',
-        'directs',
-        'reward'
+        'action',
+        'model',
+        'model_id',
+        'old_values',
+        'new_values',
+        'ip_address',
+        'user_agent',
     ];
 
-    /**
-     * Relationship: Each level package belongs to an app
-     */
-    public function app()
-    {
-        return $this->belongsTo(AppsModel::class, 'app_id', 'id');
-    }
+    protected $casts = [
+        'old_values' => 'array',
+        'new_values' => 'array',
+    ];
 
     protected static function booted()
     {
