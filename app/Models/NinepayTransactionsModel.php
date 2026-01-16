@@ -14,6 +14,8 @@ class NinepayTransactionsModel extends Model
     public const PAYMENT_STATUS_UNDERPAID   = 'underpaid';
     public const PAYMENT_STATUS_CANCEL      = 'cancel';
     
+    public const NETWORK_POOL               = ['bsc'];
+
     protected $fillable = [
         'app_id',
         'customer_id',
@@ -30,6 +32,7 @@ class NinepayTransactionsModel extends Model
         'network_type',
         'network_name',
         'remaining_amount',
+        'app_fee_pool_id',
     ];
     
 

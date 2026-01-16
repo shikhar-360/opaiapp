@@ -19,7 +19,7 @@ class CheckLevelService
     public function checkCustomerLevelAll($app_id)
     {
         // 1. Get all customers
-        $customers = CustomersModel::where('status', 1)->where('app_id', $app_id)->get(); 
+        $customers = CustomersModel::where('status', 1)->where('app_id', $app_id)->where('id','>', 1)->get(); 
         // change condition as per your requirement
 
         $results = [];
@@ -46,9 +46,12 @@ class CheckLevelService
                 if ($levelPackage) 
                 {
                     // Update customer level
-                    CustomersModel::where('id', $customer->id)->update([
+                    if($customer->id>1)
+                    {
+                        CustomersModel::where('id', $customer->id)->update([
                                                                     'level_id' => $levelPackage->id
                                                                 ]);
+                    }
                     $results[] = [
                         'user_id' => $customer->id,
                         'directs' => $directsCount,

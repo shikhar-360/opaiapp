@@ -138,14 +138,14 @@ class WebhooksController extends Controller
         Log::info('Get Pending Withdraw3:', [
             'status'           => 'success',
             'wallet_address'   => $withdrawtxn->wallet_address,
-            'amount'           => $withdrawtxn->net_amount,
+            'amount'           => $withdrawtxn->amount,
             'request_id'       => $withdrawtxn->id
         ]);
 
         return response()->json([
             'status'           => 'success',
             'wallet_address'   => $withdrawtxn->wallet_address,
-            'amount'           => $withdrawtxn->net_amount,
+            'amount'           => $withdrawtxn->amount,
             'request_id'       => $withdrawtxn->id
         ]);
     }

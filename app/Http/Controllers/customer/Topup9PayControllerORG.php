@@ -157,7 +157,7 @@ class Topup9PayController extends Controller
             ]);    
 
             $transaction_id = "TXN" . $customer->id . Str::random(4);
-            
+
             // --- ETH Wallet Logic ---
             $ninepay_eth = $this->ninepays->getEthWallet($customer, $transaction_id);
        
@@ -165,33 +165,6 @@ class Topup9PayController extends Controller
             $ninepay_tron = $this->ninepays->getTronWallet($customer, $transaction_id);
             
             $ninepay_fee = $this->ninepays->ninePayFee($validated['network_name'], $validated['coin_amount']);
-            
-            $feePoolId = 0;
-
-            if(in_array($validated['network_name'], NinepayTransactionsModel::NETWORK_POOL))
-            {
-                // $isfeepool = $this->ninepays->reserveFeePool($customer->app_id, $ninepay_fee);
-                // if($isfeepool == false)
-                // {
-                //     return back()->withErrors([
-                //         'status_code' => 'error',
-                //         'message' => 'BSC Fee pool exhausted. Please try again later.',
-                //     ]);   
-                // }
-
-                try 
-                {
-                    $feePoolId = $this->ninepays->reserveFeePool($customer->app_id, $validated['network_name'], $ninepay_fee);
-                } 
-                catch (ValidationException $e) 
-                {
-                    return back()->with([
-                        'status_code' => 'error',
-                        'message' => $e->getMessage(),
-                    ]);
-                }
-
-            }
 
             // Decode the JSON strings into PHP arrays
             $eth_array = json_decode($ninepay_eth, true);
@@ -222,8 +195,7 @@ class Topup9PayController extends Controller
                         'network_name'    => $validated['network_name'],
                         'currency'        => $validated['coinSelect'],
                         'fees_amount'     => $ninepay_fee,
-                        'transaction_id'  => $transaction_id,
-                        'app_fee_pool_id' => $feePoolId,
+                        'transaction_id'  => $transaction_id
                     ]);
             
             $qrAmount = $validated['coin_amount'];
@@ -261,34 +233,17 @@ class Topup9PayController extends Controller
 
     public function topupCancel(Request $request)
     {
-        
         $validated = $request->validate([
             'transaction_id' => 'required|string|exists:ninepay_transactions,transaction_id',
         ]);
-        
-        $transaction = NinepayTransactionsModel::where('transaction_id', $validated['transaction_id'])
-                                                    ->where('payment_status', '!=', NinepayTransactionsModel::PAYMENT_STATUS_SUCCESS)
-                                                    ->first();
-        if(!$transaction)
-        {
-            return redirect()
-                        ->route('pay.qr')
-                        ->with([
-                            'status'  => 'success',
-                            'message' => 'Already succeeded, unable to cancel'
-                        ]);
-        }
-        
-        // if(in_array($transaction->network_name, NinepayTransactionsModel::NETWORK_POOL))
-        
-        $this->ninepays->releaseFee($transaction);
-        
-        return redirect()
-                        ->route('pay.qr')
-                        ->with([
-                            'status'  => 'success',
-                            'message' => 'Transaction Canceled'
-                        ]);
+        NinepayTransactionsModel::where('transaction_id', $validated['transaction_id'])
+                                    ->update(['payment_status' => NinepayTransactionsModel::PAYMENT_STATUS_CANCEL]);
+         return redirect()
+                    ->route('pay.qr')
+                    ->with([
+                        'status'  => 'success',
+                        'message' => 'Transaction Canceled'
+                    ]);
     }
 
 }
