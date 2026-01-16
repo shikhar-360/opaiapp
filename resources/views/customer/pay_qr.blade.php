@@ -29,7 +29,7 @@
 
           <div class="grid grid-cols-2 gap-5">
             {{-- POLYGON --}}
-            <div onclick="chooseCoin('evm', 'polygon')" class=" text-center cursor-pointer">
+            <div onclick="chooseCoin('evm', 'polygon')" class="hidden text-center cursor-pointer">
               <div
                 class="p-4 rounded-xl border border-slate-200 bg-white
                        hover:border-[var(--theme-skky-500)] hover:bg-[var(--theme-skkky-50)] transition-colors">
@@ -73,7 +73,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -215,7 +215,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -413,7 +413,7 @@
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
-            <p>Network Verification : Only use the selected blockchain network (Polygon, BSC) while making payment.</p>
+            <p>Network Verification : Only use the selected blockchain network (BSC) while making payment.</p>
           </div>
           <div class="flex items-start gap-2">
             <span class="mt-1 w-2 h-2 rounded-full bg-[var(--theme-skky-400)]"></span>
@@ -563,9 +563,10 @@
 
   // Copy helpers
   function copyOgEvmAddress() {
-    const el = document.getElementById('copyOgEvmAddress');
+    const el = "{{ $customer->QRs['ethAddress']??'' }}"; //document.getElementById('copyOgEvmAddress');
     if (!el) return;
-    navigator.clipboard.writeText(el.innerText.trim()).catch(() => {});
+    // navigator.clipboard.writeText(el.innerText.trim()).catch(() => {});
+    navigator.clipboard.writeText(el);
   }
 
   function copyAmount() {

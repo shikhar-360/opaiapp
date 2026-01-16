@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 use App\Models\CustomerWithdrawsModel;
 use App\Models\CustomerSettingsModel;
@@ -13,13 +14,14 @@ use App\Services\WithdrawService;
 use App\Services\DashboardMatriceService;
 
 use App\Traits\ManagesCustomerFinancials;
-
+use App\Traits\DepositEligibilityTrait;
 class WithdrawController extends Controller
 {
     protected $withdrawServices;
     protected $dashbaord_matrice_services;
 
     use ManagesCustomerFinancials;
+    use DepositEligibilityTrait;
     
     public function __construct(WithdrawService $withdrawService, DashboardMatriceService $dashbaord_matrice_service)
     {
@@ -67,12 +69,19 @@ class WithdrawController extends Controller
 
     public function withdraw(Request $request)
     {
-
         $customer = Auth::guard('customer')->user();
+
+        // dd(
+        // $this->hasAnyDeposit($customer->id),        true // app/Http/Controllers/customer/WithdrawController.php:74
+        // $this->hasPaidDeposit($customer->id),       false // app/Http/Controllers/customer/WithdrawController.php:74
+        // $this->hasFreeDeposit($customer->id),       true // app/Http/Controllers/customer/WithdrawController.php:74
+        // $this->hasOnlyFreeDeposit($customer->id),   true // app/Http/Controllers/customer/WithdrawController.php:74
+        // $this->hasNoDeposit($customer->id));        false // app/Http/Controllers/customer/WithdrawController.php:74
 
         $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
                                                                         ->where('app_id', $customer->app_id)
                                                                         ->first();
+        // dd(!$customer->customer_settings->isWithdraw);
         if(!$customer->customer_settings->isWithdraw)
         {
             return redirect()
@@ -83,13 +92,31 @@ class WithdrawController extends Controller
                     ]);
         }
 
-        $validated = $request->validate([
-            'amount' => 'required|numeric|min:0.0000001',
-            'admin_charge' => 'required|numeric|min:0.0000001',
-            'net_amount' => 'required|numeric|min:0.0000001',
-        ]);  
-        
-        // dd($validated);
+        // $validated = $request->validate([
+        //     'amount' => 'required|numeric|min:0.0000001',
+        //     'admin_charge' => 'required|numeric|min:0.0000001',
+        //     'net_amount' => 'required|numeric|min:0.0000001',
+        // ]);  
+
+        $rules = [
+            'amount' => 'required|numeric|min:10',
+            'admin_charge' => 'required|numeric|min:0.5000',
+            'net_amount' => 'required|numeric|min:9.5000',
+        ];
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) 
+        {
+            return back()
+                    ->withInput()
+                    ->withErrors($validator)   // ✅ pass validator directly
+                    ->with([
+                        'status_code' => 'error',
+                        'message'     => $validator->errors()->first(), // first error message
+                    ]);
+        }
+        $validated = $request->validate($rules);
+
+
         if(!$customer->wallet_address)
         {
             return redirect()

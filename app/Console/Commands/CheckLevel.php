@@ -30,6 +30,9 @@ class CheckLevel extends Command
     public function handle(CheckLevelService $svc)
     {
         $svc->updateCustomerActualLevel();
+        $this->info('Actual Level assigned successfully.');
+        Log::info('Actual Level assigned successfully.');
+        $svc->checkCustomerLevelAll(1);
         $this->info('Level assigned successfully.');
         Log::info('Level assigned successfully.');
         return self::SUCCESS;

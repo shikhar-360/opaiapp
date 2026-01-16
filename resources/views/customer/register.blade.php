@@ -231,7 +231,7 @@
             <label class="flex items-start justify-center gap-3 text-sm text-slate-600 select-none">
               <input id="termsCheck" name="termsCheck" type="checkbox"
                      class="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-200"
-                     disabled>
+                     >
               <span>
                 I have read all
                 <button type="button" id="openTermsBtn"
@@ -327,7 +327,6 @@
   
   <div id="termsBackdrop" class="absolute inset-0 bg-slate-900/60"></div>
 
-  
   <div class="fixed inset-0 flex items-center justify-center p-4 md:p-6">
     
     <div
@@ -421,13 +420,14 @@
     }
 
     openTermsBtn.addEventListener('click', openModal);
+    termsCheck.addEventListener('click', openModal);
 
     closeTermsBtn.addEventListener('click', closeModal);
     termsBackdrop.addEventListener('click', closeModal);
 
     declineTermsBtn.addEventListener('click', function () {
       termsCheck.checked = false;
-      termsCheck.disabled = true;
+      termsCheck.disabled = false;
       closeModal();
     });
 
@@ -458,7 +458,7 @@ const pdfUrl = "{{ asset('storage/Signup-TnC.pdf') }}";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js";
 
-pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+/*pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
     const container = document.getElementById('pdf-viewer');
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
@@ -481,9 +481,67 @@ pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
             });
         });
     }
+});*/
+
+const container = document.getElementById('pdf-viewer');
+
+function renderPDF() {
+  container.innerHTML = '';
+
+  const dpr = window.devicePixelRatio || 1;
+
+  pdfjsLib.getDocument(pdfUrl).promise.then(pdf => {
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+      pdf.getPage(pageNum).then(page => {
+
+        const unscaledViewport = page.getViewport({ scale: 1 });
+
+        // Responsive scale based on container width
+        const scale = container.clientWidth / unscaledViewport.width;
+
+        // Increase render quality for mobile
+        const viewport = page.getViewport({ scale: scale * dpr });
+
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+
+        // Actual pixel size (high-res)
+        canvas.width = Math.floor(viewport.width);
+        canvas.height = Math.floor(viewport.height);
+
+        // CSS size (visible size)
+        canvas.style.width = `${Math.floor(viewport.width / dpr)}px`;
+        canvas.style.height = `${Math.floor(viewport.height / dpr)}px`;
+
+        canvas.classList.add('mb-6', 'mx-auto');
+
+        container.appendChild(canvas);
+
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        page.render({
+          canvasContext: context,
+          viewport: page.getViewport({ scale })
+        });
+      });
+    }
+  });
+}
+
+function waitForContainerAndRender() {
+  if (container.clientWidth === 0) {
+    requestAnimationFrame(waitForContainerAndRender);
+    return;
+  }
+  renderPDF();
+}
+
+waitForContainerAndRender();
+
+window.addEventListener('resize', () => {
+  clearTimeout(window.__pdfResizeTimer);
+  window.__pdfResizeTimer = setTimeout(renderPDF, 300);
 });
 
-
 </script>
-
 @endsection

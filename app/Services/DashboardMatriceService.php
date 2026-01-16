@@ -114,13 +114,13 @@ class DashboardMatriceService
         
         $myTotalWithdraws = CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
+                                                        // ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
                                                         ->whereIn('transaction_type', [CustomerWithdrawsModel::TRANSACTION_TYPE_WITHDRAW,CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER,CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER])
                                                         ->sum('amount');
         
         $myWithdraws    =   CustomerWithdrawsModel::where('customer_id', $customer->id)
                                                         ->where('app_id', $customer->app_id)
-                                                        ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
+                                                        // ->where('transaction_status', CustomerWithdrawsModel::TRANSACTION_STATUS_SUCCESS)
                                                         ->whereIn('transaction_type', [CustomerWithdrawsModel::TRANSACTION_TYPE_WITHDRAW,CustomerWithdrawsModel::TRANSACTION_TYPE_SELFTRANSFER,CustomerWithdrawsModel::TRANSACTION_TYPE_P2PTRANSFER])
                                                         ->get();
 
@@ -761,17 +761,21 @@ class DashboardMatriceService
         ->where('active_direct_ids', '!=', '')
         ->get();
         */
-
-        $customers = CustomersModel::whereNotNull('active_direct_ids')->where('app_id',$customer->app_id)->where('id','>', 1)->get();
+                                                    //active_direct_ids
+        $customers = CustomersModel::whereNotNull('direct_ids')->where('app_id',$customer->app_id)->where('id','>', 1)->get();
 
         return $customers->map(function ($row) {
                                                 $row->active_direct_count = count(
-                                                    array_filter(explode('/', $row->active_direct_ids))
+                                                    array_filter(explode('/', $row->direct_ids)) //active_direct_ids
+                                                );
+                                                // Total team count (recursive)
+                                                $row->member_team_count = count(
+                                                    $this->getRecursiveTeamIds($row->id)
                                                 );
                                                 return $row;
                                             })->sortByDesc('active_direct_count');
         
-        
+        $allTeamIds = count($this->getRecursiveTeamIds($row->id));
         
 
         

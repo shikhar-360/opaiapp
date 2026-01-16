@@ -1,14 +1,12 @@
 <?php
 namespace App\Services\Payment;
 
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\NinepayTransactionsModel;
 use App\Models\CustomersModel;
-use App\Models\AppFeePoolModel;
 
 use App\Traits\ManagesCustomerFinancials;
 
@@ -145,21 +143,13 @@ class NinePayService
                 // dd(abs($expectedAmount),abs($newTotalAmountReceived));
                 // if ((abs($expectedAmount - $newTotalAmountReceived) < 0.0001))
                 // if (abs($expectedAmount) <= abs($newTotalAmountReceived))
-
-                
-
-
                 if ((float)$newRemainingAmount <= 0)
                 {
-                    if(in_array($pendingPayment->network_name, NinepayTransactionsModel::NETWORK_POOL))
-                    {
-                        $this->consumeFee($pendingPayment);
-                    }
-
+                    // dd("1", $pendingPayment);
                     $pendingPayment->remaining_amount = 0;
                     $pendingPayment->payment_status = NinepayTransactionsModel::PAYMENT_STATUS_SUCCESS; 
                     $pendingPayment->save(); 
-                    
+
                     // $criteria = [
                     //     'customer_id'    => $customerId,
                     //     'transaction_id' => $transactionId,
@@ -178,20 +168,6 @@ class NinePayService
                 else 
                 {
                     $feeAmount = $this->ninePayFee($pendingPayment->network_name, $newRemainingAmount);
-
-                    if(in_array($pendingPayment->network_name, NinepayTransactionsModel::NETWORK_POOL))
-                    {
-                        $this->consumeFee($pendingPayment);
-                        $isfeepool = $this->reserveFeePool($pendingPayment->app_id, $pendingPayment->network_name, $feeAmount);
-                        if($isfeepool == false)
-                        {
-                            return back()->withErrors([
-                                'status_code' => 'error',
-                                'message' => 'BSC Fee pool exhausted. Please try again later.',
-                            ]);   
-                        }
-                    }
-                    
                     $newRemainingAmount = $newRemainingAmount + $feeAmount;
                     $pendingPayment->remaining_amount = $newRemainingAmount;
 
@@ -201,16 +177,6 @@ class NinePayService
                 }
 
                 // dd("3", $pendingPayment);
-
-                if($amountAfterfee >= 100)
-                {
-                    $temp = (float)$amountAfterfee * (0.5/100);
-                    $amountAfterfee = $amountAfterfee - $temp;
-                }
-                else
-                {
-                    $amountAfterfee = (float)$amountAfterfee - 0.5;
-                }
 
                 $finance = $this->getCustomerFinance($customerId, $customer->app_id);
                 $finance->increment('total_topup', $amountAfterfee);
@@ -226,7 +192,7 @@ class NinePayService
         
         if ($chain == 'polygon') {
             if ($amount >= 100) {
-                $feeAmount = $amount * (0.5 / 100);
+                $feeAmount = $amount * 0.5 / 100;
             } else {
                 $feeAmount = 0.5;
             }
@@ -240,9 +206,9 @@ class NinePayService
         // }
         else if ($chain == 'bsc') {
             if ($amount >= 100) {
-                $feeAmount = $amount * (0.5 / 100);
+                $feeAmount = $amount * 1 / 100;
             } else {
-                $feeAmount = 0.5;
+                $feeAmount = 1;
             }
         }
         // else if ($chain == 'eth') {
@@ -255,103 +221,5 @@ class NinePayService
         
         return $feeAmount;
         
-    }
-
-    public function reserveFeePool(int $appId, string $network, float $feeAmount): int
-    {
-        return DB::transaction(function () use ($appId, $network, $feeAmount) {
-
-            $feePool = AppFeePoolModel::where('app_id', $appId)
-                                        ->where('network_name', $network)
-                                        ->latest('id')
-                                        ->lockForUpdate()
-                                        ->first();
-
-            // 1️⃣ Pool not initialized
-            if (!$feePool) {
-                throw ValidationException::withMessages([
-                    'message' => 'Fee pool not initialized for this network.',
-                ]);
-            }
-
-            $available = $feePool->total_pool - $feePool->reserved_amount - $feePool->used_amount;
-
-            // 2️⃣ Pool exhausted
-            if ($available < $feeAmount) {
-                throw ValidationException::withMessages([
-                    'message' => 'Fee pool exhausted. Please try again later.',
-                ]);
-            }
-
-            // 3️⃣ Reserve fee
-            $feePool->increment('reserved_amount', $feeAmount);
-
-            // 4️⃣ Return pool ID 🔥
-            return $feePool->id;
-        });
-
-    }
-
-    public function consumeFee(NinepayTransactionsModel $transaction): void
-    {
-        
-        // Idempotency check
-        if ($transaction->payment_status === 'success') {
-            return;
-        }
-
-        DB::transaction(function () use ($transaction) {
-
-            if(in_array($transaction->network_name, NinepayTransactionsModel::NETWORK_POOL))
-            {
-                $feePool = AppFeePoolModel::where('app_id', $transaction->app_id)
-                                                ->where('network_name', $transaction->network_name)
-                                                ->latest('id')         
-                                                ->lockForUpdate()
-                                                ->firstOrFail();                                           
-                
-                if ($feePool && $feePool->reserved_amount < $transaction->fees_amount) 
-                {
-                    throw ValidationException::withMessages([
-                        'fee' => 'Invalid fee pool state.',
-                    ]);
-                }
-
-                // Move reserved → used
-                $feePool->decrement('reserved_amount', $transaction->fees_amount);
-                $feePool->increment('used_amount', $transaction->fees_amount);
-            }    
-        });
-    }
-
-    public function releaseFee(NinepayTransactionsModel $transaction): void
-    {
-        DB::transaction(function () use ($transaction) {
-
-            if (($transaction->payment_status === NinepayTransactionsModel::PAYMENT_STATUS_SUCCESS) || 
-                ($transaction->payment_status === NinepayTransactionsModel::PAYMENT_STATUS_CANCEL)) {
-                return; // Do not cancel
-            }
-
-            if(in_array($transaction->network_name, NinepayTransactionsModel::NETWORK_POOL))
-            {
-                $feePool = AppFeePoolModel::where('app_id', $transaction->app_id)
-                                            ->where('network_name', $transaction->network_name)
-                                            ->latest('id')
-                                            ->lockForUpdate()
-                                            ->firstOrFail();
-                if ($feePool && $feePool->reserved_amount >= $transaction->fees_amount) 
-                {
-                    $feePool->decrement('reserved_amount', $transaction->fees_amount);
-                }
-            }
-
-            // NinepayTransactionsModel::where('transaction_id', $transaction->transaction_id)
-            //                             ->update(['payment_status' => NinepayTransactionsModel::PAYMENT_STATUS_CANCEL]);
-
-            $transaction->update([
-                'payment_status' => NinepayTransactionsModel::PAYMENT_STATUS_CANCEL,
-            ]);
-        });
     }
 }

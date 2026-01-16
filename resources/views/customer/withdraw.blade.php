@@ -913,6 +913,14 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById('amount').addEventListener('input', function () {
       let amount = parseFloat(this.value) || 0;
 
+      if(amount<10)
+      {
+        typeof showToast === 'function' && showToast('error', 'Minimum withdraw $10');
+        document.getElementById('admin_charge').value = 0;
+        document.getElementById('net_amount').value = 0;
+        return 0
+      }
+
       let admin_fee = {{ $customer->appData->admin_withdraw_fee ?? 0 }}
       // 5% admin charge
       let adminCharge = amount * (admin_fee/100); //0.05;

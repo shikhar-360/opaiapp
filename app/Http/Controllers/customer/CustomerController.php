@@ -62,8 +62,10 @@ class CustomerController extends Controller
         // dd($customerUplines);
         // dd($this->getLevel($customer));
 
-        $this->check_level_service->checkCustomerLevel($customer);
-
+        if($customer->id>1)
+        {
+            $this->check_level_service->checkCustomerLevel($customer);
+        }
         // dd($customer);
         // $customers = CustomersModel::with('referrals')->find(10);
         // $customerUplines = $this->getUplines($customers);
@@ -124,7 +126,7 @@ class CustomerController extends Controller
         )->net_amount ?? 0;
         $customer->latest_withdraw_amount = $latest_withdraw_amount;
 
-        // dd($customer);
+        // dd($customer->leaderBoard);
 
 
         //cumulative leadership plan for leadership leader

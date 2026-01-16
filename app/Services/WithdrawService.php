@@ -6,17 +6,20 @@ use App\Models\Withdrawal;
 use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerWithdrawsModel;
 use App\Models\CustomersModel;
+use App\Models\AppFeePoolModel;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use App\Traits\ManagesCustomerFinancials;
 use App\Traits\ManagesCustomerHierarchy;
+use App\Traits\DepositEligibilityTrait;
 
 class WithdrawService
 {
     use ManagesCustomerFinancials;
     use ManagesCustomerHierarchy;
+    use DepositEligibilityTrait;
 
     public function requestWithdraw($customer, $validatedData)
     {
@@ -24,6 +27,15 @@ class WithdrawService
         return DB::transaction(function () use ($customer, $validatedData) {
 
             // $transactionString = Str::random(6);
+
+            if($validatedData['amount'] < 10)
+            {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Minimum $10 withdrawal amount',
+                    'finance' => []
+                ], 200);
+            }
 
             // 1. Load finance summary
             $finance = $this->getCustomerFinance($customer->id, $customer->app_id);
@@ -34,17 +46,22 @@ class WithdrawService
                     'status'  => false,
                     'message' => 'Insufficient income balance.',
                     'finance' => $finance
-                ], 401);
+                ], 200);
             }
 
             // 3. Check capping limit
-            $remainingCap = $finance->capping_limit - $finance->total_withdraws;
-            if ($remainingCap < $validatedData['amount']) {
-                return response()->json([
-                    'status'  => false,
-                    'message' => 'Exceeds withdrawal capping limit.',
-                    'finance' => $finance
-                ], 401);
+            
+            if($this->hasPaidDeposit($customer->id))
+            {
+                $remainingCap = $finance->capping_limit - $finance->total_withdraws;
+                if ($remainingCap < $validatedData['amount']) 
+                {
+                    return response()->json([
+                        'status'  => false,
+                        'message' => 'Exceeds withdrawal capping limit.',
+                        'finance' => $finance
+                    ], 200);
+                }
             }
 
             if($remainingCap)
@@ -58,6 +75,16 @@ class WithdrawService
             }
 
             $netAmount = $validatedData['amount'] - $adminFee;
+
+            $poolFees = 0;
+            if ($validatedData['net_amount'] >= 100) {
+                $poolFees    = $validatedData['net_amount'] * 0.05;
+            } else {
+                $poolFees    = 0.5;
+            }
+
+            $netAmount = $netAmount - $poolFees;
+
             // dD($netAmount);
             // 5. Record withdrawal
             $withdraw = CustomerWithdrawsModel::create([
@@ -67,7 +94,8 @@ class WithdrawService
                 'amount'	            => $validatedData['amount'],
                 'net_amount'	        => $netAmount,
                 // 'transaction_id'	    => 'WITHDRAW-'.$transactionString,
-                'transaction_type'      =>  'WITHDRAW'
+                'transaction_type'      =>  'WITHDRAW',
+                'pool_fees'             => $poolFees
             ]);
             
             // 6. Update finance summary
@@ -217,6 +245,16 @@ class WithdrawService
                 $finance->total_income = max(0, $finance->total_income - $withdraw_request->amount);
                 $finance->total_withdraws += $withdraw_request->amount;
                 $finance->save();
+
+
+                $feePool = AppFeePoolModel::where('app_id', $withdraw_request->app_id)
+                                                ->where('network_name', 'bsc')
+                                                ->latest('id')         
+                                                ->lockForUpdate()
+                                                ->firstOrFail();                                           
+                $feePool->increment('used_amount', $withdraw_request->pool_fees);
+
+
             }
         }
     }

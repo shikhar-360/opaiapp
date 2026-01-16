@@ -27,6 +27,7 @@ class CustomerWithdrawsModel extends Model
         'transaction_status',
         'transaction_type',
         'to_customer',
+        'pool_fees',
     ];
 
     public function customer()
