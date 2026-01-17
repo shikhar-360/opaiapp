@@ -27,7 +27,7 @@
             Choose Network
           </h3>
 
-          <div class="grid grid-cols-2 gap-5">
+          <div class="grid grid-cols-1 gap-5">
             {{-- POLYGON --}}
             <div onclick="chooseCoin('evm', 'polygon')" class="hidden text-center cursor-pointer">
               <div

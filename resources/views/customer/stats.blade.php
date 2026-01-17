@@ -70,8 +70,8 @@
 
     <div class="flex-1">
       <h3 class="text-sm font-medium text-amber-900">Potential</h3>
-       @php
-      $earned = (float) ($customer->myLevelEarning ?? 0);
+      @php
+      $earned = (float) ($customer->myFinance['total_income'] ?? 0);
 
       $rawCapping = (float) ($customer->myFinance['capping_limit'] ?? 0);
       $cappingLimit = max(0, $rawCapping); // never negative
@@ -89,7 +89,7 @@
       $scaleOf10   = min(10, round($scaleOf10, 2));
       @endphp
       <div class="flex justify-between mb-1 mt-1">
-        <span class="text-xs">{{ $scaleOf10 }} / 10</span>
+        <span class="text-xs">{{ $earned }} / {{ $cappingLimit }}</span>
         <span class="text-xs">{{ $percentUsed }}%</span>
       </div>
 
@@ -236,6 +236,17 @@
           <div>
             <h3 class="text-base text-slate-600">Total Withdraw</h3>
             <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ number_format($customer->myTotalWithdraws, 2, '.', '') }} {{ $customer->appData->currency }}</p>
+          </div>
+        </div>
+
+        {{-- Topup Balance --}}
+        <div class="neo-card gap-4 flex items-center bg-white border border-slate-200 rounded-2xl shadow-md">
+          <div class="w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br from-emerald-400 to-emerald-600 border border-[var(--theme-skky-200)]">
+            <img src="/assets/images/menu/pay-by-topup.webp?v=1" class="w-8 invert" alt="Topup Balance">
+          </div>
+          <div>
+            <h3 class="text-base text-slate-600">Topup Balance</h3>
+            <p class="text-lg font-bold text-[var(--theme-high-text)] mt-1">{{ $customer->myFinance->total_topup??0 }}  {{ $customer->appData->currency }}</p>
           </div>
         </div>
       </div>

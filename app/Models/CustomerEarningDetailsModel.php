@@ -20,7 +20,8 @@ class CustomerEarningDetailsModel extends Model
 	    'earning_type',
 	    'status',
 	    'reference_level',
-	    'flush_amount'
+	    'flush_amount',
+	    'reference_type',
     ];
 
 	public function getEarndateAttribute($value)

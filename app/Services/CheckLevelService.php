@@ -16,7 +16,7 @@ class CheckLevelService
     /**
      * Check & update user level based on directs
      */
-    public function checkCustomerLevelAll($app_id)
+    /*public function checkCustomerLevelAll($app_id)
     {
         // 1. Get all customers
         $customers = CustomersModel::where('status', 1)->where('app_id', $app_id)->where('id','>', 1)->get(); 
@@ -32,6 +32,7 @@ class CheckLevelService
             $directsCount = CustomersModel::join('customer_deposits', 'customer_deposits.customer_id', '=', 'customers.id')
                                             ->where('customers.sponsor_id', $customer->id)
                                             ->where('customer_deposits.payment_status', 'success')   // only successful deposits
+                                            ->where('customer_deposits.is_free_deposit', 0)
                                             ->distinct('customers.id')
                                             ->count('customers.id');
             if($directsCount)
@@ -48,7 +49,8 @@ class CheckLevelService
                     // Update customer level
                     if($customer->id>1)
                     {
-                        CustomersModel::where('id', $customer->id)->update([
+                        CustomersModel::where('id', $customer->id)
+                                            ->where('id', '>', 1)->update([
                                                                     'level_id' => $levelPackage->id
                                                                 ]);
                     }
@@ -68,12 +70,66 @@ class CheckLevelService
             'message' => 'Levels updated for all active customers',
             'data' => $results
         ];
+    }*/
+
+    public function checkCustomerLevelAll($app_id)
+    {
+        // 1. Get all customers
+        $customers = CustomersModel::where('status', 1)->where('app_id', $app_id)->where('id','>', 1)->get(); 
+        // change condition as per your requirement
+
+        $results = [];
+
+        // 2. Loop through each customer
+        foreach ($customers as $customer) {
+
+            $activeDirectIds    =   array_filter(explode('/', $customer->active_direct_ids ?? ''));
+            // $allDirectIds       =   array_filter(explode('/', $customer->direct_ids ?? ''));
+
+            $activeDirectsCount = count($activeDirectIds);
+
+            // if($activeDirectsCount > 0)
+            // {
+
+                // Find highest qualifying level
+                $levelPackage = AppLevelPackagesModel::where('app_id', $app_id)
+                                                        ->where('directs', '<=', $activeDirectsCount)
+                                                        ->orderBy('directs', 'DESC')
+                                                        ->first();
+
+                if ($levelPackage) 
+                {
+                    // Update customer level
+                    if($customer->id>1)
+                    {
+                        CustomersModel::where('id', $customer->id)
+                                            ->where('id', '>', 1)->update([
+                                                                    'level_id' => $levelPackage->id
+                                                                ]);
+                    }
+                    $results[] = [
+                        'user_id' => $customer->id,
+                        'directs' => $activeDirectsCount,
+                        'assigned_level' => $levelPackage->id,
+                    ];
+
+                } 
+                
+            // }
+        }
+
+        return [
+            'status' => true,
+            'message' => 'Levels updated for all active customers',
+            'data' => $results
+        ];
     }
 
     public function checkCustomerLevel($customer)
     {
         $directsCount = CustomersModel::join('customer_deposits', 'customer_deposits.customer_id', '=', 'customers.id')
                                             ->where('customers.sponsor_id', $customer->id)
+                                            ->where('customers.id','>', 1)
                                             ->where('customer_deposits.payment_status', 'success')   // only successful deposits
                                             ->where('customer_deposits.is_free_deposit', 0)
                                             ->distinct('customers.id')
@@ -87,7 +143,8 @@ class CheckLevelService
         if ($levelPackage) 
         {
             // Update customer level
-            CustomersModel::where('id', $customer->id)->update([
+            CustomersModel::where('id', $customer->id)
+                                ->where('id','>', 1)->update([
                                                             'level_id' => $levelPackage->id
                                                         ]);
             $results[] = [
@@ -125,6 +182,7 @@ class CheckLevelService
     {
 
         CustomersModel::where('status', 1)
+                        ->where('id','>', 1)
                         ->chunk(200, function ($customers) {
                             foreach ($customers as $customer) {
                                 /*$customer->update([

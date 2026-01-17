@@ -149,11 +149,17 @@ class DashboardMatriceService
 
 
         // Volume Today
-        $dailyVolume          =   $this->volumeSummaryByRange(Carbon::today());
+        // $dailyVolume          =   $this->volumeSummaryByRange(Carbon::today());
+        // // volume In Last 7 Days
+        // $weeklyVolume         =   $this->volumeSummaryByRange(Carbon::now()->subDays(7));
+        // // Volume In Last 30 Days
+        // $monthlyVolume        =   $this->volumeSummaryByRange(Carbon::now()->subDays(30)); 
+
+        $dailyVolume          =   $this->pointsSummaryByRange(Carbon::today());
         // volume In Last 7 Days
-        $weeklyVolume         =   $this->volumeSummaryByRange(Carbon::now()->subDays(7));
+        $weeklyVolume         =   $this->pointsSummaryByRange(Carbon::now()->subDays(7));
         // Volume In Last 30 Days
-        $monthlyVolume        =   $this->volumeSummaryByRange(Carbon::now()->subDays(30));
+        $monthlyVolume        =   $this->pointsSummaryByRange(Carbon::now()->subDays(30));
 
 
         // Directs Today
@@ -741,6 +747,29 @@ class DashboardMatriceService
         return $volumeSummary;
     }
 
+    function pointsSummaryByRange($fromDate)
+    {
+        $customer = Auth::guard('customer')->user();
+
+        $selects = [
+                        'name',
+                        'referral_code',
+                        'leadership_points',
+                        'champions_point',
+                    ];
+
+        // total volume
+        
+
+        $pointsSummary = CustomersModel::select($selects)
+                                            ->where('leadership_points','>',0)
+                                            ->orwhere('champions_point','>',0)
+                                            ->where('created_at', '>=', $fromDate)
+                                            ->orderBy('id')
+                                            ->get();
+
+        return $pointsSummary;
+    }
 
     function directsByRange($fromDate)
     {

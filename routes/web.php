@@ -96,7 +96,7 @@ Route::middleware(['customer'])->group(function () {
 
 });
 
-// Route::get('/test-income', [TestController::class, 'testLevelIncome'])->name('testincome');
+Route::get('/test-income', [TestController::class, 'releaseLevelIncomeTest'])->name('testincome');
 
 Route::prefix('customer')->name('customer.')->middleware('auth:customer')->group(function () {
     Route::get('/logoutascustomer', [AdminController::class, 'returnToAdmin'])->name('logoutascustomer');

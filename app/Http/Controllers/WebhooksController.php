@@ -118,36 +118,41 @@ class WebhooksController extends Controller
 
     public function getPendingWithdraw(Request $request)
     {
-        Log::info('Get Pending Withdraw1:', $request->all());
+        // if ($request->all()) 
+        // {
+            Log::info('Get Pending Withdraw1:', $request->all());
+        
+            // $withdrawtxn = CustomerWithdrawsModel::where('transaction_status', 'pending')->whereNull('transaction_id')->first();
+            $withdrawtxn = CustomerWithdrawsModel::query()
+                                                    ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                    ->where('customer_withdraws.transaction_status', 'pending')
+                                                    ->whereNull('customer_withdraws.transaction_id')
+                                                    ->whereNotNull('customers.wallet_address')
+                                                    ->select('customer_withdraws.*','customers.wallet_address') 
+                                                    ->first();
 
-        // $withdrawtxn = CustomerWithdrawsModel::where('transaction_status', 'pending')->whereNull('transaction_id')->first();
-        $withdrawtxn = CustomerWithdrawsModel::query()
-                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
-                                                ->where('customer_withdraws.transaction_status', 'pending')
-                                                ->whereNull('customer_withdraws.transaction_id')
-                                                ->whereNotNull('customers.wallet_address')
-                                                ->select('customer_withdraws.*','customers.wallet_address') 
-                                                ->first();
+            Log::info('Get Pending Withdraw2:', [$withdrawtxn]);
+            
+            if (!$withdrawtxn) {
+                return response()->json((object)[], 200);
+            }
 
-        Log::info('Get Pending Withdraw2:', [$withdrawtxn]);
+            Log::info('Get Pending Withdraw3:', [
+                'status'           => 'success',
+                'wallet_address'   => $withdrawtxn->wallet_address,
+                'amount'           => $withdrawtxn->net_amount,
+                'request_id'       => $withdrawtxn->id
+            ]);
 
-        if (!$withdrawtxn) {
-            return response()->json((object)[], 200);
-        }
+            return response()->json([
+                'status'           => 'success',
+                'wallet_address'   => $withdrawtxn->wallet_address,
+                'amount'           => $withdrawtxn->net_amount,
+                'request_id'       => $withdrawtxn->id
+            ]);
+        // }
 
-        Log::info('Get Pending Withdraw3:', [
-            'status'           => 'success',
-            'wallet_address'   => $withdrawtxn->wallet_address,
-            'amount'           => $withdrawtxn->net_amount,
-            'request_id'       => $withdrawtxn->id
-        ]);
-
-        return response()->json([
-            'status'           => 'success',
-            'wallet_address'   => $withdrawtxn->wallet_address,
-            'amount'           => $withdrawtxn->net_amount,
-            'request_id'       => $withdrawtxn->id
-        ]);
+        // return response()->json((object)[], 200);
     }
 
     /*public function postSuccessWithdraw (Request $request)
@@ -184,30 +189,34 @@ class WebhooksController extends Controller
 
     public function postSuccessWithdraw (Request $request)
     {
-        Log::info('POST Success Withdraw:', $request->all());
+        if ($request->all()) 
+        {
+            Log::info('Get Pending Withdraw1:', $request->all());
         
-        $validatedData = $request->validate([
-            'request_id'        =>  'required|numeric|min:1',
-            'transaction_hash'  =>  'required|string|min:10',
-        ]);
+        
+            $validatedData = $request->validate([
+                'request_id'        =>  'required|numeric|min:1',
+                'transaction_hash'  =>  'required|string|min:10',
+            ]);
 
-        $withdraw_request = CustomerWithdrawsModel::query()
-                                                ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
-                                                ->where('customer_withdraws.id', $validatedData['request_id'])
-                                                ->where('customer_withdraws.transaction_status', 'pending')
-                                                ->whereNull('customer_withdraws.transaction_id')
-                                                ->whereNotNull('customers.wallet_address')
-                                                ->select('customer_withdraws.*','customers.wallet_address') 
-                                                ->first();
-        if (!$withdraw_request) {
-            return response()->json((object)[], 200);
-        }
+            $withdraw_request = CustomerWithdrawsModel::query()
+                                                    ->join('customers', 'customers.id', '=', 'customer_withdraws.customer_id')
+                                                    ->where('customer_withdraws.id', $validatedData['request_id'])
+                                                    ->where('customer_withdraws.transaction_status', 'pending')
+                                                    ->whereNull('customer_withdraws.transaction_id')
+                                                    ->whereNotNull('customers.wallet_address')
+                                                    ->select('customer_withdraws.*','customers.wallet_address') 
+                                                    ->first();
+            if (!$withdraw_request) {
+                return response()->json((object)[], 200);
+            }
 
-        if ($withdraw_request) {
-            // $withdraw_request->transaction_status = 'success';
-            // $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
-            // $withdraw_request->save();
-            $this->withdrawsvc->updateWithdraw($validatedData);
+            if ($withdraw_request) {
+                // $withdraw_request->transaction_status = 'success';
+                // $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
+                // $withdraw_request->save();
+                $this->withdrawsvc->updateWithdraw($validatedData);
+            }
         }
 
         return response()->json([

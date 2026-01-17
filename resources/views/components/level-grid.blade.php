@@ -169,17 +169,17 @@
                 <span>Next Rank</span>
                 <span>VIP {{ str_pad($levels[$cl], 2, '0', STR_PAD_LEFT) }}</span>
             </div> -->
-            <!-- Volume -->
-            <div class="">
-              <div class="flex justify-between text-xs font-medium text-slate-700 mb-0.5">
-                <span>Total Circle</span>
-                <span>{{ (int) $current_vipvolume }} / {{ (int) $vipTargetVolume}}</span>
-            </div>
             <!-- Points -->
             <div>
               <div class="flex justify-between text-xs font-medium text-slate-700 ">
                 <span>Core Circle</span>
                 <span>{{ (int) $current_vipdirects }} / {{ (int) $vipTargetDirects }}</span>
+            </div>
+            <!-- Volume -->
+            <div class="">
+              <div class="flex justify-between text-xs font-medium text-slate-700 mb-0.5">
+                <span>Extended Circle</span>
+                <span>{{ (int) $current_vipvolume }} / {{ (int) $vipTargetVolume}}</span>
             </div>
           </div>
         </div>

@@ -7,6 +7,7 @@ use App\Models\CustomerFinancialsModel;
 use App\Models\CustomerWithdrawsModel;
 use App\Models\CustomersModel;
 use App\Models\AppFeePoolModel;
+use App\Models\CustomerSettingsModel;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -50,7 +51,6 @@ class WithdrawService
             }
 
             // 3. Check capping limit
-            
             if($this->hasPaidDeposit($customer->id))
             {
                 $remainingCap = $finance->capping_limit - $finance->total_withdraws;
@@ -64,7 +64,7 @@ class WithdrawService
                 }
             }
 
-            if($remainingCap)
+            
             // dd($remainingCap,$validatedData);
             // 4. Calculate fees
             $adminFee = 0;
@@ -229,17 +229,17 @@ class WithdrawService
                 $withdraw_request->transaction_id     = $validatedData['transaction_hash'];
                 $withdraw_request->save();
                 
-                $customer = CustomersModel::where('id', $withdraw_request->customer_id)->where('app_id', $withdraw_request->app_id)->first();
+                // $customer = CustomersModel::where('id', $withdraw_request->customer_id)->where('app_id', $withdraw_request->app_id)->first();
+                // if (!$customer) {
+                //     return response()->json([
+                //         'status'  => 'error',
+                //         'message' => 'Customer not found'
+                //     ], 404);
+                // }
+                // $customer->isWithdrawAssigned = $validatedData['request_id'];
+                // $customer->save();
 
-                if (!$customer) {
-                    return response()->json([
-                        'status'  => 'error',
-                        'message' => 'Customer not found'
-                    ], 404);
-                }
-
-                $customer->isWithdrawAssigned = $validatedData['request_id'];
-                $customer->save();
+                CustomerSettingsModel::where('customer_id', $withdraw_request->customer_id)->where('app_id', $withdraw_request->app_id)->update(['isWithdrawAssigned' => $validatedData['request_id']]);
 
                 // $finance = $this->getCustomerFinance($withdraw_request->customer_id, $withdraw_request->app_id);    
                 $finance->total_income = max(0, $finance->total_income - $withdraw_request->amount);
