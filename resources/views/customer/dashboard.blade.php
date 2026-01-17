@@ -355,14 +355,13 @@
                   <div class="mb-4">
                     <div class="flex justify-between text-xs font-medium text-slate-700 mb-1">
                       <!-- <span>Volume</span> -->
-                      <span>Extended Circle</span>
+                      <span>OP Volume</span>
                       <span>
-                        <!-- {{ $customer->totalTeamInvestment??0 }} / {{ number_format($customer->leader_total_volume, 0) }} -->
-                        {{ $customer->totalTeamCount??0 }} / {{ number_format($customer->leader_total_volume, 0) }}
+                        {{ $customer->totalTeamInvestment??0 }} / {{ number_format($customer->leader_total_volume, 0) }}
                       </span>
                     </div>
                     @php
-                    $volume_reached = ( $customer->totalTeamCount / $customer->leader_total_volume ) * 100 ;
+                    $volume_reached = ( $customer->totalTeamInvestment / $customer->leader_total_volume ) * 100 ;
                     @endphp
                     <div class="h-3 bg-slate-200 rounded-full overflow-hidden">
                       <div class="h-full bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-bllue-500)] rounded-full"
@@ -391,7 +390,7 @@
         </div>
         <div class="grid grid-cols-1 gap-5  h-full col-span-2 xl:col-span-1">
           <div class="w-full p-px overflow-hidden">
-            <x-level-grid :currentLevel="$customer->leadership_champions_rank" :totalLevels="5" :vipTargetVolume="$customer->vip_total_volume" :vipTargetDirects="$customer->vip_total_directs" :current_vipvolume="$customer->totalTeamInvestment" :current_vipdirects="$customer->totalActiveDirectsCount"  />
+            <x-level-grid :currentLevel="$customer->leadership_champions_rank" :totalLevels="5" :vipTargetVolume="$customer->vip_total_volume" :vipTargetDirects="$customer->vip_total_directs" :current_vipvolume="$customer->myTeamDataCount" :current_vipdirects="$customer->totalActiveDirectsCount"  />
           </div>
         </div>
       </div>
@@ -1243,7 +1242,7 @@
         </div>
 
         {{-- ===================================================================== --}}
-        {{-- ============================ VOLUME PANEL ============================ --}}
+        {{-- ============================ VOLUME/POINTS PANEL ============================ --}}
         {{-- ===================================================================== --}}
         <div id="volume-content" data-main-panel class="hidden relative">
 

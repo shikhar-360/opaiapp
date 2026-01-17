@@ -64,6 +64,11 @@ class WithdrawController extends Controller
         $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
                                                                         ->where('app_id', $customer->app_id)
                                                                         ->first();
+        // The net_amount of the assigned withdraw for withdraw success popup
+        $latest_withdraw_amount = optional(
+            $customer->myWithdraws->firstWhere('id', $customer->customer_settings->isWithdrawAssigned)
+        )->net_amount ?? 0;
+        $customer->latest_withdraw_amount = $latest_withdraw_amount;
         return view('customer.withdraw', compact('customer'));
     }
 

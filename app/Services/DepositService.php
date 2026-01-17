@@ -106,7 +106,7 @@ class DepositService
                                                 ->where('payment_status', CustomerDepositsModel::PAYMENT_STATUS_SUCCESS)
                                                 ->where('id', '!=', $deposit->id)
                                                 ->doesntExist();
-            if ($firstDeposit) {
+            if (!$firstDeposit) {
                 $this->updateSponsorActiveDirects($deposit->customer_id);
             }
 

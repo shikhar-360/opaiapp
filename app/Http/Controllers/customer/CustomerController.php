@@ -60,12 +60,18 @@ class CustomerController extends Controller
         // dd($customer);
         // $customerUplines = $this->getUplines($customer);
         // dd($customerUplines);
+
+        // $levelConfigs = AppLevelPackagesModel::where('app_id', 1)
+        //                                         ->orderBy('level')
+        //                                         ->get()
+        //                                         ->keyBy('level');
+        // dd($levelConfigs);                                                
         // dd($this->getLevel($customer));
 
-        if($customer->id>1)
-        {
-            $this->check_level_service->checkCustomerLevel($customer);
-        }
+        // if($customer->id>1)
+        // {
+        //     $this->check_level_service->checkCustomerLevel($customer);
+        // }
         // dd($customer);
         // $customers = CustomersModel::with('referrals')->find(10);
         // $customerUplines = $this->getUplines($customers);
@@ -105,12 +111,17 @@ class CustomerController extends Controller
 
         $customer->myVoteSumamry            =   $dashboard_matrics['myVoteSummary'];
 
-        $customer->appData                 =   $dashboard_matrics['appData'];
+        $customer->appData                  =   $dashboard_matrics['appData'];
 
-        $customer->leaderBoard             =   $dashboard_matrics['leaderBoard'];
+        $customer->leaderBoard              =   $dashboard_matrics['leaderBoard'];
 
-        $customer->myFreePackage           =   $dashboard_matrics['myFreePackage'];
+        $customer->myFreePackage            =   $dashboard_matrics['myFreePackage'];
         
+        $customer->customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
+
+        $customer->myTeamDataCount          =   count($this->dashbaord_matrice_services->getMyTeamDataGrouped($customer->id));                                                                        
         //Single champ plan for VIP circle
         // $rankIndex = is_null($customer->leadership_champions_rank) ? 0 : (int) $customer->leadership_champions_rank;
         // dd($customer);
@@ -122,11 +133,11 @@ class CustomerController extends Controller
 
         // The net_amount of the assigned withdraw for withdraw success popup
         $latest_withdraw_amount = optional(
-            $customer->myWithdraws->firstWhere('id', $customer->isWithdrawAssigned)
+            $customer->myWithdraws->firstWhere('id', $customer->customer_settings->isWithdrawAssigned)
         )->net_amount ?? 0;
         $customer->latest_withdraw_amount = $latest_withdraw_amount;
 
-        // dd($customer->leaderBoard);
+        // dd($customer);
 
 
         //cumulative leadership plan for leadership leader
@@ -544,10 +555,7 @@ class CustomerController extends Controller
             'user_id' => 'required|numeric',
         ]);
 
-        CustomersModel::where('id', $request->user_id)
-                            ->update([
-                                'isRankAssigned' => 0
-                            ]);
+        CustomerSettingsModel::where('customer_id', $request->user_id)->update(['isRankAssigned' => 0]);
 
         return response()->json([
             'status' => 'success',
@@ -560,7 +568,7 @@ class CustomerController extends Controller
         $customer = Auth::guard('customer')->user();
         $dashboard_matrics                  =   $this->dashbaord_matrice_services->showDashboardMetrics($customer->id);
         $customer->mySponsor                =   $dashboard_matrics['mySponsor'];
-
+        $customer->myFinance                =   $dashboard_matrics['myFinance'];
 
 
 
@@ -664,10 +672,7 @@ class CustomerController extends Controller
             'user_id' => 'required|numeric',
         ]);
 
-        CustomersModel::where('id', $authCustomer->id)
-                            ->update([
-                                'isWithdrawAssigned' => 0
-                            ]);
+        CustomerSettingsModel::where('customer_id', $authCustomer->id)->update(['isWithdrawAssigned' => 0]);
 
         return response()->json([
             'status' => 'success',

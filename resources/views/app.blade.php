@@ -63,11 +63,11 @@
 
   @stack('scripts')
 
-  @if($customer->isRankAssigned === 1)
+  @if($customer->customer_settings?->isRankAssigned > 0)
   <x-rank-success-modal :customer="$customer" />
   @endif
   
-  @if($customer->isWithdrawAssigned > 0)
+  @if($customer->customer_settings?->isWithdrawAssigned > 0)
   <x-withdraw-success-modal :customer="$customer" />
   @endif
 

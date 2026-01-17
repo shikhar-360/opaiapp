@@ -128,9 +128,14 @@ class DepositController extends Controller
                                                             ->where('app_id', $customer->app_id)
                                                             ->where('is_free_deposit', 1)
                                                             ->first();
+
+            $customer_settings        =   CustomerSettingsModel::where('customer_id', $customer->id)
+                                                                        ->where('app_id', $customer->app_id)
+                                                                        ->first();
             // dd($freepackages, $myPackages);
 
-            if (($customer->isFreePackage>0) && (is_null($freepackages) && is_null($myPackages))) 
+            // if (($customer->isFreePackage>0) && (is_null($freepackages) && is_null($myPackages))) 
+            if (($customer_settings->isFreePackage>0) && (is_null($freepackages) && is_null($myPackages)))                                                            
             {
                 $txnId = "FREEPACKAGE-".Str::random(8); //DUMMY TXN ID
                 // dd($freepackages, $myPackages, $txnId);

@@ -330,7 +330,8 @@
   <div class="fixed inset-0 flex items-center justify-center p-4 md:p-6">
     
     <div
-      class="w-full max-w-3xl rounded-2xl bg-white shadow-xl h-full
+      class="w-full max-w-3xl rounded-2xl border border-slate-300 bg-gradient-to-br from-blue-100/80 via-[var(--theme-skky-100)] to-[var(--theme-skky-200)]
+      backdrop-blur-xl  text-black shadow-[0_10px_30px_rgba(0,0,0,0.10)]  h-full relative
              overflow-hidden max-h-[90vh] flex flex-col">
 
       
@@ -339,7 +340,7 @@
           Terms &amp; Conditions
         </h3>
         <button type="button" id="closeTermsBtn"
-                class="rounded-lg px-3 py-1.5 text-slate-600 hover:bg-slate-100">
+                class="rounded-lg px-3 py-1.5 text-white border border-[var(--theme-skky-200)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] cursor-pointer hover:bg-gradient-to-r hover:from-[var(--theme-skky-600)] hover:to-[var(--theme-skky-500)]">
           Close
         </button>
       </div>
@@ -371,12 +372,12 @@
     
       <div class="flex items-center justify-end gap-3 px-4 md:px-5 py-3 md:py-4 border-t border-slate-200">
         <button type="button" id="declineTermsBtn"
-                class="px-4 py-2 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50">
+                class="px-4 py-2 rounded-lg  border border-[var(--theme-skky-400)] text-slate-700 bg-slate-100 hover:bg-slate-200 cursor-pointer">
           Decline
         </button>
 
         <button type="button" id="agreeTermsBtn"
-                class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:opacity-90">
+                class="rounded-lg px-3 py-1.5 text-white border border-[var(--theme-skky-200)] bg-gradient-to-r from-[var(--theme-skky-500)] to-[var(--theme-skky-600)] cursor-pointer hover:bg-gradient-to-r hover:from-[var(--theme-skky-600)] hover:to-[var(--theme-skky-500)]">
           I Agree
         </button>
       </div>
